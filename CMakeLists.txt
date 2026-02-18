@@ -139,16 +139,16 @@ set(SRC_LIBS ${STB_IMAGE})
 
 ##### SCOPE Library #####
 
-add_library(scope_lib STATIC ${FILTERED_SRC})
-target_link_libraries(scope_lib PRIVATE ${STB_IMAGE})
-target_include_directories(scope_lib
-        PUBLIC
-        $<BUILD_INTERFACE:${SRC_DIR}>
-        $<INSTALL_INTERFACE:include>)
-target_compile_definitions(scope_lib PRIVATE 
-        $<$<NOT:$<BOOL:${DISABLE_LOGGING}>>:ENABLE_LOGGING>
-        $<$<NOT:$<BOOL:${DISABLE_LOGGING}>>:LOGGING_LEVEL=${LOGGING_LEVEL}>)
-add_library(scope::scope_lib ALIAS scope_lib)
+# add_library(scope_lib STATIC ${FILTERED_SRC})
+# target_link_libraries(scope_lib PRIVATE ${STB_IMAGE})
+# target_include_directories(scope_lib
+#         PUBLIC
+#         $<BUILD_INTERFACE:${SRC_DIR}>
+#         $<INSTALL_INTERFACE:include>)
+# target_compile_definitions(scope_lib PRIVATE 
+#         $<$<NOT:$<BOOL:${DISABLE_LOGGING}>>:ENABLE_LOGGING>
+#         $<$<NOT:$<BOOL:${DISABLE_LOGGING}>>:LOGGING_LEVEL=${LOGGING_LEVEL}>)
+# add_library(scope::scope_lib ALIAS scope_lib)
 
 ########## Test Libraries ##########
 
@@ -203,7 +203,7 @@ file(MAKE_DIRECTORY ${BIN_DIR})
 
 add_executable(scope ${SRC_MAIN})
 
-target_link_libraries(scope PRIVATE ${SRC_LIBS} scope_lib)
+# target_link_libraries(scope PRIVATE ${SRC_LIBS} scope_lib)
 target_compile_definitions(scope PRIVATE 
         $<$<NOT:$<BOOL:${DISABLE_LOGGING}>>:ENABLE_LOGGING>
         $<$<NOT:$<BOOL:${DISABLE_LOGGING}>>:LOGGING_LEVEL=${LOGGING_LEVEL}>)
@@ -266,8 +266,8 @@ add_custom_target(
 ##### documentation #####
 
 find_package(Doxygen 1.9.8 REQUIRED)
-if(NOT DOXYGEN_SCOPE)
-    message(FATAL_ERROR "Doxygen is required but was not scope.")
+if(NOT DOXYGEN_FOUND)
+    message(FATAL_ERROR "Doxygen is required but was not found.")
 endif()
 
 add_custom_target(
@@ -301,12 +301,12 @@ else()
 endif()
 
 install(TARGETS scope DESTINATION bin)
-install(TARGETS scope_lib
-        EXPORT scopeTargets
-        ARCHIVE DESTINATION lib
-        LIBRARY DESTINATION lib
-        RUNTIME DESTINATION bin
-        INCLUDES DESTINATION include)
+# install(TARGETS scope_lib
+#         EXPORT scopeTargets
+#         ARCHIVE DESTINATION lib
+#         LIBRARY DESTINATION lib
+#         RUNTIME DESTINATION bin
+#         INCLUDES DESTINATION include)
 install(TARGETS ${STB_IMAGE}
         EXPORT scopeTargets
         ARCHIVE DESTINATION lib
