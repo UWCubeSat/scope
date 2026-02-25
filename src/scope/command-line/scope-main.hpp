@@ -1,5 +1,5 @@
-#ifndef SRC_COMMAND_LINE_SCOPE_MAIN_HPP_
-#define SRC_COMMAND_LINE_SCOPE_MAIN_HPP_
+#ifndef SRC_SCOPE_COMMAND_LINE_SCOPE_MAIN_HPP_
+#define SRC_SCOPE_COMMAND_LINE_SCOPE_MAIN_HPP_
 
 namespace scope {
 
@@ -20,4 +20,4 @@ int main(int argc, char **argv);
 
 }  // namespace scope
 
-#endif  // SRC_COMMAND_LINE_SCOPE_MAIN_HPP_
+#endif  // SRC_SCOPE_COMMAND_LINE_SCOPE_MAIN_HPP_

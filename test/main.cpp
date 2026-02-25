@@ -1,4 +1,6 @@
-#include "command-line/scope-main.hpp"
+#include <cstdlib>
+
+#include "scope/command-line/scope-main.hpp"
 
 /**
  * This is where the program starts.
@@ -11,5 +13,5 @@
  * 
 */
 int main(int argc, char **argv) {
-    return found::main(argc, argv);
+    return scope::main(argc, argv);
 }
