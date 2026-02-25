@@ -1,7 +1,7 @@
 #ifndef SRC_COMMAND_LINE_SCOPE_MAIN_HPP_
 #define SRC_COMMAND_LINE_SCOPE_MAIN_HPP_
 
-namespace found {
+namespace scope {
 
 /**
  * This is where the program starts.
@@ -18,6 +18,6 @@ namespace found {
 */
 int main(int argc, char **argv);
 
-}  // namespace found
+}  // namespace scope
 
 #endif  // SRC_COMMAND_LINE_SCOPE_MAIN_HPP_

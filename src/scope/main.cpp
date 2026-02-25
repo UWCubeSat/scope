@@ -11,5 +11,5 @@
  * 
 */
 int main(int argc, char **argv) {
-    return found::main(argc, argv);
+    return scope::main(argc, argv);
 }
