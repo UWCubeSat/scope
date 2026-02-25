@@ -48,7 +48,6 @@ endfunction()
 set(BUILD_DIR ${CMAKE_CURRENT_BINARY_DIR})
 set(CACHE_DIR ${PROJECT_SOURCE_DIR}/.cache)
 set(BIN_DIR ${BUILD_DIR}/bin)
-# set(OBJ_DIR ${BUILD_DIR}/objects) No longer needed
 set(DOC_DIR ${BUILD_DIR}/documentation)
 
 # Source directory
@@ -56,8 +55,8 @@ set(SRC_DIR ${PROJECT_SOURCE_DIR}/src)
 file(GLOB_RECURSE SRC ${SRC_DIR}/*.cpp)
 file(GLOB_RECURSE SRC_H ${SRC_DIR}/*.hpp)
 set(FILTERED_SRC ${SRC})
-list(FILTER FILTERED_SRC EXCLUDE REGEX ".*src/main\\.cpp$")
-set(SRC_MAIN "${SRC_DIR}/main.cpp")
+list(FILTER FILTERED_SRC EXCLUDE REGEX ".*src/scope/main\\.cpp$")
+set(SRC_MAIN "${SRC_DIR}/scope/main.cpp")
 
 # Test directory
 set(TEST_DIR ${PROJECT_SOURCE_DIR}/test)
@@ -108,47 +107,62 @@ add_compile_options(-Wall -Wextra -Wno-missing-field-initializers -pedantic)
 
 # stb_image definitions
 set(STB_IMAGE "stb_image")
-set(STB_IMAGE_URL
-    "https://raw.githubusercontent.com/nothings/stb/master/stb_image.h")
-set(STB_IMAGE_DIR "${CACHE_DIR}/${STB_IMAGE}")
-set(STB_IMAGE_HEADER "${STB_IMAGE_DIR}/${STB_IMAGE}.h")
-set(STB_IMAGE_SRC "${STB_IMAGE_DIR}/${STB_IMAGE}.cpp")
 
-# Setup directory for content
-file(MAKE_DIRECTORY ${STB_IMAGE_DIR})
+## Namespace conflict with found, this will be uncommented in the future
+
+# set(STB_IMAGE_URL
+#     "https://raw.githubusercontent.com/nothings/stb/master/stb_image.h")
+# set(STB_IMAGE_DIR "${CACHE_DIR}/${STB_IMAGE}")
+# set(STB_IMAGE_HEADER "${STB_IMAGE_DIR}/${STB_IMAGE}.h")
+# set(STB_IMAGE_SRC "${STB_IMAGE_DIR}/${STB_IMAGE}.cpp")
+
+# # Setup directory for content
+# file(MAKE_DIRECTORY ${STB_IMAGE_DIR})
+# FetchContent_Declare(
+#     ${STB_IMAGE}
+#     URL https://raw.githubusercontent.com/nothings/stb/master/${STB_IMAGE}.h
+#     DOWNLOAD_EXTRACT_TIMESTAMP TRUE
+# )
+
+# # Download stb_image and compile into library
+# if(NOT EXISTS "${STB_IMAGE_HEADER}")
+#     message(STATUS "Downloading ${STB_IMAGE}")
+#     file(DOWNLOAD ${STB_IMAGE_URL} ${STB_IMAGE_HEADER})
+# endif()
+# if(NOT EXISTS ${STB_IMAGE_SRC})
+#     file(WRITE ${STB_IMAGE_SRC} "#include \"${STB_IMAGE}/${STB_IMAGE}.h\"\n")
+# endif()
+# add_library(${STB_IMAGE} STATIC ${STB_IMAGE_SRC})
+# target_compile_definitions(${STB_IMAGE} PRIVATE STB_IMAGE_IMPLEMENTATION)
+# target_include_directories(${STB_IMAGE} PUBLIC $<BUILD_INTERFACE:${CACHE_DIR}>)
+
+##### FOUND Library #####
+
+set(FOUND_LIB found::found_lib)
+
 FetchContent_Declare(
-    ${STB_IMAGE}
-    URL https://raw.githubusercontent.com/nothings/stb/master/${STB_IMAGE}.h
-    DOWNLOAD_EXTRACT_TIMESTAMP TRUE
+  found
+  GIT_REPOSITORY https://github.com/UWCubeSat/found.git
+  GIT_TAG main
 )
 
-# Download stb_image and compile into library
-if(NOT EXISTS "${STB_IMAGE_HEADER}")
-    message(STATUS "Downloading ${STB_IMAGE}")
-    file(DOWNLOAD ${STB_IMAGE_URL} ${STB_IMAGE_HEADER})
-endif()
-if(NOT EXISTS ${STB_IMAGE_SRC})
-    file(WRITE ${STB_IMAGE_SRC} "#include \"${STB_IMAGE}/${STB_IMAGE}.h\"\n")
-endif()
-add_library(${STB_IMAGE} STATIC ${STB_IMAGE_SRC})
-target_compile_definitions(${STB_IMAGE} PRIVATE STB_IMAGE_IMPLEMENTATION)
-target_include_directories(${STB_IMAGE} PUBLIC $<BUILD_INTERFACE:${CACHE_DIR}>)
+FetchContent_MakeAvailable(found)
 
 # Set the source libraries
-set(SRC_LIBS ${STB_IMAGE})
+set(SRC_LIBS ${STB_IMAGE} ${FOUND_LIB})
 
 ##### SCOPE Library #####
 
-# add_library(scope_lib STATIC ${FILTERED_SRC})
-# target_link_libraries(scope_lib PRIVATE ${STB_IMAGE})
-# target_include_directories(scope_lib
-#         PUBLIC
-#         $<BUILD_INTERFACE:${SRC_DIR}>
-#         $<INSTALL_INTERFACE:include>)
-# target_compile_definitions(scope_lib PRIVATE 
-#         $<$<NOT:$<BOOL:${DISABLE_LOGGING}>>:ENABLE_LOGGING>
-#         $<$<NOT:$<BOOL:${DISABLE_LOGGING}>>:LOGGING_LEVEL=${LOGGING_LEVEL}>)
-# add_library(scope::scope_lib ALIAS scope_lib)
+add_library(scope_lib STATIC ${FILTERED_SRC})
+target_link_libraries(scope_lib PRIVATE ${STB_IMAGE})
+target_include_directories(scope_lib
+        PUBLIC
+        $<BUILD_INTERFACE:${SRC_DIR}>
+        $<INSTALL_INTERFACE:include>)
+target_compile_definitions(scope_lib PRIVATE 
+        $<$<NOT:$<BOOL:${DISABLE_LOGGING}>>:ENABLE_LOGGING>
+        $<$<NOT:$<BOOL:${DISABLE_LOGGING}>>:LOGGING_LEVEL=${LOGGING_LEVEL}>)
+add_library(scope::scope_lib ALIAS scope_lib)
 
 ########## Test Libraries ##########
 
@@ -203,12 +217,12 @@ file(MAKE_DIRECTORY ${BIN_DIR})
 
 add_executable(scope ${SRC_MAIN})
 
-# target_link_libraries(scope PRIVATE ${SRC_LIBS} scope_lib)
+target_link_libraries(scope PRIVATE ${SRC_LIBS} scope_lib)
 target_compile_definitions(scope PRIVATE 
         $<$<NOT:$<BOOL:${DISABLE_LOGGING}>>:ENABLE_LOGGING>
         $<$<NOT:$<BOOL:${DISABLE_LOGGING}>>:LOGGING_LEVEL=${LOGGING_LEVEL}>)
 set_target_properties(scope PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${BIN_DIR})
-add_custom_target(compile
+add_custom_target(scope-compile
                   DEPENDS scope
                   COMMENT "Compiles source code")
 
@@ -282,31 +296,31 @@ endif()
 
 ##### clean_all #####
 
-add_custom_target(clean_all
+add_custom_target(scope-clean_all
                   COMMAND rm -rf ${CACHE_DIR} ${BUILD_DIR}
                   COMMENT "Cleans the build and cache folders")
 
 ##### default target (does not run in order) #####
-add_custom_target(default ALL
+add_custom_target(scope-default ALL
                   COMMENT "The default target")
 
 if(ENABLE_WORKFLOW)
-    add_dependencies(default documentation)
+    add_dependencies(scope-default documentation)
     add_dependencies(documentation lint)
     add_dependencies(lint coverage)
     add_dependencies(coverage test)
-    add_dependencies(test compile)
+    add_dependencies(test scope-compile)
 else()
-    add_dependencies(default compile)
+    add_dependencies(scope-default scope-compile)
 endif()
 
 install(TARGETS scope DESTINATION bin)
-# install(TARGETS scope_lib
-#         EXPORT scopeTargets
-#         ARCHIVE DESTINATION lib
-#         LIBRARY DESTINATION lib
-#         RUNTIME DESTINATION bin
-#         INCLUDES DESTINATION include)
+install(TARGETS scope_lib
+        EXPORT scopeTargets
+        ARCHIVE DESTINATION lib
+        LIBRARY DESTINATION lib
+        RUNTIME DESTINATION bin
+        INCLUDES DESTINATION include)
 install(TARGETS ${STB_IMAGE}
         EXPORT scopeTargets
         ARCHIVE DESTINATION lib
