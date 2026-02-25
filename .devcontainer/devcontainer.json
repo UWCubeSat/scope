@@ -1,5 +1,5 @@
 {
-  "name": "found-dev-container",
+  "name": "scope-dev-container",
   "dockerComposeFile": "docker-compose.yml",
   "service": "dev",
   "workspaceFolder": "/workspace",
