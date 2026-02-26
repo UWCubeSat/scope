@@ -10,94 +10,99 @@ on:
       - reopened
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    container: huskysat/scope:latest
+  ### Makefile-Specific Actions ###
+  # (unused for this project)
 
-    steps:
-    - uses: actions/checkout@v4
+  # build:
+  #   runs-on: ubuntu-latest
+  #   container: huskysat/scope:latest
 
-    - name: Build all
-      uses: nick-fields/retry@v3.0.2
-      with:
-        max_attempts: 3
-        timeout_minutes: 3
-        command: make clean_all && make compile -j16
+  #   steps:
+  #   - uses: actions/checkout@v4
+
+  #   - name: Build all
+  #     uses: nick-fields/retry@v3.0.2
+  #     with:
+  #       max_attempts: 3
+  #       timeout_minutes: 3
+  #       command: make clean_all && make compile -j16
   
-  test:
-    runs-on: ubuntu-latest
-    container: huskysat/scope:latest
+  # test:
+  #   runs-on: ubuntu-latest
+  #   container: huskysat/scope:latest
 
-    steps:
-    - uses: actions/checkout@v4
+  #   steps:
+  #   - uses: actions/checkout@v4
 
-    - name: Memory Check
-      uses: nick-fields/retry@v3.0.2
-      with:
-        max_attempts: 3
-        timeout_minutes: 3
-        command: |
-          make clean_all
-          make test OMIT_ASAN=true -j16
-          valgrind ./build/bin/scope-test
+  #   - name: Memory Check
+  #     uses: nick-fields/retry@v3.0.2
+  #     with:
+  #       max_attempts: 3
+  #       timeout_minutes: 3
+  #       command: |
+  #         make clean_all
+  #         make test OMIT_ASAN=true -j16
+  #         valgrind ./build/bin/scope-test
   
-  float:
-    runs-on: ubuntu-latest
-    container: huskysat/scope:latest
+  # float:
+  #   runs-on: ubuntu-latest
+  #   container: huskysat/scope:latest
 
-    steps:
-    - uses: actions/checkout@v4
+  #   steps:
+  #   - uses: actions/checkout@v4
 
-    - name: Float Build
-      uses: nick-fields/retry@v3.0.2
-      with:
-        max_attempts: 3
-        timeout_minutes: 3
-        command: make clean_all && make compile FLOAT_MODE=true -j16
-    - name: Float Coverage
-      uses: nick-fields/retry@v3.0.2
-      with:
-        max_attempts: 3
-        timeout_minutes: 3
-        command: make clean_all && make coverage FLOAT_MODE=true -j16
+  #   - name: Float Build
+  #     uses: nick-fields/retry@v3.0.2
+  #     with:
+  #       max_attempts: 3
+  #       timeout_minutes: 3
+  #       command: make clean_all && make compile FLOAT_MODE=true -j16
+  #   - name: Float Coverage
+  #     uses: nick-fields/retry@v3.0.2
+  #     with:
+  #       max_attempts: 3
+  #       timeout_minutes: 3
+  #       command: make clean_all && make coverage FLOAT_MODE=true -j16
 
-  lint:
-    runs-on: ubuntu-latest
-    container: huskysat/scope:latest
+  # lint:
+  #   runs-on: ubuntu-latest
+  #   container: huskysat/scope:latest
 
-    steps:
-    - uses: actions/checkout@v4
+  #   steps:
+  #   - uses: actions/checkout@v4
 
-    - name: Stylecheck
-      run: make google_stylecheck
+  #   - name: Stylecheck
+  #     run: make google_stylecheck
     
-    - name: Test Stylecheck
-      run: make google_stylecheck_test
+  #   - name: Test Stylecheck
+  #     run: make google_stylecheck_test
     
-    - name: Line Ending Check (Ensure LF)
-      uses: erclu/check-crlf@master
+  #   - name: Line Ending Check (Ensure LF)
+  #     uses: erclu/check-crlf@master
 
-  coverage:
-    runs-on: ubuntu-latest
-    container: huskysat/scope:latest
+  # coverage:
+  #   runs-on: ubuntu-latest
+  #   container: huskysat/scope:latest
 
-    steps:
-    - uses: actions/checkout@v4
+  #   steps:
+  #   - uses: actions/checkout@v4
 
-    - name: Coverage
-      uses: nick-fields/retry@v3.0.2
-      with:
-        max_attempts: 3
-        timeout_minutes: 3
-        command: make clean_all && make coverage -j16
+  #   - name: Coverage
+  #     uses: nick-fields/retry@v3.0.2
+  #     with:
+  #       max_attempts: 3
+  #       timeout_minutes: 3
+  #       command: make clean_all && make coverage -j16
     
-    - name: Upload Coverage Report
-      if: ${{ always() }}
-      uses: actions/upload-artifact@v4
-      with:
-        name: Coverage Report
-        path: build/documentation/coverage
-  
+  #   - name: Upload Coverage Report
+  #     if: ${{ always() }}
+  #     uses: actions/upload-artifact@v4
+  #     with:
+  #       name: Coverage Report
+  #       path: build/documentation/coverage
+
+  ### Documentation ###
+
   documentation:
     runs-on: ubuntu-latest
     container: huskysat/scope:latest
@@ -135,7 +140,9 @@ jobs:
         branch: documentation
         folder: build/documentation/
         target-folder: ${{ env.TARGET_FOLDER }}
-  
+
+  ### Cmake-Specific Actions ###
+
   cmake-build-all:
     runs-on: ubuntu-latest
     container: huskysat/scope:latest
