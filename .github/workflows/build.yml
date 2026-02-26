@@ -101,45 +101,43 @@ jobs:
   #       name: Coverage Report
   #       path: build/documentation/coverage
 
-  ### Documentation ###
+  # documentation:
+  #   runs-on: ubuntu-latest
+  #   container: huskysat/scope:latest
+  #   needs: [build, lint, coverage]
 
-  documentation:
-    runs-on: ubuntu-latest
-    container: huskysat/scope:latest
-    needs: [build, lint, coverage]
-
-    steps:
-    - uses: actions/checkout@v4
+  #   steps:
+  #   - uses: actions/checkout@v4
     
-    - name: Generate Documentation
-      uses: nick-fields/retry@v3.0.2
-      with:
-        max_attempts: 3
-        timeout_minutes: 3
-        command: |
-          make clean_all
-          ./build.sh cmake "" --target coverage --parallel 16
-          ./build.sh cmake "" --target documentation --parallel 16
+  #   - name: Generate Documentation
+  #     uses: nick-fields/retry@v3.0.2
+  #     with:
+  #       max_attempts: 3
+  #       timeout_minutes: 3
+  #       command: |
+  #         make clean_all
+  #         ./build.sh cmake "" --target coverage --parallel 16
+  #         ./build.sh cmake "" --target documentation --parallel 16
     
-    - name: Install rsync (for JamesIves/github-pages-deploy-action@v4)
-      run: apt install -y rsync
+  #   - name: Install rsync (for JamesIves/github-pages-deploy-action@v4)
+  #     run: apt install -y rsync
     
-    - name: Set Target Folder in documentation
-      id: set-folder
-      run: |
-        if [ "${{ github.ref_name }}" = "main" ]; then
-          echo "TARGET_FOLDER=." >> $GITHUB_ENV
-        else
-          echo "TARGET_FOLDER=${{ github.ref_name }}" >> $GITHUB_ENV
-        fi
-      shell: bash
+  #   - name: Set Target Folder in documentation
+  #     id: set-folder
+  #     run: |
+  #       if [ "${{ github.ref_name }}" = "main" ]; then
+  #         echo "TARGET_FOLDER=." >> $GITHUB_ENV
+  #       else
+  #         echo "TARGET_FOLDER=${{ github.ref_name }}" >> $GITHUB_ENV
+  #       fi
+  #     shell: bash
     
-    - name: Upload Pages Artifact
-      uses: JamesIves/github-pages-deploy-action@v4
-      with:
-        branch: documentation
-        folder: build/documentation/
-        target-folder: ${{ env.TARGET_FOLDER }}
+  #   - name: Upload Pages Artifact
+  #     uses: JamesIves/github-pages-deploy-action@v4
+  #     with:
+  #       branch: documentation
+  #       folder: build/documentation/
+  #       target-folder: ${{ env.TARGET_FOLDER }}
 
   ### Cmake-Specific Actions ###
 
