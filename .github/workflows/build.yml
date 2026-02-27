@@ -1,7 +1,7 @@
 name: Build, Test, Lint, Coverage, and Documentation
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
   pull_request:
     branches: ["main"]
     types:
@@ -10,9 +10,6 @@ on:
       - reopened
 
 jobs:
-  ### Makefile-Specific Actions ###
-  # (unused for this project)
-
   # build:
   #   runs-on: ubuntu-latest
   #   container: huskysat/scope:latest
@@ -141,7 +138,7 @@ jobs:
 
   ### Cmake-Specific Actions ###
 
-  cmake-build-all:
+  build-all:
     runs-on: ubuntu-latest
     container: huskysat/scope:latest
 
@@ -155,24 +152,7 @@ jobs:
         timeout_minutes: 3
         command: ./build.sh clean && ./build.sh cmake "" --parallel 16
 
-  cmake-float:
-    runs-on: ubuntu-latest
-    container: huskysat/scope:latest
-
-    steps:
-    - uses: actions/checkout@v4
-
-    - name: Float Build
-      uses: nick-fields/retry@v3.0.2
-      with:
-        max_attempts: 3
-        timeout_minutes: 3
-        command: |
-          ./build.sh clean
-          ./build.sh cmake -DFLOAT_MODE=ON --target compile --parallel 16
-          ./build.sh cmake -DFLOAT_MODE=ON --target coverage --parallel 16
-  
-  cmake-test:
+  test:
     runs-on: ubuntu-latest
     container: huskysat/scope:latest
 
@@ -188,3 +168,105 @@ jobs:
           ./build.sh clean
           ./build.sh cmake -DOMIT_ASAN=ON --target scope-test --parallel 16
           valgrind ./build/bin/scope-test
+
+  float:
+    runs-on: ubuntu-latest
+    container: huskysat/scope:latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Float Build
+      uses: nick-fields/retry@v3.0.2
+      with:
+        max_attempts: 3
+        timeout_minutes: 3
+        command: |
+          ./build.sh clean
+          ./build.sh cmake -DFLOAT_MODE=ON --target compile --parallel 16
+
+    - name: Float Coverage
+      uses: nick-fields/retry@v3.0.2
+      with:
+        max_attempts: 3
+        timeout_minutes: 3
+        command: |
+          ./build.sh clean
+          ./build.sh cmake -DFLOAT_MODE=ON --target coverage --parallel 16
+
+  lint:
+    runs-on: ubuntu-latest
+    container: huskysat/scope:latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Lint Check
+      uses: nick-fields/retry@v3.0.2
+      with:
+        max_attempts: 3
+        timeout_minutes: 3
+        command: |
+          ./build.sh clean
+          ./build.sh cmake "" --target lint --parallel 16
+
+  coverage:
+    runs-on: ubuntu-latest
+    container: huskysat/scope:latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Coverage
+      uses: nick-fields/retry@v3.0.2
+      with:
+        max_attempts: 3
+        timeout_minutes: 3
+        command: |
+          ./build.sh clean
+          ./build.sh cmake "" --target coverage --parallel 16
+
+    - name: Upload Coverage Report
+      if: ${{ always() }}
+      uses: actions/upload-artifact@v4
+      with:
+        name: Coverage Report
+        path: build/documentation/coverage
+
+  documentation:
+    runs-on: ubuntu-latest
+    container: huskysat/scope:latest
+    needs: [build-all, lint, coverage]
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Generate Documentation
+      uses: nick-fields/retry@v3.0.2
+      with:
+        max_attempts: 3
+        timeout_minutes: 3
+        command: |
+          make clean_all
+          ./build.sh cmake "" --target coverage --parallel 16
+          ./build.sh cmake "" --target documentation --parallel 16
+
+    - name: Install rsync (for JamesIves/github-pages-deploy-action@v4)
+      run: apt install -y rsync
+
+    - name: Set Target Folder in documentation
+      id: set-folder
+      run: |
+        if [ "${{ github.ref_name }}" = "main" ]; then
+          echo "TARGET_FOLDER=." >> $GITHUB_ENV
+        else
+          echo "TARGET_FOLDER=${{ github.ref_name }}" >> $GITHUB_ENV
+        fi
+      shell: bash
+
+    - name: Upload Pages Artifact
+      uses: JamesIves/github-pages-deploy-action@v4
+      with:
+        branch: documentation
+        folder: build/documentation/
+        target-folder: ${{ env.TARGET_FOLDER }}
