@@ -138,7 +138,7 @@ jobs:
 
   ### Cmake-Specific Actions ###
 
-  build-all:
+  build:
     runs-on: ubuntu-latest
     container: huskysat/scope:latest
 
@@ -236,7 +236,7 @@ jobs:
   documentation:
     runs-on: ubuntu-latest
     container: huskysat/scope:latest
-    needs: [build-all, lint, coverage]
+    needs: [build, lint, coverage]
 
     steps:
     - uses: actions/checkout@v4
