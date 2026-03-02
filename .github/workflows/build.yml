@@ -252,8 +252,9 @@ jobs:
           ./build.sh cmake "" --target documentation --parallel 16
 
     - name: Install rsync (for JamesIves/github-pages-deploy-action@v4)
-      run: apt-get update
-      run: apt install -y rsync
+      run: |
+        apt-get update
+        apt install -y rsync
 
     - name: Set Target Folder in documentation
       id: set-folder
