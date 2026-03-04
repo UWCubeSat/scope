@@ -1,6 +1,8 @@
 #include "scope/command-line/execution/executors.hpp"
 
 #include <iostream>
+#include <memory>
+#include <utility>
 
 namespace scope {
 
@@ -34,4 +36,4 @@ void CalibrationPipelineExecutor::OutputResults() {
               << std::endl;
 }
 
-} // namespace scope
+}  // namespace scope

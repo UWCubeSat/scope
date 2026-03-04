@@ -75,4 +75,4 @@ CalibrationOptions ParseCalibrationOptions(int argc, char **argv) {
     return options;
 }
 
-} // namespace scope
+}  // namespace scope

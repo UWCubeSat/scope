@@ -5,7 +5,7 @@
 namespace scope {
 
 class NoOpCalibrationAlgorithm : public CalibrationAlgorithm {
-  public:
+ public:
     void Calibrate(const CalibrationOptions &options) override {
         (void)options;
     }
@@ -16,4 +16,4 @@ ProvideCalibrationAlgorithm([[maybe_unused]] CalibrationOptions &&options) {
     return std::make_unique<NoOpCalibrationAlgorithm>();
 }
 
-} // namespace scope
+}  // namespace scope

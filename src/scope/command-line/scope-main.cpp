@@ -33,7 +33,7 @@ void PrintHelp() {
 #undef SCOPE_CLI_OPTION
 }
 
-} // namespace
+}  // namespace
 
 int main(int argc, char **argv) {
     if (argc == 1) {
@@ -66,4 +66,4 @@ int main(int argc, char **argv) {
     return EXIT_FAILURE;
 }
 
-} // namespace scope
+}  // namespace scope

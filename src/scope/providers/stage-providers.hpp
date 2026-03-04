@@ -10,6 +10,6 @@ namespace scope {
 std::unique_ptr<CalibrationAlgorithm>
 ProvideCalibrationAlgorithm(CalibrationOptions &&options);
 
-} // namespace scope
+}  // namespace scope
 
-#endif // SRC_SCOPE_PROVIDERS_STAGE_PROVIDERS_HPP_
+#endif  // SRC_SCOPE_PROVIDERS_STAGE_PROVIDERS_HPP_

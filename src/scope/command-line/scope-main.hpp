@@ -18,6 +18,6 @@ namespace scope {
  */
 int main(int argc, char **argv);
 
-} // namespace scope
+}  // namespace scope
 
-#endif // SRC_SCOPE_COMMAND_LINE_SCOPE_MAIN_HPP_
+#endif  // SRC_SCOPE_COMMAND_LINE_SCOPE_MAIN_HPP_
