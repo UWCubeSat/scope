@@ -25,17 +25,17 @@ void PrintHelp() {
     std::cout << "==================== Calibration Flags ===================="
               << std::endl;
     std::cout << std::endl;
-#define SCOPE_CLI_OPTION(name, type, prop, defaultVal, converter, defaultArg,  \
-                         ASSIGN, doc)                                          \
-    std::cout << "    --" << name << std::endl;                                \
+#define SCOPE_CLI_OPTION(name, type, prop, defaultVal, converter, defaultArg, \
+                         ASSIGN, doc)                                         \
+    std::cout << "    --" << name << std::endl;                               \
     std::cout << "        " << doc << std::endl;
     CALIBRATION
 #undef SCOPE_CLI_OPTION
 }
 
-} // namespace
+}  // namespace
 
-int main(int argc, char **argv) {
+int main(int argc, char** argv) {
     if (argc == 1) {
         std::cerr << "No command provided. " << HELP_MSG << std::endl;
         return EXIT_FAILURE;
@@ -55,7 +55,7 @@ int main(int argc, char **argv) {
             executor->ExecutePipeline();
             executor->OutputResults();
             return EXIT_SUCCESS;
-        } catch (const std::exception &exception) {
+        } catch (const std::exception& exception) {
             std::cerr << exception.what() << std::endl;
             return EXIT_FAILURE;
         }
@@ -66,4 +66,4 @@ int main(int argc, char **argv) {
     return EXIT_FAILURE;
 }
 
-} // namespace scope
+}  // namespace scope

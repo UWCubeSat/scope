@@ -27,9 +27,8 @@
 
 namespace scope {
 
-inline bool strtobool(const char *value) {
-    if (value == nullptr)
-        return true;
+inline bool strtobool(const char* value) {
+    if (value == nullptr) return true;
 
     std::string token(value);
     if (token == "1" || token == "true" || token == "TRUE" || token == "on" ||
@@ -45,14 +44,14 @@ inline bool strtobool(const char *value) {
 }
 
 class CalibrationOptions {
-  public:
-#define SCOPE_CLI_OPTION(name, type, prop, defaultVal, converter, defaultArg,  \
-                         ASSIGN, doc)                                          \
+ public:
+#define SCOPE_CLI_OPTION(name, type, prop, defaultVal, converter, defaultArg, \
+                         ASSIGN, doc)                                         \
     type prop = defaultVal;
     CALIBRATION
 #undef SCOPE_CLI_OPTION
 };
 
-} // namespace scope
+}  // namespace scope
 
-#endif // SRC_SCOPE_COMMAND_LINE_PARSING_OPTIONS_HPP_
+#endif  // SRC_SCOPE_COMMAND_LINE_PARSING_OPTIONS_HPP_

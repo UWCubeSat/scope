@@ -1,5 +1,6 @@
-BasedOnStyle: LLVM
+BasedOnStyle: Google
 IndentWidth: 4
 TabWidth: 4
+AccessModifierOffset: -3
 UseTab: Never
 SortIncludes: Never

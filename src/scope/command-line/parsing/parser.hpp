@@ -7,8 +7,8 @@ namespace scope {
 
 #define HELP_MSG "Use ./scope --help or ./scope -h for help"
 
-CalibrationOptions ParseCalibrationOptions(int argc, char **argv);
+CalibrationOptions ParseCalibrationOptions(int argc, char** argv);
 
-} // namespace scope
+}  // namespace scope
 
-#endif // SRC_SCOPE_COMMAND_LINE_PARSING_PARSER_HPP_
+#endif  // SRC_SCOPE_COMMAND_LINE_PARSING_PARSER_HPP_

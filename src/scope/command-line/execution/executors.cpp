@@ -5,7 +5,7 @@
 namespace scope {
 
 CalibrationPipelineExecutor::CalibrationPipelineExecutor(
-    CalibrationOptions &&options,
+    CalibrationOptions&& options,
     std::unique_ptr<CalibrationAlgorithm> calibrationAlgorithm)
     : options_(std::move(options)),
       calibrationAlgorithm_(std::move(calibrationAlgorithm)) {}
@@ -34,4 +34,4 @@ void CalibrationPipelineExecutor::OutputResults() {
               << std::endl;
 }
 
-} // namespace scope
+}  // namespace scope
