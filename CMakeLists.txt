@@ -154,7 +154,9 @@ set(SRC_LIBS ${STB_IMAGE} ${FOUND_LIB})
 ##### SCOPE Library #####
 
 add_library(scope_lib STATIC ${FILTERED_SRC})
-target_link_libraries(scope_lib PRIVATE ${STB_IMAGE})
+target_link_libraries(scope_lib
+    PRIVATE ${STB_IMAGE}
+    PUBLIC ${FOUND_LIB})
 target_include_directories(scope_lib
         PUBLIC
         $<BUILD_INTERFACE:${SRC_DIR}>
