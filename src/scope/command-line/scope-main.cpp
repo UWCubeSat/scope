@@ -27,14 +27,14 @@ void PrintHelp() {
 #define SCOPE_CLI_OPTION(name, type, prop, defaultVal, converter, defaultArg,  ASSIGN, doc)  \
     std::cout << "\t--" << name << std::endl;  \
     std::cout << "\t\t" << doc << std::endl;
-    CALIBRATION
+    RECALIBRATE
 #undef SCOPE_CLI_OPTION
 }
 
 }  // namespace
 
 int main(int argc, char **argv) {
-    if (argc == 1) {
+    if (argc == 0) {
         std::cerr << "No command provided. " << HELP_MSG << std::endl;
         return EXIT_FAILURE;
     }
@@ -46,9 +46,14 @@ int main(int argc, char **argv) {
         return EXIT_SUCCESS;
     }
 
-    std::unique_ptr<PipelineExecutor> executor;
-    executor = CreateCalibrationPipelineExecutor(
-                       ParseCalibrationOptions(argc, argv));
+    std::unique_ptr<found::PipelineExecutor> executor;
+    executor = CreatePrimaryScopePipelineExecutor(
+                       ParseRecalibrationOptions(argc, argv));
+
+    executor->ExecutePipeline();
+    executor->OutputResults();
+
+    return EXIT_SUCCESS;
 }
 
 }  // namespace scope
