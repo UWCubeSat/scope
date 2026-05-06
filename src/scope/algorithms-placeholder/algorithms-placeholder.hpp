@@ -3,11 +3,12 @@
 
 #include "common/pipeline/stages.hpp"
 #include "common/style.hpp"
+#include "scope/command-line/parsing/options.hpp"
 
 namespace scope {
 
 class NoiseFilterAlgorithm : public found::FunctionStage<Images, found::Image> {
- public:
+  public:
     // Constructs this
     NoiseFilterAlgorithm() = default;
     // Destroys this
@@ -15,18 +16,21 @@ class NoiseFilterAlgorithm : public found::FunctionStage<Images, found::Image> {
 };
 
 class DarkScreenFilter : public NoiseFilterAlgorithm {
- public:
+  public:
     // Constructs this
     DarkScreenFilter() = default;
+    // Constructs this with images
+    explicit DarkScreenFilter([[maybe_unused]] const Images &images) {}
     // Destroys this
     virtual ~DarkScreenFilter() {}
 
     // Runs this, in dummy, returns an empty image
-    found::Image Run(const Images& images) override;
+    found::Image Run(const Images &images) override;
 };
 
-class StarCentroidAlgorithm : public found::FunctionStage<found::Image, std::vector<float>> {
- public:
+class StarCentroidAlgorithm
+    : public found::FunctionStage<found::Image, std::vector<float>> {
+  public:
     // Constructs this
     StarCentroidAlgorithm() = default;
     // Destroys this
@@ -34,18 +38,22 @@ class StarCentroidAlgorithm : public found::FunctionStage<found::Image, std::vec
 };
 
 class ROIFilterAlgorithm : public StarCentroidAlgorithm {
- public:
+  public:
     // Constructs this
     ROIFilterAlgorithm() = default;
+    // Constructs this with options
+    explicit ROIFilterAlgorithm(
+        [[maybe_unused]] const RecalibrationOptions &options) {}
     // Destroys this
     virtual ~ROIFilterAlgorithm() {}
 
     // Runs this, in dummy, returns empty vector
-    std::vector<float> Run(const found::Image& darkScreen) override;
+    std::vector<float> Run(const found::Image &darkScreen) override;
 };
 
-class OptimizationAlgorithm : public found::FunctionStage<std::vector<float>, std::vector<float>> {
- public:
+class OptimizationAlgorithm
+    : public found::FunctionStage<std::vector<float>, std::vector<float>> {
+  public:
     // Constructs this
     OptimizationAlgorithm() = default;
     // Destroys this
@@ -53,16 +61,19 @@ class OptimizationAlgorithm : public found::FunctionStage<std::vector<float>, st
 };
 
 class LMAOptimizationAlgorithm : public OptimizationAlgorithm {
- public:
+  public:
     // Constructs this
     LMAOptimizationAlgorithm() = default;
+    // Constructs this with options
+    explicit LMAOptimizationAlgorithm(
+        [[maybe_unused]] const RecalibrationOptions &options) {}
     // Destroys this
     virtual ~LMAOptimizationAlgorithm() {}
 
     // Runs this, in dummy, returns empty vector
-    std::vector<float> Run(const std::vector<float>& stars) override;
+    std::vector<float> Run(const std::vector<float> &stars) override;
 };
 
-}  // namespace scope
+} // namespace scope
 
-#endif  //SRC_SCOPE_ALGORITHMS_PLACEHOLDER_ALGORITHMS_PLACEHOLDER_HPP_
+#endif // SRC_SCOPE_ALGORITHMS_PLACEHOLDER_ALGORITHMS_PLACEHOLDER_HPP_

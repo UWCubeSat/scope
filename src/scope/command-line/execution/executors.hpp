@@ -12,10 +12,12 @@
 namespace scope {
 
 class PrimaryScopePipelineExecutor : public found::PipelineExecutor {
-    explicit PrimaryScopePipelineExecutor(RecalibrationOptions &&options,
-                                          std::unique_ptr<NoiseFilterAlgorithm> noiseFilterAlgorithm,
-                                          std::unique_ptr<StarCentroidAlgorithm> starCentroidAlgorithm,
-                                          std::unique_ptr<OptimizationAlgorithm> optimizationAlgorithm);
+  public:
+    explicit PrimaryScopePipelineExecutor(
+        RecalibrationOptions &&options,
+        std::unique_ptr<NoiseFilterAlgorithm> noiseFilterAlgorithm,
+        std::unique_ptr<StarCentroidAlgorithm> starCentroidAlgorithm,
+        std::unique_ptr<OptimizationAlgorithm> optimizationAlgorithm);
 
     void ExecutePipeline() override;
     void OutputResults() override;
@@ -27,6 +29,6 @@ class PrimaryScopePipelineExecutor : public found::PipelineExecutor {
     PrimaryScopePipeline pipeline_;
 };
 
-}  // namespace scope
+} // namespace scope
 
-#endif  // SRC_SCOPE_COMMAND_LINE_EXECUTION_EXECUTORS_HPP_
+#endif // SRC_SCOPE_COMMAND_LINE_EXECUTION_EXECUTORS_HPP_
