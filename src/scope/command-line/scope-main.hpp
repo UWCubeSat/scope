@@ -16,7 +16,7 @@ namespace scope {
  * an Options object that represents all the algorithms we want to run
  * and their parameters
  */
-int main(int argc, char **argv);
+int main(int argc, char** argv);
 
 }  // namespace scope
 
