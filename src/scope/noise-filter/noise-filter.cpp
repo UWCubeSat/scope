@@ -10,6 +10,11 @@ namespace scope {
 
 namespace {
 
+/// Validates that input images are non-empty, non-null, and shape-compatible.
+///
+/// @param images Input images to validate.
+/// @throws std::invalid_argument if the image collection is empty.
+/// @throws std::runtime_error if any image is null, invalid, or mismatched.
 void ValidateInput(const Images& images) {
     if (images.empty()) {
         throw std::invalid_argument(
@@ -41,6 +46,8 @@ void ValidateInput(const Images& images) {
 }
 
 }  // namespace
+
+///// DarkScreenFilter /////
 
 Image DarkScreenFilter::Run(const Images& images) {
     ValidateInput(images);
