@@ -18,19 +18,16 @@ namespace scope {
  * @return The assembled PrimaryScopePipelineExecutor.
  */
 inline std::unique_ptr<PrimaryScopePipelineExecutor> CreatePrimaryScopePipelineExecutor(
-        RecalibrationOptions &&options) {
-    std::unique_ptr<NoiseFilterAlgorithm> noiseAlg = ProvideNoiseFilterAlgorithm(
-                                                       std::forward<const RecalibrationOptions&&>(options));
-    std::unique_ptr<StarCentroidAlgorithm> starAlg = ProvideStarCentroidAlgorithm(
-                                                       std::forward<const RecalibrationOptions&&>(options));
-    std::unique_ptr<OptimizationAlgorithm> optAlg = ProvideOptimizationAlgorithm(
-                                                       std::forward<const RecalibrationOptions&&>(options));
+    RecalibrationOptions &&options) {
+    std::unique_ptr<NoiseFilterAlgorithm> noiseAlg =
+        ProvideNoiseFilterAlgorithm(std::forward<const RecalibrationOptions &&>(options));
+    std::unique_ptr<StarCentroidAlgorithm> starAlg =
+        ProvideStarCentroidAlgorithm(std::forward<const RecalibrationOptions &&>(options));
+    std::unique_ptr<OptimizationAlgorithm> optAlg =
+        ProvideOptimizationAlgorithm(std::forward<const RecalibrationOptions &&>(options));
 
     return std::make_unique<PrimaryScopePipelineExecutor>(
-        std::move(options),
-        std::move(noiseAlg),
-        std::move(starAlg),
-        std::move(optAlg));
+        std::move(options), std::move(noiseAlg), std::move(starAlg), std::move(optAlg));
 }
 
 }  // namespace scope

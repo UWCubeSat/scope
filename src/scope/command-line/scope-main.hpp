@@ -12,7 +12,7 @@ namespace scope {
  *
  * @return 0 on success, non-zero on failure.
  */
-int main(int argc, char** argv);
+int main(int argc, char **argv);
 
 }  // namespace scope
 
