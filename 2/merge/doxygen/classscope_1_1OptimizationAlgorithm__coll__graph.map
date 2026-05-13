@@ -1,0 +1,5 @@
+<map id="scope::OptimizationAlgorithm" name="scope::OptimizationAlgorithm">
+<area shape="rect" id="Node000001" title="Produces updated camera intrinsic + distortion parameters from star centroids." alt="" coords="5,108,221,133"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="19,5,207,60"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="116,74,116,108,111,108,111,74"/>
+</map>

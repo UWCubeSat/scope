@@ -1,0 +1,24 @@
+<map id="src/scope/optimization/optimization.hpp" name="src/scope/optimization/optimization.hpp">
+<area shape="rect" id="Node000001" title="Parameter&#45;fit optimization algorithms for SCOPE calibration." alt="" coords="52,5,222,45"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="72,328,135,353"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="79,48,47,67,22,95,11,124,9,154,14,185,24,216,55,273,87,316,82,319,50,276,19,218,8,187,3,154,6,122,17,92,44,63,77,43"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="32,101,242,126"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="140,46,140,87,134,87,134,46"/>
+<area shape="rect" id="Node000004" href="$options_8hpp_source.html" title=" " alt="" coords="267,93,426,133"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="184,43,289,86,287,91,182,48"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="120,255,178,280"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="267,134,142,162,93,175,72,183,68,191,67,199,76,216,93,232,114,246,111,250,89,236,71,219,62,200,63,190,69,179,92,170,140,157,266,129"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="82,181,245,207"/>
+<area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="304,136,204,178,202,173,302,131"/>
+<area shape="rect" id="Node000007" href="$style_8hpp_source.html" title=" " alt="" coords="290,255,475,280"/>
+<area shape="poly" id="edge6_Node000004_Node000007" title=" " alt="" coords="426,120,456,128,485,140,512,157,534,180,540,193,540,206,534,217,524,227,495,242,460,254,458,249,493,237,521,222,530,214,535,204,535,194,529,183,509,161,483,144,454,133,425,125"/>
+<area shape="rect" id="Node000009" href="$converters_8hpp_source.html" title=" " alt="" coords="269,181,496,207"/>
+<area shape="poly" id="edge10_Node000004_Node000009" title=" " alt="" coords="357,132,374,167,369,170,353,135"/>
+<area shape="poly" id="edge7_Node000007_Node000002" title=" " alt="" coords="338,283,149,331,148,325,337,277"/>
+<area shape="poly" id="edge9_Node000007_Node000007" title=" " alt="" coords="437,252,480,253,495,258,502,267,497,276,485,280,450,283,450,278,484,275,493,272,496,267,492,262,480,258,437,257"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="269,328,496,353"/>
+<area shape="poly" id="edge8_Node000007_Node000008" title=" " alt="" coords="385,280,385,314,380,314,380,280"/>
+<area shape="poly" id="edge11_Node000009_Node000005" title=" " alt="" coords="346,209,192,256,191,251,344,204"/>
+<area shape="poly" id="edge13_Node000009_Node000007" title=" " alt="" coords="385,207,385,241,380,241,380,207"/>
+<area shape="poly" id="edge12_Node000009_Node000009" title=" " alt="" coords="446,179,498,180,515,185,522,194,516,203,502,207,460,210,460,205,501,202,513,198,517,194,512,189,497,185,446,184"/>
+</map>

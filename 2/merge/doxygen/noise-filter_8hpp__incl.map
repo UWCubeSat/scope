@@ -1,0 +1,12 @@
+<map id="src/scope/noise&#45;filter/noise&#45;filter.hpp" name="src/scope/noise&#45;filter/noise&#45;filter.hpp">
+<area shape="rect" id="Node000001" title="Noise filtering algorithms for SCOPE calibration." alt="" coords="143,5,300,45"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,93,216,119"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="196,48,140,87,137,83,193,43"/>
+<area shape="rect" id="Node000003" href="$style_8hpp_source.html" title=" " alt="" coords="241,93,426,119"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="250,43,307,83,304,87,247,48"/>
+<area shape="poly" id="edge5_Node000003_Node000003" title=" " alt="" coords="388,91,431,92,446,97,453,106,448,114,436,119,401,122,401,117,435,114,444,110,447,106,443,101,431,97,388,96"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="217,167,279,192"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="321,121,274,160,271,156,318,117"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="304,167,531,192"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="349,117,395,155,391,160,345,121"/>
+</map>

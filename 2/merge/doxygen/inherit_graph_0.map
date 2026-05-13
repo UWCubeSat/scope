@@ -1,0 +1,15 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="Node000000" title=" " alt="" coords="5,55,164,80"/>
+<area shape="rect" id="Node000001" href="$classscope_1_1NoiseFilterAlgorithm.html" title="Reduces a set of input frames to a single representative image (e.g." alt="" coords="219,5,421,31"/>
+<area shape="poly" id="edge1_Node000000_Node000001" title=" " alt="" coords="159,49,258,28,259,33,160,54"/>
+<area shape="rect" id="Node000003" href="$classscope_1_1OptimizationAlgorithm.html" title="Produces updated camera intrinsic + distortion parameters from star centroids." alt="" coords="212,55,428,80"/>
+<area shape="poly" id="edge3_Node000000_Node000003" title=" " alt="" coords="178,65,212,65,212,70,178,70"/>
+<area shape="rect" id="Node000005" href="$classscope_1_1StarCentroidAlgorithm.html" title="Extracts star centroids from a calibrated image." alt="" coords="213,104,427,129"/>
+<area shape="poly" id="edge5_Node000000_Node000005" title=" " alt="" coords="160,80,259,101,258,107,159,85"/>
+<area shape="rect" id="Node000002" href="$classscope_1_1DarkScreenFilter.html" title="Computes a per&#45;pixel median across frames to estimate fixed&#45;pattern noise." alt="" coords="510,5,686,31"/>
+<area shape="poly" id="edge2_Node000001_Node000002" title=" " alt="" coords="435,15,510,15,510,21,435,21"/>
+<area shape="rect" id="Node000004" href="$classscope_1_1LMAOptimizationAlgorithm.html" title="Levenberg&#45;Marquardt parameter optimizer." alt="" coords="476,55,720,80"/>
+<area shape="poly" id="edge4_Node000003_Node000004" title=" " alt="" coords="442,65,476,65,476,70,442,70"/>
+<area shape="rect" id="Node000006" href="$classscope_1_1ROIFilterAlgorithm.html" title="A priori ROI + center&#45;of&#45;intensity star locator." alt="" coords="504,104,692,129"/>
+<area shape="poly" id="edge6_Node000005_Node000006" title=" " alt="" coords="441,114,504,114,504,119,441,119"/>
+</map>
