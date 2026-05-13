@@ -1,11 +1,15 @@
 #include "scope/command-line/execution/executors.hpp"
+
+#include <cstring>
+
+#include <iostream>
+#include <memory>
+#include <utility>
+#include <vector>
+
 #include "scope/common/style.hpp"
 #include "common/logging.hpp"
 #include "common/time/time.hpp"
-
-#include <memory>
-#include <utility>
-#include <cstring>
 
 namespace scope {
 
@@ -34,7 +38,7 @@ void PrimaryScopePipelineExecutor::ExecutePipeline() {
 // Will output the values found by this recalibration
 void PrimaryScopePipelineExecutor::OutputResults() {
     // std::vector<float> *&output = this->pipeline_.GetProduct();
-    //  TODO: something with output
+    // TODO: something with output
     std::cout << "Nothing is implemented :(" << std::endl;
 }
 

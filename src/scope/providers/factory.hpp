@@ -17,7 +17,8 @@ namespace scope {
  * 
  * @return A pointer to a PrimaryScopePipelineExecutor
  */
-inline std::unique_ptr<PrimaryScopePipelineExecutor> CreatePrimaryScopePipelineExecutor(RecalibrationOptions &&options) {
+inline std::unique_ptr<PrimaryScopePipelineExecutor> CreatePrimaryScopePipelineExecutor(
+        RecalibrationOptions &&options) {
     std::unique_ptr<NoiseFilterAlgorithm> noiseAlg = ProvideNoiseFilterAlgorithm(
                                                        std::forward<const RecalibrationOptions&&>(options));
     std::unique_ptr<StarCentroidAlgorithm> starAlg = ProvideStarCentroidAlgorithm(

@@ -1,11 +1,11 @@
 #ifndef SRC_SCOPE_COMMON_STYLE_HPP_
 #define SRC_SCOPE_COMMON_STYLE_HPP_
 
+#include <vector>
+
 #include "common/pipeline/pipelines.hpp"
 
 #include "common/style.hpp"
-
-#include <vector>
 
 namespace scope {
 

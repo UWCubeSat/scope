@@ -78,4 +78,4 @@ RecalibrationOptions ParseRecalibrationOptions(int argc, char **argv) {
     return options;
 }
 
-} // namespace scope
+}  // namespace scope
