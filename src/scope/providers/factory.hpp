@@ -10,12 +10,12 @@
 namespace scope {
 
 /**
- * Creates a PrimaryScopePipelineExecutor
- * 
- * @param options The options to create the pipeline from
- *                (refer to src/scope/command-line/parsing/options.hpp)
- * 
- * @return A pointer to a PrimaryScopePipelineExecutor
+ * Assembles a PrimaryScopePipelineExecutor from parsed options.
+ *
+ * @param options Parsed recalibration options
+ *                (see src/scope/command-line/parsing/options.hpp).
+ *
+ * @return The assembled PrimaryScopePipelineExecutor.
  */
 inline std::unique_ptr<PrimaryScopePipelineExecutor> CreatePrimaryScopePipelineExecutor(
         RecalibrationOptions &&options) {

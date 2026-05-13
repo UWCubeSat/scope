@@ -1,8 +1,7 @@
-/// @file optimization.hpp
-/// @brief Parameter-fit optimization algorithms for SCOPE calibration.
-///
-/// This header defines the optimization pipeline stage: its abstract
-/// base and concrete implementations.
+/**
+ * @file optimization.hpp
+ * @brief Parameter-fit optimization algorithms for SCOPE calibration.
+ */
 
 #ifndef SRC_SCOPE_OPTIMIZATION_OPTIMIZATION_HPP_
 #define SRC_SCOPE_OPTIMIZATION_OPTIMIZATION_HPP_
@@ -15,21 +14,38 @@
 
 namespace scope {
 
-/// Pipeline stage that produces updated camera parameters from centroids.
+/**
+ * Produces updated camera intrinsic + distortion parameters from star centroids.
+ */
 class OptimizationAlgorithm : public found::FunctionStage<std::vector<float>, std::vector<float>> {
  public:
     OptimizationAlgorithm() = default;
     virtual ~OptimizationAlgorithm() {}
 };
 
-/// Levenberg-Marquardt parameter optimizer. Stub implementation pending
-/// the real algorithm.
+/**
+ * Levenberg-Marquardt parameter optimizer. Stub pending the real algorithm.
+ */
 class LMAOptimizationAlgorithm : public OptimizationAlgorithm {
  public:
     LMAOptimizationAlgorithm() = default;
+
+    /**
+     * Constructs a new LMAOptimizationAlgorithm.
+     *
+     * @param options Parsed recalibration options (currently unused).
+     */
     explicit LMAOptimizationAlgorithm([[maybe_unused]] const RecalibrationOptions &options) {}
+
     ~LMAOptimizationAlgorithm() override = default;
 
+    /**
+     * Fits camera parameters to the given star centroids.
+     *
+     * @param stars Flattened centroid coordinates from the previous stage.
+     *
+     * @return The updated camera parameter vector. The stub returns an empty vector.
+     */
     std::vector<float> Run(const std::vector<float> &stars) override;
 };
 

@@ -10,14 +10,13 @@
 namespace scope {
 
 /**
- * Converts a string to a vector of images
- * 
- * @param str The string to convert
- * 
- * @return The vector of location records that the string represents
- * 
- * @pre str must contain a list of valid file paths to image files.
- * Each file path needs to be seperated by commas or spaces.
+ * Loads images from a list of file paths.
+ *
+ * @param str Comma- or space-separated list of image file paths.
+ *
+ * @return Images loaded from the listed paths.
+ *
+ * @pre Each entry in str must be a valid path to an image file.
  */
 inline Images strtoimages(const std::string &str) {
     char delimiter = str.find(" ") != std::string::npos ? ' ' : ',';

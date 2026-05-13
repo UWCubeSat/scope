@@ -1,8 +1,7 @@
-/// @file noise-filter.hpp
-/// @brief Noise filtering algorithms for SCOPE calibration.
-///
-/// This header defines the noise-filter pipeline stage: its abstract
-/// base and concrete implementations.
+/**
+ * @file noise-filter.hpp
+ * @brief Noise filtering algorithms for SCOPE calibration.
+ */
 
 #ifndef SRC_SCOPE_NOISE_FILTER_NOISE_FILTER_HPP_
 #define SRC_SCOPE_NOISE_FILTER_NOISE_FILTER_HPP_
@@ -13,25 +12,34 @@
 
 namespace scope {
 
-/// Pipeline stage that reduces a collection of input frames to a single
-/// representative image (e.g. dark frame / fixed-pattern noise estimate).
+/**
+ * Reduces a set of input frames to a single representative image
+ * (e.g. a dark frame / fixed-pattern noise estimate).
+ */
 class NoiseFilterAlgorithm : public found::FunctionStage<Images, Image> {
  public:
     NoiseFilterAlgorithm() = default;
     virtual ~NoiseFilterAlgorithm() {}
 };
 
-/// Computes a per-pixel median filter to estimate fixed-pattern noise.
+/**
+ * Computes a per-pixel median across frames to estimate fixed-pattern noise.
+ */
 class DarkScreenFilter : public NoiseFilterAlgorithm {
  public:
     DarkScreenFilter() = default;
     ~DarkScreenFilter() override = default;
 
-    /// @param images Raw frames with identical dimensions and channel counts.
-    /// @return The median image with newly allocated pixel storage.
-    ///         The caller must free the image buffer.
-    /// @throws std::invalid_argument if images collection is empty.
-    /// @throws std::runtime_error if images have mismatched dimensions.
+    /**
+     * Computes the per-pixel median of the input frames.
+     *
+     * @param images Frames with identical dimensions and channel counts.
+     *
+     * @return The median image; the caller owns the pixel buffer.
+     *
+     * @throws std::invalid_argument if images is empty.
+     * @throws std::runtime_error if any image is null or has mismatched dimensions.
+     */
     Image Run(const Images &images) override;
 };
 

@@ -24,12 +24,12 @@ int optind = 2;
 
 namespace scope {
 
-/// For macro processing
+/// Sentinel for options with no default value.
 const char kNoDefaultArgument = 0;
 
 RecalibrationOptions ParseRecalibrationOptions(int argc, char **argv) {
-    // Define an enum for each valid flag (command-line entry), which maps it
-    // from the name to an integer
+    // Each block below re-expands RECALIBRATE to derive a piece of getopt
+    // wiring from the option table in options.hpp.
     enum class ClientOption {
 #define SCOPE_CLI_OPTION(name, type, prop, defaultVal, converter, defaultArg,  \
                          ASSIGN, doc)                                          \
@@ -38,8 +38,6 @@ RecalibrationOptions ParseRecalibrationOptions(int argc, char **argv) {
 #undef SCOPE_CLI_OPTION
     };
 
-    // Define an array of options, which defines the traits pertaining to each
-    // expected command-line entry
     static option long_options[] = {
 #define SCOPE_CLI_OPTION(name, type, prop, defaultVal, converter, defaultArg,  \
                          ASSIGN, doc)                                          \
@@ -50,15 +48,10 @@ RecalibrationOptions ParseRecalibrationOptions(int argc, char **argv) {
 #undef SCOPE_CLI_OPTION
         {0}};
 
-    // Define our result, and iterator helpers
     RecalibrationOptions options;
     int index;
     int option;
 
-    // Iterates through the list of command-line tokens and figures out
-    // what data to assign to which field in options. Note that the
-    // SCOPE_CLI_OPTION defines the conversion already between any
-    // particular parameter (as a string) to its actual type
     while ((option = getopt_long(argc, argv, "", long_options, &index)) != -1) {
         switch (option) {
 #define SCOPE_CLI_OPTION(name, type, prop, defaultVal, converter, defaultArg,  \

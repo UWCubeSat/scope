@@ -30,12 +30,9 @@ PrimaryScopePipelineExecutor::PrimaryScopePipelineExecutor(
 }
 
 void PrimaryScopePipelineExecutor::ExecutePipeline() {
-    // Results are stored within the pipeline, can also be accessed
-    // via this function call
     this->pipeline_.Run(this->options_.images);
 }
 
-// Will output the values found by this recalibration
 void PrimaryScopePipelineExecutor::OutputResults() {
     // std::vector<float> *&output = this->pipeline_.GetProduct();
     // TODO: something with output

@@ -11,11 +11,11 @@
 namespace scope {
 
 /**
- * Provides a NoiseFilterAlgorithm
+ * Selects a NoiseFilterAlgorithm implementation for the run.
  *
- * @param options The options to derive the noise filter algorithm from
+ * @param options Parsed recalibration options.
  *
- * @return std::unique_ptr<NoiseFilterAlgorithm> The noise filter algorithm
+ * @return The chosen NoiseFilterAlgorithm.
  */
 inline std::unique_ptr<NoiseFilterAlgorithm> ProvideNoiseFilterAlgorithm(
     [[maybe_unused]] const RecalibrationOptions &&options) {
@@ -23,22 +23,22 @@ inline std::unique_ptr<NoiseFilterAlgorithm> ProvideNoiseFilterAlgorithm(
 }
 
 /**
- * Provides a StarCentroidAlgorithm
+ * Selects a StarCentroidAlgorithm implementation for the run.
  *
- * @param options The options to derive the star centroid algorithm from
+ * @param options Parsed recalibration options.
  *
- * @return std::unique_ptr<StarCentroidAlgorithm> The star centroid algorithm
+ * @return The chosen StarCentroidAlgorithm.
  */
 inline std::unique_ptr<StarCentroidAlgorithm> ProvideStarCentroidAlgorithm(const RecalibrationOptions &&options) {
     return std::make_unique<ROIFilterAlgorithm>(options);
 }
 
 /**
- * Provides an OptimizationAlgorithm
+ * Selects an OptimizationAlgorithm implementation for the run.
  *
- * @param options The options to derive the optimization algorithm from
+ * @param options Parsed recalibration options.
  *
- * @return std::unique_ptr<OptimizationAlgorithm> The optimization algorithm
+ * @return The chosen OptimizationAlgorithm.
  */
 inline std::unique_ptr<OptimizationAlgorithm> ProvideOptimizationAlgorithm(const RecalibrationOptions &&options) {
     return std::make_unique<LMAOptimizationAlgorithm>(options);

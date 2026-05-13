@@ -9,16 +9,16 @@
 
 namespace scope {
 
-// Single image from FOUND
+/** Single image from FOUND. */
 typedef found::Image Image;
 
-// Images passed in by the user
+/** Images passed in by the user. */
 typedef std::vector<found::Image> Images;
 
-// Number of (maximum) stages for each pipeline
+/** Number of (maximum) stages for each pipeline. */
 constexpr size_t recalibration_size = 3;
 
-/// Pipeline for Recalibration
+/** Pipeline for Recalibration. */
 typedef found::SequentialPipeline<std::vector<found::Image>, std::vector<float>, recalibration_size>
     PrimaryScopePipeline;
 
