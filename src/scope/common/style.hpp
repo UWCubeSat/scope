@@ -9,6 +9,9 @@
 
 namespace scope {
 
+// Single image from FOUND
+typedef found::Image Image;
+
 // Images passed in by the user
 typedef std::vector<found::Image> Images;
 
@@ -16,8 +19,9 @@ typedef std::vector<found::Image> Images;
 constexpr size_t recalibration_size = 3;
 
 /// Pipeline for Recalibration
-typedef found::SequentialPipeline<std::vector<found::Image>, std::vector<float>, recalibration_size> PrimaryScopePipeline;
+typedef found::SequentialPipeline<std::vector<found::Image>, std::vector<float>, recalibration_size>
+    PrimaryScopePipeline;
 
 }  // namespace scope
 
-#endif  //SRC_SCOPE_COMMON_STYLE_HPP_
+#endif  // SRC_SCOPE_COMMON_STYLE_HPP_

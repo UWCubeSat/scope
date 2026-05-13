@@ -1,23 +1,20 @@
 /// @file noise-filter.hpp
 /// @brief Noise filtering algorithms for SCOPE calibration.
 ///
-/// This header defines the interface for noise filtering stages in SCOPE's
-/// image calibration pipeline.
+/// This header defines the noise-filter pipeline stage: its abstract
+/// base and concrete implementations.
 
 #ifndef SRC_SCOPE_NOISE_FILTER_NOISE_FILTER_HPP_
 #define SRC_SCOPE_NOISE_FILTER_NOISE_FILTER_HPP_
 
-#include <vector>
-
 #include "common/pipeline/stages.hpp"
-#include "common/style.hpp"
+
+#include "scope/common/style.hpp"
 
 namespace scope {
 
-using Image = found::Image;
-using Images = std::vector<Image>;
-
-/// Base class for noise filtering algorithms.
+/// Pipeline stage that reduces a collection of input frames to a single
+/// representative image (e.g. dark frame / fixed-pattern noise estimate).
 class NoiseFilterAlgorithm : public found::FunctionStage<Images, Image> {
  public:
     NoiseFilterAlgorithm() = default;
@@ -35,7 +32,7 @@ class DarkScreenFilter : public NoiseFilterAlgorithm {
     ///         The caller must free the image buffer.
     /// @throws std::invalid_argument if images collection is empty.
     /// @throws std::runtime_error if images have mismatched dimensions.
-    Image Run(const Images& images) override;
+    Image Run(const Images &images) override;
 };
 
 }  // namespace scope
