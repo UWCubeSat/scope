@@ -1,7 +1,0 @@
-<map id="scope::LMAOptimizationAlgorithm" name="scope::LMAOptimizationAlgorithm">
-<area shape="rect" id="Node000001" title="Levenberg&#45;Marquardt parameter optimizer." alt="" coords="5,181,249,207"/>
-<area shape="rect" id="Node000002" href="$classscope_1_1OptimizationAlgorithm.html" title="Produces updated camera intrinsic + distortion parameters from star centroids." alt="" coords="19,108,235,133"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="130,147,130,181,125,181,125,147"/>
-<area shape="rect" id="Node000003" title=" " alt="" coords="33,5,221,60"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="130,74,130,108,125,108,125,74"/>
-</map>
