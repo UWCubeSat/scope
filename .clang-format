@@ -1,10 +1,27 @@
+---
 BasedOnStyle: Google
+
 IndentWidth: 4
-TabWidth: 4
 AccessModifierOffset: -3
-UseTab: Never
-SortIncludes: Never
 ColumnLimit: 120
-AllowShortFunctionsOnASingleLine: Empty
+
 PointerAlignment: Right
-BreakConstructorInitializers: AfterColon
+DerivePointerAlignment: false
+
+AllowShortBlocksOnASingleLine: Empty
+AllowShortFunctionsOnASingleLine: Inline
+AllowShortIfStatementsOnASingleLine: WithoutElse
+
+BreakStringLiterals: false
+ReflowComments: false
+
+SpaceAfterTemplateKeyword: false
+
+SortIncludes: Never
+IncludeBlocks: Preserve
+
+AlignConsecutiveMacros: Consecutive
+
+BinPackParameters: false
+BinPackArguments: false
+...

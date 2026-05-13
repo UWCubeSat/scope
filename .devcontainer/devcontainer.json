@@ -5,5 +5,22 @@
   "workspaceFolder": "/workspace",
   "overrideCommand": true,
   "postCreateCommand": "git config --global user.name \"${GIT_AUTHOR_NAME:-Your Name}\" && git config --global user.email \"${GIT_AUTHOR_EMAIL:-you@example.com}\" && /workspace/build.sh cmake",
-  "shutdownAction": "stopCompose"
+  "shutdownAction": "stopCompose",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "twxs.cmake",
+        "ms-vscode.cpptools"
+      ],
+      "settings": {
+        "[cpp]": {
+          "editor.defaultFormatter": "ms-vscode.cpptools",
+          "editor.formatOnSave": true,
+          "editor.formatOnSaveMode": "modifications"
+        },
+        "C_Cpp.formatting": "clangFormat",
+        "C_Cpp.clang_format_style": "file"
+      }
+    }
+  }
 }

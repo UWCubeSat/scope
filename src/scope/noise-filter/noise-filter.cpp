@@ -15,48 +15,41 @@ namespace {
 /// @param images Input images to validate.
 /// @throws std::invalid_argument if the image collection is empty.
 /// @throws std::runtime_error if any image is null or has mismatched dimensions.
-void ValidateInput(const Images& images) {
+void ValidateInput(const Images &images) {
     if (images.empty()) {
-        throw std::invalid_argument(
-            "DarkScreenFilter requires at least one image");
+        throw std::invalid_argument("DarkScreenFilter requires at least one image");
     }
 
-    const Image& reference = images.front();
+    const Image &reference = images.front();
     if (reference.image == nullptr) {
         throw std::runtime_error("Input image pointer is null");
     }
-    if (reference.width <= 0 || reference.height <= 0 ||
-        reference.channels <= 0) {
-        throw std::runtime_error(
-            "Input image dimensions/channels must be positive");
+    if (reference.width <= 0 || reference.height <= 0 || reference.channels <= 0) {
+        throw std::runtime_error("Input image dimensions/channels must be positive");
     }
 
     for (size_t i = 1; i < images.size(); ++i) {
-        const Image& image = images[i];
+        const Image &image = images[i];
         if (image.image == nullptr) {
             throw std::runtime_error("Input image pointer is null");
         }
-        if (image.width != reference.width ||
-            image.height != reference.height ||
+        if (image.width != reference.width || image.height != reference.height ||
             image.channels != reference.channels) {
-            throw std::runtime_error(
-                "All images must share width, height, and channels");
+            throw std::runtime_error("All images must share width, height, and channels");
         }
     }
 }
 
 }  // namespace
 
-Image DarkScreenFilter::Run(const Images& images) {
+Image DarkScreenFilter::Run(const Images &images) {
     ValidateInput(images);
 
-    const Image& reference = images.front();
-    const size_t valueCount = static_cast<size_t>(reference.width) *
-                              static_cast<size_t>(reference.height) *
+    const Image &reference = images.front();
+    const size_t valueCount = static_cast<size_t>(reference.width) * static_cast<size_t>(reference.height) *
                               static_cast<size_t>(reference.channels);
 
-    unsigned char* buffer =
-        static_cast<unsigned char*>(std::malloc(valueCount));
+    unsigned char *buffer = static_cast<unsigned char *>(std::malloc(valueCount));
     if (buffer == nullptr) {
         throw std::bad_alloc();
     }
@@ -69,10 +62,7 @@ Image DarkScreenFilter::Run(const Images& images) {
             samples[j] = images[j].image[i];
         }
 
-        std::nth_element(
-            samples.begin(),
-            samples.begin() + static_cast<std::ptrdiff_t>(medianIndex),
-            samples.end());
+        std::nth_element(samples.begin(), samples.begin() + static_cast<std::ptrdiff_t>(medianIndex), samples.end());
         buffer[i] = samples[medianIndex];
     }
 

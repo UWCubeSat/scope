@@ -10,4 +10,6 @@
  * successfully
  *
  */
-int main(int argc, char** argv) { return scope::main(argc, argv); }
+int main(int argc, char **argv) {
+    return scope::main(argc, argv);
+}

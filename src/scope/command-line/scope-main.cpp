@@ -15,18 +15,15 @@ namespace scope {
 namespace {
 
 void PrintHelp() {
-    std::cout << "Usage: ./scope <option> [[flag value]...] [[flag=value]...]"
-              << std::endl;
+    std::cout << "Usage: ./scope <option> [[flag value]...] [[flag=value]...]" << std::endl;
     std::cout << std::endl;
     std::cout << "Current capabilities:" << std::endl;
-    std::cout << "\tCalculates camera intrisic and distortion paramters."
-              << std::endl;
+    std::cout << "\tCalculates camera intrisic and distortion paramters." << std::endl;
     std::cout << std::endl;
-    std::cout << "==================== Calibration Flags ===================="
-              << std::endl;
+    std::cout << "==================== Calibration Flags ====================" << std::endl;
     std::cout << std::endl;
-#define SCOPE_CLI_OPTION(name, type, prop, defaultVal, converter, defaultArg,  ASSIGN, doc)  \
-    std::cout << "\t--" << name << std::endl;  \
+#define SCOPE_CLI_OPTION(name, type, prop, defaultVal, converter, defaultArg, ASSIGN, doc) \
+    std::cout << "\t--" << name << std::endl;                                              \
     std::cout << "\t\t" << doc << std::endl;
     RECALIBRATE
 #undef SCOPE_CLI_OPTION
@@ -48,8 +45,7 @@ int main(int argc, char **argv) {
     }
 
     std::unique_ptr<found::PipelineExecutor> executor;
-    executor = CreatePrimaryScopePipelineExecutor(
-                       ParseRecalibrationOptions(argc, argv));
+    executor = CreatePrimaryScopePipelineExecutor(ParseRecalibrationOptions(argc, argv));
 
     executor->ExecutePipeline();
     executor->OutputResults();

@@ -13,11 +13,11 @@
 
 namespace scope {
 
-PrimaryScopePipelineExecutor::PrimaryScopePipelineExecutor(
-    RecalibrationOptions &&options, std::unique_ptr<NoiseFilterAlgorithm> noiseFilterAlgorithm,
-    std::unique_ptr<StarCentroidAlgorithm> starCentroidAlgorithm,
-    std::unique_ptr<OptimizationAlgorithm> optimizationAlgorithm) :
-    options_(std::move(options)) {
+PrimaryScopePipelineExecutor::PrimaryScopePipelineExecutor(RecalibrationOptions &&options,
+                                                           std::unique_ptr<NoiseFilterAlgorithm> noiseFilterAlgorithm,
+                                                           std::unique_ptr<StarCentroidAlgorithm> starCentroidAlgorithm,
+                                                           std::unique_ptr<OptimizationAlgorithm> optimizationAlgorithm)
+    : options_(std::move(options)) {
     // TODO: change inputs + outputs of stages to actual values we will use
     std::unique_ptr<found::FunctionStage<Images, Image>> noiseFilterStage(std::move(noiseFilterAlgorithm));
     std::unique_ptr<found::FunctionStage<Image, std::vector<float>>> starCentroidStage(

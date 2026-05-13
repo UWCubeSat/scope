@@ -37,9 +37,7 @@ SCOPE_CLI_OPTION("input-images", scope::Images, images, {}, scope::strtoimages(o
 /** Parsed CLI options driving a recalibration run. */
 class RecalibrationOptions {
  public:
-#define SCOPE_CLI_OPTION(name, type, prop, defaultVal, converter, defaultArg,  \
-                         ASSIGN, doc)                                          \
-    type prop = defaultVal;
+#define SCOPE_CLI_OPTION(name, type, prop, defaultVal, converter, defaultArg, ASSIGN, doc) type prop = defaultVal;
     RECALIBRATE
 #undef SCOPE_CLI_OPTION
 };
