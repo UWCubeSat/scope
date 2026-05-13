@@ -34,9 +34,7 @@ SCOPE_CLI_OPTION("input-images", scope::Images, images, {}, scope::strtoimages(o
 
 // NOLINTEND
 
-/**
- * Options object, contains all data requested from user to run all algorithms
- */
+/** Parsed CLI options driving a recalibration run. */
 class RecalibrationOptions {
  public:
 #define SCOPE_CLI_OPTION(name, type, prop, defaultVal, converter, defaultArg,  \

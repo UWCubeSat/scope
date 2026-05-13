@@ -1,6 +1,7 @@
 #include <cstdlib>
 
 #include <iostream>
+#include <memory>
 #include <string>
 
 #include "scope/command-line/scope-main.hpp"

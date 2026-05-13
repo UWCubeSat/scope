@@ -4,17 +4,13 @@
 namespace scope {
 
 /**
- * This is where the program starts.
+ * Program entry point. Parses command-line options and runs the
+ * recalibration pipeline.
  *
- * @param argc The number of arguments passed into the command line
- * @param argv The arguments passed into the command line
+ * @param argc The number of command-line arguments.
+ * @param argv The command-line arguments.
  *
- * @return An integer indicating success (0) iff the program executes
- * successfully
- *
- * @note The method itself uses command line arguments to generate
- * an Options object that represents all the algorithms we want to run
- * and their parameters
+ * @return 0 on success, non-zero on failure.
  */
 int main(int argc, char** argv);
 
