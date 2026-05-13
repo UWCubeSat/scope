@@ -26,6 +26,16 @@ var NAVTREE =
 [
   [ "SCOPE", "index.html", [
     [ "SCOPE: Star Camera Optical Parameter Estimator", "index.html", "index" ],
+    [ "Classes", "annotated.html", [
+      [ "Class List", "annotated.html", "annotated_dup" ],
+      [ "Class Index", "classes.html", null ],
+      [ "Class Hierarchy", "hierarchy.html", "hierarchy" ],
+      [ "Class Members", "functions.html", [
+        [ "All", "functions.html", null ],
+        [ "Functions", "functions_func.html", null ],
+        [ "Variables", "functions_vars.html", null ]
+      ] ]
+    ] ],
     [ "Files", "files.html", [
       [ "File List", "files.html", "files_dup" ]
     ] ]
@@ -34,7 +44,7 @@ var NAVTREE =
 
 var NAVTREEINDEX =
 [
-"dir_296c313e7b22cc4feb888ee1399aae33.html"
+"annotated.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

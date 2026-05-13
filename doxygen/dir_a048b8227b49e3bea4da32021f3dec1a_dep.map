@@ -1,4 +1,15 @@
 <map id="src/scope/command&#45;line" name="src/scope/command&#45;line">
-<area shape="rect" id="node1" href="dir_a048b8227b49e3bea4da32021f3dec1a.html" title="command&#45;line" alt="" coords="27,52,143,77"/>
-<area shape="rect" id="clust1" href="dir_296c313e7b22cc4feb888ee1399aae33.html" title="scope" alt="" coords="16,16,155,88"/>
+<area shape="rect" id="node1" href="dir_e32c341bec5eba78f880a7a09142f74c.html" title="noise&#45;filter" alt="" coords="27,136,119,161"/>
+<area shape="rect" id="node2" href="dir_87fee5896d39201987984be50eac7001.html" title="optimization" alt="" coords="144,136,248,161"/>
+<area shape="rect" id="node3" href="dir_13df637fe27c735d27cd20fa2052489b.html" title="star&#45;centroid" alt="" coords="273,136,378,161"/>
+<area shape="rect" id="node5" href="dir_ad495d6df394e93b516466dc1c58797f.html" title="execution" alt="" coords="140,63,225,88"/>
+<area shape="poly" id="edge3" href="dir_000002_000003.html" alt="" coords="167,90,104,131,101,126,164,86"/>
+<area shape="rect" id="edge3-headlabel" href="dir_000002_000003.html" title="1" alt="" coords="106,126,116,140"/>
+<area shape="poly" id="edge2" href="dir_000002_000004.html" alt="" coords="187,88,194,122,189,123,182,89"/>
+<area shape="rect" id="edge2-headlabel" href="dir_000002_000004.html" title="1" alt="" coords="194,109,203,124"/>
+<area shape="poly" id="edge1" href="dir_000002_000009.html" alt="" coords="207,86,291,127,289,132,204,90"/>
+<area shape="rect" id="edge1-headlabel" href="dir_000002_000009.html" title="1" alt="" coords="285,113,294,127"/>
+<area shape="rect" id="node6" href="dir_ad90ad56dc56aa4c002f19501bf95566.html" title="parsing" alt="" coords="45,63,115,88"/>
+<area shape="rect" id="clust2" href="dir_a048b8227b49e3bea4da32021f3dec1a.html" alt="" coords="33,52,377,99"/>
+<area shape="rect" id="clust1" href="dir_296c313e7b22cc4feb888ee1399aae33.html" title="scope" alt="" coords="16,16,388,172"/>
 </map>
