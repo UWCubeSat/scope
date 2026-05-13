@@ -18,25 +18,23 @@ void PrintHelp() {
               << std::endl;
     std::cout << std::endl;
     std::cout << "Current capabilities:" << std::endl;
-    std::cout << "  1. calibration - command-path scaffold for camera "
-                 "parameter estimation"
+    std::cout << "\tCalculates camera intrisic and distortion paramters."
               << std::endl;
     std::cout << std::endl;
     std::cout << "==================== Calibration Flags ===================="
               << std::endl;
     std::cout << std::endl;
-#define SCOPE_CLI_OPTION(name, type, prop, defaultVal, converter, defaultArg, \
-                         ASSIGN, doc)                                         \
-    std::cout << "    --" << name << std::endl;                               \
-    std::cout << "        " << doc << std::endl;
-    CALIBRATION
+#define SCOPE_CLI_OPTION(name, type, prop, defaultVal, converter, defaultArg,  ASSIGN, doc)  \
+    std::cout << "\t--" << name << std::endl;  \
+    std::cout << "\t\t" << doc << std::endl;
+    RECALIBRATE
 #undef SCOPE_CLI_OPTION
 }
 
 }  // namespace
 
-int main(int argc, char** argv) {
-    if (argc == 1) {
+int main(int argc, char **argv) {
+    if (argc == 0) {
         std::cerr << "No command provided. " << HELP_MSG << std::endl;
         return EXIT_FAILURE;
     }
@@ -48,22 +46,14 @@ int main(int argc, char** argv) {
         return EXIT_SUCCESS;
     }
 
-    if (command == "calibration") {
-        try {
-            auto executor = CreateCalibrationPipelineExecutor(
-                ParseCalibrationOptions(argc, argv));
-            executor->ExecutePipeline();
-            executor->OutputResults();
-            return EXIT_SUCCESS;
-        } catch (const std::exception& exception) {
-            std::cerr << exception.what() << std::endl;
-            return EXIT_FAILURE;
-        }
-    }
+    std::unique_ptr<found::PipelineExecutor> executor;
+    executor = CreatePrimaryScopePipelineExecutor(
+                       ParseRecalibrationOptions(argc, argv));
 
-    std::cerr << "Unrecognized command: " << command << ". " << HELP_MSG
-              << std::endl;
-    return EXIT_FAILURE;
+    executor->ExecutePipeline();
+    executor->OutputResults();
+
+    return EXIT_SUCCESS;
 }
 
 }  // namespace scope
