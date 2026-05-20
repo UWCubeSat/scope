@@ -1,0 +1,7 @@
+<map id="scope::StarCentroidAlgorithm" name="scope::StarCentroidAlgorithm">
+<area shape="rect" id="Node000001" title="Extracts star centroids from a calibrated image." alt="" coords="5,108,219,133"/>
+<area shape="rect" id="Node000003" href="$classscope_1_1ROIFilterAlgorithm.html" title="A priori ROI + center&#45;of&#45;intensity star locator." alt="" coords="18,181,206,207"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="115,147,115,181,109,181,109,147"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="33,5,191,60"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="115,74,115,108,109,108,109,74"/>
+</map>
