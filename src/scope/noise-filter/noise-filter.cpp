@@ -51,7 +51,7 @@ Image DarkScreenFilter::Run(const Images &images) {
 
     unsigned char *buffer = static_cast<unsigned char *>(std::malloc(valueCount));
     if (buffer == nullptr) {
-        throw std::bad_alloc();
+        throw std::runtime_error("DarkScreenFilter: failed to allocate output buffer");
     }
 
     std::vector<unsigned char> samples(images.size());
