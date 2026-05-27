@@ -67,15 +67,29 @@ TEST(DarkScreenFilterTest, ThrowsOnEmptyImageSet) {
     EXPECT_THROW(filter.Run({}), std::invalid_argument);
 }
 
-// Check that a mismatch in width or height across inputs throws.
-TEST(DarkScreenFilterTest, ThrowsOnMismatchedDimensions) {
+// Check that a mismatch in width across inputs throws.
+TEST(DarkScreenFilterTest, ThrowsOnMismatchedWidth) {
     DarkScreenFilter filter;
 
     std::array<unsigned char, 4> imageA{1, 2, 3, 4};
-    std::array<unsigned char, 3> imageB{5, 6, 7};
+    std::array<unsigned char, 2> imageB{5, 6};
 
     Image a{2, 2, 1, imageA.data()};
-    Image b{3, 1, 1, imageB.data()};
+    Image b{1, 2, 1, imageB.data()};
+
+    EXPECT_THROW(filter.Run({a, b}), std::runtime_error);
+}
+
+// Check that a mismatch in height across inputs throws (width matches, so the height term of the validation
+// short-circuit chain is the one that fires).
+TEST(DarkScreenFilterTest, ThrowsOnMismatchedHeight) {
+    DarkScreenFilter filter;
+
+    std::array<unsigned char, 4> imageA{1, 2, 3, 4};
+    std::array<unsigned char, 2> imageB{5, 6};
+
+    Image a{2, 2, 1, imageA.data()};
+    Image b{2, 1, 1, imageB.data()};
 
     EXPECT_THROW(filter.Run({a, b}), std::runtime_error);
 }
