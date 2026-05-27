@@ -1,9 +1,0 @@
-<map id="src/scope/command&#45;line/execution/executors.hpp" name="src/scope/command&#45;line/execution/executors.hpp">
-<area shape="rect" id="Node000001" title="Pipeline executor for the primary SCOPE calibration chain." alt="" coords="5,5,189,45"/>
-<area shape="poly" id="edge1_Node000001_Node000001" title=" " alt="" coords="204,12,213,17,216,26,208,37,191,43,189,38,205,33,211,25,209,20,201,16"/>
-<area shape="rect" id="Node000002" href="$factory_8hpp_source.html" title=" " alt="" coords="23,181,171,221"/>
-<area shape="poly" id="edge2_Node000001_Node000002" title=" " alt="" coords="81,59,68,94,65,113,68,133,76,158,88,180,83,182,72,160,63,134,60,113,63,93,76,57"/>
-<area shape="rect" id="Node000003" href="$stage-providers_8hpp_source.html" title=" " alt="" coords="78,93,234,133"/>
-<area shape="poly" id="edge3_Node000001_Node000003" title=" " alt="" coords="120,55,145,92,141,95,116,58"/>
-<area shape="poly" id="edge4_Node000003_Node000002" title=" " alt="" coords="138,146,113,183,108,180,133,143"/>
-</map>
