@@ -134,6 +134,7 @@ Public Member Functions</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Computes a per-pixel median across frames to estimate fixed-pattern noise. </p>
+<p>For an even number of input frames the lower median (n - 1) / 2 is returned. </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="ac55751cca8fbb10ddf1a43ce7ca37fa2" name="ac55751cca8fbb10ddf1a43ce7ca37fa2"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ac55751cca8fbb10ddf1a43ce7ca37fa2">&#9670;&#160;</a></span>Run()</h2>
@@ -160,17 +161,18 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Computes the per-pixel median of the input frames. </p>
+<p>For even-count inputs, returns the lower median.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">images</td><td>Frames with identical dimensions and channel counts.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>The median image; the caller owns the pixel buffer.</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The median image. The caller owns the pixel buffer and must release it with std::free (matching FOUND's stb_image-allocated input buffers).</dd></dl>
 <dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
     <tr><td class="paramname">std::invalid_argument</td><td>if images is empty. </td></tr>
-    <tr><td class="paramname">std::runtime_error</td><td>if any image is null or has mismatched dimensions. </td></tr>
+    <tr><td class="paramname">std::runtime_error</td><td>if any image is null, has mismatched dimensions, or if the output buffer cannot be allocated. </td></tr>
   </table>
   </dd>
 </dl>
