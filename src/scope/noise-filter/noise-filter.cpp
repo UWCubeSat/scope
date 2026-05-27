@@ -50,9 +50,11 @@ Image DarkScreenFilter::Run(const Images &images) {
                               static_cast<size_t>(reference.channels);
 
     unsigned char *buffer = static_cast<unsigned char *>(std::malloc(valueCount));
+    // GCOVR_EXCL_START — malloc failure on a CubeSat-sized image is unrecoverable and not unit-testable.
     if (buffer == nullptr) {
-        throw std::bad_alloc();
+        throw std::runtime_error("DarkScreenFilter: failed to allocate output buffer");
     }
+    // GCOVR_EXCL_STOP
 
     std::vector<unsigned char> samples(images.size());
     const size_t medianIndex = (images.size() - 1) / 2;

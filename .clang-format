@@ -13,7 +13,6 @@ AllowShortFunctionsOnASingleLine: Inline
 AllowShortIfStatementsOnASingleLine: WithoutElse
 
 BreakStringLiterals: false
-ReflowComments: false
 
 SpaceAfterTemplateKeyword: false
 
