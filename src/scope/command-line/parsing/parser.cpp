@@ -2,7 +2,9 @@
 
 #include <getopt.h>
 
+#include <cstdlib>
 #include <stdexcept>
+#include <string>
 
 #include "scope/command-line/parsing/options.hpp"
 

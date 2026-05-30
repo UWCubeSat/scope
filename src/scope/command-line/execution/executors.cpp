@@ -18,11 +18,10 @@ PrimaryScopePipelineExecutor::PrimaryScopePipelineExecutor(RecalibrationOptions 
                                                            std::unique_ptr<StarCentroidAlgorithm> starCentroidAlgorithm,
                                                            std::unique_ptr<OptimizationAlgorithm> optimizationAlgorithm)
     : options_(std::move(options)) {
-    // TODO: change inputs + outputs of stages to actual values we will use
     std::unique_ptr<found::FunctionStage<Images, Image>> noiseFilterStage(std::move(noiseFilterAlgorithm));
-    std::unique_ptr<found::FunctionStage<Image, std::vector<float>>> starCentroidStage(
+    std::unique_ptr<found::FunctionStage<Image, CentroidObservations>> starCentroidStage(
         std::move(starCentroidAlgorithm));
-    std::unique_ptr<found::FunctionStage<std::vector<float>, std::vector<float>>> optimizationStage(
+    std::unique_ptr<found::FunctionStage<CentroidObservations, std::vector<float>>> optimizationStage(
         std::move(optimizationAlgorithm));
     this->pipeline_.AddStage(std::move(noiseFilterStage))
         .AddStage(std::move(starCentroidStage))
@@ -30,7 +29,7 @@ PrimaryScopePipelineExecutor::PrimaryScopePipelineExecutor(RecalibrationOptions 
 }
 
 void PrimaryScopePipelineExecutor::ExecutePipeline() {
-    this->pipeline_.Run(this->options_.images);
+    this->pipeline_.Run(this->options_.darkFrames);
 }
 
 void PrimaryScopePipelineExecutor::OutputResults() {

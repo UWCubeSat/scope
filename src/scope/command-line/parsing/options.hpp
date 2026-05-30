@@ -30,7 +30,10 @@ SCOPE_CLI_OPTION("k2", decimal, k2, 0, found::strtodecimal(optarg), kNoDefaultAr
 SCOPE_CLI_OPTION("k3", decimal, k3, 0, found::strtodecimal(optarg), kNoDefaultArgument, REQ_ASSIGN, "Third radial distortion coefficient")  \
 SCOPE_CLI_OPTION("p1", decimal, p1, 0, found::strtodecimal(optarg), kNoDefaultArgument, REQ_ASSIGN, "First tangential distortion coefficient")  \
 SCOPE_CLI_OPTION("p2", decimal, p2, 0, found::strtodecimal(optarg), kNoDefaultArgument, REQ_ASSIGN, "Second tangential distortion coefficient")  \
-SCOPE_CLI_OPTION("input-images", scope::Images, images, {}, scope::strtoimages(optarg), kNoDefaultArgument, REQ_ASSIGN, "Images used to calculate paramters (list of comma or space seperated file paths)")  \
+SCOPE_CLI_OPTION("dark-frames", scope::Images, darkFrames, {}, scope::strtoimages(optarg), kNoDefaultArgument, REQ_ASSIGN, "Dark calibration frames used to estimate fixed-pattern noise (list of comma or space separated file paths)")  \
+SCOPE_CLI_OPTION("star-images", scope::Images, starImages, {}, scope::strtoimages(optarg), kNoDefaultArgument, REQ_ASSIGN, "Star-field images to centroid (list of comma or space separated file paths)")  \
+SCOPE_CLI_OPTION("catalog-path", std::string, catalogPath, std::string("./bright-star-catalog.tsv"), std::string(optarg), kNoDefaultArgument, REQ_ASSIGN, "Path to the bright star catalog TSV (see download-bsc.sh)")  \
+SCOPE_CLI_OPTION("centroid-threshold", int, centroidThreshold, 40, std::atoi(optarg), kNoDefaultArgument, REQ_ASSIGN, "Minimum dark-subtracted intensity for a pixel to join a centroid mask (paper does not specify; 40 is a starting value)")  \
 
 // NOLINTEND
 
