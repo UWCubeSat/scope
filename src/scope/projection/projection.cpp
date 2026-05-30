@@ -1,5 +1,7 @@
 #include "scope/projection/projection.hpp"
 
+#include <optional>
+
 #include "common/decimal.hpp"
 #include "common/spatial/attitude-utils.hpp"
 
@@ -22,11 +24,20 @@ found::Vec2 BrownDistort(const found::Vec2 &ideal, decimal k1, decimal k2, decim
     return found::Vec2{radial * x + dx, radial * y + dy};
 }
 
-found::Vec2 ProjectStarToPixel(const found::Vec3 &eI,
-                               const found::Quaternion &attitude,
-                               const RecalibrationOptions &options) {
+std::optional<found::Vec2> ProjectStarToPixel(const found::Vec3 &eI,
+                                              const found::Quaternion &attitude,
+                                              const RecalibrationOptions &options) {
     // Rotate the inertial line of sight into the camera frame (z is the boresight).
     const found::Vec3 eC = (attitude * eI).normalized();
+
+    // Reject stars at or behind the image plane (z <= 0): they cannot be imaged,
+    // and dividing by a non-positive z would fold a mirror image of the rear
+    // hemisphere onto the sensor -- e.g. a star on the anti-boresight maps
+    // straight to the principal point. InSensorWithMargin alone cannot catch this
+    // because the bogus pixel can land well inside the frame.
+    if (eC.z() <= DECIMAL(0.0)) {
+        return std::nullopt;
+    }
 
     // Pinhole projection onto the normalized image plane (paper Eq. 1, with the
     // focal length absorbed into the intrinsics below).

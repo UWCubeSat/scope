@@ -7,6 +7,7 @@
 #include <stdexcept>
 #include <vector>
 
+#include "common/decimal.hpp"
 #include "common/spatial/attitude-utils.hpp"
 
 #include "scope/projection/projection.hpp"
@@ -22,6 +23,9 @@ constexpr int kRoiSize = 31;
 constexpr int kRecenterRadius = 3;
 /// Keep this clear of every edge so a full ROI never overruns the image.
 constexpr int kSensorMargin = kRoiSize / 2 + 1;
+/// Two centroids closer than this (pixels) are treated as the same blob -- a
+/// collision the a-priori matcher cannot disambiguate. Sized to the mask radius.
+constexpr decimal kCentroidMatchTolerance = DECIMAL(3.0);
 
 /// Per-pixel saturating subtraction of the dark frame from a star image, clamped
 /// to zero. Returns a newly malloc'd buffer the caller must std::free.
@@ -57,6 +61,10 @@ CentroidObservations ROIFilterAlgorithm::Run(const Image &darkFrame) {
     result.catalog = &catalog_;
 
     const unsigned char threshold = static_cast<unsigned char>(options_.centroidThreshold);
+    // Faintest magnitude worth projecting, in the catalog's (mag * 100) integer
+    // units. Stars dimmer than this are unlikely to centroid and only crowd the
+    // field with collision candidates, so they are skipped outright.
+    const int magnitudeLimit = static_cast<int>(DECIMAL_ROUND(options_.magnitudeThreshold * DECIMAL(100.0)));
 
     for (std::size_t i = 0; i < options_.starImages.size(); ++i) {
         const Image &star = options_.starImages[i];
@@ -67,20 +75,48 @@ CentroidObservations ROIFilterAlgorithm::Run(const Image &darkFrame) {
         unsigned char *subtracted = DarkSubtract(star, darkFrame);
         const Image darkSubtracted{star.width, star.height, star.channels, subtracted};
 
+        // Gather this image's centroids first, then prune ambiguous ones below.
+        std::vector<Observation> candidates;
         for (std::size_t j = 0; j < catalog_.size(); ++j) {
-            const found::Vec2 expected = ProjectStarToPixel(catalog_[j].spatial, attitudes_[i], options_);
-            if (!InSensorWithMargin(expected, star.width, star.height, kSensorMargin)) {
+            if (catalog_[j].magnitude > magnitudeLimit) {
+                continue;
+            }
+
+            const std::optional<found::Vec2> expected =
+                ProjectStarToPixel(catalog_[j].spatial, attitudes_[i], options_);
+            if (!expected.has_value() || !InSensorWithMargin(*expected, star.width, star.height, kSensorMargin)) {
                 continue;
             }
 
             const std::optional<found::Vec2> centroid =
-                ExtractCentroid(darkSubtracted, expected, kRoiSize, kRecenterRadius, threshold);
+                ExtractCentroid(darkSubtracted, *expected, kRoiSize, kRecenterRadius, threshold);
             if (centroid.has_value()) {
-                result.observations.push_back(Observation{static_cast<int>(i), static_cast<int>(j), *centroid});
+                candidates.push_back(Observation{static_cast<int>(i), static_cast<int>(j), *centroid});
             }
         }
 
         std::free(subtracted);
+
+        // Two catalog stars projecting close enough to share a blob yield an
+        // ambiguous correspondence (same measured pixel, different catalog star)
+        // that would feed the optimizer an outlier. Rather than guess which star
+        // the blob belongs to, drop every candidate that collides with another in
+        // this image.
+        for (std::size_t a = 0; a < candidates.size(); ++a) {
+            bool ambiguous = false;
+            for (std::size_t b = 0; b < candidates.size(); ++b) {
+                if (a == b) {
+                    continue;
+                }
+                if ((candidates[a].measured_pixel - candidates[b].measured_pixel).norm() < kCentroidMatchTolerance) {
+                    ambiguous = true;
+                    break;
+                }
+            }
+            if (!ambiguous) {
+                result.observations.push_back(candidates[a]);
+            }
+        }
     }
 
     return result;

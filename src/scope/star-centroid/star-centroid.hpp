@@ -32,10 +32,13 @@ class StarCentroidAlgorithm : public found::FunctionStage<Image, CentroidObserva
  * A priori ROI + center-of-intensity star locator (Orion paper §"Image
  * Processing and Star Centroiding").
  *
- * For each star image, every catalog star is projected to its expected pixel
- * using the per-image prior attitude and the prior calibration. Stars that fall
- * within the sensor (with ROI margin) are centroided via ExtractCentroid on the
- * dark-subtracted image; successful centroids become Observations.
+ * For each star image, every catalog star bright enough to clear the magnitude
+ * threshold is projected to its expected pixel using the per-image prior attitude
+ * and the prior calibration. Stars behind the camera or outside the sensor (with
+ * ROI margin) are skipped; the rest are centroided via ExtractCentroid on the
+ * dark-subtracted image. Successful centroids become Observations, except that
+ * candidates whose centroids collide within one image (two catalog stars landing
+ * on the same blob) are dropped as ambiguous.
  */
 class ROIFilterAlgorithm : public StarCentroidAlgorithm {
  public:

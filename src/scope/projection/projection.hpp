@@ -12,6 +12,8 @@
 #ifndef SRC_SCOPE_PROJECTION_PROJECTION_HPP_
 #define SRC_SCOPE_PROJECTION_PROJECTION_HPP_
 
+#include <optional>
+
 #include "common/decimal.hpp"
 #include "common/spatial/attitude-utils.hpp"
 
@@ -47,13 +49,14 @@ found::Vec2 BrownDistort(const found::Vec2 &ideal, decimal k1, decimal k2, decim
  * @param options Calibration options carrying the prior intrinsics and
  *                distortion coefficients.
  *
- * @return The predicted distorted pixel coordinate [u', v']. Only meaningful
- *         when the star is in front of the camera; callers should reject
- *         out-of-sensor results with InSensorWithMargin.
+ * @return The predicted distorted pixel coordinate [u', v'], or std::nullopt if
+ *         the star is at or behind the image plane (camera-frame z <= 0) and so
+ *         cannot be imaged. A returned pixel is not guaranteed in-sensor; callers
+ *         must still reject out-of-frame results with InSensorWithMargin.
  */
-found::Vec2 ProjectStarToPixel(const found::Vec3 &eI,
-                               const found::Quaternion &attitude,
-                               const RecalibrationOptions &options);
+std::optional<found::Vec2> ProjectStarToPixel(const found::Vec3 &eI,
+                                              const found::Quaternion &attitude,
+                                              const RecalibrationOptions &options);
 
 /**
  * Tests whether a pixel lies inside the sensor with a margin on every side.

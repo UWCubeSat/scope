@@ -1,5 +1,7 @@
 #include <gtest/gtest.h>
 
+#include <optional>
+
 #include "common/decimal.hpp"
 #include "common/spatial/attitude-utils.hpp"
 
@@ -36,10 +38,11 @@ TEST(ProjectStarToPixelTest, OnAxisStarMapsToPrincipalPoint) {
     RecalibrationOptions options = PinholeOptions(DECIMAL(100.0), DECIMAL(100.0), DECIMAL(320.0), DECIMAL(240.0));
     found::Vec3 eI(DECIMAL(0.0), DECIMAL(0.0), DECIMAL(1.0));
 
-    found::Vec2 pixel = ProjectStarToPixel(eI, found::Quaternion::Identity(), options);
+    std::optional<found::Vec2> pixel = ProjectStarToPixel(eI, found::Quaternion::Identity(), options);
 
-    EXPECT_NEAR(pixel.x(), DECIMAL(320.0), kTol);
-    EXPECT_NEAR(pixel.y(), DECIMAL(240.0), kTol);
+    ASSERT_TRUE(pixel.has_value());
+    EXPECT_NEAR(pixel->x(), DECIMAL(320.0), kTol);
+    EXPECT_NEAR(pixel->y(), DECIMAL(240.0), kTol);
 }
 
 // An off-axis star with no distortion lands at principal + focal * (x/z, y/z).
@@ -47,10 +50,11 @@ TEST(ProjectStarToPixelTest, OffAxisStarPinhole) {
     RecalibrationOptions options = PinholeOptions(DECIMAL(100.0), DECIMAL(100.0), DECIMAL(320.0), DECIMAL(240.0));
     found::Vec3 eI(DECIMAL(0.1), DECIMAL(-0.05), DECIMAL(1.0));
 
-    found::Vec2 pixel = ProjectStarToPixel(eI, found::Quaternion::Identity(), options);
+    std::optional<found::Vec2> pixel = ProjectStarToPixel(eI, found::Quaternion::Identity(), options);
 
-    EXPECT_NEAR(pixel.x(), DECIMAL(330.0), kTol);  // 100 * 0.1 + 320
-    EXPECT_NEAR(pixel.y(), DECIMAL(235.0), kTol);  // 100 * -0.05 + 240
+    ASSERT_TRUE(pixel.has_value());
+    EXPECT_NEAR(pixel->x(), DECIMAL(330.0), kTol);  // 100 * 0.1 + 320
+    EXPECT_NEAR(pixel->y(), DECIMAL(235.0), kTol);  // 100 * -0.05 + 240
 }
 
 // The skew term alpha contributes alpha * y' to the u coordinate.
@@ -59,10 +63,11 @@ TEST(ProjectStarToPixelTest, SkewAffectsUCoordinate) {
     options.alpha = DECIMAL(10.0);
     found::Vec3 eI(DECIMAL(0.1), DECIMAL(0.2), DECIMAL(1.0));
 
-    found::Vec2 pixel = ProjectStarToPixel(eI, found::Quaternion::Identity(), options);
+    std::optional<found::Vec2> pixel = ProjectStarToPixel(eI, found::Quaternion::Identity(), options);
 
-    EXPECT_NEAR(pixel.x(), DECIMAL(332.0), kTol);  // 100 * 0.1 + 10 * 0.2 + 320
-    EXPECT_NEAR(pixel.y(), DECIMAL(260.0), kTol);  // 100 * 0.2 + 240
+    ASSERT_TRUE(pixel.has_value());
+    EXPECT_NEAR(pixel->x(), DECIMAL(332.0), kTol);  // 100 * 0.1 + 10 * 0.2 + 320
+    EXPECT_NEAR(pixel->y(), DECIMAL(260.0), kTol);  // 100 * 0.2 + 240
 }
 
 // A non-identity attitude rotates the inertial direction into the camera frame
@@ -74,10 +79,26 @@ TEST(ProjectStarToPixelTest, AttitudeRotatesIntoCameraFrame) {
     const found::Vec3 yAxis(DECIMAL(0.0), DECIMAL(1.0), DECIMAL(0.0));
     found::Quaternion attitude(found::AngleAxis(-DECIMAL_M_PI_2, yAxis));
 
-    found::Vec2 pixel = ProjectStarToPixel(eI, attitude, options);
+    std::optional<found::Vec2> pixel = ProjectStarToPixel(eI, attitude, options);
 
-    EXPECT_NEAR(pixel.x(), DECIMAL(320.0), kTol);
-    EXPECT_NEAR(pixel.y(), DECIMAL(240.0), kTol);
+    ASSERT_TRUE(pixel.has_value());
+    EXPECT_NEAR(pixel->x(), DECIMAL(320.0), kTol);
+    EXPECT_NEAR(pixel->y(), DECIMAL(240.0), kTol);
+}
+
+// A star rotated to sit behind the camera (camera-frame z <= 0) cannot be
+// imaged, so the projection reports nullopt rather than a folded-over pixel.
+TEST(ProjectStarToPixelTest, RejectsStarBehindCamera) {
+    RecalibrationOptions options = PinholeOptions(DECIMAL(100.0), DECIMAL(100.0), DECIMAL(320.0), DECIMAL(240.0));
+    // Anti-boresight: directly behind the camera. Without the z-guard this would
+    // divide by a negative z and project straight onto the principal point.
+    found::Vec3 eI(DECIMAL(0.0), DECIMAL(0.0), DECIMAL(-1.0));
+
+    EXPECT_FALSE(ProjectStarToPixel(eI, found::Quaternion::Identity(), options).has_value());
+
+    // A star 30 deg off the anti-boresight is still behind the image plane.
+    found::Vec3 offAxisBehind(DECIMAL(0.5), DECIMAL(0.0), DECIMAL(-1.0));
+    EXPECT_FALSE(ProjectStarToPixel(offAxisBehind.normalized(), found::Quaternion::Identity(), options).has_value());
 }
 
 // Pure radial distortion (k1 != 0) scales an off-axis point outward.

@@ -160,6 +160,96 @@ TEST(ROIFilterAlgorithmTest, TagsObservationsPerImage) {
     EXPECT_EQ(result.observations[1].image_index, 1);
 }
 
+// A catalog star fainter than the magnitude threshold is not even projected, so
+// its blob is ignored while a bright star in the same field still produces its
+// observation.
+TEST(ROIFilterAlgorithmTest, SkipsStarFainterThanMagnitudeThreshold) {
+    TestImage dark(10);
+    TestImage star(10);
+    PaintStar(&star, 40, 36);  // the bright star's blob
+    PaintStar(&star, 24, 24);  // the faint star's blob (its own, non-overlapping ROI)
+
+    RecalibrationOptions options = CenteredOptions();  // magnitudeThreshold defaults to 6.0
+    options.starImages = {star.View()};
+
+    Catalog catalog;
+    catalog.push_back(CatalogStar{DirectionForPixel(DECIMAL(40.0), DECIMAL(36.0)), 200, 1});  // mag 2.0 -> kept
+    catalog.push_back(CatalogStar{DirectionForPixel(DECIMAL(24.0), DECIMAL(24.0)), 700, 2});  // mag 7.0 -> skipped
+
+    ROIFilterAlgorithm algorithm(options, catalog, {found::Quaternion::Identity()});
+    Image darkView = dark.View();
+    CentroidObservations result = algorithm.Run(darkView);
+
+    ASSERT_EQ(result.observations.size(), 1u);
+    EXPECT_EQ(result.observations[0].catalog_index, 0);
+}
+
+// Two catalog stars projecting a pixel apart both lock onto the same blob, an
+// ambiguous correspondence; both observations are dropped rather than guessed.
+TEST(ROIFilterAlgorithmTest, DropsCollidingObservations) {
+    TestImage dark(10);
+    TestImage star(10);
+    PaintStar(&star, 40, 36);  // a single blob both stars will centroid onto
+
+    RecalibrationOptions options = CenteredOptions();
+    options.starImages = {star.View()};
+
+    Catalog catalog;
+    catalog.push_back(CatalogStar{DirectionForPixel(DECIMAL(40.0), DECIMAL(36.0)), 200, 1});
+    catalog.push_back(CatalogStar{DirectionForPixel(DECIMAL(41.0), DECIMAL(36.0)), 200, 2});
+
+    ROIFilterAlgorithm algorithm(options, catalog, {found::Quaternion::Identity()});
+    Image darkView = dark.View();
+    CentroidObservations result = algorithm.Run(darkView);
+
+    EXPECT_TRUE(result.observations.empty());
+}
+
+// Two bright stars far enough apart that their centroids do not collide are both
+// kept as separate observations.
+TEST(ROIFilterAlgorithmTest, KeepsWellSeparatedStars) {
+    TestImage dark(10);
+    TestImage star(10);
+    PaintStar(&star, 40, 36);
+    PaintStar(&star, 24, 24);
+
+    RecalibrationOptions options = CenteredOptions();
+    options.starImages = {star.View()};
+
+    Catalog catalog;
+    catalog.push_back(CatalogStar{DirectionForPixel(DECIMAL(40.0), DECIMAL(36.0)), 200, 1});
+    catalog.push_back(CatalogStar{DirectionForPixel(DECIMAL(24.0), DECIMAL(24.0)), 200, 2});
+
+    ROIFilterAlgorithm algorithm(options, catalog, {found::Quaternion::Identity()});
+    Image darkView = dark.View();
+    CentroidObservations result = algorithm.Run(darkView);
+
+    EXPECT_EQ(result.observations.size(), 2u);
+}
+
+// A catalog star sitting behind the camera projects to no pixel and is skipped,
+// while a visible star in the same catalog still produces its observation.
+TEST(ROIFilterAlgorithmTest, SkipsStarBehindCamera) {
+    TestImage dark(10);
+    TestImage star(10);
+    PaintStar(&star, 40, 36);
+
+    RecalibrationOptions options = CenteredOptions();
+    options.starImages = {star.View()};
+
+    Catalog catalog;
+    catalog.push_back(CatalogStar{DirectionForPixel(DECIMAL(40.0), DECIMAL(36.0)), 200, 1});
+    // Anti-boresight under identity attitude: camera-frame z < 0, not imageable.
+    catalog.push_back(CatalogStar{found::Vec3(DECIMAL(0.0), DECIMAL(0.0), DECIMAL(-1.0)), 200, 2});
+
+    ROIFilterAlgorithm algorithm(options, catalog, {found::Quaternion::Identity()});
+    Image darkView = dark.View();
+    CentroidObservations result = algorithm.Run(darkView);
+
+    ASSERT_EQ(result.observations.size(), 1u);
+    EXPECT_EQ(result.observations[0].catalog_index, 0);
+}
+
 // Mismatched attitude / star-image counts are a programming error and throw.
 TEST(ROIFilterAlgorithmTest, ThrowsOnAttitudeCountMismatch) {
     TestImage dark(10);

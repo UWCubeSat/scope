@@ -19,7 +19,7 @@ const char *kFixturePath = "test/fixtures/bright-star-catalog-test.tsv";
 // Check that the fixture parses into the expected number of stars.
 TEST(LoadBscTest, ParsesAllStars) {
     Catalog catalog = LoadBsc(kFixturePath);
-    EXPECT_EQ(catalog.size(), 6u);
+    EXPECT_EQ(catalog.size(), 7u);
 }
 
 // Check that RA/Dec are converted to the expected unit vectors (LOST's
@@ -65,9 +65,14 @@ TEST(LoadBscTest, ParsesMagnitudesAndNames) {
     EXPECT_EQ(catalog[2].magnitude, 425);
     EXPECT_EQ(catalog[3].magnitude, 300);
 
-    // -1.46 -> -1 * 100 + (-46) = -146.
+    // -1.46 -> -146.
     EXPECT_EQ(catalog[5].name, 6);
     EXPECT_EQ(catalog[5].magnitude, -146);
+
+    // -0.74 -> -74. The integer part is "-0", so a per-field parse would drop the
+    // sign and store +74; reading Vmag as one rounded float keeps it negative.
+    EXPECT_EQ(catalog[6].name, 7);
+    EXPECT_EQ(catalog[6].magnitude, -74);
 }
 
 // Check that a missing catalog file throws rather than returning silently.

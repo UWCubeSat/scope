@@ -1,6 +1,7 @@
 #include "scope/catalog/catalog.hpp"
 
 #include <cerrno>
+#include <cmath>
 #include <cstdio>
 #include <cstring>
 
@@ -40,22 +41,23 @@ Catalog LoadBsc(const std::string &path) {
 
     Catalog catalog;
     // Fields per line, pipe-separated: RA(deg), Dec(deg), HR name, single-char
-    // Multiple flag (discarded), and Vmag written as <high>.<low>.
+    // Multiple flag (discarded), and Vmag.
     double raDeg;
     double decDeg;
     int name;
     char multiple;
-    int magnitudeHigh;
-    int magnitudeLow;
+    double vmag;
 
     // Read into double regardless of decimal width so the scanf format never
     // disagrees with the storage type, then narrow to decimal during conversion.
-    while (std::fscanf(file, "%lf|%lf|%d|%c|%d.%d", &raDeg, &decDeg, &name, &multiple, &magnitudeHigh, &magnitudeLow) ==
-           6) {
+    while (std::fscanf(file, "%lf|%lf|%d|%c|%lf", &raDeg, &decDeg, &name, &multiple, &vmag) == 5) {
         const decimal ra = found::DegToRad(DECIMAL(raDeg));
         const decimal dec = found::DegToRad(DECIMAL(decDeg));
-        // A negative whole part means the fractional part is negative too.
-        const int magnitude = magnitudeHigh * 100 + (magnitudeHigh < 0 ? -magnitudeLow : magnitudeLow);
+        // Store apparent magnitude scaled by 100, matching LOST's integer
+        // convention. Read Vmag as a single float and round so the sign survives
+        // for stars in (-1, 0) (e.g. -0.74); parsing the integer part on its own
+        // would read "-0" as 0 and silently drop the minus.
+        const int magnitude = static_cast<int>(std::lround(vmag * 100.0));
         catalog.push_back(CatalogStar{SphericalToSpatial(ra, dec), magnitude, name});
     }
 
