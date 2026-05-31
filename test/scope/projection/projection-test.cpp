@@ -30,6 +30,14 @@ RecalibrationOptions PinholeOptions(decimal focalX, decimal focalY, decimal px, 
 
 const decimal kTol = DECIMAL(1e-4);
 
+// LOST/FOUND forward model with the optical axis on +x: a camera-frame vector
+// projects to pixel (c_x - f*y/x, c_y - f*z/x) (FOUND common/spatial/camera.cpp,
+// LOST camera.cpp SpatialToCamera). Replicated here so the adapter is pinned
+// against LOST's published convention rather than against itself.
+found::Vec2 LostPixel(const found::Vec3 &cam, decimal f, decimal cx, decimal cy) {
+    return found::Vec2{cx - f * cam.y() / cam.x(), cy - f * cam.z() / cam.x()};
+}
+
 }  // namespace
 
 // An on-axis star with identity attitude and no distortion projects to the
@@ -152,6 +160,60 @@ TEST(InSensorWithMarginTest, EdgeBehavior) {
     // On the exclusive upper edge -> rejected.
     EXPECT_FALSE(InSensorWithMargin(found::Vec2(DECIMAL(48.0), DECIMAL(30.0)), w, h, margin));
     EXPECT_FALSE(InSensorWithMargin(found::Vec2(DECIMAL(30.0), DECIMAL(48.0)), w, h, margin));
+}
+
+// Under an identity LOST attitude the camera frame equals the inertial frame, so
+// the adapter alone reconciles LOST's x-boresight with SCOPE's z-boresight. A
+// star on the LOST optical axis (inertial +x) must land on the principal point.
+TEST(LostAttitudeToScopeFrameTest, OnAxisStarMapsToPrincipalPoint) {
+    RecalibrationOptions options = PinholeOptions(DECIMAL(100.0), DECIMAL(100.0), DECIMAL(320.0), DECIMAL(240.0));
+    const found::Quaternion attitude = LostAttitudeToScopeFrame(found::Quaternion::Identity());
+    found::Vec3 eI(DECIMAL(1.0), DECIMAL(0.0), DECIMAL(0.0));
+
+    std::optional<found::Vec2> pixel = ProjectStarToPixel(eI, attitude, options);
+
+    ASSERT_TRUE(pixel.has_value());
+    EXPECT_NEAR(pixel->x(), DECIMAL(320.0), kTol);
+    EXPECT_NEAR(pixel->y(), DECIMAL(240.0), kTol);
+}
+
+// The adapter must reproduce LOST's exact pixel for off-axis stars, pinning the
+// axis permutation AND its signs. Under the identity LOST attitude, a +camera-y
+// then a +camera-z inertial nudge must match LOST's SpatialToCamera to the last
+// sign -- a swapped or sign-flipped permutation would mirror the field.
+TEST(LostAttitudeToScopeFrameTest, MatchesLostForwardModelSigns) {
+    const decimal f = DECIMAL(100.0);
+    const decimal cx = DECIMAL(320.0);
+    const decimal cy = DECIMAL(240.0);
+    RecalibrationOptions options = PinholeOptions(f, f, cx, cy);
+    const found::Quaternion attitude = LostAttitudeToScopeFrame(found::Quaternion::Identity());
+
+    // +camera-y: LOST sends this toward -u (left); SCOPE must agree.
+    found::Vec3 plusY(DECIMAL(1.0), DECIMAL(0.1), DECIMAL(0.0));
+    std::optional<found::Vec2> py = ProjectStarToPixel(plusY, attitude, options);
+    ASSERT_TRUE(py.has_value());
+    found::Vec2 pyExpected = LostPixel(plusY, f, cx, cy);
+    EXPECT_NEAR(py->x(), pyExpected.x(), kTol);
+    EXPECT_NEAR(py->y(), pyExpected.y(), kTol);
+
+    // +camera-z: LOST sends this toward -v; SCOPE must agree.
+    found::Vec3 plusZ(DECIMAL(1.0), DECIMAL(0.0), DECIMAL(0.1));
+    std::optional<found::Vec2> pz = ProjectStarToPixel(plusZ, attitude, options);
+    ASSERT_TRUE(pz.has_value());
+    found::Vec2 pzExpected = LostPixel(plusZ, f, cx, cy);
+    EXPECT_NEAR(pz->x(), pzExpected.x(), kTol);
+    EXPECT_NEAR(pz->y(), pzExpected.y(), kTol);
+}
+
+// A star on the LOST anti-boresight (inertial -x) lands behind SCOPE's image
+// plane after conversion (camera-frame z < 0), so the projection rejects it
+// rather than folding it onto the sensor.
+TEST(LostAttitudeToScopeFrameTest, AntiBoresightIsRejected) {
+    RecalibrationOptions options = PinholeOptions(DECIMAL(100.0), DECIMAL(100.0), DECIMAL(320.0), DECIMAL(240.0));
+    const found::Quaternion attitude = LostAttitudeToScopeFrame(found::Quaternion::Identity());
+    found::Vec3 eI(DECIMAL(-1.0), DECIMAL(0.0), DECIMAL(0.0));
+
+    EXPECT_FALSE(ProjectStarToPixel(eI, attitude, options).has_value());
 }
 
 }  // namespace scope

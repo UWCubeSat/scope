@@ -26,8 +26,17 @@ inline std::unique_ptr<PrimaryScopePipelineExecutor> CreatePrimaryScopePipelineE
     // Load the catalog once; the star-centroid stage takes ownership of it.
     Catalog catalog = LoadBsc(options.catalogPath);
 
-    // TODO(lost-integration): replace identity attitudes with per-image quaternions
-    // queried from LOST. Until then, integration tests must supply explicit attitudes.
+    // LOST-integration seam. Real per-image attitudes arrive from LOST in its
+    // x-boresight camera convention and MUST be funneled through
+    // scope::LostAttitudeToScopeFrame (src/scope/projection/projection.hpp) before
+    // reaching the projection, which assumes SCOPE's z-boresight frame. Skipping
+    // that conversion yields plausible-but-wrong pixels.
+    //
+    // Until LOST is wired in we inject identity attitudes that are already
+    // SCOPE-frame (not LOST-frame), so they correctly bypass the adapter.
+    //
+    // TODO(lost-integration): query per-image quaternions from LOST and map each
+    // through LostAttitudeToScopeFrame here.
     std::vector<found::Quaternion> attitudes(options.starImages.size(), found::Quaternion::Identity());
 
     std::unique_ptr<NoiseFilterAlgorithm> noiseAlg = ProvideNoiseFilterAlgorithm(options);

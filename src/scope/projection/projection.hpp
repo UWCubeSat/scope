@@ -34,6 +34,32 @@ namespace scope {
 found::Vec2 BrownDistort(const found::Vec2 &ideal, decimal k1, decimal k2, decimal k3, decimal p1, decimal p2);
 
 /**
+ * Converts a LOST attitude into SCOPE's camera-frame convention.
+ *
+ * LOST and FOUND put the optical axis (boresight) on camera +x: their forward
+ * model is pixel = (c_x - f*y/x, c_y - f*z/x) and they assert x > 0 (see FOUND
+ * common/spatial/camera.cpp and LOST camera.cpp SpatialToCamera). SCOPE's
+ * ProjectStarToPixel instead puts the boresight on +z and projects x/z, y/z.
+ * Both share the equatorial inertial frame and both apply the attitude as
+ * e_C = attitude * e_I, so the conventions differ only by a fixed rotation of the
+ * camera frame. Requiring SCOPE's pixel to equal LOST's for every line of sight
+ * forces the signed permutation (x, y, z)_lost -> (-y, -z, x)_scope.
+ *
+ * Feeding a raw LOST quaternion to ProjectStarToPixel without this conversion
+ * produces plausible-but-wrong pixels (the boresight star projects to z = 0 and
+ * is dropped, while stars 90 deg off-axis are accepted), so every per-image
+ * attitude arriving from LOST MUST pass through here first. This is the loud
+ * counterpart to the LOST-integration seam in providers/factory.hpp.
+ *
+ * @param lostAttitude Attitude from LOST: rotates an inertial line of sight into
+ *                     LOST's x-boresight camera frame (e_C = lostAttitude * e_I).
+ *
+ * @return The equivalent attitude in SCOPE's z-boresight camera frame, ready to
+ *         hand to ProjectStarToPixel.
+ */
+found::Quaternion LostAttitudeToScopeFrame(const found::Quaternion &lostAttitude);
+
+/**
  * Projects an inertial-frame line-of-sight direction to a raw (distorted) pixel.
  *
  * Full forward model: rotate e_I into the camera frame by the prior attitude

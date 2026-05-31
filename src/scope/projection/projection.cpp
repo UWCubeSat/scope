@@ -24,6 +24,18 @@ found::Vec2 BrownDistort(const found::Vec2 &ideal, decimal k1, decimal k2, decim
     return found::Vec2{radial * x + dx, radial * y + dy};
 }
 
+found::Quaternion LostAttitudeToScopeFrame(const found::Quaternion &lostAttitude) {
+    // Fixed rotation taking LOST's x-boresight camera frame into SCOPE's
+    // z-boresight frame: (x, y, z)_lost -> (-y, -z, x)_scope. Derived in the
+    // header from LOST's forward model; det = +1 (a proper rotation). Composing on
+    // the left leaves the downstream e_C = attitude * e_I machinery unchanged.
+    found::Mat3 framePermutation;
+    framePermutation << DECIMAL(0.0), DECIMAL(-1.0), DECIMAL(0.0),
+                        DECIMAL(0.0), DECIMAL(0.0), DECIMAL(-1.0),
+                        DECIMAL(1.0), DECIMAL(0.0), DECIMAL(0.0);
+    return found::Quaternion(framePermutation) * lostAttitude;
+}
+
 std::optional<found::Vec2> ProjectStarToPixel(const found::Vec3 &eI,
                                               const found::Quaternion &attitude,
                                               const RecalibrationOptions &options) {
