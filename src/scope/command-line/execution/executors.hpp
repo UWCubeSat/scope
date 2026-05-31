@@ -47,6 +47,9 @@ class PrimaryScopePipelineExecutor : public found::PipelineExecutor {
     const RecalibrationOptions options_;
     /// The pipeline assembled for SCOPE operation.
     PrimaryScopePipeline pipeline_;
+    /// Non-owning observer of the noise-filter stage, used to release its
+    /// malloc'd dark-frame product after the run (no pipeline stage owns it).
+    found::FunctionStage<Images, Image> *noiseStage_ = nullptr;
 };
 
 }  // namespace scope
