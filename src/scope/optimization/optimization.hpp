@@ -11,13 +11,14 @@
 #include "common/pipeline/stages.hpp"
 
 #include "scope/command-line/parsing/options.hpp"
+#include "scope/common/style.hpp"
 
 namespace scope {
 
 /**
  * Produces updated camera intrinsic + distortion parameters from star centroids.
  */
-class OptimizationAlgorithm : public found::FunctionStage<std::vector<float>, std::vector<float>> {
+class OptimizationAlgorithm : public found::FunctionStage<CentroidObservations, std::vector<float>> {
  public:
     OptimizationAlgorithm() = default;
     virtual ~OptimizationAlgorithm() {}
@@ -42,11 +43,12 @@ class LMAOptimizationAlgorithm : public OptimizationAlgorithm {
     /**
      * Fits camera parameters to the given star centroids.
      *
-     * @param stars Flattened centroid coordinates from the previous stage.
+     * @param observations Star measurements + prior attitudes + catalog from the
+     *                     star-centroid stage.
      *
      * @return The updated camera parameter vector. The stub returns an empty vector.
      */
-    std::vector<float> Run(const std::vector<float> &stars) override;
+    std::vector<float> Run(const CentroidObservations &observations) override;
 };
 
 }  // namespace scope
