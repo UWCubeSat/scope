@@ -1,9 +1,0 @@
-<map id="src/scope/catalog/catalog.hpp" name="src/scope/catalog/catalog.hpp">
-<area shape="rect" id="Node000001" title="Bright star catalog types and loader for SCOPE calibration." alt="" coords="13,5,227,31"/>
-<area shape="rect" id="Node000002" title=" " alt="" coords="5,86,64,111"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="109,33,59,78,56,75,106,29"/>
-<area shape="rect" id="Node000003" title=" " alt="" coords="89,86,151,111"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="123,31,123,72,117,72,117,31"/>
-<area shape="rect" id="Node000004" title=" " alt="" coords="175,79,358,119"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="143,28,221,70,218,75,140,33"/>
-</map>
