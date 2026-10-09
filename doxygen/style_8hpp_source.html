@@ -104,23 +104,52 @@ $(document).ready(function(){initNavTree('style_8hpp_source.html',''); initResiz
 <div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &lt;vector&gt;</span></div>
 <div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span> </div>
 <div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#include &quot;common/pipeline/pipelines.hpp&quot;</span></div>
-<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span> </div>
-<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#include &quot;common/style.hpp&quot;</span></div>
-<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span> </div>
-<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="keyword">namespace </span>scope {</div>
-<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span> </div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="keyword">typedef</span> found::Image Image;</div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="preprocessor">#include &quot;common/spatial/attitude-utils.hpp&quot;</span></div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span> </div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="preprocessor">#include &quot;common/style.hpp&quot;</span></div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span> </div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="preprocessor">#include &quot;<a class="code" href="catalog_8hpp.html">scope/catalog/catalog.hpp</a>&quot;</span></div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span> </div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="keyword">namespace </span>scope {</div>
 <div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span> </div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="keyword">typedef</span> std::vector&lt;found::Image&gt; Images;</div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="keyword">typedef</span> found::Image Image;</div>
 <div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span> </div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><span class="keyword">constexpr</span> <span class="keywordtype">size_t</span> recalibration_size = 3;</div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><span class="keyword">typedef</span> std::vector&lt;found::Image&gt; Images;</div>
 <div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span> </div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="keyword">typedef</span> found::SequentialPipeline&lt;std::vector&lt;found::Image&gt;, std::vector&lt;float&gt;, recalibration_size&gt;</div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>    PrimaryScopePipeline;</div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span> </div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>}  <span class="comment">// namespace scope</span></div>
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span> </div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span><span class="preprocessor">#endif  </span><span class="comment">// SRC_SCOPE_COMMON_STYLE_HPP_</span></div>
+<div class="foldopen" id="foldopen00025" data-start="{" data-end="};">
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno"><a class="line" href="structscope_1_1Observation.html">   25</a></span><span class="keyword">struct </span><a class="code hl_struct" href="structscope_1_1Observation.html">Observation</a> {</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno"><a class="line" href="structscope_1_1Observation.html#a0b1a14ece184fe62001fbaa47c46a932">   27</a></span>    <span class="keywordtype">int</span> <a class="code hl_variable" href="structscope_1_1Observation.html#a0b1a14ece184fe62001fbaa47c46a932">image_index</a>;</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno"><a class="line" href="structscope_1_1Observation.html#a493835f4a9535c0df09f7914967826ba">   29</a></span>    <span class="keywordtype">int</span> <a class="code hl_variable" href="structscope_1_1Observation.html#a493835f4a9535c0df09f7914967826ba">catalog_index</a>;</div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno"><a class="line" href="structscope_1_1Observation.html#a8df5fbfd52e8597556b42edd085f1974">   31</a></span>    found::Vec2 <a class="code hl_variable" href="structscope_1_1Observation.html#a8df5fbfd52e8597556b42edd085f1974">measured_pixel</a>;</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>};</div>
+</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span> </div>
+<div class="foldopen" id="foldopen00041" data-start="{" data-end="};">
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno"><a class="line" href="structscope_1_1CentroidObservations.html">   41</a></span><span class="keyword">struct </span><a class="code hl_struct" href="structscope_1_1CentroidObservations.html">CentroidObservations</a> {</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno"><a class="line" href="structscope_1_1CentroidObservations.html#ae27186ba847ab1348017a6725297f9f8">   43</a></span>    std::vector&lt;Observation&gt; <a class="code hl_variable" href="structscope_1_1CentroidObservations.html#ae27186ba847ab1348017a6725297f9f8">observations</a>;</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno"><a class="line" href="structscope_1_1CentroidObservations.html#a841f9c8b84e64cf000c513ec6729e5e5">   45</a></span>    std::vector&lt;found::Quaternion&gt; <a class="code hl_variable" href="structscope_1_1CentroidObservations.html#a841f9c8b84e64cf000c513ec6729e5e5">attitudes</a>;</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno"><a class="line" href="structscope_1_1CentroidObservations.html#a36f795218e0e0b5e54aed660042880d7">   47</a></span>    <span class="keyword">const</span> <a class="code hl_typedef" href="catalog_8hpp.html#a088b8f568074b9e555714a6a55b43614">Catalog</a> *<a class="code hl_variable" href="structscope_1_1CentroidObservations.html#a36f795218e0e0b5e54aed660042880d7">catalog</a> = <span class="keyword">nullptr</span>;</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>};</div>
+</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span> </div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span><span class="keyword">constexpr</span> <span class="keywordtype">size_t</span> recalibration_size = 3;</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span> </div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span><span class="keyword">typedef</span> found::SequentialPipeline&lt;std::vector&lt;found::Image&gt;, std::vector&lt;float&gt;, recalibration_size&gt;</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>    PrimaryScopePipeline;</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span> </div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>}  <span class="comment">// namespace scope</span></div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span> </div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span><span class="preprocessor">#endif  </span><span class="comment">// SRC_SCOPE_COMMON_STYLE_HPP_</span></div>
+<div class="ttc" id="acatalog_8hpp_html"><div class="ttname"><a href="catalog_8hpp.html">catalog.hpp</a></div><div class="ttdoc">Bright star catalog types and loader for SCOPE calibration.</div></div>
+<div class="ttc" id="acatalog_8hpp_html_a088b8f568074b9e555714a6a55b43614"><div class="ttname"><a href="catalog_8hpp.html#a088b8f568074b9e555714a6a55b43614">scope::Catalog</a></div><div class="ttdeci">std::vector&lt; CatalogStar &gt; Catalog</div><div class="ttdoc">A collection of catalog stars.</div><div class="ttdef"><b>Definition</b> catalog.hpp:33</div></div>
+<div class="ttc" id="astructscope_1_1CentroidObservations_html"><div class="ttname"><a href="structscope_1_1CentroidObservations.html">scope::CentroidObservations</a></div><div class="ttdoc">The star-centroid stage's output: the measurements, the per-image prior attitudes (forwarded to LMA),...</div><div class="ttdef"><b>Definition</b> style.hpp:41</div></div>
+<div class="ttc" id="astructscope_1_1CentroidObservations_html_a36f795218e0e0b5e54aed660042880d7"><div class="ttname"><a href="structscope_1_1CentroidObservations.html#a36f795218e0e0b5e54aed660042880d7">scope::CentroidObservations::catalog</a></div><div class="ttdeci">const Catalog * catalog</div><div class="ttdoc">Non-owning pointer to the catalog the observations index into.</div><div class="ttdef"><b>Definition</b> style.hpp:47</div></div>
+<div class="ttc" id="astructscope_1_1CentroidObservations_html_a841f9c8b84e64cf000c513ec6729e5e5"><div class="ttname"><a href="structscope_1_1CentroidObservations.html#a841f9c8b84e64cf000c513ec6729e5e5">scope::CentroidObservations::attitudes</a></div><div class="ttdeci">std::vector&lt; found::Quaternion &gt; attitudes</div><div class="ttdoc">One prior attitude per star image, forwarded for the optimization stage.</div><div class="ttdef"><b>Definition</b> style.hpp:45</div></div>
+<div class="ttc" id="astructscope_1_1CentroidObservations_html_ae27186ba847ab1348017a6725297f9f8"><div class="ttname"><a href="structscope_1_1CentroidObservations.html#ae27186ba847ab1348017a6725297f9f8">scope::CentroidObservations::observations</a></div><div class="ttdeci">std::vector&lt; Observation &gt; observations</div><div class="ttdoc">All star measurements gathered across every star image.</div><div class="ttdef"><b>Definition</b> style.hpp:43</div></div>
+<div class="ttc" id="astructscope_1_1Observation_html"><div class="ttname"><a href="structscope_1_1Observation.html">scope::Observation</a></div><div class="ttdoc">A single measured star: a catalog star paired with where it was actually observed (the raw,...</div><div class="ttdef"><b>Definition</b> style.hpp:25</div></div>
+<div class="ttc" id="astructscope_1_1Observation_html_a0b1a14ece184fe62001fbaa47c46a932"><div class="ttname"><a href="structscope_1_1Observation.html#a0b1a14ece184fe62001fbaa47c46a932">scope::Observation::image_index</a></div><div class="ttdeci">int image_index</div><div class="ttdoc">Index of the star image this observation came from.</div><div class="ttdef"><b>Definition</b> style.hpp:27</div></div>
+<div class="ttc" id="astructscope_1_1Observation_html_a493835f4a9535c0df09f7914967826ba"><div class="ttname"><a href="structscope_1_1Observation.html#a493835f4a9535c0df09f7914967826ba">scope::Observation::catalog_index</a></div><div class="ttdeci">int catalog_index</div><div class="ttdoc">Index into the run's catalog. Stable for the duration of one run.</div><div class="ttdef"><b>Definition</b> style.hpp:29</div></div>
+<div class="ttc" id="astructscope_1_1Observation_html_a8df5fbfd52e8597556b42edd085f1974"><div class="ttname"><a href="structscope_1_1Observation.html#a8df5fbfd52e8597556b42edd085f1974">scope::Observation::measured_pixel</a></div><div class="ttdeci">found::Vec2 measured_pixel</div><div class="ttdoc">The measured (distorted) centroid in pixel coordinates [u', v'].</div><div class="ttdef"><b>Definition</b> style.hpp:31</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

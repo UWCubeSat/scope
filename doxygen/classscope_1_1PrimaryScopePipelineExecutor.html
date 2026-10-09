@@ -149,6 +149,10 @@ const <a class="el" href="classRecalibrationOptions.html">RecalibrationOptions</
 PrimaryScopePipeline&#160;</td><td class="memItemRight" valign="bottom"><b>pipeline_</b></td></tr>
 <tr class="memdesc:af5af9aa3ff63ab731e2833d193cca9b9"><td class="mdescLeft">&#160;</td><td class="mdescRight">The pipeline assembled for SCOPE operation. <br /></td></tr>
 <tr class="separator:af5af9aa3ff63ab731e2833d193cca9b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa68c27991e46a72f3de2849451f82929" id="r_aa68c27991e46a72f3de2849451f82929"><td class="memItemLeft" align="right" valign="top"><a id="aa68c27991e46a72f3de2849451f82929" name="aa68c27991e46a72f3de2849451f82929"></a>
+found::FunctionStage&lt; Images, Image &gt; *&#160;</td><td class="memItemRight" valign="bottom"><b>noiseStage_</b> = nullptr</td></tr>
+<tr class="memdesc:aa68c27991e46a72f3de2849451f82929"><td class="mdescLeft">&#160;</td><td class="mdescRight">Non-owning observer of the noise-filter stage, used to release its malloc'd dark-frame product after the run (no pipeline stage owns it). <br /></td></tr>
+<tr class="separator:aa68c27991e46a72f3de2849451f82929"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Owns and runs the primary SCOPE calibration pipeline (noise filter -&gt; star centroid -&gt; optimization). </p>

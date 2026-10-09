@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['lmaoptimizationalgorithm_0',['LMAOptimizationAlgorithm',['../classscope_1_1LMAOptimizationAlgorithm.html',1,'scope']]]
+  ['darkscreenfilter_0',['DarkScreenFilter',['../classscope_1_1DarkScreenFilter.html',1,'scope']]]
 ];

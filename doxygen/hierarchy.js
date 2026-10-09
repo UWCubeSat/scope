@@ -1,5 +1,7 @@
 var hierarchy =
 [
+    [ "scope::CatalogStar", "structscope_1_1CatalogStar.html", null ],
+    [ "scope::CentroidObservations", "structscope_1_1CentroidObservations.html", null ],
     [ "found::FunctionStage", null, [
       [ "scope::NoiseFilterAlgorithm", "classscope_1_1NoiseFilterAlgorithm.html", [
         [ "scope::DarkScreenFilter", "classscope_1_1DarkScreenFilter.html", null ]
@@ -11,6 +13,7 @@ var hierarchy =
         [ "scope::ROIFilterAlgorithm", "classscope_1_1ROIFilterAlgorithm.html", null ]
       ] ]
     ] ],
+    [ "scope::Observation", "structscope_1_1Observation.html", null ],
     [ "found::PipelineExecutor", null, [
       [ "scope::PrimaryScopePipelineExecutor", "classscope_1_1PrimaryScopePipelineExecutor.html", null ]
     ] ],

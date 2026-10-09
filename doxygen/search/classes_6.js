@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['starcentroidalgorithm_0',['StarCentroidAlgorithm',['../classscope_1_1StarCentroidAlgorithm.html',1,'scope']]]
+  ['recalibrationoptions_0',['RecalibrationOptions',['../classRecalibrationOptions.html',1,'']]],
+  ['roifilteralgorithm_1',['ROIFilterAlgorithm',['../classscope_1_1ROIFilterAlgorithm.html',1,'scope']]]
 ];

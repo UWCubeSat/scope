@@ -1,11 +1,12 @@
 var indexSectionsWithContent =
 {
-  0: "cdeflnoprs",
-  1: "dlnoprs",
-  2: "enos",
+  0: "acdefilmnoprs",
+  1: "cdlnoprs",
+  2: "cenops",
   3: "elopr",
-  4: "op",
-  5: "ceops"
+  4: "acimnops",
+  5: "c",
+  6: "ceops"
 };
 
 var indexSectionNames =
@@ -15,7 +16,8 @@ var indexSectionNames =
   2: "files",
   3: "functions",
   4: "variables",
-  5: "pages"
+  5: "typedefs",
+  6: "pages"
 };
 
 var indexSectionLabels =
@@ -25,6 +27,7 @@ var indexSectionLabels =
   2: "Files",
   3: "Functions",
   4: "Variables",
-  5: "Pages"
+  5: "Typedefs",
+  6: "Pages"
 };
 

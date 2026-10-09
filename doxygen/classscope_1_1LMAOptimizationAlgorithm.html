@@ -109,7 +109,7 @@ Inheritance diagram for scope::LMAOptimizationAlgorithm:</div>
 <area shape="rect" title="Levenberg&#45;Marquardt parameter optimizer." alt="" coords="5,181,249,207"/>
 <area shape="rect" href="classscope_1_1OptimizationAlgorithm.html" title="Produces updated camera intrinsic + distortion parameters from star centroids." alt="" coords="19,108,235,133"/>
 <area shape="poly" title=" " alt="" coords="130,147,130,181,125,181,125,147"/>
-<area shape="rect" title=" " alt="" coords="33,5,221,60"/>
+<area shape="rect" title=" " alt="" coords="36,5,219,60"/>
 <area shape="poly" title=" " alt="" coords="130,74,130,108,125,108,125,74"/>
 </map>
 <center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
@@ -121,7 +121,7 @@ Collaboration diagram for scope::LMAOptimizationAlgorithm:</div>
 <area shape="rect" title="Levenberg&#45;Marquardt parameter optimizer." alt="" coords="5,181,249,207"/>
 <area shape="rect" href="classscope_1_1OptimizationAlgorithm.html" title="Produces updated camera intrinsic + distortion parameters from star centroids." alt="" coords="19,108,235,133"/>
 <area shape="poly" title=" " alt="" coords="130,147,130,181,125,181,125,147"/>
-<area shape="rect" title=" " alt="" coords="33,5,221,60"/>
+<area shape="rect" title=" " alt="" coords="36,5,219,60"/>
 <area shape="poly" title=" " alt="" coords="130,74,130,108,125,108,125,74"/>
 </map>
 <center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
@@ -131,9 +131,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:af25916d83d401b78ca4fbf0e0c08a06a" id="r_af25916d83d401b78ca4fbf0e0c08a06a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classscope_1_1LMAOptimizationAlgorithm.html#af25916d83d401b78ca4fbf0e0c08a06a">LMAOptimizationAlgorithm</a> (const <a class="el" href="classRecalibrationOptions.html">RecalibrationOptions</a> &amp;options)</td></tr>
 <tr class="memdesc:af25916d83d401b78ca4fbf0e0c08a06a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a new <a class="el" href="classscope_1_1LMAOptimizationAlgorithm.html" title="Levenberg-Marquardt parameter optimizer.">LMAOptimizationAlgorithm</a>.  <br /></td></tr>
 <tr class="separator:af25916d83d401b78ca4fbf0e0c08a06a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a583ba9df635d7df494e23e0232d7bc7d" id="r_a583ba9df635d7df494e23e0232d7bc7d"><td class="memItemLeft" align="right" valign="top">std::vector&lt; float &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classscope_1_1LMAOptimizationAlgorithm.html#a583ba9df635d7df494e23e0232d7bc7d">Run</a> (const std::vector&lt; float &gt; &amp;stars) override</td></tr>
-<tr class="memdesc:a583ba9df635d7df494e23e0232d7bc7d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fits camera parameters to the given star centroids.  <br /></td></tr>
-<tr class="separator:a583ba9df635d7df494e23e0232d7bc7d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8364da3b5207a9984ec17abdbcd63f7f" id="r_a8364da3b5207a9984ec17abdbcd63f7f"><td class="memItemLeft" align="right" valign="top">std::vector&lt; float &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classscope_1_1LMAOptimizationAlgorithm.html#a8364da3b5207a9984ec17abdbcd63f7f">Run</a> (const <a class="el" href="structscope_1_1CentroidObservations.html">CentroidObservations</a> &amp;observations) override</td></tr>
+<tr class="memdesc:a8364da3b5207a9984ec17abdbcd63f7f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fits camera parameters to the given star centroids.  <br /></td></tr>
+<tr class="separator:a8364da3b5207a9984ec17abdbcd63f7f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Levenberg-Marquardt parameter optimizer. </p>
@@ -174,8 +174,8 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a583ba9df635d7df494e23e0232d7bc7d" name="a583ba9df635d7df494e23e0232d7bc7d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a583ba9df635d7df494e23e0232d7bc7d">&#9670;&#160;</a></span>Run()</h2>
+<a id="a8364da3b5207a9984ec17abdbcd63f7f" name="a8364da3b5207a9984ec17abdbcd63f7f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8364da3b5207a9984ec17abdbcd63f7f">&#9670;&#160;</a></span>Run()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -186,8 +186,8 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="memname">std::vector&lt; float &gt; scope::LMAOptimizationAlgorithm::Run </td>
           <td>(</td>
-          <td class="paramtype">const std::vector&lt; float &gt; &amp;&#160;</td>
-          <td class="paramname"><em>stars</em></td><td>)</td>
+          <td class="paramtype">const <a class="el" href="structscope_1_1CentroidObservations.html">CentroidObservations</a> &amp;&#160;</td>
+          <td class="paramname"><em>observations</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -201,7 +201,7 @@ Public Member Functions</h2></td></tr>
 <p>Fits camera parameters to the given star centroids. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">stars</td><td>Flattened centroid coordinates from the previous stage.</td></tr>
+    <tr><td class="paramname">observations</td><td>Star measurements + prior attitudes + catalog from the star-centroid stage.</td></tr>
   </table>
   </dd>
 </dl>

@@ -1,6 +1,8 @@
 var searchData=
 [
-  ['recalibrationoptions_0',['RecalibrationOptions',['../classRecalibrationOptions.html',1,'']]],
-  ['roifilteralgorithm_1',['roifilteralgorithm',['../classscope_1_1ROIFilterAlgorithm.html',1,'scope::ROIFilterAlgorithm'],['../classscope_1_1ROIFilterAlgorithm.html#a15b5db2e725b5a62e9c5d9601854c7f1',1,'scope::ROIFilterAlgorithm::ROIFilterAlgorithm()']]],
-  ['run_2',['run',['../classscope_1_1DarkScreenFilter.html#ac55751cca8fbb10ddf1a43ce7ca37fa2',1,'scope::DarkScreenFilter::Run()'],['../classscope_1_1LMAOptimizationAlgorithm.html#a583ba9df635d7df494e23e0232d7bc7d',1,'scope::LMAOptimizationAlgorithm::Run()'],['../classscope_1_1ROIFilterAlgorithm.html#aa17c080ba2fa8e6c9a385f29f65672ad',1,'scope::ROIFilterAlgorithm::Run()']]]
+  ['name_0',['name',['../structscope_1_1CatalogStar.html#a7ce5ac9bb9e0dc3291d8d716bd7f7af2',1,'scope::CatalogStar']]],
+  ['noise_2dfilter_2ehpp_1',['noise-filter.hpp',['../noise-filter_8hpp.html',1,'']]],
+  ['noisefilteralgorithm_2',['NoiseFilterAlgorithm',['../classscope_1_1NoiseFilterAlgorithm.html',1,'scope']]],
+  ['noisestage_5f_3',['noiseStage_',['../classscope_1_1PrimaryScopePipelineExecutor.html#aa68c27991e46a72f3de2849451f82929',1,'scope::PrimaryScopePipelineExecutor']]],
+  ['not_20currently_20functional_4',['NOT CURRENTLY FUNCTIONAL',['../index.html#autotoc_md1',1,'']]]
 ];

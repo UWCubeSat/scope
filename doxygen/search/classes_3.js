@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['optimizationalgorithm_0',['OptimizationAlgorithm',['../classscope_1_1OptimizationAlgorithm.html',1,'scope']]]
+  ['noisefilteralgorithm_0',['NoiseFilterAlgorithm',['../classscope_1_1NoiseFilterAlgorithm.html',1,'scope']]]
 ];
