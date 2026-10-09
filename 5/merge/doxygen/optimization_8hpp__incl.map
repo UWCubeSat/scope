@@ -1,0 +1,32 @@
+<map id="src/scope/optimization/optimization.hpp" name="src/scope/optimization/optimization.hpp">
+<area shape="rect" id="Node000001" title="Parameter&#45;fit optimization algorithms for SCOPE calibration." alt="" coords="86,5,255,45"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="25,409,87,434"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="131,48,91,72,51,104,34,124,20,145,11,168,8,193,8,269,12,304,21,339,45,396,40,398,16,340,6,305,3,269,3,192,6,167,16,142,30,120,47,100,88,67,128,43"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="359,101,569,126"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="236,43,412,94,411,99,234,48"/>
+<area shape="rect" id="Node000004" href="$options_8hpp_source.html" title=" " alt="" coords="175,93,334,133"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="191,44,229,82,225,85,187,47"/>
+<area shape="rect" id="Node000007" href="$style_8hpp_source.html" title=" " alt="" coords="70,255,255,280"/>
+<area shape="poly" id="edge19_Node000001_Node000007" title=" " alt="" coords="171,46,167,93,165,241,159,241,161,93,166,46"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="595,409,653,434"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="335,128,347,131,416,136,507,140,552,144,593,151,628,163,651,180,667,205,675,234,677,264,674,295,658,352,639,397,634,395,653,351,669,294,672,264,670,235,662,207,647,183,625,167,592,156,551,149,506,145,416,141,346,136,334,134"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="200,181,363,207"/>
+<area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="264,133,275,167,270,169,259,134"/>
+<area shape="poly" id="edge6_Node000004_Node000007" title=" " alt="" coords="233,135,210,157,190,183,177,212,169,242,164,241,172,211,186,180,206,153,229,131"/>
+<area shape="rect" id="Node000011" href="$converters_8hpp_source.html" title=" " alt="" coords="387,181,613,207"/>
+<area shape="poly" id="edge15_Node000004_Node000011" title=" " alt="" coords="314,131,452,175,451,180,313,136"/>
+<area shape="poly" id="edge7_Node000007_Node000002" title=" " alt="" coords="157,282,74,399,70,396,152,279"/>
+<area shape="poly" id="edge10_Node000007_Node000007" title=" " alt="" coords="217,252,261,253,276,258,282,267,277,276,266,280,231,283,230,278,264,275,274,272,277,267,273,262,260,258,217,257"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="360,328,587,353"/>
+<area shape="poly" id="edge8_Node000007_Node000008" title=" " alt="" coords="213,277,411,322,409,328,212,283"/>
+<area shape="rect" id="Node000009" title=" " alt="" coords="130,401,313,441"/>
+<area shape="poly" id="edge9_Node000007_Node000009" title=" " alt="" coords="155,282,135,315,131,334,134,352,150,374,172,392,168,396,146,378,130,354,125,334,130,313,150,279"/>
+<area shape="rect" id="Node000010" href="$catalog_8hpp.html" title="Bright star catalog types and loader for SCOPE calibration." alt="" coords="144,328,336,353"/>
+<area shape="poly" id="edge11_Node000007_Node000010" title=" " alt="" coords="177,278,219,317,215,320,173,282"/>
+<area shape="poly" id="edge13_Node000010_Node000002" title=" " alt="" coords="214,356,96,406,94,401,212,351"/>
+<area shape="poly" id="edge12_Node000010_Node000005" title=" " alt="" coords="296,351,581,409,580,414,295,356"/>
+<area shape="poly" id="edge14_Node000010_Node000009" title=" " alt="" coords="240,354,232,389,226,387,235,353"/>
+<area shape="poly" id="edge16_Node000011_Node000005" title=" " alt="" coords="513,205,555,255,580,290,601,327,614,361,622,394,617,395,609,363,596,329,575,293,551,259,509,208"/>
+<area shape="poly" id="edge18_Node000011_Node000007" title=" " alt="" coords="446,209,231,254,230,249,445,204"/>
+<area shape="poly" id="edge17_Node000011_Node000011" title=" " alt="" coords="564,179,615,180,633,185,640,194,634,203,620,207,578,210,577,205,619,202,631,198,635,194,630,189,614,185,564,184"/>
+</map>

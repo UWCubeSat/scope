@@ -1,0 +1,9 @@
+<map id="scope::ROIFilterAlgorithm" name="scope::ROIFilterAlgorithm">
+<area shape="rect" id="Node000001" title="A priori ROI + center&#45;of&#45;intensity star locator (Orion paper §&quot;Image Processing and Star Centroiding&quot;..." alt="" coords="138,183,326,208"/>
+<area shape="rect" id="Node000002" href="$classscope_1_1StarCentroidAlgorithm.html" title="Extracts star centroids from the star&#45;field images, pairing each measured (distorted) pixel with the ..." alt="" coords="20,95,233,120"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="153,127,219,180,216,184,150,131"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="5,5,248,45"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="129,59,129,94,124,94,124,59"/>
+<area shape="rect" id="Node000004" href="$classRecalibrationOptions.html" title="Parsed CLI options driving a recalibration run." alt="" coords="258,95,417,120"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="314,131,248,184,245,180,311,127"/>
+</map>
