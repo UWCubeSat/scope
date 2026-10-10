@@ -13,9 +13,35 @@
 #include "scope/command-line/execution/executors.hpp"
 #include "scope/noise-filter/noise-filter.hpp"
 #include "scope/optimization/optimization.hpp"
+#include "scope/projection/projection.hpp"
 #include "scope/star-centroid/star-centroid.hpp"
 
 namespace scope {
+
+/**
+ * Builds the prior camera parameters from the command-line options.
+ *
+ * This is the one place that reads the ten prior parameters out of the options,
+ * so validating them or filling in a default belongs here.
+ *
+ * @param options Parsed recalibration options.
+ *
+ * @return The prior intrinsics and distortion coefficients.
+ */
+inline CameraParameters ProvideCameraParameters(const RecalibrationOptions &options) {
+    CameraParameters camera;
+    camera.focalLengthX = options.focalLengthX;
+    camera.alpha = options.alpha;
+    camera.focalLengthY = options.focalLengthY;
+    camera.principalX = options.principalX;
+    camera.principalY = options.principalY;
+    camera.k1 = options.k1;
+    camera.k2 = options.k2;
+    camera.k3 = options.k3;
+    camera.p1 = options.p1;
+    camera.p2 = options.p2;
+    return camera;
+}
 
 /**
  * Selects a NoiseFilterAlgorithm implementation for the run.
@@ -60,15 +86,17 @@ inline std::vector<found::Quaternion> ProvideAttitudes(const RecalibrationOption
  * Selects a StarCentroidAlgorithm implementation for the run.
  *
  * @param options Parsed recalibration options.
+ * @param camera The prior camera parameters.
  * @param catalog The star catalog (moved into the stage).
  * @param attitudes One prior attitude per star image.
  *
  * @return The chosen StarCentroidAlgorithm.
  */
 inline std::unique_ptr<StarCentroidAlgorithm> ProvideStarCentroidAlgorithm(const RecalibrationOptions &options,
+                                                                           const CameraParameters &camera,
                                                                            Catalog catalog,
                                                                            std::vector<found::Quaternion> attitudes) {
-    return std::make_unique<ROIFilterAlgorithm>(options, std::move(catalog), std::move(attitudes));
+    return std::make_unique<ROIFilterAlgorithm>(options, camera, std::move(catalog), std::move(attitudes));
 }
 
 /**

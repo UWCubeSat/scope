@@ -4,8 +4,8 @@ Written 2026-10-09 at the merge of the `star-centroid` branch, and updated the s
 
 ## Needed before the pipeline does real work
 
-- **Optimization is a stub.** `LMAOptimizationAlgorithm` (`src/scope/optimization/`) returns an empty vector. The Levenberg-Marquardt fit is the bulk of the remaining work.
-- **No output.** `PrimaryScopePipelineExecutor::OutputResults` (`src/scope/command-line/execution/executors.cpp`) prints "Nothing is implemented :(" and discards the pipeline result. The only visible result of a run is one log line per star image giving how many centroids were kept. The output format is also undecided, because neither FOUND's nor LOST's `Camera` accepts distortion parameters yet.
+- **Optimization is a stub.** `LMAOptimizationAlgorithm` (`src/scope/optimization/`) returns an empty, unconverged `CalibrationResult`. The Levenberg-Marquardt fit is the bulk of the remaining work.
+- **The output is a printout only.** `PrimaryScopePipelineExecutor::OutputResults` (`src/scope/command-line/execution/executors.cpp`) prints the `CalibrationResult` to standard output: whether the fit converged, the ten parameters, and the residual RMS. With the stub optimizer that is all zeros and `converged: no`, so the only real result of a run is still one log line per star image giving how many centroids were kept. Nothing is written to a file, and the per-image attitudes and per-observation residuals the result carries are not printed. The handoff format is also undecided, because neither FOUND's nor LOST's `Camera` accepts distortion parameters yet.
 - **Nothing produces the attitudes file.** `--attitudes` reads attitudes that are already in SCOPE's camera frame (see below). Converting a plate solver's or a star tracker's output into that frame is left to whatever writes the file. For LOST the conversion is `LostAttitudeToScopeFrame` (`src/scope/projection/projection.hpp`); for astrometry.net it has not been written.
 
 ## Behaviour to be aware of

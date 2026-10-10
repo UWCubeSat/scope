@@ -5,7 +5,7 @@
  * Implements the Orion paper's camera model (Christian et al. 2016, §"Camera
  * Model"). The image plane is normalized at z = 1, so the focal length is carried
  * entirely by the intrinsic parameters d_x and d_y (in pixels); these are
- * RecalibrationOptions::focalLengthX / focalLengthY. This is the standard
+ * CameraParameters::focalLengthX / focalLengthY. This is the standard
  * computer-vision convention and matches what the CLI options represent.
  */
 
@@ -17,9 +17,39 @@
 #include "common/decimal.hpp"
 #include "common/spatial/attitude-utils.hpp"
 
-#include "scope/command-line/parsing/options.hpp"
-
 namespace scope {
+
+/**
+ * The ten parameters of the paper's camera model: the intrinsics
+ * k = [d_x, alpha, d_y, u_p, v_p] (Eq. 13) followed by the Brown distortion
+ * coefficients xi = [k1, k2, k3, p1, p2] (Eq. 14), in that order.
+ *
+ * Plain data with no ties to the command line or the pipeline, so the forward
+ * model can be evaluated at any parameter set. ProvideCameraParameters
+ * (providers/stage-providers.hpp) builds the prior from the CLI options.
+ */
+struct CameraParameters {
+    /// d_x: focal length along u, in pixels.
+    decimal focalLengthX = DECIMAL(0.0);
+    /// alpha: skew, the contribution of y' to u, in pixels.
+    decimal alpha = DECIMAL(0.0);
+    /// d_y: focal length along v, in pixels.
+    decimal focalLengthY = DECIMAL(0.0);
+    /// u_p: principal point column, in pixels.
+    decimal principalX = DECIMAL(0.0);
+    /// v_p: principal point row, in pixels.
+    decimal principalY = DECIMAL(0.0);
+    /// First radial distortion coefficient.
+    decimal k1 = DECIMAL(0.0);
+    /// Second radial distortion coefficient.
+    decimal k2 = DECIMAL(0.0);
+    /// Third radial distortion coefficient.
+    decimal k3 = DECIMAL(0.0);
+    /// First decentering (tangential) distortion coefficient.
+    decimal p1 = DECIMAL(0.0);
+    /// Second decentering (tangential) distortion coefficient.
+    decimal p2 = DECIMAL(0.0);
+};
 
 /**
  * Applies the Brown radial + decentering distortion model (paper Eq. 6) to an
@@ -72,8 +102,7 @@ found::Quaternion LostAttitudeToScopeFrame(const found::Quaternion &lostAttitude
  * @param attitude Prior attitude that rotates a vector from the inertial frame
  *                 into the camera frame (e_C = attitude * e_I), with the
  *                 boresight on +z.
- * @param options Calibration options carrying the prior intrinsics and
- *                distortion coefficients.
+ * @param camera The intrinsics and distortion coefficients to project with.
  *
  * @return The predicted distorted pixel coordinate [u', v'], or std::nullopt if
  *         the star is at or behind the image plane (camera-frame z <= 0) and so
@@ -82,7 +111,7 @@ found::Quaternion LostAttitudeToScopeFrame(const found::Quaternion &lostAttitude
  */
 std::optional<found::Vec2> ProjectStarToPixel(const found::Vec3 &eI,
                                               const found::Quaternion &attitude,
-                                              const RecalibrationOptions &options);
+                                              const CameraParameters &camera);
 
 /**
  * Tests whether a pixel lies inside the sensor with a margin on every side.

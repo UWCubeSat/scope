@@ -5,27 +5,26 @@
 #include "common/decimal.hpp"
 #include "common/spatial/attitude-utils.hpp"
 
-#include "scope/command-line/parsing/options.hpp"
 #include "scope/projection/projection.hpp"
 
 namespace scope {
 
 namespace {
 
-/// Builds options with the given pinhole parameters and no distortion or skew.
-RecalibrationOptions PinholeOptions(decimal focalX, decimal focalY, decimal px, decimal py) {
-    RecalibrationOptions options;
-    options.focalLengthX = focalX;
-    options.focalLengthY = focalY;
-    options.principalX = px;
-    options.principalY = py;
-    options.alpha = DECIMAL(0.0);
-    options.k1 = DECIMAL(0.0);
-    options.k2 = DECIMAL(0.0);
-    options.k3 = DECIMAL(0.0);
-    options.p1 = DECIMAL(0.0);
-    options.p2 = DECIMAL(0.0);
-    return options;
+/// Builds camera parameters with the given pinhole parameters and no distortion or skew.
+CameraParameters PinholeCamera(decimal focalX, decimal focalY, decimal px, decimal py) {
+    CameraParameters camera;
+    camera.focalLengthX = focalX;
+    camera.focalLengthY = focalY;
+    camera.principalX = px;
+    camera.principalY = py;
+    camera.alpha = DECIMAL(0.0);
+    camera.k1 = DECIMAL(0.0);
+    camera.k2 = DECIMAL(0.0);
+    camera.k3 = DECIMAL(0.0);
+    camera.p1 = DECIMAL(0.0);
+    camera.p2 = DECIMAL(0.0);
+    return camera;
 }
 
 const decimal kTol = DECIMAL(1e-4);
@@ -43,10 +42,10 @@ found::Vec2 LostPixel(const found::Vec3 &cam, decimal f, decimal cx, decimal cy)
 // An on-axis star with identity attitude and no distortion projects to the
 // principal point.
 TEST(ProjectStarToPixelTest, OnAxisStarMapsToPrincipalPoint) {
-    RecalibrationOptions options = PinholeOptions(DECIMAL(100.0), DECIMAL(100.0), DECIMAL(320.0), DECIMAL(240.0));
+    CameraParameters camera = PinholeCamera(DECIMAL(100.0), DECIMAL(100.0), DECIMAL(320.0), DECIMAL(240.0));
     found::Vec3 eI(DECIMAL(0.0), DECIMAL(0.0), DECIMAL(1.0));
 
-    std::optional<found::Vec2> pixel = ProjectStarToPixel(eI, found::Quaternion::Identity(), options);
+    std::optional<found::Vec2> pixel = ProjectStarToPixel(eI, found::Quaternion::Identity(), camera);
 
     ASSERT_TRUE(pixel.has_value());
     EXPECT_NEAR(pixel->x(), DECIMAL(320.0), kTol);
@@ -55,10 +54,10 @@ TEST(ProjectStarToPixelTest, OnAxisStarMapsToPrincipalPoint) {
 
 // An off-axis star with no distortion lands at principal + focal * (x/z, y/z).
 TEST(ProjectStarToPixelTest, OffAxisStarPinhole) {
-    RecalibrationOptions options = PinholeOptions(DECIMAL(100.0), DECIMAL(100.0), DECIMAL(320.0), DECIMAL(240.0));
+    CameraParameters camera = PinholeCamera(DECIMAL(100.0), DECIMAL(100.0), DECIMAL(320.0), DECIMAL(240.0));
     found::Vec3 eI(DECIMAL(0.1), DECIMAL(-0.05), DECIMAL(1.0));
 
-    std::optional<found::Vec2> pixel = ProjectStarToPixel(eI, found::Quaternion::Identity(), options);
+    std::optional<found::Vec2> pixel = ProjectStarToPixel(eI, found::Quaternion::Identity(), camera);
 
     ASSERT_TRUE(pixel.has_value());
     EXPECT_NEAR(pixel->x(), DECIMAL(330.0), kTol);  // 100 * 0.1 + 320
@@ -67,11 +66,11 @@ TEST(ProjectStarToPixelTest, OffAxisStarPinhole) {
 
 // The skew term alpha contributes alpha * y' to the u coordinate.
 TEST(ProjectStarToPixelTest, SkewAffectsUCoordinate) {
-    RecalibrationOptions options = PinholeOptions(DECIMAL(100.0), DECIMAL(100.0), DECIMAL(320.0), DECIMAL(240.0));
-    options.alpha = DECIMAL(10.0);
+    CameraParameters camera = PinholeCamera(DECIMAL(100.0), DECIMAL(100.0), DECIMAL(320.0), DECIMAL(240.0));
+    camera.alpha = DECIMAL(10.0);
     found::Vec3 eI(DECIMAL(0.1), DECIMAL(0.2), DECIMAL(1.0));
 
-    std::optional<found::Vec2> pixel = ProjectStarToPixel(eI, found::Quaternion::Identity(), options);
+    std::optional<found::Vec2> pixel = ProjectStarToPixel(eI, found::Quaternion::Identity(), camera);
 
     ASSERT_TRUE(pixel.has_value());
     EXPECT_NEAR(pixel->x(), DECIMAL(332.0), kTol);  // 100 * 0.1 + 10 * 0.2 + 320
@@ -81,13 +80,13 @@ TEST(ProjectStarToPixelTest, SkewAffectsUCoordinate) {
 // A non-identity attitude rotates the inertial direction into the camera frame
 // before projection: here eI = (1,0,0) is rotated onto the boresight.
 TEST(ProjectStarToPixelTest, AttitudeRotatesIntoCameraFrame) {
-    RecalibrationOptions options = PinholeOptions(DECIMAL(100.0), DECIMAL(100.0), DECIMAL(320.0), DECIMAL(240.0));
+    CameraParameters camera = PinholeCamera(DECIMAL(100.0), DECIMAL(100.0), DECIMAL(320.0), DECIMAL(240.0));
     found::Vec3 eI(DECIMAL(1.0), DECIMAL(0.0), DECIMAL(0.0));
     // Rotate -90 deg about +y maps the inertial x-axis onto the camera +z boresight.
     const found::Vec3 yAxis(DECIMAL(0.0), DECIMAL(1.0), DECIMAL(0.0));
     found::Quaternion attitude(found::AngleAxis(-DECIMAL_M_PI_2, yAxis));
 
-    std::optional<found::Vec2> pixel = ProjectStarToPixel(eI, attitude, options);
+    std::optional<found::Vec2> pixel = ProjectStarToPixel(eI, attitude, camera);
 
     ASSERT_TRUE(pixel.has_value());
     EXPECT_NEAR(pixel->x(), DECIMAL(320.0), kTol);
@@ -97,16 +96,16 @@ TEST(ProjectStarToPixelTest, AttitudeRotatesIntoCameraFrame) {
 // A star rotated to sit behind the camera (camera-frame z <= 0) cannot be
 // imaged, so the projection reports nullopt rather than a folded-over pixel.
 TEST(ProjectStarToPixelTest, RejectsStarBehindCamera) {
-    RecalibrationOptions options = PinholeOptions(DECIMAL(100.0), DECIMAL(100.0), DECIMAL(320.0), DECIMAL(240.0));
+    CameraParameters camera = PinholeCamera(DECIMAL(100.0), DECIMAL(100.0), DECIMAL(320.0), DECIMAL(240.0));
     // Anti-boresight: directly behind the camera. Without the z-guard this would
     // divide by a negative z and project straight onto the principal point.
     found::Vec3 eI(DECIMAL(0.0), DECIMAL(0.0), DECIMAL(-1.0));
 
-    EXPECT_FALSE(ProjectStarToPixel(eI, found::Quaternion::Identity(), options).has_value());
+    EXPECT_FALSE(ProjectStarToPixel(eI, found::Quaternion::Identity(), camera).has_value());
 
     // A star 30 deg off the anti-boresight is still behind the image plane.
     found::Vec3 offAxisBehind(DECIMAL(0.5), DECIMAL(0.0), DECIMAL(-1.0));
-    EXPECT_FALSE(ProjectStarToPixel(offAxisBehind.normalized(), found::Quaternion::Identity(), options).has_value());
+    EXPECT_FALSE(ProjectStarToPixel(offAxisBehind.normalized(), found::Quaternion::Identity(), camera).has_value());
 }
 
 // Pure radial distortion (k1 != 0) scales an off-axis point outward.
@@ -166,11 +165,11 @@ TEST(InSensorWithMarginTest, EdgeBehavior) {
 // the adapter alone reconciles LOST's x-boresight with SCOPE's z-boresight. A
 // star on the LOST optical axis (inertial +x) must land on the principal point.
 TEST(LostAttitudeToScopeFrameTest, OnAxisStarMapsToPrincipalPoint) {
-    RecalibrationOptions options = PinholeOptions(DECIMAL(100.0), DECIMAL(100.0), DECIMAL(320.0), DECIMAL(240.0));
+    CameraParameters camera = PinholeCamera(DECIMAL(100.0), DECIMAL(100.0), DECIMAL(320.0), DECIMAL(240.0));
     const found::Quaternion attitude = LostAttitudeToScopeFrame(found::Quaternion::Identity());
     found::Vec3 eI(DECIMAL(1.0), DECIMAL(0.0), DECIMAL(0.0));
 
-    std::optional<found::Vec2> pixel = ProjectStarToPixel(eI, attitude, options);
+    std::optional<found::Vec2> pixel = ProjectStarToPixel(eI, attitude, camera);
 
     ASSERT_TRUE(pixel.has_value());
     EXPECT_NEAR(pixel->x(), DECIMAL(320.0), kTol);
@@ -185,12 +184,12 @@ TEST(LostAttitudeToScopeFrameTest, MatchesLostForwardModelSigns) {
     const decimal f = DECIMAL(100.0);
     const decimal cx = DECIMAL(320.0);
     const decimal cy = DECIMAL(240.0);
-    RecalibrationOptions options = PinholeOptions(f, f, cx, cy);
+    CameraParameters camera = PinholeCamera(f, f, cx, cy);
     const found::Quaternion attitude = LostAttitudeToScopeFrame(found::Quaternion::Identity());
 
     // +camera-y: LOST sends this toward -u (left); SCOPE must agree.
     found::Vec3 plusY(DECIMAL(1.0), DECIMAL(0.1), DECIMAL(0.0));
-    std::optional<found::Vec2> py = ProjectStarToPixel(plusY, attitude, options);
+    std::optional<found::Vec2> py = ProjectStarToPixel(plusY, attitude, camera);
     ASSERT_TRUE(py.has_value());
     found::Vec2 pyExpected = LostPixel(plusY, f, cx, cy);
     EXPECT_NEAR(py->x(), pyExpected.x(), kTol);
@@ -198,7 +197,7 @@ TEST(LostAttitudeToScopeFrameTest, MatchesLostForwardModelSigns) {
 
     // +camera-z: LOST sends this toward -v; SCOPE must agree.
     found::Vec3 plusZ(DECIMAL(1.0), DECIMAL(0.0), DECIMAL(0.1));
-    std::optional<found::Vec2> pz = ProjectStarToPixel(plusZ, attitude, options);
+    std::optional<found::Vec2> pz = ProjectStarToPixel(plusZ, attitude, camera);
     ASSERT_TRUE(pz.has_value());
     found::Vec2 pzExpected = LostPixel(plusZ, f, cx, cy);
     EXPECT_NEAR(pz->x(), pzExpected.x(), kTol);
@@ -209,11 +208,11 @@ TEST(LostAttitudeToScopeFrameTest, MatchesLostForwardModelSigns) {
 // plane after conversion (camera-frame z < 0), so the projection rejects it
 // rather than folding it onto the sensor.
 TEST(LostAttitudeToScopeFrameTest, AntiBoresightIsRejected) {
-    RecalibrationOptions options = PinholeOptions(DECIMAL(100.0), DECIMAL(100.0), DECIMAL(320.0), DECIMAL(240.0));
+    CameraParameters camera = PinholeCamera(DECIMAL(100.0), DECIMAL(100.0), DECIMAL(320.0), DECIMAL(240.0));
     const found::Quaternion attitude = LostAttitudeToScopeFrame(found::Quaternion::Identity());
     found::Vec3 eI(DECIMAL(-1.0), DECIMAL(0.0), DECIMAL(0.0));
 
-    EXPECT_FALSE(ProjectStarToPixel(eI, attitude, options).has_value());
+    EXPECT_FALSE(ProjectStarToPixel(eI, attitude, camera).has_value());
 }
 
 }  // namespace scope

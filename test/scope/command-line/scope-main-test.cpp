@@ -119,6 +119,7 @@ TEST_F(ScopeMainTest, RunsEndToEndFromFiles) {
 
     EXPECT_EQ(status, EXIT_SUCCESS);
     EXPECT_THAT(output, testing::HasSubstr("Star image 0: 1 of 1 centroids kept"));
+    EXPECT_THAT(output, testing::HasSubstr("Calibration result:"));
 }
 
 }  // namespace scope

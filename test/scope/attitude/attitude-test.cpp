@@ -8,7 +8,6 @@
 #include "common/spatial/attitude-utils.hpp"
 
 #include "scope/attitude/attitude.hpp"
-#include "scope/command-line/parsing/options.hpp"
 #include "scope/projection/projection.hpp"
 
 #include "test/scope/common/test-files.hpp"
@@ -90,14 +89,14 @@ TEST(LoadAttitudesTest, AttitudeRotatesInertialIntoCameraFrame) {
     std::vector<found::Quaternion> attitudes = LoadAttitudes(file.Path());
     ASSERT_EQ(attitudes.size(), 1u);
 
-    RecalibrationOptions options;
-    options.focalLengthX = DECIMAL(100.0);
-    options.focalLengthY = DECIMAL(100.0);
-    options.principalX = DECIMAL(32.0);
-    options.principalY = DECIMAL(24.0);
+    CameraParameters camera;
+    camera.focalLengthX = DECIMAL(100.0);
+    camera.focalLengthY = DECIMAL(100.0);
+    camera.principalX = DECIMAL(32.0);
+    camera.principalY = DECIMAL(24.0);
 
     const found::Vec3 inertialX(DECIMAL(1.0), DECIMAL(0.0), DECIMAL(0.0));
-    std::optional<found::Vec2> pixel = ProjectStarToPixel(inertialX, attitudes[0], options);
+    std::optional<found::Vec2> pixel = ProjectStarToPixel(inertialX, attitudes[0], camera);
 
     ASSERT_TRUE(pixel.has_value());
     EXPECT_NEAR(pixel->x(), DECIMAL(32.0), DECIMAL(1e-3));

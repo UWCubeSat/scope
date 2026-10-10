@@ -5,16 +5,26 @@
 #include <cstdlib>
 #include <cstring>
 
+#include <iomanip>
 #include <iostream>
 #include <memory>
+#include <sstream>
 #include <utility>
-#include <vector>
 
 #include "scope/common/style.hpp"
 #include "common/logging.hpp"
 #include "common/time/time.hpp"
 
 namespace scope {
+
+namespace {
+
+/// Significant digits printed for each result value: enough that a printed
+/// calibration can be passed back in as the next run's prior without a loss
+/// that matters at the sub-pixel level.
+constexpr int kOutputPrecision = 10;
+
+}  // namespace
 
 PrimaryScopePipelineExecutor::PrimaryScopePipelineExecutor(RecalibrationOptions &&options,
                                                            std::unique_ptr<NoiseFilterAlgorithm> noiseFilterAlgorithm,
@@ -25,7 +35,7 @@ PrimaryScopePipelineExecutor::PrimaryScopePipelineExecutor(RecalibrationOptions 
     this->noiseStage_ = noiseFilterStage.get();
     std::unique_ptr<found::FunctionStage<Image, CentroidObservations>> starCentroidStage(
         std::move(starCentroidAlgorithm));
-    std::unique_ptr<found::FunctionStage<CentroidObservations, std::vector<float>>> optimizationStage(
+    std::unique_ptr<found::FunctionStage<CentroidObservations, CalibrationResult>> optimizationStage(
         std::move(optimizationAlgorithm));
     this->pipeline_.AddStage(std::move(noiseFilterStage))
         .AddStage(std::move(starCentroidStage))
@@ -52,9 +62,26 @@ void PrimaryScopePipelineExecutor::ExecutePipeline() {
 }
 
 void PrimaryScopePipelineExecutor::OutputResults() {
-    // std::vector<float> *&output = this->pipeline_.GetProduct();
-    // TODO: something with output
-    std::cout << "Nothing is implemented :(" << std::endl;
+    const CalibrationResult &result = *this->pipeline_.GetProduct();
+    const CameraParameters &camera = result.camera;
+
+    // Each parameter is labelled with the command-line flag that takes it.
+    std::ostringstream text;
+    text << std::setprecision(kOutputPrecision);
+    text << "Calibration result:\n";
+    text << "    converged: " << (result.converged ? "yes" : "no") << "\n";
+    text << "    focal-length-x: " << camera.focalLengthX << "\n";
+    text << "    alpha: " << camera.alpha << "\n";
+    text << "    focal-length-y: " << camera.focalLengthY << "\n";
+    text << "    principal-point-x: " << camera.principalX << "\n";
+    text << "    principal-point-y: " << camera.principalY << "\n";
+    text << "    k1: " << camera.k1 << "\n";
+    text << "    k2: " << camera.k2 << "\n";
+    text << "    k3: " << camera.k3 << "\n";
+    text << "    p1: " << camera.p1 << "\n";
+    text << "    p2: " << camera.p2 << "\n";
+    text << "    residual-rms: " << result.residualRms << " px over " << result.residuals.size() << " observations\n";
+    std::cout << text.str() << std::flush;
 }
 
 }  // namespace scope

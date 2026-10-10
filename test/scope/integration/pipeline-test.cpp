@@ -15,6 +15,7 @@
 #include "scope/common/style.hpp"
 #include "scope/noise-filter/noise-filter.hpp"
 #include "scope/optimization/optimization.hpp"
+#include "scope/projection/projection.hpp"
 #include "scope/star-centroid/star-centroid.hpp"
 
 namespace scope {
@@ -58,17 +59,13 @@ TEST(PipelineIntegrationTest, RunsEndToEnd) {
 
     // Pinhole camera (focal 100, principal at (32, 32)), no distortion. A star
     // along DirectionForPixel projects to (40, 36).
+    CameraParameters camera;
+    camera.focalLengthX = DECIMAL(100.0);
+    camera.focalLengthY = DECIMAL(100.0);
+    camera.principalX = DECIMAL(32.0);
+    camera.principalY = DECIMAL(32.0);
+
     RecalibrationOptions options;
-    options.focalLengthX = DECIMAL(100.0);
-    options.focalLengthY = DECIMAL(100.0);
-    options.principalX = DECIMAL(32.0);
-    options.principalY = DECIMAL(32.0);
-    options.alpha = DECIMAL(0.0);
-    options.k1 = DECIMAL(0.0);
-    options.k2 = DECIMAL(0.0);
-    options.k3 = DECIMAL(0.0);
-    options.p1 = DECIMAL(0.0);
-    options.p2 = DECIMAL(0.0);
     options.centroidThreshold = 40;
     options.starImages = {star.View()};
 
@@ -82,27 +79,28 @@ TEST(PipelineIntegrationTest, RunsEndToEnd) {
 
     std::vector<found::Quaternion> attitudes{found::Quaternion::Identity()};
     std::unique_ptr<found::FunctionStage<Image, CentroidObservations>> starStage =
-        std::make_unique<ROIFilterAlgorithm>(options, catalog, std::move(attitudes));
+        std::make_unique<ROIFilterAlgorithm>(options, camera, catalog, std::move(attitudes));
     found::FunctionStage<Image, CentroidObservations> *starPtr = starStage.get();
 
-    std::unique_ptr<found::FunctionStage<CentroidObservations, std::vector<float>>> optStage =
+    std::unique_ptr<found::FunctionStage<CentroidObservations, CalibrationResult>> optStage =
         std::make_unique<LMAOptimizationAlgorithm>(options);
 
     PrimaryScopePipeline pipeline;
     pipeline.AddStage(std::move(noiseStage)).AddStage(std::move(starStage)).Complete(std::move(optStage));
 
-    std::vector<float> result = pipeline.Run(darkFrames);
+    CalibrationResult result = pipeline.Run(darkFrames);
 
-    // The optimizer is a stub, so the final product is empty -- but reaching it
-    // means the whole chain ran.
-    EXPECT_TRUE(result.empty());
+    // The optimizer is a stub, so the final product is an empty, unconverged
+    // result -- but reaching it means the whole chain ran.
+    EXPECT_FALSE(result.converged);
+    EXPECT_TRUE(result.residuals.empty());
 
     // Inspect the intermediate payload: the star was centroided at (40, 36).
     CentroidObservations *observations = starPtr->GetProduct();
     ASSERT_NE(observations, nullptr);
     ASSERT_EQ(observations->observations.size(), 1u);
-    EXPECT_NEAR(observations->observations[0].measured_pixel.x(), DECIMAL(40.0), DECIMAL(1e-3));
-    EXPECT_NEAR(observations->observations[0].measured_pixel.y(), DECIMAL(36.0), DECIMAL(1e-3));
+    EXPECT_NEAR(observations->observations[0].measuredPixel.x(), DECIMAL(40.0), DECIMAL(1e-3));
+    EXPECT_NEAR(observations->observations[0].measuredPixel.y(), DECIMAL(36.0), DECIMAL(1e-3));
 
     // The noise filter's dark frame is a malloc'd buffer owned by no one in this
     // WIP pipeline; free it here so the test stays clean under leak detection.

@@ -9,6 +9,7 @@
 #include "scope/catalog/catalog.hpp"
 #include "scope/command-line/parsing/options.hpp"
 #include "scope/common/style.hpp"
+#include "scope/projection/projection.hpp"
 #include "scope/star-centroid/star-centroid.hpp"
 
 namespace scope {
@@ -32,24 +33,17 @@ class TestImage {
     std::vector<unsigned char> pixels_;
 };
 
-/// Pinhole options (focal 100, principal at the image center) with no distortion.
-RecalibrationOptions CenteredOptions() {
-    RecalibrationOptions options;
-    options.focalLengthX = DECIMAL(100.0);
-    options.focalLengthY = DECIMAL(100.0);
-    options.principalX = DECIMAL(32.0);
-    options.principalY = DECIMAL(32.0);
-    options.alpha = DECIMAL(0.0);
-    options.k1 = DECIMAL(0.0);
-    options.k2 = DECIMAL(0.0);
-    options.k3 = DECIMAL(0.0);
-    options.p1 = DECIMAL(0.0);
-    options.p2 = DECIMAL(0.0);
-    options.centroidThreshold = 40;
-    return options;
+/// Pinhole camera (focal 100, principal at the image center) with no distortion.
+CameraParameters CenteredCamera() {
+    CameraParameters camera;
+    camera.focalLengthX = DECIMAL(100.0);
+    camera.focalLengthY = DECIMAL(100.0);
+    camera.principalX = DECIMAL(32.0);
+    camera.principalY = DECIMAL(32.0);
+    return camera;
 }
 
-/// Inertial direction that, under identity attitude and CenteredOptions,
+/// Inertial direction that, under identity attitude and CenteredCamera,
 /// projects to pixel (px, py).
 found::Vec3 DirectionForPixel(decimal px, decimal py) {
     return found::Vec3((px - DECIMAL(32.0)) / DECIMAL(100.0), (py - DECIMAL(32.0)) / DECIMAL(100.0), DECIMAL(1.0))
@@ -68,30 +62,30 @@ void PaintStar(TestImage *image, int x, int y) {
 }  // namespace
 
 // A catalog star that projects onto a visible blob produces one observation,
-// with the catalog and attitudes forwarded.
+// which carries the star's name and inertial direction, with the attitudes
+// forwarded.
 TEST(ROIFilterAlgorithmTest, ProducesObservationForVisibleStar) {
     TestImage dark(10);
     TestImage star(10);
     PaintStar(&star, 40, 36);
 
-    RecalibrationOptions options = CenteredOptions();
+    RecalibrationOptions options;
     options.starImages = {star.View()};
 
     Catalog catalog;
     catalog.push_back(CatalogStar{DirectionForPixel(DECIMAL(40.0), DECIMAL(36.0)), 200, 1});
 
-    ROIFilterAlgorithm algorithm(options, catalog, {found::Quaternion::Identity()});
+    ROIFilterAlgorithm algorithm(options, CenteredCamera(), catalog, {found::Quaternion::Identity()});
     Image darkView = dark.View();
     CentroidObservations result = algorithm.Run(darkView);
 
     ASSERT_EQ(result.observations.size(), 1u);
-    EXPECT_EQ(result.observations[0].image_index, 0);
-    EXPECT_EQ(result.observations[0].catalog_index, 0);
-    EXPECT_NEAR(result.observations[0].measured_pixel.x(), DECIMAL(40.0), kTol);
-    EXPECT_NEAR(result.observations[0].measured_pixel.y(), DECIMAL(36.0), kTol);
+    EXPECT_EQ(result.observations[0].imageIndex, 0);
+    EXPECT_EQ(result.observations[0].starName, 1);
+    EXPECT_NEAR((result.observations[0].inertialDirection - catalog[0].spatial).norm(), DECIMAL(0.0), kTol);
+    EXPECT_NEAR(result.observations[0].measuredPixel.x(), DECIMAL(40.0), kTol);
+    EXPECT_NEAR(result.observations[0].measuredPixel.y(), DECIMAL(36.0), kTol);
 
-    ASSERT_NE(result.catalog, nullptr);
-    EXPECT_EQ(result.catalog->size(), 1u);
     ASSERT_EQ(result.attitudes.size(), 1u);
 }
 
@@ -102,7 +96,7 @@ TEST(ROIFilterAlgorithmTest, SkipsOutOfSensorStar) {
     TestImage star(10);
     PaintStar(&star, 40, 36);
 
-    RecalibrationOptions options = CenteredOptions();
+    RecalibrationOptions options;
     options.starImages = {star.View()};
 
     Catalog catalog;
@@ -110,12 +104,12 @@ TEST(ROIFilterAlgorithmTest, SkipsOutOfSensorStar) {
     // u = 100 * 0.5 + 32 = 82, well outside a 64-wide sensor.
     catalog.push_back(CatalogStar{found::Vec3(DECIMAL(0.5), DECIMAL(0.0), DECIMAL(1.0)).normalized(), 200, 2});
 
-    ROIFilterAlgorithm algorithm(options, catalog, {found::Quaternion::Identity()});
+    ROIFilterAlgorithm algorithm(options, CenteredCamera(), catalog, {found::Quaternion::Identity()});
     Image darkView = dark.View();
     CentroidObservations result = algorithm.Run(darkView);
 
     ASSERT_EQ(result.observations.size(), 1u);
-    EXPECT_EQ(result.observations[0].catalog_index, 0);
+    EXPECT_EQ(result.observations[0].starName, 1);
 }
 
 // An in-sensor star with no corresponding blob yields no observation.
@@ -123,18 +117,17 @@ TEST(ROIFilterAlgorithmTest, NoObservationWhenStarNotPresent) {
     TestImage dark(10);
     TestImage star(10);  // uniform background, nothing above threshold after subtraction
 
-    RecalibrationOptions options = CenteredOptions();
+    RecalibrationOptions options;
     options.starImages = {star.View()};
 
     Catalog catalog;
     catalog.push_back(CatalogStar{DirectionForPixel(DECIMAL(40.0), DECIMAL(36.0)), 200, 1});
 
-    ROIFilterAlgorithm algorithm(options, catalog, {found::Quaternion::Identity()});
+    ROIFilterAlgorithm algorithm(options, CenteredCamera(), catalog, {found::Quaternion::Identity()});
     Image darkView = dark.View();
     CentroidObservations result = algorithm.Run(darkView);
 
     EXPECT_TRUE(result.observations.empty());
-    ASSERT_NE(result.catalog, nullptr);
 }
 
 // Observations from multiple star images are tagged with the right image index.
@@ -145,19 +138,20 @@ TEST(ROIFilterAlgorithmTest, TagsObservationsPerImage) {
     PaintStar(&starA, 40, 36);
     PaintStar(&starB, 40, 36);
 
-    RecalibrationOptions options = CenteredOptions();
+    RecalibrationOptions options;
     options.starImages = {starA.View(), starB.View()};
 
     Catalog catalog;
     catalog.push_back(CatalogStar{DirectionForPixel(DECIMAL(40.0), DECIMAL(36.0)), 200, 1});
 
-    ROIFilterAlgorithm algorithm(options, catalog, {found::Quaternion::Identity(), found::Quaternion::Identity()});
+    ROIFilterAlgorithm algorithm(
+        options, CenteredCamera(), catalog, {found::Quaternion::Identity(), found::Quaternion::Identity()});
     Image darkView = dark.View();
     CentroidObservations result = algorithm.Run(darkView);
 
     ASSERT_EQ(result.observations.size(), 2u);
-    EXPECT_EQ(result.observations[0].image_index, 0);
-    EXPECT_EQ(result.observations[1].image_index, 1);
+    EXPECT_EQ(result.observations[0].imageIndex, 0);
+    EXPECT_EQ(result.observations[1].imageIndex, 1);
 }
 
 // A catalog star fainter than the magnitude threshold is not even projected, so
@@ -169,19 +163,19 @@ TEST(ROIFilterAlgorithmTest, SkipsStarFainterThanMagnitudeThreshold) {
     PaintStar(&star, 40, 36);  // the bright star's blob
     PaintStar(&star, 24, 24);  // the faint star's blob (its own, non-overlapping ROI)
 
-    RecalibrationOptions options = CenteredOptions();  // magnitudeThreshold defaults to 6.0
+    RecalibrationOptions options;  // magnitudeThreshold defaults to 6.0
     options.starImages = {star.View()};
 
     Catalog catalog;
     catalog.push_back(CatalogStar{DirectionForPixel(DECIMAL(40.0), DECIMAL(36.0)), 200, 1});  // mag 2.0 -> kept
     catalog.push_back(CatalogStar{DirectionForPixel(DECIMAL(24.0), DECIMAL(24.0)), 700, 2});  // mag 7.0 -> skipped
 
-    ROIFilterAlgorithm algorithm(options, catalog, {found::Quaternion::Identity()});
+    ROIFilterAlgorithm algorithm(options, CenteredCamera(), catalog, {found::Quaternion::Identity()});
     Image darkView = dark.View();
     CentroidObservations result = algorithm.Run(darkView);
 
     ASSERT_EQ(result.observations.size(), 1u);
-    EXPECT_EQ(result.observations[0].catalog_index, 0);
+    EXPECT_EQ(result.observations[0].starName, 1);
 }
 
 // Two catalog stars projecting a pixel apart both lock onto the same blob, an
@@ -191,14 +185,14 @@ TEST(ROIFilterAlgorithmTest, DropsCollidingObservations) {
     TestImage star(10);
     PaintStar(&star, 40, 36);  // a single blob both stars will centroid onto
 
-    RecalibrationOptions options = CenteredOptions();
+    RecalibrationOptions options;
     options.starImages = {star.View()};
 
     Catalog catalog;
     catalog.push_back(CatalogStar{DirectionForPixel(DECIMAL(40.0), DECIMAL(36.0)), 200, 1});
     catalog.push_back(CatalogStar{DirectionForPixel(DECIMAL(41.0), DECIMAL(36.0)), 200, 2});
 
-    ROIFilterAlgorithm algorithm(options, catalog, {found::Quaternion::Identity()});
+    ROIFilterAlgorithm algorithm(options, CenteredCamera(), catalog, {found::Quaternion::Identity()});
     Image darkView = dark.View();
     CentroidObservations result = algorithm.Run(darkView);
 
@@ -213,14 +207,14 @@ TEST(ROIFilterAlgorithmTest, KeepsWellSeparatedStars) {
     PaintStar(&star, 40, 36);
     PaintStar(&star, 24, 24);
 
-    RecalibrationOptions options = CenteredOptions();
+    RecalibrationOptions options;
     options.starImages = {star.View()};
 
     Catalog catalog;
     catalog.push_back(CatalogStar{DirectionForPixel(DECIMAL(40.0), DECIMAL(36.0)), 200, 1});
     catalog.push_back(CatalogStar{DirectionForPixel(DECIMAL(24.0), DECIMAL(24.0)), 200, 2});
 
-    ROIFilterAlgorithm algorithm(options, catalog, {found::Quaternion::Identity()});
+    ROIFilterAlgorithm algorithm(options, CenteredCamera(), catalog, {found::Quaternion::Identity()});
     Image darkView = dark.View();
     CentroidObservations result = algorithm.Run(darkView);
 
@@ -234,7 +228,7 @@ TEST(ROIFilterAlgorithmTest, SkipsStarBehindCamera) {
     TestImage star(10);
     PaintStar(&star, 40, 36);
 
-    RecalibrationOptions options = CenteredOptions();
+    RecalibrationOptions options;
     options.starImages = {star.View()};
 
     Catalog catalog;
@@ -242,12 +236,12 @@ TEST(ROIFilterAlgorithmTest, SkipsStarBehindCamera) {
     // Anti-boresight under identity attitude: camera-frame z < 0, not imageable.
     catalog.push_back(CatalogStar{found::Vec3(DECIMAL(0.0), DECIMAL(0.0), DECIMAL(-1.0)), 200, 2});
 
-    ROIFilterAlgorithm algorithm(options, catalog, {found::Quaternion::Identity()});
+    ROIFilterAlgorithm algorithm(options, CenteredCamera(), catalog, {found::Quaternion::Identity()});
     Image darkView = dark.View();
     CentroidObservations result = algorithm.Run(darkView);
 
     ASSERT_EQ(result.observations.size(), 1u);
-    EXPECT_EQ(result.observations[0].catalog_index, 0);
+    EXPECT_EQ(result.observations[0].starName, 1);
 }
 
 // Mismatched attitude / star-image counts are a programming error and throw.
@@ -255,14 +249,15 @@ TEST(ROIFilterAlgorithmTest, ThrowsOnAttitudeCountMismatch) {
     TestImage dark(10);
     TestImage star(10);
 
-    RecalibrationOptions options = CenteredOptions();
+    RecalibrationOptions options;
     options.starImages = {star.View()};
 
     Catalog catalog;
     catalog.push_back(CatalogStar{DirectionForPixel(DECIMAL(40.0), DECIMAL(36.0)), 200, 1});
 
     // Two attitudes for one star image.
-    ROIFilterAlgorithm algorithm(options, catalog, {found::Quaternion::Identity(), found::Quaternion::Identity()});
+    ROIFilterAlgorithm algorithm(
+        options, CenteredCamera(), catalog, {found::Quaternion::Identity(), found::Quaternion::Identity()});
     Image darkView = dark.View();
     EXPECT_THROW(algorithm.Run(darkView), std::runtime_error);
 }
@@ -274,13 +269,13 @@ TEST(ROIFilterAlgorithmTest, ThrowsOnDimensionMismatch) {
 
     TestImage star(10);  // 64x64, mismatched against the 32x32 dark frame
 
-    RecalibrationOptions options = CenteredOptions();
+    RecalibrationOptions options;
     options.starImages = {star.View()};
 
     Catalog catalog;
     catalog.push_back(CatalogStar{DirectionForPixel(DECIMAL(40.0), DECIMAL(36.0)), 200, 1});
 
-    ROIFilterAlgorithm algorithm(options, catalog, {found::Quaternion::Identity()});
+    ROIFilterAlgorithm algorithm(options, CenteredCamera(), catalog, {found::Quaternion::Identity()});
     EXPECT_THROW(algorithm.Run(darkView), std::runtime_error);
 }
 
@@ -292,20 +287,22 @@ TEST(ROIFilterAlgorithmTest, RoiSizeSetsSearchReach) {
     TestImage star(10);
     PaintStar(&star, 40, 30);  // 10 px to the right of the prediction
 
-    RecalibrationOptions options = CenteredOptions();  // roiSize defaults to 31
+    RecalibrationOptions options;  // roiSize defaults to 31
     options.starImages = {star.View()};
 
     Catalog catalog;
     catalog.push_back(CatalogStar{DirectionForPixel(DECIMAL(30.0), DECIMAL(30.0)), 200, 1});
 
     Image darkView = dark.View();
-    CentroidObservations wide = ROIFilterAlgorithm(options, catalog, {found::Quaternion::Identity()}).Run(darkView);
+    CentroidObservations wide =
+        ROIFilterAlgorithm(options, CenteredCamera(), catalog, {found::Quaternion::Identity()}).Run(darkView);
     ASSERT_EQ(wide.observations.size(), 1u);
-    EXPECT_NEAR(wide.observations[0].measured_pixel.x(), DECIMAL(40.0), kTol);
-    EXPECT_NEAR(wide.observations[0].measured_pixel.y(), DECIMAL(30.0), kTol);
+    EXPECT_NEAR(wide.observations[0].measuredPixel.x(), DECIMAL(40.0), kTol);
+    EXPECT_NEAR(wide.observations[0].measuredPixel.y(), DECIMAL(30.0), kTol);
 
     options.roiSize = 11;
-    CentroidObservations narrow = ROIFilterAlgorithm(options, catalog, {found::Quaternion::Identity()}).Run(darkView);
+    CentroidObservations narrow =
+        ROIFilterAlgorithm(options, CenteredCamera(), catalog, {found::Quaternion::Identity()}).Run(darkView);
     EXPECT_TRUE(narrow.observations.empty());
 }
 
@@ -317,21 +314,23 @@ TEST(ROIFilterAlgorithmTest, RoiSizeSetsEdgeMargin) {
     TestImage star(10);
     PaintStar(&star, 10, 32);
 
-    RecalibrationOptions options = CenteredOptions();
+    RecalibrationOptions options;
     options.starImages = {star.View()};
 
     Catalog catalog;
     catalog.push_back(CatalogStar{DirectionForPixel(DECIMAL(10.0), DECIMAL(32.0)), 200, 1});
 
     Image darkView = dark.View();
-    CentroidObservations wide = ROIFilterAlgorithm(options, catalog, {found::Quaternion::Identity()}).Run(darkView);
+    CentroidObservations wide =
+        ROIFilterAlgorithm(options, CenteredCamera(), catalog, {found::Quaternion::Identity()}).Run(darkView);
     EXPECT_TRUE(wide.observations.empty());
 
     options.roiSize = 11;
-    CentroidObservations narrow = ROIFilterAlgorithm(options, catalog, {found::Quaternion::Identity()}).Run(darkView);
+    CentroidObservations narrow =
+        ROIFilterAlgorithm(options, CenteredCamera(), catalog, {found::Quaternion::Identity()}).Run(darkView);
     ASSERT_EQ(narrow.observations.size(), 1u);
-    EXPECT_NEAR(narrow.observations[0].measured_pixel.x(), DECIMAL(10.0), kTol);
-    EXPECT_NEAR(narrow.observations[0].measured_pixel.y(), DECIMAL(32.0), kTol);
+    EXPECT_NEAR(narrow.observations[0].measuredPixel.x(), DECIMAL(10.0), kTol);
+    EXPECT_NEAR(narrow.observations[0].measuredPixel.y(), DECIMAL(32.0), kTol);
 }
 
 // The ROI is centered on a pixel, so an even size reaches as far as the next
@@ -343,7 +342,7 @@ TEST(ROIFilterAlgorithmTest, EvenRoiSizeActsAsNextOdd) {
     // its wing would reach into the 29 px window.
     star.Set(45, 30, 210);
 
-    RecalibrationOptions options = CenteredOptions();
+    RecalibrationOptions options;
     options.starImages = {star.View()};
 
     Catalog catalog;
@@ -351,11 +350,13 @@ TEST(ROIFilterAlgorithmTest, EvenRoiSizeActsAsNextOdd) {
 
     Image darkView = dark.View();
     options.roiSize = 30;
-    CentroidObservations even = ROIFilterAlgorithm(options, catalog, {found::Quaternion::Identity()}).Run(darkView);
+    CentroidObservations even =
+        ROIFilterAlgorithm(options, CenteredCamera(), catalog, {found::Quaternion::Identity()}).Run(darkView);
     EXPECT_EQ(even.observations.size(), 1u);
 
     options.roiSize = 29;
-    CentroidObservations odd = ROIFilterAlgorithm(options, catalog, {found::Quaternion::Identity()}).Run(darkView);
+    CentroidObservations odd =
+        ROIFilterAlgorithm(options, CenteredCamera(), catalog, {found::Quaternion::Identity()}).Run(darkView);
     EXPECT_TRUE(odd.observations.empty());
 }
 
@@ -364,14 +365,14 @@ TEST(ROIFilterAlgorithmTest, ThrowsOnNonPositiveRoiSize) {
     TestImage dark(10);
     TestImage star(10);
 
-    RecalibrationOptions options = CenteredOptions();
+    RecalibrationOptions options;
     options.starImages = {star.View()};
     options.roiSize = 0;
 
     Catalog catalog;
     catalog.push_back(CatalogStar{DirectionForPixel(DECIMAL(40.0), DECIMAL(36.0)), 200, 1});
 
-    ROIFilterAlgorithm algorithm(options, catalog, {found::Quaternion::Identity()});
+    ROIFilterAlgorithm algorithm(options, CenteredCamera(), catalog, {found::Quaternion::Identity()});
     Image darkView = dark.View();
     EXPECT_THROW(algorithm.Run(darkView), std::runtime_error);
 }

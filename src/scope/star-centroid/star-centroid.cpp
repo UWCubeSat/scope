@@ -61,7 +61,6 @@ CentroidObservations ROIFilterAlgorithm::Run(const Image &darkFrame) {
 
     CentroidObservations result;
     result.attitudes = attitudes_;
-    result.catalog = &catalog_;
 
     const unsigned char threshold = static_cast<unsigned char>(options_.centroidThreshold);
     // Faintest magnitude worth projecting, in the catalog's (mag * 100) integer
@@ -85,8 +84,7 @@ CentroidObservations ROIFilterAlgorithm::Run(const Image &darkFrame) {
                 continue;
             }
 
-            const std::optional<found::Vec2> expected =
-                ProjectStarToPixel(catalog_[j].spatial, attitudes_[i], options_);
+            const std::optional<found::Vec2> expected = ProjectStarToPixel(catalog_[j].spatial, attitudes_[i], camera_);
             if (!expected.has_value() || !InSensorWithMargin(*expected, star.width, star.height, sensorMargin)) {
                 continue;
             }
@@ -94,7 +92,8 @@ CentroidObservations ROIFilterAlgorithm::Run(const Image &darkFrame) {
             const std::optional<found::Vec2> centroid =
                 ExtractCentroid(darkSubtracted, *expected, options_.roiSize, kRecenterRadius, threshold);
             if (centroid.has_value()) {
-                candidates.push_back(Observation{static_cast<int>(i), static_cast<int>(j), *centroid});
+                candidates.push_back(
+                    Observation{static_cast<int>(i), catalog_[j].name, catalog_[j].spatial, *centroid});
             }
         }
 
@@ -112,7 +111,7 @@ CentroidObservations ROIFilterAlgorithm::Run(const Image &darkFrame) {
                 if (a == b) {
                     continue;
                 }
-                if ((candidates[a].measured_pixel - candidates[b].measured_pixel).norm() < kCentroidMatchTolerance) {
+                if ((candidates[a].measuredPixel - candidates[b].measuredPixel).norm() < kCentroidMatchTolerance) {
                     ambiguous = true;
                     break;
                 }

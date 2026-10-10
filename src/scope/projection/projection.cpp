@@ -38,7 +38,7 @@ found::Quaternion LostAttitudeToScopeFrame(const found::Quaternion &lostAttitude
 
 std::optional<found::Vec2> ProjectStarToPixel(const found::Vec3 &eI,
                                               const found::Quaternion &attitude,
-                                              const RecalibrationOptions &options) {
+                                              const CameraParameters &camera) {
     // Rotate the inertial line of sight into the camera frame (z is the boresight).
     const found::Vec3 eC = (attitude * eI).normalized();
 
@@ -56,11 +56,11 @@ std::optional<found::Vec2> ProjectStarToPixel(const found::Vec3 &eI,
     const found::Vec2 ideal{eC.x() / eC.z(), eC.y() / eC.z()};
 
     // Brown distortion (paper Eq. 6).
-    const found::Vec2 distorted = BrownDistort(ideal, options.k1, options.k2, options.k3, options.p1, options.p2);
+    const found::Vec2 distorted = BrownDistort(ideal, camera.k1, camera.k2, camera.k3, camera.p1, camera.p2);
 
     // Camera intrinsics (paper Eq. 7): [u'; v'] = [d_x, alpha, u_p; 0, d_y, v_p] [x'; y'; 1].
-    const decimal u = options.focalLengthX * distorted.x() + options.alpha * distorted.y() + options.principalX;
-    const decimal v = options.focalLengthY * distorted.y() + options.principalY;
+    const decimal u = camera.focalLengthX * distorted.x() + camera.alpha * distorted.y() + camera.principalX;
+    const decimal v = camera.focalLengthY * distorted.y() + camera.principalY;
 
     return found::Vec2{u, v};
 }

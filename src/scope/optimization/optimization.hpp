@@ -6,8 +6,6 @@
 #ifndef SRC_SCOPE_OPTIMIZATION_OPTIMIZATION_HPP_
 #define SRC_SCOPE_OPTIMIZATION_OPTIMIZATION_HPP_
 
-#include <vector>
-
 #include "common/pipeline/stages.hpp"
 
 #include "scope/command-line/parsing/options.hpp"
@@ -18,7 +16,7 @@ namespace scope {
 /**
  * Produces updated camera intrinsic + distortion parameters from star centroids.
  */
-class OptimizationAlgorithm : public found::FunctionStage<CentroidObservations, std::vector<float>> {
+class OptimizationAlgorithm : public found::FunctionStage<CentroidObservations, CalibrationResult> {
  public:
     OptimizationAlgorithm() = default;
     virtual ~OptimizationAlgorithm() {}
@@ -43,12 +41,13 @@ class LMAOptimizationAlgorithm : public OptimizationAlgorithm {
     /**
      * Fits camera parameters to the given star centroids.
      *
-     * @param observations Star measurements + prior attitudes + catalog from the
+     * @param observations Star measurements + prior attitudes from the
      *                     star-centroid stage.
      *
-     * @return The updated camera parameter vector. The stub returns an empty vector.
+     * @return The fitted calibration. The stub returns an empty, unconverged
+     *         result.
      */
-    std::vector<float> Run(const CentroidObservations &observations) override;
+    CalibrationResult Run(const CentroidObservations &observations) override;
 };
 
 }  // namespace scope

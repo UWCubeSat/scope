@@ -29,9 +29,12 @@ inline std::unique_ptr<PrimaryScopePipelineExecutor> CreatePrimaryScopePipelineE
     // One prior attitude per star image, already in SCOPE's camera frame.
     std::vector<found::Quaternion> attitudes = ProvideAttitudes(options);
 
+    // The prior camera parameters, read out of the options once.
+    const CameraParameters camera = ProvideCameraParameters(options);
+
     std::unique_ptr<NoiseFilterAlgorithm> noiseAlg = ProvideNoiseFilterAlgorithm(options);
     std::unique_ptr<StarCentroidAlgorithm> starAlg =
-        ProvideStarCentroidAlgorithm(options, std::move(catalog), std::move(attitudes));
+        ProvideStarCentroidAlgorithm(options, camera, std::move(catalog), std::move(attitudes));
     std::unique_ptr<OptimizationAlgorithm> optAlg = ProvideOptimizationAlgorithm(options);
 
     return std::make_unique<PrimaryScopePipelineExecutor>(

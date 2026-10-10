@@ -16,6 +16,7 @@
 #include "scope/common/style.hpp"
 #include "scope/noise-filter/noise-filter.hpp"
 #include "scope/optimization/optimization.hpp"
+#include "scope/projection/projection.hpp"
 #include "scope/providers/factory.hpp"
 #include "scope/providers/stage-providers.hpp"
 #include "scope/star-centroid/star-centroid.hpp"
@@ -58,8 +59,8 @@ TEST(StageProvidersTest, ProvidesDarkScreenFilter) {
 }
 
 TEST(StageProvidersTest, ProvidesRoiFilter) {
-    std::unique_ptr<StarCentroidAlgorithm> algorithm =
-        ProvideStarCentroidAlgorithm(RecalibrationOptions(), Catalog(), std::vector<found::Quaternion>());
+    std::unique_ptr<StarCentroidAlgorithm> algorithm = ProvideStarCentroidAlgorithm(
+        RecalibrationOptions(), CameraParameters(), Catalog(), std::vector<found::Quaternion>());
 
     EXPECT_NE(dynamic_cast<ROIFilterAlgorithm *>(algorithm.get()), nullptr);
 }
@@ -68,6 +69,35 @@ TEST(StageProvidersTest, ProvidesLmaOptimizer) {
     std::unique_ptr<OptimizationAlgorithm> algorithm = ProvideOptimizationAlgorithm(RecalibrationOptions());
 
     EXPECT_NE(dynamic_cast<LMAOptimizationAlgorithm *>(algorithm.get()), nullptr);
+}
+
+// Each of the ten prior parameters is carried from its option into its own
+// field. The values are all different, so a swapped pair would show.
+TEST(ProvideCameraParametersTest, CopiesEveryPriorParameter) {
+    RecalibrationOptions options;
+    options.focalLengthX = DECIMAL(1.0);
+    options.alpha = DECIMAL(2.0);
+    options.focalLengthY = DECIMAL(3.0);
+    options.principalX = DECIMAL(4.0);
+    options.principalY = DECIMAL(5.0);
+    options.k1 = DECIMAL(6.0);
+    options.k2 = DECIMAL(7.0);
+    options.k3 = DECIMAL(8.0);
+    options.p1 = DECIMAL(9.0);
+    options.p2 = DECIMAL(10.0);
+
+    const CameraParameters camera = ProvideCameraParameters(options);
+
+    EXPECT_EQ(camera.focalLengthX, DECIMAL(1.0));
+    EXPECT_EQ(camera.alpha, DECIMAL(2.0));
+    EXPECT_EQ(camera.focalLengthY, DECIMAL(3.0));
+    EXPECT_EQ(camera.principalX, DECIMAL(4.0));
+    EXPECT_EQ(camera.principalY, DECIMAL(5.0));
+    EXPECT_EQ(camera.k1, DECIMAL(6.0));
+    EXPECT_EQ(camera.k2, DECIMAL(7.0));
+    EXPECT_EQ(camera.k3, DECIMAL(8.0));
+    EXPECT_EQ(camera.p1, DECIMAL(9.0));
+    EXPECT_EQ(camera.p2, DECIMAL(10.0));
 }
 
 // The attitudes come from the file named in the options.

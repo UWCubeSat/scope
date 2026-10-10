@@ -47,7 +47,12 @@ class PrimaryScopePipelineExecutor : public found::PipelineExecutor {
 
     /// Runs the assembled pipeline end-to-end.
     void ExecutePipeline() override;
-    /// Prints the calibrated parameters produced by the pipeline.
+    /**
+     * Prints the calibration produced by the pipeline to standard output: whether
+     * the fit converged, the ten camera parameters, and the residual RMS.
+     *
+     * @pre ExecutePipeline has run.
+     */
     void OutputResults() override;
 
  private:
