@@ -110,67 +110,65 @@ $(document).ready(function(){initNavTree('stage-providers_8hpp_source.html','');
 <div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span> </div>
 <div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="preprocessor">#include &quot;<a class="code" href="attitude_8hpp.html">scope/attitude/attitude.hpp</a>&quot;</span></div>
 <div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="preprocessor">#include &quot;<a class="code" href="catalog_8hpp.html">scope/catalog/catalog.hpp</a>&quot;</span></div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="preprocessor">#include &quot;<a class="code" href="executors_8hpp.html">scope/command-line/execution/executors.hpp</a>&quot;</span></div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="preprocessor">#include &quot;<a class="code" href="noise-filter_8hpp.html">scope/noise-filter/noise-filter.hpp</a>&quot;</span></div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="preprocessor">#include &quot;<a class="code" href="optimization_8hpp.html">scope/optimization/optimization.hpp</a>&quot;</span></div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="preprocessor">#include &quot;<a class="code" href="projection_8hpp.html">scope/projection/projection.hpp</a>&quot;</span></div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="preprocessor">#include &quot;<a class="code" href="star-centroid_8hpp.html">scope/star-centroid/star-centroid.hpp</a>&quot;</span></div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span> </div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><span class="keyword">namespace </span>scope {</div>
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span> </div>
-<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span><span class="keyword">inline</span> CameraParameters ProvideCameraParameters(<span class="keyword">const</span> <a class="code hl_class" href="classRecalibrationOptions.html">RecalibrationOptions</a> &amp;options) {</div>
-<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>    CameraParameters camera;</div>
-<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>    camera.<a class="code hl_variable" href="structscope_1_1CameraParameters.html#a351fe2da6560e54d201e425b722c4644">focalLengthX</a> = options.focalLengthX;</div>
-<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>    camera.alpha = options.alpha;</div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>    camera.focalLengthY = options.focalLengthY;</div>
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>    camera.principalX = options.principalX;</div>
-<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>    camera.principalY = options.principalY;</div>
-<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>    camera.k1 = options.k1;</div>
-<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>    camera.k2 = options.k2;</div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>    camera.k3 = options.k3;</div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>    camera.p1 = options.p1;</div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>    camera.p2 = options.p2;</div>
-<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>    <span class="keywordflow">return</span> camera;</div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>}</div>
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span> </div>
-<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span><span class="keyword">inline</span> std::unique_ptr&lt;NoiseFilterAlgorithm&gt; ProvideNoiseFilterAlgorithm(</div>
-<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>    [[maybe_unused]] <span class="keyword">const</span> <a class="code hl_class" href="classRecalibrationOptions.html">RecalibrationOptions</a> &amp;options) {</div>
-<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>    <span class="keywordflow">return</span> std::make_unique&lt;DarkScreenFilter&gt;();</div>
-<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>}</div>
-<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span> </div>
-<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span><span class="keyword">inline</span> std::vector&lt;found::Quaternion&gt; ProvideAttitudes(<span class="keyword">const</span> <a class="code hl_class" href="classRecalibrationOptions.html">RecalibrationOptions</a> &amp;options) {</div>
-<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>    <span class="keywordflow">if</span> (options.attitudesPath.empty()) {</div>
-<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>        <span class="keywordflow">if</span> (!options.starImages.empty()) {</div>
-<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>            <span class="keywordflow">throw</span> std::runtime_error(<span class="stringliteral">&quot;No attitudes given: --attitudes needs one attitude per star image&quot;</span>);</div>
-<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>        }</div>
-<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>        <span class="keywordflow">return</span> {};</div>
-<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>    }</div>
-<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>    <span class="keywordflow">return</span> LoadAttitudes(options.attitudesPath);</div>
-<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>}</div>
-<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span> </div>
-<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span><span class="keyword">inline</span> std::unique_ptr&lt;StarCentroidAlgorithm&gt; ProvideStarCentroidAlgorithm(<span class="keyword">const</span> <a class="code hl_class" href="classRecalibrationOptions.html">RecalibrationOptions</a> &amp;options,</div>
-<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>                                                                           <span class="keyword">const</span> CameraParameters &amp;camera,</div>
-<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>                                                                           Catalog catalog,</div>
-<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>                                                                           std::vector&lt;found::Quaternion&gt; attitudes) {</div>
-<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>    <span class="keywordflow">return</span> std::make_unique&lt;ROIFilterAlgorithm&gt;(options, camera, std::move(catalog), std::move(attitudes));</div>
-<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>}</div>
-<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span> </div>
-<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span><span class="keyword">inline</span> std::unique_ptr&lt;OptimizationAlgorithm&gt; ProvideOptimizationAlgorithm(<span class="keyword">const</span> <a class="code hl_class" href="classRecalibrationOptions.html">RecalibrationOptions</a> &amp;options) {</div>
-<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>    <span class="keywordflow">return</span> std::make_unique&lt;LMAOptimizationAlgorithm&gt;(options);</div>
-<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>}</div>
-<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span> </div>
-<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>}  <span class="comment">// namespace scope</span></div>
-<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span> </div>
-<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span><span class="preprocessor">#endif  </span><span class="comment">// SRC_SCOPE_PROVIDERS_STAGE_PROVIDERS_HPP_</span></div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="preprocessor">#include &quot;<a class="code" href="noise-filter_8hpp.html">scope/noise-filter/noise-filter.hpp</a>&quot;</span></div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="preprocessor">#include &quot;<a class="code" href="optimization_8hpp.html">scope/optimization/optimization.hpp</a>&quot;</span></div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="preprocessor">#include &quot;<a class="code" href="projection_8hpp.html">scope/projection/projection.hpp</a>&quot;</span></div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="preprocessor">#include &quot;<a class="code" href="star-centroid_8hpp.html">scope/star-centroid/star-centroid.hpp</a>&quot;</span></div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span> </div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="keyword">namespace </span>scope {</div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span> </div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span><span class="keyword">inline</span> CameraParameters ProvideCameraParameters(<span class="keyword">const</span> <a class="code hl_class" href="classRecalibrationOptions.html">RecalibrationOptions</a> &amp;options) {</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>    CameraParameters camera;</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>    camera.<a class="code hl_variable" href="structscope_1_1CameraParameters.html#a351fe2da6560e54d201e425b722c4644">focalLengthX</a> = options.focalLengthX;</div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>    camera.alpha = options.alpha;</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>    camera.focalLengthY = options.focalLengthY;</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>    camera.principalX = options.principalX;</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>    camera.principalY = options.principalY;</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>    camera.k1 = options.k1;</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>    camera.k2 = options.k2;</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>    camera.k3 = options.k3;</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>    camera.p1 = options.p1;</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>    camera.p2 = options.p2;</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>    <span class="keywordflow">return</span> camera;</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>}</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span> </div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span><span class="keyword">inline</span> std::unique_ptr&lt;NoiseFilterAlgorithm&gt; ProvideNoiseFilterAlgorithm(</div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>    [[maybe_unused]] <span class="keyword">const</span> <a class="code hl_class" href="classRecalibrationOptions.html">RecalibrationOptions</a> &amp;options) {</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>    <span class="keywordflow">return</span> std::make_unique&lt;DarkScreenFilter&gt;();</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>}</div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span> </div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span><span class="keyword">inline</span> std::vector&lt;found::Quaternion&gt; ProvideAttitudes(<span class="keyword">const</span> <a class="code hl_class" href="classRecalibrationOptions.html">RecalibrationOptions</a> &amp;options) {</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>    <span class="keywordflow">if</span> (options.attitudesPath.empty()) {</div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>        <span class="keywordflow">if</span> (!options.starImages.empty()) {</div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>            <span class="keywordflow">throw</span> std::runtime_error(<span class="stringliteral">&quot;No attitudes given: --attitudes needs one attitude per star image&quot;</span>);</div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>        }</div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>        <span class="keywordflow">return</span> {};</div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>    }</div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>    <span class="keywordflow">return</span> LoadAttitudes(options.attitudesPath);</div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>}</div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span> </div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span><span class="keyword">inline</span> std::unique_ptr&lt;StarCentroidAlgorithm&gt; ProvideStarCentroidAlgorithm(<span class="keyword">const</span> <a class="code hl_class" href="classRecalibrationOptions.html">RecalibrationOptions</a> &amp;options,</div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>                                                                           <span class="keyword">const</span> CameraParameters &amp;camera,</div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>                                                                           Catalog catalog,</div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>                                                                           std::vector&lt;found::Quaternion&gt; attitudes) {</div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>    <span class="keywordflow">return</span> std::make_unique&lt;ROIFilterAlgorithm&gt;(options, camera, std::move(catalog), std::move(attitudes));</div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>}</div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span> </div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span><span class="keyword">inline</span> std::unique_ptr&lt;OptimizationAlgorithm&gt; ProvideOptimizationAlgorithm(<span class="keyword">const</span> <a class="code hl_class" href="classRecalibrationOptions.html">RecalibrationOptions</a> &amp;options) {</div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>    <span class="keywordflow">return</span> std::make_unique&lt;LMAOptimizationAlgorithm&gt;(options);</div>
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>}</div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span> </div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>}  <span class="comment">// namespace scope</span></div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span> </div>
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span><span class="preprocessor">#endif  </span><span class="comment">// SRC_SCOPE_PROVIDERS_STAGE_PROVIDERS_HPP_</span></div>
 <div class="ttc" id="aattitude_8hpp_html"><div class="ttname"><a href="attitude_8hpp.html">attitude.hpp</a></div><div class="ttdoc">Loader for the per-image prior attitudes.</div></div>
 <div class="ttc" id="acatalog_8hpp_html"><div class="ttname"><a href="catalog_8hpp.html">catalog.hpp</a></div><div class="ttdoc">Bright star catalog types and loader for SCOPE calibration.</div></div>
-<div class="ttc" id="aclassRecalibrationOptions_html"><div class="ttname"><a href="classRecalibrationOptions.html">RecalibrationOptions</a></div><div class="ttdoc">Parsed CLI options driving a recalibration run.</div><div class="ttdef"><b>Definition</b> options.hpp:44</div></div>
-<div class="ttc" id="aexecutors_8hpp_html"><div class="ttname"><a href="executors_8hpp.html">executors.hpp</a></div><div class="ttdoc">Pipeline executor for the primary SCOPE calibration chain.</div></div>
+<div class="ttc" id="aclassRecalibrationOptions_html"><div class="ttname"><a href="classRecalibrationOptions.html">RecalibrationOptions</a></div><div class="ttdoc">Parsed CLI options driving a recalibration run.</div><div class="ttdef"><b>Definition</b> options.hpp:42</div></div>
 <div class="ttc" id="anoise-filter_8hpp_html"><div class="ttname"><a href="noise-filter_8hpp.html">noise-filter.hpp</a></div><div class="ttdoc">Noise filtering algorithms for SCOPE calibration.</div></div>
 <div class="ttc" id="aoptimization_8hpp_html"><div class="ttname"><a href="optimization_8hpp.html">optimization.hpp</a></div><div class="ttdoc">Parameter-fit optimization algorithms for SCOPE calibration.</div></div>
 <div class="ttc" id="aprojection_8hpp_html"><div class="ttname"><a href="projection_8hpp.html">projection.hpp</a></div><div class="ttdoc">Forward camera projection (pinhole + Brown distortion + intrinsics).</div></div>
 <div class="ttc" id="astar-centroid_8hpp_html"><div class="ttname"><a href="star-centroid_8hpp.html">star-centroid.hpp</a></div><div class="ttdoc">Star centroid algorithms for SCOPE calibration.</div></div>
-<div class="ttc" id="astructscope_1_1CameraParameters_html_a351fe2da6560e54d201e425b722c4644"><div class="ttname"><a href="structscope_1_1CameraParameters.html#a351fe2da6560e54d201e425b722c4644">scope::CameraParameters::focalLengthX</a></div><div class="ttdeci">decimal focalLengthX</div><div class="ttdoc">d_x: focal length along u, in pixels.</div><div class="ttdef"><b>Definition</b> projection.hpp:33</div></div>
+<div class="ttc" id="astructscope_1_1CameraParameters_html_a351fe2da6560e54d201e425b722c4644"><div class="ttname"><a href="structscope_1_1CameraParameters.html#a351fe2da6560e54d201e425b722c4644">scope::CameraParameters::focalLengthX</a></div><div class="ttdeci">decimal focalLengthX</div><div class="ttdoc">d_x: focal length along u, in pixels.</div><div class="ttdef"><b>Definition</b> projection.hpp:27</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

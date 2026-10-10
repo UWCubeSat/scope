@@ -126,29 +126,28 @@ decimal&#160;</td><td class="memItemRight" valign="bottom"><b>principalY</b> = D
 <tr class="separator:af3f732deeb907d862b49c57ebc15839d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae7d315bd68f2d2fde7f996b96c1c7758" id="r_ae7d315bd68f2d2fde7f996b96c1c7758"><td class="memItemLeft" align="right" valign="top"><a id="ae7d315bd68f2d2fde7f996b96c1c7758" name="ae7d315bd68f2d2fde7f996b96c1c7758"></a>
 decimal&#160;</td><td class="memItemRight" valign="bottom"><b>k1</b> = DECIMAL(0.0)</td></tr>
-<tr class="memdesc:ae7d315bd68f2d2fde7f996b96c1c7758"><td class="mdescLeft">&#160;</td><td class="mdescRight">First radial distortion coefficient. <br /></td></tr>
+<tr class="memdesc:ae7d315bd68f2d2fde7f996b96c1c7758"><td class="mdescLeft">&#160;</td><td class="mdescRight">Radial distortion coefficient on r^2. <br /></td></tr>
 <tr class="separator:ae7d315bd68f2d2fde7f996b96c1c7758"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0a4a452db536765013b3b2797285f44b" id="r_a0a4a452db536765013b3b2797285f44b"><td class="memItemLeft" align="right" valign="top"><a id="a0a4a452db536765013b3b2797285f44b" name="a0a4a452db536765013b3b2797285f44b"></a>
 decimal&#160;</td><td class="memItemRight" valign="bottom"><b>k2</b> = DECIMAL(0.0)</td></tr>
-<tr class="memdesc:a0a4a452db536765013b3b2797285f44b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Second radial distortion coefficient. <br /></td></tr>
+<tr class="memdesc:a0a4a452db536765013b3b2797285f44b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Radial distortion coefficient on r^4. <br /></td></tr>
 <tr class="separator:a0a4a452db536765013b3b2797285f44b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:affc0aa38fe41bb5a6bfe05aec708d340" id="r_affc0aa38fe41bb5a6bfe05aec708d340"><td class="memItemLeft" align="right" valign="top"><a id="affc0aa38fe41bb5a6bfe05aec708d340" name="affc0aa38fe41bb5a6bfe05aec708d340"></a>
 decimal&#160;</td><td class="memItemRight" valign="bottom"><b>k3</b> = DECIMAL(0.0)</td></tr>
-<tr class="memdesc:affc0aa38fe41bb5a6bfe05aec708d340"><td class="mdescLeft">&#160;</td><td class="mdescRight">Third radial distortion coefficient. <br /></td></tr>
+<tr class="memdesc:affc0aa38fe41bb5a6bfe05aec708d340"><td class="mdescLeft">&#160;</td><td class="mdescRight">Radial distortion coefficient on r^6. <br /></td></tr>
 <tr class="separator:affc0aa38fe41bb5a6bfe05aec708d340"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aeabbbcc087bf837bdddc9c16831ac749" id="r_aeabbbcc087bf837bdddc9c16831ac749"><td class="memItemLeft" align="right" valign="top"><a id="aeabbbcc087bf837bdddc9c16831ac749" name="aeabbbcc087bf837bdddc9c16831ac749"></a>
 decimal&#160;</td><td class="memItemRight" valign="bottom"><b>p1</b> = DECIMAL(0.0)</td></tr>
-<tr class="memdesc:aeabbbcc087bf837bdddc9c16831ac749"><td class="mdescLeft">&#160;</td><td class="mdescRight">First decentering (tangential) distortion coefficient. <br /></td></tr>
+<tr class="memdesc:aeabbbcc087bf837bdddc9c16831ac749"><td class="mdescLeft">&#160;</td><td class="mdescRight">First decentering (tangential) coefficient. <br /></td></tr>
 <tr class="separator:aeabbbcc087bf837bdddc9c16831ac749"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afe902207f8f1082215008c431422eab8" id="r_afe902207f8f1082215008c431422eab8"><td class="memItemLeft" align="right" valign="top"><a id="afe902207f8f1082215008c431422eab8" name="afe902207f8f1082215008c431422eab8"></a>
 decimal&#160;</td><td class="memItemRight" valign="bottom"><b>p2</b> = DECIMAL(0.0)</td></tr>
-<tr class="memdesc:afe902207f8f1082215008c431422eab8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Second decentering (tangential) distortion coefficient. <br /></td></tr>
+<tr class="memdesc:afe902207f8f1082215008c431422eab8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Second decentering (tangential) coefficient. <br /></td></tr>
 <tr class="separator:afe902207f8f1082215008c431422eab8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>The ten parameters of the paper's camera model: the intrinsics k = [d_x, alpha, d_y, u_p, v_p] (Eq. </p>
-<p>13) followed by the Brown distortion coefficients xi = [k1, k2, k3, p1, p2] (Eq. 14), in that order.</p>
-<p>Plain data with no ties to the command line or the pipeline, so the forward model can be evaluated at any parameter set. ProvideCameraParameters (<a class="el" href="stage-providers_8hpp_source.html">providers/stage-providers.hpp</a>) builds the prior from the CLI options. </p>
+<p>13) followed by the Brown distortion coefficients xi = [k1, k2, k3, p1, p2] (Eq. 14), in that order. </p>
 </div><hr/>The documentation for this struct was generated from the following file:<ul>
 <li>src/scope/projection/<a class="el" href="projection_8hpp_source.html">projection.hpp</a></li>
 </ul>

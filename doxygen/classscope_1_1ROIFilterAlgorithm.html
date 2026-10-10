@@ -109,7 +109,7 @@ Inheritance diagram for scope::ROIFilterAlgorithm:</div>
 <div class="center"><img src="classscope_1_1ROIFilterAlgorithm__inherit__graph.png" border="0" usemap="#ascope_1_1ROIFilterAlgorithm_inherit__map" alt="Inheritance graph"/></div>
 <map name="ascope_1_1ROIFilterAlgorithm_inherit__map" id="ascope_1_1ROIFilterAlgorithm_inherit__map">
 <area shape="rect" title="A priori ROI + center&#45;of&#45;intensity star locator (Orion paper §&quot;Image Processing and Star Centroiding&quot;..." alt="" coords="33,167,221,192"/>
-<area shape="rect" href="classscope_1_1StarCentroidAlgorithm.html" title="Extracts star centroids from the star&#45;field images, pairing each measured (distorted) pixel with the ..." alt="" coords="20,93,233,119"/>
+<area shape="rect" href="classscope_1_1StarCentroidAlgorithm.html" title="Extracts star centroids from the star images, pairing each measured pixel with the catalog star it ca..." alt="" coords="20,93,233,119"/>
 <area shape="poly" title=" " alt="" coords="129,132,129,167,124,167,124,132"/>
 <area shape="rect" title=" " alt="" coords="5,5,248,45"/>
 <area shape="poly" title=" " alt="" coords="129,59,129,93,124,93,124,59"/>
@@ -121,7 +121,7 @@ Collaboration diagram for scope::ROIFilterAlgorithm:</div>
 <div class="center"><img src="classscope_1_1ROIFilterAlgorithm__coll__graph.png" border="0" usemap="#ascope_1_1ROIFilterAlgorithm_coll__map" alt="Collaboration graph"/></div>
 <map name="ascope_1_1ROIFilterAlgorithm_coll__map" id="ascope_1_1ROIFilterAlgorithm_coll__map">
 <area shape="rect" title="A priori ROI + center&#45;of&#45;intensity star locator (Orion paper §&quot;Image Processing and Star Centroiding&quot;..." alt="" coords="243,183,431,208"/>
-<area shape="rect" href="classscope_1_1StarCentroidAlgorithm.html" title="Extracts star centroids from the star&#45;field images, pairing each measured (distorted) pixel with the ..." alt="" coords="20,95,233,120"/>
+<area shape="rect" href="classscope_1_1StarCentroidAlgorithm.html" title="Extracts star centroids from the star images, pairing each measured pixel with the catalog star it ca..." alt="" coords="20,95,233,120"/>
 <area shape="poly" title=" " alt="" coords="169,123,310,180,308,185,167,128"/>
 <area shape="rect" title=" " alt="" coords="5,5,248,45"/>
 <area shape="poly" title=" " alt="" coords="129,59,129,94,124,94,124,59"/>
@@ -135,7 +135,6 @@ Collaboration diagram for scope::ROIFilterAlgorithm:</div>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a4d41a359fad0a27284b6c31051a710d7" id="r_a4d41a359fad0a27284b6c31051a710d7"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classscope_1_1ROIFilterAlgorithm.html#a4d41a359fad0a27284b6c31051a710d7">ROIFilterAlgorithm</a> (const <a class="el" href="classRecalibrationOptions.html">RecalibrationOptions</a> &amp;options, const <a class="el" href="structscope_1_1CameraParameters.html">CameraParameters</a> &amp;camera, <a class="el" href="catalog_8hpp.html#a088b8f568074b9e555714a6a55b43614">Catalog</a> catalog, std::vector&lt; found::Quaternion &gt; attitudes)</td></tr>
-<tr class="memdesc:a4d41a359fad0a27284b6c31051a710d7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a new <a class="el" href="classscope_1_1ROIFilterAlgorithm.html" title="A priori ROI + center-of-intensity star locator (Orion paper §&quot;Image Processing and Star Centroiding&quot;...">ROIFilterAlgorithm</a>.  <br /></td></tr>
 <tr class="separator:a4d41a359fad0a27284b6c31051a710d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a555ed185b3d3ef912a68c76e37203392" id="r_a555ed185b3d3ef912a68c76e37203392"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structscope_1_1CentroidObservations.html">CentroidObservations</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classscope_1_1ROIFilterAlgorithm.html#a555ed185b3d3ef912a68c76e37203392">Run</a> (const Image &amp;darkFrame) override</td></tr>
 <tr class="memdesc:a555ed185b3d3ef912a68c76e37203392"><td class="mdescLeft">&#160;</td><td class="mdescRight">Locates star centroids across all star images.  <br /></td></tr>
@@ -145,15 +144,15 @@ Public Member Functions</h2></td></tr>
 Private Attributes</h2></td></tr>
 <tr class="memitem:ab9f8d5498ee46e85dee0327cd65c43d7" id="r_ab9f8d5498ee46e85dee0327cd65c43d7"><td class="memItemLeft" align="right" valign="top"><a id="ab9f8d5498ee46e85dee0327cd65c43d7" name="ab9f8d5498ee46e85dee0327cd65c43d7"></a>
 const <a class="el" href="classRecalibrationOptions.html">RecalibrationOptions</a>&#160;</td><td class="memItemRight" valign="bottom"><b>options_</b></td></tr>
-<tr class="memdesc:ab9f8d5498ee46e85dee0327cd65c43d7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Captured calibration options (star images + thresholds + ROI size). <br /></td></tr>
+<tr class="memdesc:ab9f8d5498ee46e85dee0327cd65c43d7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Star images, thresholds and ROI size. <br /></td></tr>
 <tr class="separator:ab9f8d5498ee46e85dee0327cd65c43d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a64b3ec031f77b73d35ec61a6cc82e5e9" id="r_a64b3ec031f77b73d35ec61a6cc82e5e9"><td class="memItemLeft" align="right" valign="top"><a id="a64b3ec031f77b73d35ec61a6cc82e5e9" name="a64b3ec031f77b73d35ec61a6cc82e5e9"></a>
 const <a class="el" href="structscope_1_1CameraParameters.html">CameraParameters</a>&#160;</td><td class="memItemRight" valign="bottom"><b>camera_</b></td></tr>
-<tr class="memdesc:a64b3ec031f77b73d35ec61a6cc82e5e9"><td class="mdescLeft">&#160;</td><td class="mdescRight">The prior camera parameters star positions are predicted with. <br /></td></tr>
+<tr class="memdesc:a64b3ec031f77b73d35ec61a6cc82e5e9"><td class="mdescLeft">&#160;</td><td class="mdescRight">The prior camera parameters. <br /></td></tr>
 <tr class="separator:a64b3ec031f77b73d35ec61a6cc82e5e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acc808e48198a9037cd89f71d9106d312" id="r_acc808e48198a9037cd89f71d9106d312"><td class="memItemLeft" align="right" valign="top"><a id="acc808e48198a9037cd89f71d9106d312" name="acc808e48198a9037cd89f71d9106d312"></a>
 const <a class="el" href="catalog_8hpp.html#a088b8f568074b9e555714a6a55b43614">Catalog</a>&#160;</td><td class="memItemRight" valign="bottom"><b>catalog_</b></td></tr>
-<tr class="memdesc:acc808e48198a9037cd89f71d9106d312"><td class="mdescLeft">&#160;</td><td class="mdescRight">The catalog whose stars are projected and matched. <br /></td></tr>
+<tr class="memdesc:acc808e48198a9037cd89f71d9106d312"><td class="mdescLeft">&#160;</td><td class="mdescRight">The stars to project. <br /></td></tr>
 <tr class="separator:acc808e48198a9037cd89f71d9106d312"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8e088f207df08e893bf9d6de04e54522" id="r_a8e088f207df08e893bf9d6de04e54522"><td class="memItemLeft" align="right" valign="top"><a id="a8e088f207df08e893bf9d6de04e54522" name="a8e088f207df08e893bf9d6de04e54522"></a>
 const std::vector&lt; found::Quaternion &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>attitudes_</b></td></tr>
@@ -163,7 +162,7 @@ const std::vector&lt; found::Quaternion &gt;&#160;</td><td class="memItemRight" 
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>A priori ROI + center-of-intensity star locator (Orion paper §"Image
 Processing and Star Centroiding"). </p>
-<p>For each star image, every catalog star bright enough to clear the magnitude threshold is projected to its expected pixel using the per-image prior attitude and the prior calibration. Stars behind the camera or outside the sensor (with ROI margin) are skipped; the rest are centroided via ExtractCentroid on the dark-subtracted image, searching a window of options.roiSize pixels around the predicted position. Successful centroids become Observations, except that candidates whose centroids collide within one image (two catalog stars landing on the same blob) are dropped as ambiguous. </p>
+<p>For each star image, every catalog star brighter than the magnitude threshold is projected with the prior attitude and calibration. Those that land on the sensor (less an ROI margin) are centroided with ExtractCentroid on the dark-subtracted image. Centroids that collide within one image (two catalog stars on the same blob) are dropped as ambiguous. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a4d41a359fad0a27284b6c31051a710d7" name="a4d41a359fad0a27284b6c31051a710d7"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a4d41a359fad0a27284b6c31051a710d7">&#9670;&#160;</a></span>ROIFilterAlgorithm()</h2>
@@ -210,14 +209,12 @@ Processing and Star Centroiding"). </p>
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Constructs a new <a class="el" href="classscope_1_1ROIFilterAlgorithm.html" title="A priori ROI + center-of-intensity star locator (Orion paper §&quot;Image Processing and Star Centroiding&quot;...">ROIFilterAlgorithm</a>. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">options</td><td>Parsed recalibration options (star images, centroid and magnitude thresholds, and ROI size). Copied so the stage is self-contained. Its prior camera fields are not read here; the prior comes from camera. </td></tr>
-    <tr><td class="paramname">camera</td><td>The prior intrinsics and distortion coefficients, used to predict where each catalog star lands. </td></tr>
-    <tr><td class="paramname">catalog</td><td>The star catalog to project and match against. Owned by the stage; each observation gets a copy of its star's direction, so the output does not refer back to it. </td></tr>
-    <tr><td class="paramname">attitudes</td><td>One prior attitude per star image (rotates inertial directions into the camera frame). </td></tr>
+    <tr><td class="paramname">options</td><td>Supplies the star images, the centroid and magnitude thresholds and the ROI size. Its camera fields are ignored. </td></tr>
+    <tr><td class="paramname">camera</td><td>The prior intrinsics and distortion coefficients. </td></tr>
+    <tr><td class="paramname">catalog</td><td>The star catalog to project. </td></tr>
+    <tr><td class="paramname">attitudes</td><td>One prior attitude per star image, in SCOPE's camera frame. </td></tr>
   </table>
   </dd>
 </dl>
@@ -252,14 +249,14 @@ Processing and Star Centroiding"). </p>
 <p>Locates star centroids across all star images. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">darkFrame</td><td>The dark frame produced by the noise-filter stage; it is subtracted from each star image before centroiding.</td></tr>
+    <tr><td class="paramname">darkFrame</td><td>The dark frame to subtract from each star image.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>The gathered observations and the forwarded attitudes.</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The observations, with the prior attitudes forwarded.</dd></dl>
 <dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
-    <tr><td class="paramname">std::runtime_error</td><td>if the attitude count does not match the star image count, the ROI size is below 1, or a star image's dimensions do not match the dark frame. </td></tr>
+    <tr><td class="paramname">std::runtime_error</td><td>if the attitude and star image counts differ, the ROI size is below 1, or a star image's dimensions do not match the dark frame. </td></tr>
   </table>
   </dd>
 </dl>

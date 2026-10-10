@@ -11,7 +11,7 @@
 <area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="465,117,482,139,497,166,508,197,516,226,510,227,503,198,492,168,477,142,461,120"/>
 <area shape="rect" id="Node000006" title=" " alt="" coords="557,167,784,192"/>
 <area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="489,116,623,160,622,165,487,121"/>
-<area shape="rect" id="Node000007" href="$types_8hpp.html" title="Plain data passed between SCOPE&#39;s stages." alt="" coords="293,167,483,192"/>
+<area shape="rect" id="Node000007" href="$types_8hpp.html" title="Plain data passed between SCOPE&#39;s stages, independent of FOUND&#39;s pipeline and of the command line." alt="" coords="293,167,483,192"/>
 <area shape="poly" id="edge7_Node000004_Node000007" title=" " alt="" coords="445,121,410,158,406,155,441,117"/>
 <area shape="poly" id="edge10_Node000007_Node000003" title=" " alt="" coords="391,193,386,228,380,248,369,267,343,291,313,309,311,305,340,287,365,264,375,246,381,227,385,192"/>
 <area shape="poly" id="edge8_Node000007_Node000005" title=" " alt="" coords="410,190,485,231,483,235,408,194"/>

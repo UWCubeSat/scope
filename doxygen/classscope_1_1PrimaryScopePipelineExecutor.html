@@ -98,7 +98,7 @@ $(document).ready(function(){initNavTree('classscope_1_1PrimaryScopePipelineExec
 </div><!--header-->
 <div class="contents">
 
-<p>Owns and runs the primary SCOPE calibration pipeline (noise filter -&gt; star centroid -&gt; optimization).  
+<p>Owns and runs the calibration pipeline (noise filter -&gt; star centroid -&gt; optimization).  
  <a href="classscope_1_1PrimaryScopePipelineExecutor.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="executors_8hpp_source.html">executors.hpp</a>&gt;</code></p>
@@ -107,7 +107,7 @@ Inheritance diagram for scope::PrimaryScopePipelineExecutor:</div>
 <div class="dyncontent">
 <div class="center"><img src="classscope_1_1PrimaryScopePipelineExecutor__inherit__graph.png" border="0" usemap="#ascope_1_1PrimaryScopePipelineExecutor_inherit__map" alt="Inheritance graph"/></div>
 <map name="ascope_1_1PrimaryScopePipelineExecutor_inherit__map" id="ascope_1_1PrimaryScopePipelineExecutor_inherit__map">
-<area shape="rect" title="Owns and runs the primary SCOPE calibration pipeline (noise filter &#45;&gt; star centroid &#45;&gt; optimization)." alt="" coords="5,79,216,119"/>
+<area shape="rect" title="Owns and runs the calibration pipeline (noise filter &#45;&gt; star centroid &#45;&gt; optimization)." alt="" coords="5,79,216,119"/>
 <area shape="rect" title=" " alt="" coords="23,5,198,31"/>
 <area shape="poly" title=" " alt="" coords="113,44,113,79,108,79,108,44"/>
 </map>
@@ -117,7 +117,7 @@ Collaboration diagram for scope::PrimaryScopePipelineExecutor:</div>
 <div class="dyncontent">
 <div class="center"><img src="classscope_1_1PrimaryScopePipelineExecutor__coll__graph.png" border="0" usemap="#ascope_1_1PrimaryScopePipelineExecutor_coll__map" alt="Collaboration graph"/></div>
 <map name="ascope_1_1PrimaryScopePipelineExecutor_coll__map" id="ascope_1_1PrimaryScopePipelineExecutor_coll__map">
-<area shape="rect" title="Owns and runs the primary SCOPE calibration pipeline (noise filter &#45;&gt; star centroid &#45;&gt; optimization)." alt="" coords="82,93,293,133"/>
+<area shape="rect" title="Owns and runs the calibration pipeline (noise filter &#45;&gt; star centroid &#45;&gt; optimization)." alt="" coords="82,93,293,133"/>
 <area shape="rect" title=" " alt="" coords="5,5,180,31"/>
 <area shape="poly" title=" " alt="" coords="116,38,170,91,166,95,112,42"/>
 <area shape="rect" href="classRecalibrationOptions.html" title="Parsed CLI options driving a recalibration run." alt="" coords="204,5,363,31"/>
@@ -128,36 +128,36 @@ Collaboration diagram for scope::PrimaryScopePipelineExecutor:</div>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a004dd88c834c59bab54fc9bec20c5de9" id="r_a004dd88c834c59bab54fc9bec20c5de9"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classscope_1_1PrimaryScopePipelineExecutor.html#a004dd88c834c59bab54fc9bec20c5de9">PrimaryScopePipelineExecutor</a> (<a class="el" href="classRecalibrationOptions.html">RecalibrationOptions</a> &amp;&amp;options, std::unique_ptr&lt; <a class="el" href="classscope_1_1NoiseFilterAlgorithm.html">NoiseFilterAlgorithm</a> &gt; noiseFilterAlgorithm, std::unique_ptr&lt; <a class="el" href="classscope_1_1StarCentroidAlgorithm.html">StarCentroidAlgorithm</a> &gt; starCentroidAlgorithm, std::unique_ptr&lt; <a class="el" href="classscope_1_1OptimizationAlgorithm.html">OptimizationAlgorithm</a> &gt; optimizationAlgorithm)</td></tr>
-<tr class="memdesc:a004dd88c834c59bab54fc9bec20c5de9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a <a class="el" href="classscope_1_1PrimaryScopePipelineExecutor.html" title="Owns and runs the primary SCOPE calibration pipeline (noise filter -&gt; star centroid -&gt; optimization).">PrimaryScopePipelineExecutor</a> and assembles its pipeline.  <br /></td></tr>
 <tr class="separator:a004dd88c834c59bab54fc9bec20c5de9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a785518fd12328cddf1d89d9584a422c3" id="r_a785518fd12328cddf1d89d9584a422c3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classscope_1_1PrimaryScopePipelineExecutor.html#a785518fd12328cddf1d89d9584a422c3">~PrimaryScopePipelineExecutor</a> () override</td></tr>
-<tr class="memdesc:a785518fd12328cddf1d89d9584a422c3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Releases the dark frames and star images held in the options.  <br /></td></tr>
+<tr class="memitem:a785518fd12328cddf1d89d9584a422c3" id="r_a785518fd12328cddf1d89d9584a422c3"><td class="memItemLeft" align="right" valign="top"><a id="a785518fd12328cddf1d89d9584a422c3" name="a785518fd12328cddf1d89d9584a422c3"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>~PrimaryScopePipelineExecutor</b> () override</td></tr>
+<tr class="memdesc:a785518fd12328cddf1d89d9584a422c3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Frees the dark frames and star images held in the options. <br /></td></tr>
 <tr class="separator:a785518fd12328cddf1d89d9584a422c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a124855899b79d402140d9e8cf7c34968" id="r_a124855899b79d402140d9e8cf7c34968"><td class="memItemLeft" align="right" valign="top"><a id="a124855899b79d402140d9e8cf7c34968" name="a124855899b79d402140d9e8cf7c34968"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>ExecutePipeline</b> () override</td></tr>
-<tr class="memdesc:a124855899b79d402140d9e8cf7c34968"><td class="mdescLeft">&#160;</td><td class="mdescRight">Runs the assembled pipeline end-to-end. <br /></td></tr>
+<tr class="memdesc:a124855899b79d402140d9e8cf7c34968"><td class="mdescLeft">&#160;</td><td class="mdescRight">Runs the pipeline end to end. <br /></td></tr>
 <tr class="separator:a124855899b79d402140d9e8cf7c34968"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a89553ccccb8276f1c2fb8c064ad12d21" id="r_a89553ccccb8276f1c2fb8c064ad12d21"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classscope_1_1PrimaryScopePipelineExecutor.html#a89553ccccb8276f1c2fb8c064ad12d21">OutputResults</a> () override</td></tr>
-<tr class="memdesc:a89553ccccb8276f1c2fb8c064ad12d21"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prints the calibration produced by the pipeline to standard output: whether the fit converged, the ten camera parameters, and the residual RMS.  <br /></td></tr>
+<tr class="memdesc:a89553ccccb8276f1c2fb8c064ad12d21"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prints whether the fit converged, the ten camera parameters and the residual RMS to standard output.  <br /></td></tr>
 <tr class="separator:a89553ccccb8276f1c2fb8c064ad12d21"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-attribs" name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
 <tr class="memitem:a54bc6fbbbbe62ae9eba3467978998bc1" id="r_a54bc6fbbbbe62ae9eba3467978998bc1"><td class="memItemLeft" align="right" valign="top"><a id="a54bc6fbbbbe62ae9eba3467978998bc1" name="a54bc6fbbbbe62ae9eba3467978998bc1"></a>
 const <a class="el" href="classRecalibrationOptions.html">RecalibrationOptions</a>&#160;</td><td class="memItemRight" valign="bottom"><b>options_</b></td></tr>
-<tr class="memdesc:a54bc6fbbbbe62ae9eba3467978998bc1"><td class="mdescLeft">&#160;</td><td class="mdescRight">The options driving this pipeline run. <br /></td></tr>
+<tr class="memdesc:a54bc6fbbbbe62ae9eba3467978998bc1"><td class="mdescLeft">&#160;</td><td class="mdescRight">The options for this run, including the input images. <br /></td></tr>
 <tr class="separator:a54bc6fbbbbe62ae9eba3467978998bc1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af5af9aa3ff63ab731e2833d193cca9b9" id="r_af5af9aa3ff63ab731e2833d193cca9b9"><td class="memItemLeft" align="right" valign="top"><a id="af5af9aa3ff63ab731e2833d193cca9b9" name="af5af9aa3ff63ab731e2833d193cca9b9"></a>
 PrimaryScopePipeline&#160;</td><td class="memItemRight" valign="bottom"><b>pipeline_</b></td></tr>
-<tr class="memdesc:af5af9aa3ff63ab731e2833d193cca9b9"><td class="mdescLeft">&#160;</td><td class="mdescRight">The pipeline assembled for SCOPE operation. <br /></td></tr>
+<tr class="memdesc:af5af9aa3ff63ab731e2833d193cca9b9"><td class="mdescLeft">&#160;</td><td class="mdescRight">The three-stage pipeline. <br /></td></tr>
 <tr class="separator:af5af9aa3ff63ab731e2833d193cca9b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa68c27991e46a72f3de2849451f82929" id="r_aa68c27991e46a72f3de2849451f82929"><td class="memItemLeft" align="right" valign="top"><a id="aa68c27991e46a72f3de2849451f82929" name="aa68c27991e46a72f3de2849451f82929"></a>
 found::FunctionStage&lt; Images, Image &gt; *&#160;</td><td class="memItemRight" valign="bottom"><b>noiseStage_</b> = nullptr</td></tr>
-<tr class="memdesc:aa68c27991e46a72f3de2849451f82929"><td class="mdescLeft">&#160;</td><td class="mdescRight">Non-owning observer of the noise-filter stage, used to release its malloc'd dark-frame product after the run (no pipeline stage owns it). <br /></td></tr>
+<tr class="memdesc:aa68c27991e46a72f3de2849451f82929"><td class="mdescLeft">&#160;</td><td class="mdescRight">The noise-filter stage (not owned), kept so its malloc'd dark frame can be freed after the run. <br /></td></tr>
 <tr class="separator:aa68c27991e46a72f3de2849451f82929"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Owns and runs the primary SCOPE calibration pipeline (noise filter -&gt; star centroid -&gt; optimization). </p>
+<div class="textblock"><p>Owns and runs the calibration pipeline (noise filter -&gt; star centroid -&gt; optimization). </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a004dd88c834c59bab54fc9bec20c5de9" name="a004dd88c834c59bab54fc9bec20c5de9"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a004dd88c834c59bab54fc9bec20c5de9">&#9670;&#160;</a></span>PrimaryScopePipelineExecutor()</h2>
@@ -204,45 +204,15 @@ found::FunctionStage&lt; Images, Image &gt; *&#160;</td><td class="memItemRight"
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Constructs a <a class="el" href="classscope_1_1PrimaryScopePipelineExecutor.html" title="Owns and runs the primary SCOPE calibration pipeline (noise filter -&gt; star centroid -&gt; optimization).">PrimaryScopePipelineExecutor</a> and assembles its pipeline. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">options</td><td>Parsed recalibration options consumed by the run. The executor takes ownership of the image buffers in darkFrames and starImages, which must be malloc'd. </td></tr>
+    <tr><td class="paramname">options</td><td>Parsed recalibration options. The executor takes ownership of the image buffers in darkFrames and starImages, which must be malloc'd. </td></tr>
     <tr><td class="paramname">noiseFilterAlgorithm</td><td>Stage that reduces raw frames to one image. </td></tr>
     <tr><td class="paramname">starCentroidAlgorithm</td><td>Stage that extracts star centroids. </td></tr>
     <tr><td class="paramname">optimizationAlgorithm</td><td>Stage that fits camera parameters. </td></tr>
   </table>
   </dd>
 </dl>
-
-</div>
-</div>
-<a id="a785518fd12328cddf1d89d9584a422c3" name="a785518fd12328cddf1d89d9584a422c3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a785518fd12328cddf1d89d9584a422c3">&#9670;&#160;</a></span>~PrimaryScopePipelineExecutor()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">scope::PrimaryScopePipelineExecutor::~PrimaryScopePipelineExecutor </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">override</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Releases the dark frames and star images held in the options. </p>
-<p>The CLI loads them with stb_image (see strtoimages) and nothing else frees them. </p>
 
 </div>
 </div>
@@ -270,7 +240,7 @@ found::FunctionStage&lt; Images, Image &gt; *&#160;</td><td class="memItemRight"
 </table>
 </div><div class="memdoc">
 
-<p>Prints the calibration produced by the pipeline to standard output: whether the fit converged, the ten camera parameters, and the residual RMS. </p>
+<p>Prints whether the fit converged, the ten camera parameters and the residual RMS to standard output. </p>
 <dl class="section pre"><dt>Precondition</dt><dd>ExecutePipeline has run. </dd></dl>
 
 </div>

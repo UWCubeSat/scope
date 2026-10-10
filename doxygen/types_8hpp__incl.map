@@ -1,5 +1,5 @@
 <map id="src/scope/common/types.hpp" name="src/scope/common/types.hpp">
-<area shape="rect" id="Node000001" title="Plain data passed between SCOPE&#39;s stages." alt="" coords="75,5,287,31"/>
+<area shape="rect" id="Node000001" title="Plain data passed between SCOPE&#39;s stages, independent of FOUND&#39;s pipeline and of the command line." alt="" coords="75,5,287,31"/>
 <area shape="rect" id="Node000002" title=" " alt="" coords="5,79,68,104"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="159,33,74,75,71,70,156,28"/>
 <area shape="rect" id="Node000003" title=" " alt="" coords="27,159,190,185"/>

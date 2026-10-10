@@ -123,19 +123,18 @@ This graph shows which files directly or indirectly include this file:</div>
 <div class="center"><img src="catalog_8hpp__dep__incl.png" border="0" usemap="#asrc_2scope_2catalog_2catalog_8hppdep" alt=""/></div>
 <map name="asrc_2scope_2catalog_2catalog_8hppdep" id="asrc_2scope_2catalog_2catalog_8hppdep">
 <area shape="rect" title="Bright star catalog types and loader for SCOPE calibration." alt="" coords="5,5,220,31"/>
-<area shape="rect" href="factory_8hpp_source.html" title=" " alt="" coords="103,343,251,383"/>
-<area shape="poly" title=" " alt="" coords="104,45,87,93,73,157,70,192,70,227,76,261,88,293,110,320,138,340,134,345,106,324,84,296,71,263,65,227,64,192,68,156,82,92,99,43"/>
-<area shape="rect" href="stage-providers_8hpp_source.html" title=" " alt="" coords="99,255,255,295"/>
-<area shape="poly" title=" " alt="" coords="121,43,175,254,169,255,116,45"/>
+<area shape="rect" href="factory_8hpp_source.html" title=" " alt="" coords="72,255,220,295"/>
+<area shape="poly" title=" " alt="" coords="98,43,77,76,58,117,49,162,50,184,58,205,79,232,107,252,104,257,75,236,53,208,45,185,43,162,52,116,72,73,93,40"/>
+<area shape="rect" href="stage-providers_8hpp_source.html" title=" " alt="" coords="68,167,224,207"/>
+<area shape="poly" title=" " alt="" coords="120,44,145,166,140,167,115,45"/>
 <area shape="rect" href="star-centroid_8hpp.html" title="Star centroid algorithms for SCOPE calibration." alt="" coords="150,79,321,119"/>
 <area shape="poly" title=" " alt="" coords="144,36,207,76,204,81,141,41"/>
-<area shape="poly" title=" " alt="" coords="179,309,179,342,174,342,174,309"/>
-<area shape="poly" title=" " alt="" coords="212,131,191,168,181,214,179,255,173,254,176,213,186,166,208,128"/>
-<area shape="rect" href="executors_8hpp.html" title="Pipeline executor for the primary SCOPE calibration chain." alt="" coords="201,167,385,207"/>
-<area shape="poly" title=" " alt="" coords="258,129,282,165,278,168,254,132"/>
-<area shape="poly" title=" " alt="" coords="293,221,285,258,268,296,243,324,214,345,211,340,239,320,264,293,280,257,288,220"/>
-<area shape="poly" title=" " alt="" coords="258,217,204,257,201,252,254,213"/>
-<area shape="poly" title=" " alt="" coords="400,173,408,178,411,187,404,198,386,204,384,199,401,194,406,186,404,182,397,177"/>
+<area shape="poly" title=" " alt="" coords="149,221,149,254,143,254,143,221"/>
+<area shape="poly" title=" " alt="" coords="207,130,168,168,164,165,204,127"/>
+<area shape="rect" href="executors_8hpp.html" title="Pipeline executor for the primary SCOPE calibration chain." alt="" coords="249,167,433,207"/>
+<area shape="poly" title=" " alt="" coords="271,125,319,164,316,169,267,129"/>
+<area shape="poly" title=" " alt="" coords="287,215,190,257,188,252,285,210"/>
+<area shape="poly" title=" " alt="" coords="448,173,456,178,459,187,452,198,434,204,432,199,449,194,454,186,452,182,445,177"/>
 </map>
 </div>
 </div>
@@ -144,7 +143,7 @@ This graph shows which files directly or indirectly include this file:</div>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structscope_1_1CatalogStar.html">scope::CatalogStar</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A single catalog star.  <a href="structscope_1_1CatalogStar.html#details">More...</a><br /></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A single catalog star, shaped like LOST's <a class="el" href="structscope_1_1CatalogStar.html" title="A single catalog star, shaped like LOST&#39;s CatalogStar.">CatalogStar</a>.  <a href="structscope_1_1CatalogStar.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
@@ -157,7 +156,7 @@ using&#160;</td><td class="memItemRight" valign="bottom"><b>scope::Catalog</b> =
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:aecf5369171447315ffef6a26a5950e27" id="r_aecf5369171447315ffef6a26a5950e27"><td class="memItemLeft" align="right" valign="top"><a class="el" href="catalog_8hpp.html#a088b8f568074b9e555714a6a55b43614">Catalog</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="catalog_8cpp.html#aecf5369171447315ffef6a26a5950e27">scope::LoadBsc</a> (const std::string &amp;path)</td></tr>
-<tr class="memdesc:aecf5369171447315ffef6a26a5950e27"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads the Yale Bright Star Catalog (BSC, Vizier V/50) from a pre-filtered TSV.  <br /></td></tr>
+<tr class="memdesc:aecf5369171447315ffef6a26a5950e27"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads the Yale Bright Star Catalog (Vizier V/50) from the file written by download-bsc.sh: one star per line, <code>RA(deg)|Dec(deg)|HR|Multiple|Vmag</code>.  <br /></td></tr>
 <tr class="separator:aecf5369171447315ffef6a26a5950e27"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -179,15 +178,14 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Loads the Yale Bright Star Catalog (BSC, Vizier V/50) from a pre-filtered TSV. </p>
-<p>The TSV is the output of download-bsc.sh: one star per line, pipe-separated as <code>RA(deg)|Dec(deg)|HR|Multiple|Vmag</code>, where Vmag is written as <code>&lt;high&gt;.&lt;low&gt;</code>.</p>
+<p>Loads the Yale Bright Star Catalog (Vizier V/50) from the file written by download-bsc.sh: one star per line, <code>RA(deg)|Dec(deg)|HR|Multiple|Vmag</code>. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">path</td><td>Path to the catalog TSV.</td></tr>
+    <tr><td class="paramname">path</td><td>Path to the catalog file.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>The parsed catalog. Each star's spatial vector is a unit vector built from its J2000 right ascension and declination.</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The parsed catalog.</dd></dl>
 <dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
     <tr><td class="paramname">std::runtime_error</td><td>if the file cannot be opened or no stars parse. </td></tr>

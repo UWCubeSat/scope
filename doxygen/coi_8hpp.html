@@ -118,7 +118,7 @@ Include dependency graph for coi.hpp:</div>
 <area shape="poly" title=" " alt="" coords="465,117,482,139,497,166,508,197,516,226,510,227,503,198,492,168,477,142,461,120"/>
 <area shape="rect" title=" " alt="" coords="557,167,784,192"/>
 <area shape="poly" title=" " alt="" coords="489,116,623,160,622,165,487,121"/>
-<area shape="rect" href="types_8hpp.html" title="Plain data passed between SCOPE&#39;s stages." alt="" coords="293,167,483,192"/>
+<area shape="rect" href="types_8hpp.html" title="Plain data passed between SCOPE&#39;s stages, independent of FOUND&#39;s pipeline and of the command line." alt="" coords="293,167,483,192"/>
 <area shape="poly" title=" " alt="" coords="445,121,410,158,406,155,441,117"/>
 <area shape="poly" title=" " alt="" coords="391,193,386,228,380,248,369,267,343,291,313,309,311,305,340,287,365,264,375,246,381,227,385,192"/>
 <area shape="poly" title=" " alt="" coords="410,190,485,231,483,235,408,194"/>
@@ -137,12 +137,13 @@ Include dependency graph for coi.hpp:</div>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:a7ebc5b28f360e1543b15603b89dc857b" id="r_a7ebc5b28f360e1543b15603b89dc857b"><td class="memItemLeft" align="right" valign="top">std::optional&lt; found::Vec2 &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="coi_8cpp.html#a7ebc5b28f360e1543b15603b89dc857b">scope::ExtractCentroid</a> (const Image &amp;darkSubtracted, const found::Vec2 &amp;expectedPixel, int roiSize, int recenterRadius, unsigned char threshold)</td></tr>
-<tr class="memdesc:a7ebc5b28f360e1543b15603b89dc857b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extracts a single star centroid via center of intensity (paper Eqs.  <br /></td></tr>
+<tr class="memdesc:a7ebc5b28f360e1543b15603b89dc857b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extracts one star centroid by center of intensity (paper Eqs.  <br /></td></tr>
 <tr class="separator:a7ebc5b28f360e1543b15603b89dc857b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Center-of-intensity star centroiding kernel. </p>
-<p>Implements the per-star centroid extraction described in the Orion paper (Christian et al. 2016, §"Image Processing and Star Centroiding", Eqs. 8-9): draw a ROI around the expected location, find the brightest pixel, recenter, mask the pixels within a small radius above a threshold, and take the intensity-weighted center of those masked pixels. </p>
+<p>From the Orion paper (Christian et al. 2016, §"Image Processing and Star
+Centroiding", Eqs. 8-9). </p>
 </div><h2 class="groupheader">Function Documentation</h2>
 <a id="a7ebc5b28f360e1543b15603b89dc857b" name="a7ebc5b28f360e1543b15603b89dc857b"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a7ebc5b28f360e1543b15603b89dc857b">&#9670;&#160;</a></span>ExtractCentroid()</h2>
@@ -188,28 +189,20 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Extracts a single star centroid via center of intensity (paper Eqs. </p>
-<p>8-9).</p>
-<p>Steps:</p><ol type="1">
-<li>Define a roi_size x roi_size ROI centered on expected_pixel (clamped to the image bounds).</li>
-<li>Find the brightest pixel inside the ROI.</li>
-<li>Recenter on that brightest pixel.</li>
-<li>Build the mask of pixels within recenter_radius of the recentered point whose (dark-subtracted) intensity exceeds the threshold.</li>
-<li>Return the intensity-weighted center of the masked pixels.</li>
-</ol>
-<p>Pixel convention: an integer coordinate is the center of a pixel, so a star lit on the single pixel in column 40, row 30 centroids to exactly (40, 30). This matches FOUND, whose edge points are raw pixel indices with no half-pixel offset, and FOUND is what consumes SCOPE's calibration. LOST's centroider instead adds 0.5 (integers are pixel corners), so a LOST centroid must have 0.5 subtracted before it is compared with one from here.</p>
+<p>Extracts one star centroid by center of intensity (paper Eqs. </p>
+<p>8-9): find the brightest pixel in a ROI around the expected pixel, then take the intensity-weighted center of the pixels within recenterRadius of it that exceed the threshold.</p>
+<p>An integer coordinate is the center of a pixel, as in FOUND: a star lit on the single pixel in column 40, row 30 centroids to exactly (40, 30). LOST's centroider adds 0.5, so subtract 0.5 from a LOST centroid before comparing.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">darkSubtracted</td><td>Single-channel, dark-frame-subtracted image. If the image has multiple channels, only the first channel is used. </td></tr>
+    <tr><td class="paramname">darkSubtracted</td><td>Dark-subtracted image. Only the first channel is used. </td></tr>
     <tr><td class="paramname">expectedPixel</td><td>The expected star location [u, v] (column, row). </td></tr>
-    <tr><td class="paramname">roiSize</td><td>The ROI side length, in pixels (paper uses 31). The ROI spans roiSize / 2 pixels either side of the rounded expected pixel, so an even value covers the same pixels as the next odd one. </td></tr>
+    <tr><td class="paramname">roiSize</td><td>The ROI side length, in pixels (paper uses 31). The ROI spans roiSize / 2 pixels either side of the rounded expected pixel, clamped to the image, so an even value acts as the next odd one. </td></tr>
     <tr><td class="paramname">recenterRadius</td><td>The mask radius about the brightest pixel (paper uses 3). </td></tr>
-    <tr><td class="paramname">threshold</td><td>Minimum intensity for a pixel to join the mask.</td></tr>
+    <tr><td class="paramname">threshold</td><td>Intensity a pixel must exceed to join the mask.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>The measured centroid [u', v'] (column, row), or std::nullopt if no pixel in the ROI exceeds the threshold.</dd></dl>
-<dl class="section pre"><dt>Precondition</dt><dd>The caller has verified expected_pixel is in-sensor with adequate margin. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The measured centroid [u', v'] (column, row), or std::nullopt if no pixel in the ROI exceeds the threshold. </dd></dl>
 
 </div>
 </div>

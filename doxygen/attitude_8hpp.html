@@ -156,18 +156,18 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Loads one prior attitude per star image from a text file. </p>
-<p>Each attitude is a quaternion on its own line, written as four numbers <code>w x y z</code> (real part first) separated by spaces, tabs or commas. Blank lines are skipped and <code>#</code> starts a comment that runs to the end of the line. The k-th attitude in the file belongs to the k-th star image.</p>
-<p>The quaternion must rotate an inertial (equatorial J2000) direction into SCOPE's camera frame, e_C = q * e_I, with the boresight on +z. That is what ProjectStarToPixel consumes, so the file is deliberately ignorant of where the attitudes came from: whatever writes it (a plate solver, a star tracker) is responsible for converting into this frame. For an attitude from LOST that conversion is LostAttitudeToScopeFrame (<a class="el" href="projection_8hpp.html" title="Forward camera projection (pinhole + Brown distortion + intrinsics).">src/scope/projection/projection.hpp</a>).</p>
+<p>One quaternion per line, <code>w x y z</code>, separated by spaces, tabs or commas. Blank lines are skipped and <code>#</code> starts a comment. The k-th attitude belongs to the k-th star image.</p>
+<p>Each quaternion must rotate an inertial (J2000) direction into SCOPE's camera frame (boresight on +z), as ProjectStarToPixel expects. Whatever writes the file does that conversion; for LOST it is LostAttitudeToScopeFrame.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">path</td><td>Path to the attitudes file.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>The attitudes in file order, each normalized to unit length.</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The attitudes in file order, normalized.</dd></dl>
 <dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
-    <tr><td class="paramname">std::runtime_error</td><td>if the file cannot be opened, or if a line is not exactly four numbers or has zero length. </td></tr>
+    <tr><td class="paramname">std::runtime_error</td><td>if the file cannot be opened, or a line is not exactly four numbers or is the zero quaternion. </td></tr>
   </table>
   </dd>
 </dl>

@@ -97,7 +97,7 @@ $(document).ready(function(){initNavTree('classscope_1_1DarkScreenFilter.html','
 </div><!--header-->
 <div class="contents">
 
-<p>Computes a per-pixel median across frames to estimate fixed-pattern noise.  
+<p>Estimates fixed-pattern noise as the per-pixel median across frames.  
  <a href="classscope_1_1DarkScreenFilter.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="noise-filter_8hpp_source.html">noise-filter.hpp</a>&gt;</code></p>
@@ -106,8 +106,8 @@ Inheritance diagram for scope::DarkScreenFilter:</div>
 <div class="dyncontent">
 <div class="center"><img src="classscope_1_1DarkScreenFilter__inherit__graph.png" border="0" usemap="#ascope_1_1DarkScreenFilter_inherit__map" alt="Inheritance graph"/></div>
 <map name="ascope_1_1DarkScreenFilter_inherit__map" id="ascope_1_1DarkScreenFilter_inherit__map">
-<area shape="rect" title="Computes a per&#45;pixel median across frames to estimate fixed&#45;pattern noise." alt="" coords="19,167,195,192"/>
-<area shape="rect" href="classscope_1_1NoiseFilterAlgorithm.html" title="Reduces a set of input frames to a single representative image (e.g." alt="" coords="5,93,208,119"/>
+<area shape="rect" title="Estimates fixed&#45;pattern noise as the per&#45;pixel median across frames." alt="" coords="19,167,195,192"/>
+<area shape="rect" href="classscope_1_1NoiseFilterAlgorithm.html" title="Reduces a set of frames to one image (a dark frame)." alt="" coords="5,93,208,119"/>
 <area shape="poly" title=" " alt="" coords="109,132,109,167,104,167,104,132"/>
 <area shape="rect" title=" " alt="" coords="27,5,186,45"/>
 <area shape="poly" title=" " alt="" coords="109,59,109,93,104,93,104,59"/>
@@ -118,8 +118,8 @@ Collaboration diagram for scope::DarkScreenFilter:</div>
 <div class="dyncontent">
 <div class="center"><img src="classscope_1_1DarkScreenFilter__coll__graph.png" border="0" usemap="#ascope_1_1DarkScreenFilter_coll__map" alt="Collaboration graph"/></div>
 <map name="ascope_1_1DarkScreenFilter_coll__map" id="ascope_1_1DarkScreenFilter_coll__map">
-<area shape="rect" title="Computes a per&#45;pixel median across frames to estimate fixed&#45;pattern noise." alt="" coords="19,167,195,192"/>
-<area shape="rect" href="classscope_1_1NoiseFilterAlgorithm.html" title="Reduces a set of input frames to a single representative image (e.g." alt="" coords="5,93,208,119"/>
+<area shape="rect" title="Estimates fixed&#45;pattern noise as the per&#45;pixel median across frames." alt="" coords="19,167,195,192"/>
+<area shape="rect" href="classscope_1_1NoiseFilterAlgorithm.html" title="Reduces a set of frames to one image (a dark frame)." alt="" coords="5,93,208,119"/>
 <area shape="poly" title=" " alt="" coords="109,132,109,167,104,167,104,132"/>
 <area shape="rect" title=" " alt="" coords="27,5,186,45"/>
 <area shape="poly" title=" " alt="" coords="109,59,109,93,104,93,104,59"/>
@@ -129,12 +129,11 @@ Collaboration diagram for scope::DarkScreenFilter:</div>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:ac55751cca8fbb10ddf1a43ce7ca37fa2" id="r_ac55751cca8fbb10ddf1a43ce7ca37fa2"><td class="memItemLeft" align="right" valign="top">Image&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classscope_1_1DarkScreenFilter.html#ac55751cca8fbb10ddf1a43ce7ca37fa2">Run</a> (const Images &amp;images) override</td></tr>
-<tr class="memdesc:ac55751cca8fbb10ddf1a43ce7ca37fa2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the per-pixel median of the input frames.  <br /></td></tr>
+<tr class="memdesc:ac55751cca8fbb10ddf1a43ce7ca37fa2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the per-pixel median of the frames (the lower median for an even count).  <br /></td></tr>
 <tr class="separator:ac55751cca8fbb10ddf1a43ce7ca37fa2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Computes a per-pixel median across frames to estimate fixed-pattern noise. </p>
-<p>For an even number of input frames the lower median (n - 1) / 2 is returned. </p>
+<div class="textblock"><p>Estimates fixed-pattern noise as the per-pixel median across frames. </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="ac55751cca8fbb10ddf1a43ce7ca37fa2" name="ac55751cca8fbb10ddf1a43ce7ca37fa2"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ac55751cca8fbb10ddf1a43ce7ca37fa2">&#9670;&#160;</a></span>Run()</h2>
@@ -160,19 +159,18 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Computes the per-pixel median of the input frames. </p>
-<p>For even-count inputs, returns the lower median.</p>
+<p>Computes the per-pixel median of the frames (the lower median for an even count). </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">images</td><td>Frames with identical dimensions and channel counts.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>The median image. The caller owns the pixel buffer and must release it with std::free (matching FOUND's stb_image-allocated input buffers).</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The median image. The caller must std::free its pixel buffer.</dd></dl>
 <dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
     <tr><td class="paramname">std::invalid_argument</td><td>if images is empty. </td></tr>
-    <tr><td class="paramname">std::runtime_error</td><td>if any image is null, has mismatched dimensions, or if the output buffer cannot be allocated. </td></tr>
+    <tr><td class="paramname">std::runtime_error</td><td>if an image is null, the dimensions do not match, or the output buffer cannot be allocated. </td></tr>
   </table>
   </dd>
 </dl>

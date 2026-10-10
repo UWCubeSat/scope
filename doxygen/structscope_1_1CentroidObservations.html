@@ -97,7 +97,7 @@ $(document).ready(function(){initNavTree('structscope_1_1CentroidObservations.ht
 </div><!--header-->
 <div class="contents">
 
-<p>The star-centroid stage's output: the measurements and the per-image prior attitudes, which are forwarded for the optimization stage.  
+<p>The star-centroid stage's output.  
  <a href="structscope_1_1CentroidObservations.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="types_8hpp_source.html">types.hpp</a>&gt;</code></p>
@@ -106,15 +106,15 @@ $(document).ready(function(){initNavTree('structscope_1_1CentroidObservations.ht
 Public Attributes</h2></td></tr>
 <tr class="memitem:ae27186ba847ab1348017a6725297f9f8" id="r_ae27186ba847ab1348017a6725297f9f8"><td class="memItemLeft" align="right" valign="top"><a id="ae27186ba847ab1348017a6725297f9f8" name="ae27186ba847ab1348017a6725297f9f8"></a>
 std::vector&lt; <a class="el" href="structscope_1_1Observation.html">Observation</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>observations</b></td></tr>
-<tr class="memdesc:ae27186ba847ab1348017a6725297f9f8"><td class="mdescLeft">&#160;</td><td class="mdescRight">All star measurements gathered across every star image. <br /></td></tr>
+<tr class="memdesc:ae27186ba847ab1348017a6725297f9f8"><td class="mdescLeft">&#160;</td><td class="mdescRight">The measurements from every star image. <br /></td></tr>
 <tr class="separator:ae27186ba847ab1348017a6725297f9f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a841f9c8b84e64cf000c513ec6729e5e5" id="r_a841f9c8b84e64cf000c513ec6729e5e5"><td class="memItemLeft" align="right" valign="top"><a id="a841f9c8b84e64cf000c513ec6729e5e5" name="a841f9c8b84e64cf000c513ec6729e5e5"></a>
 std::vector&lt; found::Quaternion &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>attitudes</b></td></tr>
-<tr class="memdesc:a841f9c8b84e64cf000c513ec6729e5e5"><td class="mdescLeft">&#160;</td><td class="mdescRight">One prior attitude per star image; <a class="el" href="structscope_1_1Observation.html#ad475fc57494afd5a7f45bf13f8ffe1a9" title="Index of the star image this observation came from.">Observation::imageIndex</a> indexes it. <br /></td></tr>
+<tr class="memdesc:a841f9c8b84e64cf000c513ec6729e5e5"><td class="mdescLeft">&#160;</td><td class="mdescRight">One prior attitude per star image, indexed by <a class="el" href="structscope_1_1Observation.html#ad475fc57494afd5a7f45bf13f8ffe1a9" title="Index of the star image this came from.">Observation::imageIndex</a>. <br /></td></tr>
 <tr class="separator:a841f9c8b84e64cf000c513ec6729e5e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>The star-centroid stage's output: the measurements and the per-image prior attitudes, which are forwarded for the optimization stage. </p>
+<div class="textblock"><p>The star-centroid stage's output. </p>
 </div><hr/>The documentation for this struct was generated from the following file:<ul>
 <li>src/scope/common/<a class="el" href="types_8hpp_source.html">types.hpp</a></li>
 </ul>

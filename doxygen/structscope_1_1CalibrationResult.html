@@ -97,7 +97,7 @@ $(document).ready(function(){initNavTree('structscope_1_1CalibrationResult.html'
 </div><!--header-->
 <div class="contents">
 
-<p>The optimization stage's output: the fitted calibration and how well it fits the observations.  
+<p>The optimization stage's output.  
  <a href="structscope_1_1CalibrationResult.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="types_8hpp_source.html">types.hpp</a>&gt;</code></p>
@@ -106,7 +106,7 @@ Collaboration diagram for scope::CalibrationResult:</div>
 <div class="dyncontent">
 <div class="center"><img src="structscope_1_1CalibrationResult__coll__graph.png" border="0" usemap="#ascope_1_1CalibrationResult_coll__map" alt="Collaboration graph"/></div>
 <map name="ascope_1_1CalibrationResult_coll__map" id="ascope_1_1CalibrationResult_coll__map">
-<area shape="rect" title="The optimization stage&#39;s output: the fitted calibration and how well it fits the observations." alt="" coords="12,93,192,119"/>
+<area shape="rect" title="The optimization stage&#39;s output." alt="" coords="12,93,192,119"/>
 <area shape="rect" href="structscope_1_1CameraParameters.html" title="The ten parameters of the paper&#39;s camera model: the intrinsics k = [d_x, alpha, d_y,..." alt="" coords="5,5,199,31"/>
 <area shape="poly" title=" " alt="" coords="105,45,105,93,99,93,99,45"/>
 </map>
@@ -120,15 +120,15 @@ Public Attributes</h2></td></tr>
 <tr class="separator:a693cf063784503f5efa6081f01d97be6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a151da33863ab11ea034562f497c76c8a" id="r_a151da33863ab11ea034562f497c76c8a"><td class="memItemLeft" align="right" valign="top"><a id="a151da33863ab11ea034562f497c76c8a" name="a151da33863ab11ea034562f497c76c8a"></a>
 std::vector&lt; found::Quaternion &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>attitudes</b></td></tr>
-<tr class="memdesc:a151da33863ab11ea034562f497c76c8a"><td class="mdescLeft">&#160;</td><td class="mdescRight">One refined attitude per star image, in the order and frame of the prior attitudes (inertial into camera, boresight on +z). <br /></td></tr>
+<tr class="memdesc:a151da33863ab11ea034562f497c76c8a"><td class="mdescLeft">&#160;</td><td class="mdescRight">One refined attitude per star image, in the prior attitudes' order and frame. <br /></td></tr>
 <tr class="separator:a151da33863ab11ea034562f497c76c8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a40182c64e6d2fdf59c62565656dca439" id="r_a40182c64e6d2fdf59c62565656dca439"><td class="memItemLeft" align="right" valign="top"><a id="a40182c64e6d2fdf59c62565656dca439" name="a40182c64e6d2fdf59c62565656dca439"></a>
 std::vector&lt; found::Vec2 &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>residuals</b></td></tr>
-<tr class="memdesc:a40182c64e6d2fdf59c62565656dca439"><td class="mdescLeft">&#160;</td><td class="mdescRight">One residual per observation, in observation order: the measured pixel minus the pixel the fitted model predicts, [du, dv]. <br /></td></tr>
+<tr class="memdesc:a40182c64e6d2fdf59c62565656dca439"><td class="mdescLeft">&#160;</td><td class="mdescRight">Measured minus predicted pixel [du, dv] for each observation, in order. <br /></td></tr>
 <tr class="separator:a40182c64e6d2fdf59c62565656dca439"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad92c31e55852462df66904ddf9ad5c2b" id="r_ad92c31e55852462df66904ddf9ad5c2b"><td class="memItemLeft" align="right" valign="top"><a id="ad92c31e55852462df66904ddf9ad5c2b" name="ad92c31e55852462df66904ddf9ad5c2b"></a>
 decimal&#160;</td><td class="memItemRight" valign="bottom"><b>residualRms</b> = DECIMAL(0.0)</td></tr>
-<tr class="memdesc:ad92c31e55852462df66904ddf9ad5c2b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Root mean square of the residuals' u and v components pooled together, in pixels. <br /></td></tr>
+<tr class="memdesc:ad92c31e55852462df66904ddf9ad5c2b"><td class="mdescLeft">&#160;</td><td class="mdescRight">RMS of the residuals' u and v components pooled together, in pixels. <br /></td></tr>
 <tr class="separator:ad92c31e55852462df66904ddf9ad5c2b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab964d3230f4a61c519f7c65a199a048a" id="r_ab964d3230f4a61c519f7c65a199a048a"><td class="memItemLeft" align="right" valign="top"><a id="ab964d3230f4a61c519f7c65a199a048a" name="ab964d3230f4a61c519f7c65a199a048a"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>converged</b> = false</td></tr>
@@ -136,8 +136,8 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>converged</b> = false
 <tr class="separator:ab964d3230f4a61c519f7c65a199a048a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>The optimization stage's output: the fitted calibration and how well it fits the observations. </p>
-<p>A default-constructed value is an empty, unconverged result. </p>
+<div class="textblock"><p>The optimization stage's output. </p>
+<p>Default-constructed, it is an empty, unconverged result. </p>
 </div><hr/>The documentation for this struct was generated from the following file:<ul>
 <li>src/scope/common/<a class="el" href="types_8hpp_source.html">types.hpp</a></li>
 </ul>
