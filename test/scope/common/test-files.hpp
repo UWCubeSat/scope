@@ -16,6 +16,14 @@
 
 namespace scope {
 
+/// Size of the synthetic test images.
+constexpr int kWidth = 64;
+constexpr int kHeight = 64;
+
+/// The small fixture catalog, relative to the repository root. Its first star
+/// sits at (ra = 0, dec = 0), i.e. along inertial +x.
+constexpr const char *kFixtureCatalog = "test/fixtures/bright-star-catalog-test.tsv";
+
 /// A file under gtest's temp directory, deleted when it goes out of scope.
 class TempFile {
  public:
@@ -60,6 +68,22 @@ inline void PaintStar(std::vector<unsigned char> *pixels, int width, int x, int 
     at(x, y - 1) = 110;
     at(x, y + 1) = 110;
 }
+
+/// Owns a kWidth x kHeight single-channel pixel buffer and exposes it as an Image.
+class TestImage {
+ public:
+    explicit TestImage(unsigned char background = 0) : pixels_(FlatPixels(kWidth, kHeight, background)) {}
+
+    void Set(int x, int y, unsigned char value) { pixels_[static_cast<std::size_t>(y) * kWidth + x] = value; }
+
+    /// Paints a symmetric blob (bright center + 4 neighbors) at (x, y).
+    void PaintStar(int x, int y) { scope::PaintStar(&pixels_, kWidth, x, y); }
+
+    Image View() { return Image{kWidth, kHeight, 1, pixels_.data()}; }
+
+ private:
+    std::vector<unsigned char> pixels_;
+};
 
 /// Copies pixels into a malloc'd single-channel Image, the way stb_image hands
 /// images to the CLI. For code that takes ownership of its images and frees them.

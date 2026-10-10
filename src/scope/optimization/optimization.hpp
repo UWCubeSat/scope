@@ -14,38 +14,26 @@
 namespace scope {
 
 /**
- * Produces updated camera intrinsic + distortion parameters from star centroids.
+ * Fits the camera intrinsics and distortion parameters to star centroids.
  */
-class OptimizationAlgorithm : public found::FunctionStage<CentroidObservations, CalibrationResult> {
- public:
-    OptimizationAlgorithm() = default;
-    virtual ~OptimizationAlgorithm() {}
-};
+class OptimizationAlgorithm : public found::FunctionStage<CentroidObservations, CalibrationResult> {};
 
 /**
  * Levenberg-Marquardt parameter optimizer. Stub pending the real algorithm.
  */
 class LMAOptimizationAlgorithm : public OptimizationAlgorithm {
  public:
-    LMAOptimizationAlgorithm() = default;
-
     /**
-     * Constructs a new LMAOptimizationAlgorithm.
-     *
      * @param options Parsed recalibration options (currently unused).
      */
     explicit LMAOptimizationAlgorithm([[maybe_unused]] const RecalibrationOptions &options) {}
 
-    ~LMAOptimizationAlgorithm() override = default;
-
     /**
-     * Fits camera parameters to the given star centroids.
+     * Fits camera parameters to the star centroids.
      *
-     * @param observations Star measurements + prior attitudes from the
-     *                     star-centroid stage.
+     * @param observations The star-centroid stage's output.
      *
-     * @return The fitted calibration. The stub returns an empty, unconverged
-     *         result.
+     * @return The fitted calibration; from the stub, an empty, unconverged result.
      */
     CalibrationResult Run(const CentroidObservations &observations) override;
 };

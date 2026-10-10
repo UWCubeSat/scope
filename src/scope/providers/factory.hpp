@@ -16,20 +16,14 @@ namespace scope {
 /**
  * Assembles a PrimaryScopePipelineExecutor from parsed options.
  *
- * @param options Parsed recalibration options
- *                (see src/scope/command-line/parsing/options.hpp).
+ * @param options Parsed recalibration options.
  *
  * @return The assembled PrimaryScopePipelineExecutor.
  */
 inline std::unique_ptr<PrimaryScopePipelineExecutor> CreatePrimaryScopePipelineExecutor(
     RecalibrationOptions &&options) {
-    // Load the catalog once; the star-centroid stage takes ownership of it.
     Catalog catalog = LoadBsc(options.catalogPath);
-
-    // One prior attitude per star image, already in SCOPE's camera frame.
     std::vector<found::Quaternion> attitudes = ProvideAttitudes(options);
-
-    // The prior camera parameters, read out of the options once.
     const CameraParameters camera = ProvideCameraParameters(options);
 
     std::unique_ptr<NoiseFilterAlgorithm> noiseAlg = ProvideNoiseFilterAlgorithm(options);

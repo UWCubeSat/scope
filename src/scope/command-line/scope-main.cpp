@@ -19,12 +19,12 @@ void PrintHelp() {
     std::cout << "Usage: ./scope <option> [[flag value]...] [[flag=value]...]" << std::endl;
     std::cout << std::endl;
     std::cout << "Current capabilities:" << std::endl;
-    std::cout << "\tCalculates camera intrisic and distortion paramters." << std::endl;
+    std::cout << "\tCalculates camera intrinsic and distortion parameters." << std::endl;
     std::cout << std::endl;
     std::cout << "==================== Calibration Flags ====================" << std::endl;
     std::cout << std::endl;
-#define SCOPE_CLI_OPTION(name, type, prop, defaultVal, converter, defaultArg, ASSIGN, doc) \
-    std::cout << "\t--" << name << std::endl;                                              \
+#define SCOPE_CLI_OPTION(name, type, prop, defaultVal, converter, doc) \
+    std::cout << "\t--" << name << std::endl;                          \
     std::cout << "\t\t" << doc << std::endl;
     RECALIBRATE
 #undef SCOPE_CLI_OPTION
@@ -45,12 +45,10 @@ int main(int argc, char **argv) {
         return EXIT_SUCCESS;
     }
 
-    // Bad input (a missing catalog, an unreadable image, a malformed attitudes
-    // file) surfaces as an exception; report it and exit instead of aborting.
+    // Bad input (missing catalog, unreadable image, malformed attitudes file)
+    // arrives as an exception.
     try {
-        std::unique_ptr<found::PipelineExecutor> executor;
-        executor = CreatePrimaryScopePipelineExecutor(ParseRecalibrationOptions(argc, argv));
-
+        auto executor = CreatePrimaryScopePipelineExecutor(ParseRecalibrationOptions(argc, argv));
         executor->ExecutePipeline();
         executor->OutputResults();
     } catch (const std::exception &e) {

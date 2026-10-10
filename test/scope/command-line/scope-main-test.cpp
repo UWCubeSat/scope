@@ -14,13 +14,6 @@
 
 namespace scope {
 
-namespace {
-
-constexpr int kWidth = 64;
-constexpr int kHeight = 64;
-
-}  // namespace
-
 class ScopeMainTest : public testing::Test {
  protected:
     /// getopt keeps its position in a global; rewind it for the next parse.
@@ -54,7 +47,6 @@ TEST_F(ScopeMainTest, HelpListsFlags) {
     EXPECT_THAT(output, testing::HasSubstr("--roi-size"));
 }
 
-// -h is the short form of --help.
 TEST_F(ScopeMainTest, ShortHelpListsFlags) {
     const char *argv[] = {"scope", "-h"};
 
@@ -78,10 +70,8 @@ TEST_F(ScopeMainTest, MissingCatalogFailsCleanly) {
     EXPECT_THAT(errors, testing::HasSubstr("failed to open catalog"));
 }
 
-// A full run from the command line: image files, the catalog and the attitudes
-// file go in, and the star-centroid stage finds the star. The attitude turns
-// inertial +x onto the boresight, so the fixture catalog's star at
-// (ra = 0, dec = 0) lands on the principal point, where the blob is.
+// The attitude turns inertial +x onto the boresight, so the fixture catalog's
+// star at (ra = 0, dec = 0) lands on the principal point, where the blob is.
 TEST_F(ScopeMainTest, RunsEndToEndFromFiles) {
     std::vector<unsigned char> dark = FlatPixels(kWidth, kHeight, 10);
     std::vector<unsigned char> star = dark;
@@ -110,7 +100,7 @@ TEST_F(ScopeMainTest, RunsEndToEndFromFiles) {
                           "--attitudes",
                           attitudes.Path().c_str(),
                           "--catalog-path",
-                          "test/fixtures/bright-star-catalog-test.tsv"};
+                          kFixtureCatalog};
     const int argc = static_cast<int>(sizeof(argv) / sizeof(argv[0]));
 
     testing::internal::CaptureStdout();

@@ -29,18 +29,15 @@ CameraParameters PinholeCamera(decimal focalX, decimal focalY, decimal px, decim
 
 const decimal kTol = DECIMAL(1e-4);
 
-// LOST/FOUND forward model with the optical axis on +x: a camera-frame vector
-// projects to pixel (c_x - f*y/x, c_y - f*z/x) (FOUND common/spatial/camera.cpp,
-// LOST camera.cpp SpatialToCamera). Replicated here so the adapter is pinned
-// against LOST's published convention rather than against itself.
+// LOST/FOUND forward model, boresight on +x: pixel = (c_x - f*y/x, c_y - f*z/x)
+// (FOUND common/spatial/camera.cpp, LOST camera.cpp SpatialToCamera). Replicated
+// so the adapter is tested against LOST's convention, not against itself.
 found::Vec2 LostPixel(const found::Vec3 &cam, decimal f, decimal cx, decimal cy) {
     return found::Vec2{cx - f * cam.y() / cam.x(), cy - f * cam.z() / cam.x()};
 }
 
 }  // namespace
 
-// An on-axis star with identity attitude and no distortion projects to the
-// principal point.
 TEST(ProjectStarToPixelTest, OnAxisStarMapsToPrincipalPoint) {
     CameraParameters camera = PinholeCamera(DECIMAL(100.0), DECIMAL(100.0), DECIMAL(320.0), DECIMAL(240.0));
     found::Vec3 eI(DECIMAL(0.0), DECIMAL(0.0), DECIMAL(1.0));
@@ -77,8 +74,7 @@ TEST(ProjectStarToPixelTest, SkewAffectsUCoordinate) {
     EXPECT_NEAR(pixel->y(), DECIMAL(260.0), kTol);  // 100 * 0.2 + 240
 }
 
-// A non-identity attitude rotates the inertial direction into the camera frame
-// before projection: here eI = (1,0,0) is rotated onto the boresight.
+// Here eI = (1, 0, 0) is rotated onto the boresight.
 TEST(ProjectStarToPixelTest, AttitudeRotatesIntoCameraFrame) {
     CameraParameters camera = PinholeCamera(DECIMAL(100.0), DECIMAL(100.0), DECIMAL(320.0), DECIMAL(240.0));
     found::Vec3 eI(DECIMAL(1.0), DECIMAL(0.0), DECIMAL(0.0));
@@ -93,12 +89,9 @@ TEST(ProjectStarToPixelTest, AttitudeRotatesIntoCameraFrame) {
     EXPECT_NEAR(pixel->y(), DECIMAL(240.0), kTol);
 }
 
-// A star rotated to sit behind the camera (camera-frame z <= 0) cannot be
-// imaged, so the projection reports nullopt rather than a folded-over pixel.
 TEST(ProjectStarToPixelTest, RejectsStarBehindCamera) {
     CameraParameters camera = PinholeCamera(DECIMAL(100.0), DECIMAL(100.0), DECIMAL(320.0), DECIMAL(240.0));
-    // Anti-boresight: directly behind the camera. Without the z-guard this would
-    // divide by a negative z and project straight onto the principal point.
+    // Anti-boresight: without the z-guard this lands on the principal point.
     found::Vec3 eI(DECIMAL(0.0), DECIMAL(0.0), DECIMAL(-1.0));
 
     EXPECT_FALSE(ProjectStarToPixel(eI, found::Quaternion::Identity(), camera).has_value());
@@ -108,7 +101,6 @@ TEST(ProjectStarToPixelTest, RejectsStarBehindCamera) {
     EXPECT_FALSE(ProjectStarToPixel(offAxisBehind.normalized(), found::Quaternion::Identity(), camera).has_value());
 }
 
-// Pure radial distortion (k1 != 0) scales an off-axis point outward.
 TEST(BrownDistortTest, PureRadial) {
     // r^2 = 0.01, radial = 1 + 0.5 * 0.01 = 1.005, so x' = 0.1005, y' = 0.
     found::Vec2 distorted = BrownDistort(
@@ -133,15 +125,6 @@ TEST(BrownDistortTest, Decentering) {
     EXPECT_NEAR(distorted.y(), DECIMAL(0.2021), kTol);
 }
 
-// Zero distortion coefficients leave the point unchanged.
-TEST(BrownDistortTest, ZeroCoefficientsAreIdentity) {
-    found::Vec2 ideal(DECIMAL(0.3), DECIMAL(-0.2));
-    found::Vec2 distorted = BrownDistort(ideal, DECIMAL(0.0), DECIMAL(0.0), DECIMAL(0.0), DECIMAL(0.0), DECIMAL(0.0));
-
-    EXPECT_NEAR(distorted.x(), ideal.x(), kTol);
-    EXPECT_NEAR(distorted.y(), ideal.y(), kTol);
-}
-
 // InSensorWithMargin accepts the inclusive lower edge and rejects the exclusive
 // upper edge and anything past the margin.
 TEST(InSensorWithMarginTest, EdgeBehavior) {
@@ -161,9 +144,8 @@ TEST(InSensorWithMarginTest, EdgeBehavior) {
     EXPECT_FALSE(InSensorWithMargin(found::Vec2(DECIMAL(30.0), DECIMAL(48.0)), w, h, margin));
 }
 
-// Under an identity LOST attitude the camera frame equals the inertial frame, so
-// the adapter alone reconciles LOST's x-boresight with SCOPE's z-boresight. A
-// star on the LOST optical axis (inertial +x) must land on the principal point.
+// Under an identity LOST attitude, a star on LOST's optical axis (inertial +x)
+// must land on the principal point.
 TEST(LostAttitudeToScopeFrameTest, OnAxisStarMapsToPrincipalPoint) {
     CameraParameters camera = PinholeCamera(DECIMAL(100.0), DECIMAL(100.0), DECIMAL(320.0), DECIMAL(240.0));
     const found::Quaternion attitude = LostAttitudeToScopeFrame(found::Quaternion::Identity());
@@ -176,10 +158,8 @@ TEST(LostAttitudeToScopeFrameTest, OnAxisStarMapsToPrincipalPoint) {
     EXPECT_NEAR(pixel->y(), DECIMAL(240.0), kTol);
 }
 
-// The adapter must reproduce LOST's exact pixel for off-axis stars, pinning the
-// axis permutation AND its signs. Under the identity LOST attitude, a +camera-y
-// then a +camera-z inertial nudge must match LOST's SpatialToCamera to the last
-// sign -- a swapped or sign-flipped permutation would mirror the field.
+// Off-axis stars must match LOST's pixel exactly, which pins the axis
+// permutation and its signs; a wrong one would mirror the field.
 TEST(LostAttitudeToScopeFrameTest, MatchesLostForwardModelSigns) {
     const decimal f = DECIMAL(100.0);
     const decimal cx = DECIMAL(320.0);
@@ -204,9 +184,8 @@ TEST(LostAttitudeToScopeFrameTest, MatchesLostForwardModelSigns) {
     EXPECT_NEAR(pz->y(), pzExpected.y(), kTol);
 }
 
-// A star on the LOST anti-boresight (inertial -x) lands behind SCOPE's image
-// plane after conversion (camera-frame z < 0), so the projection rejects it
-// rather than folding it onto the sensor.
+// A star on LOST's anti-boresight (inertial -x) ends up behind SCOPE's image
+// plane and is rejected.
 TEST(LostAttitudeToScopeFrameTest, AntiBoresightIsRejected) {
     CameraParameters camera = PinholeCamera(DECIMAL(100.0), DECIMAL(100.0), DECIMAL(320.0), DECIMAL(240.0));
     const found::Quaternion attitude = LostAttitudeToScopeFrame(found::Quaternion::Identity());

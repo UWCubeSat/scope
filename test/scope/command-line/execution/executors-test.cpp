@@ -24,11 +24,7 @@ namespace scope {
 
 namespace {
 
-constexpr int kWidth = 64;
-constexpr int kHeight = 64;
-
-/// An optimization stage that ignores its input and returns a fixed result, so
-/// the executor's output can be checked against known values.
+/// An optimization stage that returns a fixed result.
 class FixedResultOptimization : public OptimizationAlgorithm {
  public:
     explicit FixedResultOptimization(const CalibrationResult &result) : result_(result) {}
@@ -41,9 +37,8 @@ class FixedResultOptimization : public OptimizationAlgorithm {
 
 }  // namespace
 
-// The executor runs all three stages over the images in its options, prints the
-// result, and releases those images when it is destroyed (the sanitizer and
-// valgrind runs fail this test if it does not).
+// The sanitizer fails this test if the executor does not free the images in
+// its options.
 TEST(ExecutorsTest, RunsPipelineAndReleasesImages) {
     std::vector<unsigned char> dark = FlatPixels(kWidth, kHeight, 10);
     std::vector<unsigned char> star = dark;
@@ -84,10 +79,8 @@ TEST(ExecutorsTest, RunsPipelineAndReleasesImages) {
     EXPECT_THAT(output, testing::HasSubstr("residual-rms: 0 px over 0 observations"));
 }
 
-// OutputResults prints what the optimization stage produced: whether it
-// converged, each parameter under the name of its command-line flag, and the
-// residual RMS with the number of observations behind it. The values are exactly
-// representable, so they print the same in double and float builds.
+// The values are exactly representable, so they print the same in double and
+// float builds.
 TEST(ExecutorsTest, PrintsCalibrationResult) {
     CalibrationResult result;
     result.converged = true;

@@ -14,10 +14,9 @@ found::Vec2 BrownDistort(const found::Vec2 &ideal, decimal k1, decimal k2, decim
     const decimal r4 = r2 * r2;
     const decimal r6 = r4 * r2;
 
-    // Radial term: (1 + k1 r^2 + k2 r^4 + k3 r^6).
     const decimal radial = DECIMAL(1.0) + k1 * r2 + k2 * r4 + k3 * r6;
 
-    // Decentering (tangential) term.
+    // Decentering (tangential) terms.
     const decimal dx = DECIMAL(2.0) * p1 * x * y + p2 * (r2 + DECIMAL(2.0) * x * x);
     const decimal dy = p1 * (r2 + DECIMAL(2.0) * y * y) + DECIMAL(2.0) * p2 * x * y;
 
@@ -25,10 +24,7 @@ found::Vec2 BrownDistort(const found::Vec2 &ideal, decimal k1, decimal k2, decim
 }
 
 found::Quaternion LostAttitudeToScopeFrame(const found::Quaternion &lostAttitude) {
-    // Fixed rotation taking LOST's x-boresight camera frame into SCOPE's
-    // z-boresight frame: (x, y, z)_lost -> (-y, -z, x)_scope. Derived in the
-    // header from LOST's forward model; det = +1 (a proper rotation). Composing on
-    // the left leaves the downstream e_C = attitude * e_I machinery unchanged.
+    // (x, y, z)_lost -> (-y, -z, x)_scope; see the header.
     found::Mat3 framePermutation;
     framePermutation << DECIMAL(0.0), DECIMAL(-1.0), DECIMAL(0.0),
                         DECIMAL(0.0), DECIMAL(0.0), DECIMAL(-1.0),
@@ -39,26 +35,19 @@ found::Quaternion LostAttitudeToScopeFrame(const found::Quaternion &lostAttitude
 std::optional<found::Vec2> ProjectStarToPixel(const found::Vec3 &eI,
                                               const found::Quaternion &attitude,
                                               const CameraParameters &camera) {
-    // Rotate the inertial line of sight into the camera frame (z is the boresight).
     const found::Vec3 eC = (attitude * eI).normalized();
 
-    // Reject stars at or behind the image plane (z <= 0): they cannot be imaged,
-    // and dividing by a non-positive z would fold a mirror image of the rear
-    // hemisphere onto the sensor -- e.g. a star on the anti-boresight maps
-    // straight to the principal point. InSensorWithMargin alone cannot catch this
-    // because the bogus pixel can land well inside the frame.
+    // Dividing by z <= 0 would mirror the rear hemisphere onto the sensor (the
+    // anti-boresight lands on the principal point), which InSensorWithMargin
+    // cannot catch.
     if (eC.z() <= DECIMAL(0.0)) {
         return std::nullopt;
     }
 
-    // Pinhole projection onto the normalized image plane (paper Eq. 1, with the
-    // focal length absorbed into the intrinsics below).
     const found::Vec2 ideal{eC.x() / eC.z(), eC.y() / eC.z()};
-
-    // Brown distortion (paper Eq. 6).
     const found::Vec2 distorted = BrownDistort(ideal, camera.k1, camera.k2, camera.k3, camera.p1, camera.p2);
 
-    // Camera intrinsics (paper Eq. 7): [u'; v'] = [d_x, alpha, u_p; 0, d_y, v_p] [x'; y'; 1].
+    // Paper Eq. 7: [u'; v'] = [d_x, alpha, u_p; 0, d_y, v_p] [x'; y'; 1].
     const decimal u = camera.focalLengthX * distorted.x() + camera.alpha * distorted.y() + camera.principalX;
     const decimal v = camera.focalLengthY * distorted.y() + camera.principalY;
 

@@ -12,26 +12,13 @@
 #include "scope/projection/projection.hpp"
 #include "scope/star-centroid/star-centroid.hpp"
 
+#include "test/scope/common/test-files.hpp"
+
 namespace scope {
 
 namespace {
 
-constexpr int kWidth = 64;
-constexpr int kHeight = 64;
 const decimal kTol = DECIMAL(1e-3);
-
-/// Owns a single-channel pixel buffer and exposes it as a FOUND Image.
-class TestImage {
- public:
-    explicit TestImage(unsigned char background) : pixels_(static_cast<std::size_t>(kWidth) * kHeight, background) {}
-
-    void Set(int x, int y, unsigned char value) { pixels_[static_cast<std::size_t>(y) * kWidth + x] = value; }
-
-    Image View() { return Image{kWidth, kHeight, 1, pixels_.data()}; }
-
- private:
-    std::vector<unsigned char> pixels_;
-};
 
 /// Pinhole camera (focal 100, principal at the image center) with no distortion.
 CameraParameters CenteredCamera() {
@@ -50,24 +37,14 @@ found::Vec3 DirectionForPixel(decimal px, decimal py) {
         .normalized();
 }
 
-/// Paints a symmetric blob (bright center + 4 neighbors) at (x, y).
-void PaintStar(TestImage *image, int x, int y) {
-    image->Set(x, y, 210);
-    image->Set(x - 1, y, 110);
-    image->Set(x + 1, y, 110);
-    image->Set(x, y - 1, 110);
-    image->Set(x, y + 1, 110);
-}
-
 }  // namespace
 
-// A catalog star that projects onto a visible blob produces one observation,
-// which carries the star's name and inertial direction, with the attitudes
-// forwarded.
+// The observation carries the star's name and inertial direction, and the
+// attitudes are forwarded.
 TEST(ROIFilterAlgorithmTest, ProducesObservationForVisibleStar) {
     TestImage dark(10);
     TestImage star(10);
-    PaintStar(&star, 40, 36);
+    star.PaintStar(40, 36);
 
     RecalibrationOptions options;
     options.starImages = {star.View()};
@@ -89,12 +66,11 @@ TEST(ROIFilterAlgorithmTest, ProducesObservationForVisibleStar) {
     ASSERT_EQ(result.attitudes.size(), 1u);
 }
 
-// A star whose projection falls outside the sensor margin is skipped, while a
-// visible star in the same catalog still produces its observation.
+// A visible star in the same catalog is still observed.
 TEST(ROIFilterAlgorithmTest, SkipsOutOfSensorStar) {
     TestImage dark(10);
     TestImage star(10);
-    PaintStar(&star, 40, 36);
+    star.PaintStar(40, 36);
 
     RecalibrationOptions options;
     options.starImages = {star.View()};
@@ -112,7 +88,6 @@ TEST(ROIFilterAlgorithmTest, SkipsOutOfSensorStar) {
     EXPECT_EQ(result.observations[0].starName, 1);
 }
 
-// An in-sensor star with no corresponding blob yields no observation.
 TEST(ROIFilterAlgorithmTest, NoObservationWhenStarNotPresent) {
     TestImage dark(10);
     TestImage star(10);  // uniform background, nothing above threshold after subtraction
@@ -130,13 +105,12 @@ TEST(ROIFilterAlgorithmTest, NoObservationWhenStarNotPresent) {
     EXPECT_TRUE(result.observations.empty());
 }
 
-// Observations from multiple star images are tagged with the right image index.
 TEST(ROIFilterAlgorithmTest, TagsObservationsPerImage) {
     TestImage dark(10);
     TestImage starA(10);
     TestImage starB(10);
-    PaintStar(&starA, 40, 36);
-    PaintStar(&starB, 40, 36);
+    starA.PaintStar(40, 36);
+    starB.PaintStar(40, 36);
 
     RecalibrationOptions options;
     options.starImages = {starA.View(), starB.View()};
@@ -154,14 +128,13 @@ TEST(ROIFilterAlgorithmTest, TagsObservationsPerImage) {
     EXPECT_EQ(result.observations[1].imageIndex, 1);
 }
 
-// A catalog star fainter than the magnitude threshold is not even projected, so
-// its blob is ignored while a bright star in the same field still produces its
-// observation.
+// The faint star's blob is ignored; a bright star in the same field is still
+// observed.
 TEST(ROIFilterAlgorithmTest, SkipsStarFainterThanMagnitudeThreshold) {
     TestImage dark(10);
     TestImage star(10);
-    PaintStar(&star, 40, 36);  // the bright star's blob
-    PaintStar(&star, 24, 24);  // the faint star's blob (its own, non-overlapping ROI)
+    star.PaintStar(40, 36);  // the bright star's blob
+    star.PaintStar(24, 24);  // the faint star's blob (its own, non-overlapping ROI)
 
     RecalibrationOptions options;  // magnitudeThreshold defaults to 6.0
     options.starImages = {star.View()};
@@ -178,12 +151,11 @@ TEST(ROIFilterAlgorithmTest, SkipsStarFainterThanMagnitudeThreshold) {
     EXPECT_EQ(result.observations[0].starName, 1);
 }
 
-// Two catalog stars projecting a pixel apart both lock onto the same blob, an
-// ambiguous correspondence; both observations are dropped rather than guessed.
+// Two catalog stars a pixel apart lock onto the same blob; both are dropped.
 TEST(ROIFilterAlgorithmTest, DropsCollidingObservations) {
     TestImage dark(10);
     TestImage star(10);
-    PaintStar(&star, 40, 36);  // a single blob both stars will centroid onto
+    star.PaintStar(40, 36);  // a single blob both stars will centroid onto
 
     RecalibrationOptions options;
     options.starImages = {star.View()};
@@ -199,13 +171,11 @@ TEST(ROIFilterAlgorithmTest, DropsCollidingObservations) {
     EXPECT_TRUE(result.observations.empty());
 }
 
-// Two bright stars far enough apart that their centroids do not collide are both
-// kept as separate observations.
 TEST(ROIFilterAlgorithmTest, KeepsWellSeparatedStars) {
     TestImage dark(10);
     TestImage star(10);
-    PaintStar(&star, 40, 36);
-    PaintStar(&star, 24, 24);
+    star.PaintStar(40, 36);
+    star.PaintStar(24, 24);
 
     RecalibrationOptions options;
     options.starImages = {star.View()};
@@ -221,12 +191,11 @@ TEST(ROIFilterAlgorithmTest, KeepsWellSeparatedStars) {
     EXPECT_EQ(result.observations.size(), 2u);
 }
 
-// A catalog star sitting behind the camera projects to no pixel and is skipped,
-// while a visible star in the same catalog still produces its observation.
+// A visible star in the same catalog is still observed.
 TEST(ROIFilterAlgorithmTest, SkipsStarBehindCamera) {
     TestImage dark(10);
     TestImage star(10);
-    PaintStar(&star, 40, 36);
+    star.PaintStar(40, 36);
 
     RecalibrationOptions options;
     options.starImages = {star.View()};
@@ -244,7 +213,6 @@ TEST(ROIFilterAlgorithmTest, SkipsStarBehindCamera) {
     EXPECT_EQ(result.observations[0].starName, 1);
 }
 
-// Mismatched attitude / star-image counts are a programming error and throw.
 TEST(ROIFilterAlgorithmTest, ThrowsOnAttitudeCountMismatch) {
     TestImage dark(10);
     TestImage star(10);
@@ -262,7 +230,6 @@ TEST(ROIFilterAlgorithmTest, ThrowsOnAttitudeCountMismatch) {
     EXPECT_THROW(algorithm.Run(darkView), std::runtime_error);
 }
 
-// A star image whose dimensions differ from the dark frame throws.
 TEST(ROIFilterAlgorithmTest, ThrowsOnDimensionMismatch) {
     std::vector<unsigned char> darkPixels(32u * 32u, 10);
     Image darkView{32, 32, 1, darkPixels.data()};
@@ -285,7 +252,7 @@ TEST(ROIFilterAlgorithmTest, ThrowsOnDimensionMismatch) {
 TEST(ROIFilterAlgorithmTest, RoiSizeSetsSearchReach) {
     TestImage dark(10);
     TestImage star(10);
-    PaintStar(&star, 40, 30);  // 10 px to the right of the prediction
+    star.PaintStar(40, 30);  // 10 px to the right of the prediction
 
     RecalibrationOptions options;  // roiSize defaults to 31
     options.starImages = {star.View()};
@@ -312,7 +279,7 @@ TEST(ROIFilterAlgorithmTest, RoiSizeSetsSearchReach) {
 TEST(ROIFilterAlgorithmTest, RoiSizeSetsEdgeMargin) {
     TestImage dark(10);
     TestImage star(10);
-    PaintStar(&star, 10, 32);
+    star.PaintStar(10, 32);
 
     RecalibrationOptions options;
     options.starImages = {star.View()};
@@ -360,7 +327,6 @@ TEST(ROIFilterAlgorithmTest, EvenRoiSizeActsAsNextOdd) {
     EXPECT_TRUE(odd.observations.empty());
 }
 
-// An ROI of less than one pixel cannot hold a star and throws.
 TEST(ROIFilterAlgorithmTest, ThrowsOnNonPositiveRoiSize) {
     TestImage dark(10);
     TestImage star(10);

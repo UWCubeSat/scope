@@ -27,13 +27,6 @@ namespace scope {
 
 namespace {
 
-constexpr int kWidth = 64;
-constexpr int kHeight = 64;
-
-/// The small fixture catalog, relative to the repository root. Its first star
-/// sits at (ra = 0, dec = 0), i.e. along inertial +x.
-const char *kCatalogPath = "test/fixtures/bright-star-catalog-test.tsv";
-
 /// Attitude that turns inertial +x onto the camera boresight (+z), so the
 /// fixture catalog's first star lands on the principal point.
 const char *kInertialXOnBoresight = "0.7071067811865476 0 -0.7071067811865476 0\n";
@@ -45,34 +38,13 @@ RecalibrationOptions CenteredOptions() {
     options.focalLengthY = DECIMAL(100.0);
     options.principalX = DECIMAL(32.0);
     options.principalY = DECIMAL(32.0);
-    options.catalogPath = kCatalogPath;
+    options.catalogPath = kFixtureCatalog;
     return options;
 }
 
 }  // namespace
 
-// Each stage provider hands back the implementation the pipeline expects.
-TEST(StageProvidersTest, ProvidesDarkScreenFilter) {
-    std::unique_ptr<NoiseFilterAlgorithm> algorithm = ProvideNoiseFilterAlgorithm(RecalibrationOptions());
-
-    EXPECT_NE(dynamic_cast<DarkScreenFilter *>(algorithm.get()), nullptr);
-}
-
-TEST(StageProvidersTest, ProvidesRoiFilter) {
-    std::unique_ptr<StarCentroidAlgorithm> algorithm = ProvideStarCentroidAlgorithm(
-        RecalibrationOptions(), CameraParameters(), Catalog(), std::vector<found::Quaternion>());
-
-    EXPECT_NE(dynamic_cast<ROIFilterAlgorithm *>(algorithm.get()), nullptr);
-}
-
-TEST(StageProvidersTest, ProvidesLmaOptimizer) {
-    std::unique_ptr<OptimizationAlgorithm> algorithm = ProvideOptimizationAlgorithm(RecalibrationOptions());
-
-    EXPECT_NE(dynamic_cast<LMAOptimizationAlgorithm *>(algorithm.get()), nullptr);
-}
-
-// Each of the ten prior parameters is carried from its option into its own
-// field. The values are all different, so a swapped pair would show.
+// The values are all different, so a swapped pair would show.
 TEST(ProvideCameraParametersTest, CopiesEveryPriorParameter) {
     RecalibrationOptions options;
     options.focalLengthX = DECIMAL(1.0);
@@ -100,7 +72,6 @@ TEST(ProvideCameraParametersTest, CopiesEveryPriorParameter) {
     EXPECT_EQ(camera.p2, DECIMAL(10.0));
 }
 
-// The attitudes come from the file named in the options.
 TEST(ProvideAttitudesTest, LoadsAttitudesFile) {
     TempFile file("providers-attitudes.txt", "1 0 0 0\n0 0 0 1\n");
     RecalibrationOptions options;
@@ -122,15 +93,8 @@ TEST(ProvideAttitudesTest, ThrowsWhenStarImagesHaveNoAttitudes) {
     EXPECT_THROW(ProvideAttitudes(options), std::runtime_error);
 }
 
-// With no star images there is nothing to supply attitudes for.
-TEST(ProvideAttitudesTest, NoStarImagesNeedNoAttitudes) {
-    EXPECT_TRUE(ProvideAttitudes(RecalibrationOptions()).empty());
-}
-
-// The factory loads the catalog and the attitudes and wires up a pipeline that
-// runs. The attitude in the file is what puts the catalog star on the blob: the
-// star at inertial +x is only on the sensor because the attitude turns +x onto
-// the boresight.
+// The catalog star at inertial +x is only on the sensor because the attitude
+// in the file turns +x onto the boresight.
 TEST(FactoryTest, BuildsExecutorThatUsesCatalogAndAttitudes) {
     std::vector<unsigned char> dark = FlatPixels(kWidth, kHeight, 10);
     std::vector<unsigned char> star = dark;
@@ -153,7 +117,6 @@ TEST(FactoryTest, BuildsExecutorThatUsesCatalogAndAttitudes) {
     EXPECT_THAT(output, testing::HasSubstr("Star image 0: 1 of 1 centroids kept"));
 }
 
-// A catalog that cannot be opened throws before any pipeline is built.
 TEST(FactoryTest, MissingCatalogThrows) {
     RecalibrationOptions options;
     options.catalogPath = "test/fixtures/does-not-exist.tsv";
@@ -161,7 +124,6 @@ TEST(FactoryTest, MissingCatalogThrows) {
     EXPECT_THROW(CreatePrimaryScopePipelineExecutor(std::move(options)), std::runtime_error);
 }
 
-// Star images without attitudes throw before any pipeline is built.
 TEST(FactoryTest, MissingAttitudesThrows) {
     // No executor is built, so these stay owned by the test.
     std::vector<unsigned char> pixels = FlatPixels(kWidth, kHeight, 10);

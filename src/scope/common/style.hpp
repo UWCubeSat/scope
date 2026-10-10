@@ -21,8 +21,7 @@ typedef std::vector<found::Image> Images;
 constexpr size_t recalibration_size = 3;
 
 /** Pipeline for Recalibration. */
-typedef found::SequentialPipeline<std::vector<found::Image>, CalibrationResult, recalibration_size>
-    PrimaryScopePipeline;
+typedef found::SequentialPipeline<Images, CalibrationResult, recalibration_size> PrimaryScopePipeline;
 
 }  // namespace scope
 

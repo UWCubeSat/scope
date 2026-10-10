@@ -35,13 +35,9 @@ std::vector<found::Quaternion> LoadAttitudes(const std::string &path) {
             continue;
         }
 
-        // Read into double regardless of decimal width, then narrow, so the
-        // parse does not depend on the storage type.
+        // Parse as double whatever the width of decimal, then narrow.
         std::istringstream fields(line);
-        double w;
-        double x;
-        double y;
-        double z;
+        double w, x, y, z;
         std::string extra;
         if (!(fields >> w >> x >> y >> z) || (fields >> extra)) {
             throw std::runtime_error("LoadAttitudes: expected 'w x y z' on line " + std::to_string(lineNumber) +

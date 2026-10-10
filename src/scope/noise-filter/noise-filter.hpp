@@ -13,38 +13,26 @@
 namespace scope {
 
 /**
- * Reduces a set of input frames to a single representative image
- * (e.g. a dark frame / fixed-pattern noise estimate).
+ * Reduces a set of frames to one image (a dark frame).
  */
-class NoiseFilterAlgorithm : public found::FunctionStage<Images, Image> {
- public:
-    NoiseFilterAlgorithm() = default;
-    virtual ~NoiseFilterAlgorithm() {}
-};
+class NoiseFilterAlgorithm : public found::FunctionStage<Images, Image> {};
 
 /**
- * Computes a per-pixel median across frames to estimate fixed-pattern noise.
- *
- * For an even number of input frames the lower median (n - 1) / 2 is returned.
+ * Estimates fixed-pattern noise as the per-pixel median across frames.
  */
 class DarkScreenFilter : public NoiseFilterAlgorithm {
  public:
-    DarkScreenFilter() = default;
-    ~DarkScreenFilter() override = default;
-
     /**
-     * Computes the per-pixel median of the input frames. For even-count
-     * inputs, returns the lower median.
+     * Computes the per-pixel median of the frames (the lower median for an
+     * even count).
      *
      * @param images Frames with identical dimensions and channel counts.
      *
-     * @return The median image. The caller owns the pixel buffer and must
-     *         release it with std::free (matching FOUND's stb_image-allocated
-     *         input buffers).
+     * @return The median image. The caller must std::free its pixel buffer.
      *
      * @throws std::invalid_argument if images is empty.
-     * @throws std::runtime_error if any image is null, has mismatched dimensions,
-     *         or if the output buffer cannot be allocated.
+     * @throws std::runtime_error if an image is null, the dimensions do not
+     *         match, or the output buffer cannot be allocated.
      */
     Image Run(const Images &images) override;
 };

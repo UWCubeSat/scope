@@ -8,8 +8,6 @@
 
 namespace scope {
 
-// Check that each output pixel is the median of the corresponding pixels across the input stack, and that output
-// dimensions match the inputs.
 TEST(DarkScreenFilterTest, ComputesPerPixelMedian) {
     DarkScreenFilter filter;
 
@@ -36,8 +34,6 @@ TEST(DarkScreenFilterTest, ComputesPerPixelMedian) {
     std::free(dark.image);
 }
 
-// Check that with an even number of inputs (no single middle element), the filter picks the lower of the two middle
-// values rather than averaging them.
 TEST(DarkScreenFilterTest, UsesLowerMedianWhenInputCountIsEven) {
     DarkScreenFilter filter;
 
@@ -53,21 +49,19 @@ TEST(DarkScreenFilterTest, UsesLowerMedianWhenInputCountIsEven) {
 
     Image dark = filter.Run({a, b, c, d});
 
-    // Sorted: {10, 20, 30, 200}; the two middle values are 20 and 30, and the lower (20) is selected.
+    // Sorted: {10, 20, 30, 200}; the lower middle value is 20.
     EXPECT_EQ(dark.image[0], 20);
 
     std::free(dark.image);
 }
 
-// Check that an empty input set throws std::invalid_argument (distinct from the std::runtime_error used for other
-// malformed inputs).
+// std::invalid_argument, unlike the std::runtime_error for other bad input.
 TEST(DarkScreenFilterTest, ThrowsOnEmptyImageSet) {
     DarkScreenFilter filter;
 
     EXPECT_THROW(filter.Run({}), std::invalid_argument);
 }
 
-// Check that a mismatch in width across inputs throws.
 TEST(DarkScreenFilterTest, ThrowsOnMismatchedWidth) {
     DarkScreenFilter filter;
 
@@ -80,8 +74,6 @@ TEST(DarkScreenFilterTest, ThrowsOnMismatchedWidth) {
     EXPECT_THROW(filter.Run({a, b}), std::runtime_error);
 }
 
-// Check that a mismatch in height across inputs throws (width matches, so the height term of the validation
-// short-circuit chain is the one that fires).
 TEST(DarkScreenFilterTest, ThrowsOnMismatchedHeight) {
     DarkScreenFilter filter;
 
@@ -94,7 +86,6 @@ TEST(DarkScreenFilterTest, ThrowsOnMismatchedHeight) {
     EXPECT_THROW(filter.Run({a, b}), std::runtime_error);
 }
 
-// Check that a mismatch in channel count across inputs throws.
 TEST(DarkScreenFilterTest, ThrowsOnMismatchedChannels) {
     DarkScreenFilter filter;
 
@@ -107,7 +98,6 @@ TEST(DarkScreenFilterTest, ThrowsOnMismatchedChannels) {
     EXPECT_THROW(filter.Run({a, b}), std::runtime_error);
 }
 
-// Check that a null data pointer on the first image throws.
 TEST(DarkScreenFilterTest, ThrowsOnNullReferenceImage) {
     DarkScreenFilter filter;
 
@@ -116,7 +106,6 @@ TEST(DarkScreenFilterTest, ThrowsOnNullReferenceImage) {
     EXPECT_THROW(filter.Run({a}), std::runtime_error);
 }
 
-// Check that a null data pointer on any non-first image throws.
 TEST(DarkScreenFilterTest, ThrowsOnNullSubsequentImage) {
     DarkScreenFilter filter;
 
@@ -127,7 +116,6 @@ TEST(DarkScreenFilterTest, ThrowsOnNullSubsequentImage) {
     EXPECT_THROW(filter.Run({a, b}), std::runtime_error);
 }
 
-// Check that an image with zero width, height, or channel count throws.
 TEST(DarkScreenFilterTest, ThrowsOnNonPositiveDimensions) {
     DarkScreenFilter filter;
 
@@ -141,7 +129,6 @@ TEST(DarkScreenFilterTest, ThrowsOnNonPositiveDimensions) {
     EXPECT_THROW(filter.Run({zeroChannels}), std::runtime_error);
 }
 
-// Check that a single-image input returns a freshly-allocated buffer rather than aliasing the input.
 TEST(DarkScreenFilterTest, SingleImageReturnsCopy) {
     DarkScreenFilter filter;
 
@@ -153,7 +140,7 @@ TEST(DarkScreenFilterTest, SingleImageReturnsCopy) {
     ASSERT_EQ(dark.width, 2);
     ASSERT_EQ(dark.height, 2);
     ASSERT_EQ(dark.channels, 1);
-    // Output buffer must not alias the input — this is the load-bearing assertion for this test.
+    // The output must not alias the input.
     ASSERT_NE(dark.image, data.data());
     EXPECT_EQ(dark.image[0], 7);
     EXPECT_EQ(dark.image[1], 42);
@@ -163,7 +150,6 @@ TEST(DarkScreenFilterTest, SingleImageReturnsCopy) {
     std::free(dark.image);
 }
 
-// Check that medians are computed per-channel, with no mixing of samples across channels.
 TEST(DarkScreenFilterTest, MultiChannelMediansChannelsIndependently) {
     DarkScreenFilter filter;
 

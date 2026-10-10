@@ -18,47 +18,19 @@
 #include "scope/projection/projection.hpp"
 #include "scope/star-centroid/star-centroid.hpp"
 
+#include "test/scope/common/test-files.hpp"
+
 namespace scope {
 
-namespace {
-
-constexpr int kWidth = 64;
-constexpr int kHeight = 64;
-
-/// Owns a single-channel pixel buffer and exposes it as a FOUND Image.
-class TestImage {
- public:
-    explicit TestImage(unsigned char background) : pixels_(static_cast<std::size_t>(kWidth) * kHeight, background) {}
-
-    void Set(int x, int y, unsigned char value) { pixels_[static_cast<std::size_t>(y) * kWidth + x] = value; }
-
-    Image View() { return Image{kWidth, kHeight, 1, pixels_.data()}; }
-
- private:
-    std::vector<unsigned char> pixels_;
-};
-
-}  // namespace
-
-// Drives the full noise-filter -> star-centroid -> optimization pipeline on
-// synthetic data and verifies it runs end-to-end, the star is centroided in the
-// intermediate payload, and the (stub) optimizer is reached.
 TEST(PipelineIntegrationTest, RunsEndToEnd) {
-    // Two constant dark frames -> median dark frame of value 10.
     TestImage darkA(10);
     TestImage darkB(10);
     Images darkFrames = {darkA.View(), darkB.View()};
 
-    // One star image: background 10 with a symmetric blob at (40, 36).
     TestImage star(10);
-    star.Set(40, 36, 210);
-    star.Set(39, 36, 110);
-    star.Set(41, 36, 110);
-    star.Set(40, 35, 110);
-    star.Set(40, 37, 110);
+    star.PaintStar(40, 36);
 
-    // Pinhole camera (focal 100, principal at (32, 32)), no distortion. A star
-    // along DirectionForPixel projects to (40, 36).
+    // Pinhole camera, no distortion; the catalog star below projects to (40, 36).
     CameraParameters camera;
     camera.focalLengthX = DECIMAL(100.0);
     camera.focalLengthY = DECIMAL(100.0);
@@ -72,8 +44,7 @@ TEST(PipelineIntegrationTest, RunsEndToEnd) {
     Catalog catalog;
     catalog.push_back(CatalogStar{found::Vec3(DECIMAL(0.08), DECIMAL(0.04), DECIMAL(1.0)).normalized(), 200, 1});
 
-    // Wrap stages in their FunctionStage base type so the pipeline can deduce the
-    // input/output types, keeping raw observers to inspect/free products later.
+    // The pipeline deduces its types from the FunctionStage base type.
     std::unique_ptr<found::FunctionStage<Images, Image>> noiseStage = std::make_unique<DarkScreenFilter>();
     found::FunctionStage<Images, Image> *noisePtr = noiseStage.get();
 
@@ -90,20 +61,17 @@ TEST(PipelineIntegrationTest, RunsEndToEnd) {
 
     CalibrationResult result = pipeline.Run(darkFrames);
 
-    // The optimizer is a stub, so the final product is an empty, unconverged
-    // result -- but reaching it means the whole chain ran.
+    // The optimizer is a stub, so the result is empty and unconverged.
     EXPECT_FALSE(result.converged);
     EXPECT_TRUE(result.residuals.empty());
 
-    // Inspect the intermediate payload: the star was centroided at (40, 36).
     CentroidObservations *observations = starPtr->GetProduct();
     ASSERT_NE(observations, nullptr);
     ASSERT_EQ(observations->observations.size(), 1u);
     EXPECT_NEAR(observations->observations[0].measuredPixel.x(), DECIMAL(40.0), DECIMAL(1e-3));
     EXPECT_NEAR(observations->observations[0].measuredPixel.y(), DECIMAL(36.0), DECIMAL(1e-3));
 
-    // The noise filter's dark frame is a malloc'd buffer owned by no one in this
-    // WIP pipeline; free it here so the test stays clean under leak detection.
+    // No stage owns the noise filter's malloc'd dark frame.
     Image *darkFrame = noisePtr->GetProduct();
     ASSERT_NE(darkFrame, nullptr);
     std::free(darkFrame->image);

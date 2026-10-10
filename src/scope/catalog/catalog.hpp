@@ -14,18 +14,14 @@
 namespace scope {
 
 /**
- * A single catalog star.
- *
- * The data shape mirrors LOST's CatalogStar so an eventual LOST integration is a
- * thin adapter, but the type is SCOPE-owned and backed by FOUND's Vec3.
+ * A single catalog star, shaped like LOST's CatalogStar.
  */
 struct CatalogStar {
-    /// Unit line-of-sight vector in the inertial (equatorial J2000) frame.
-    /// This is the e_I used by the calibration measurement model.
+    /// Unit line of sight in the inertial (equatorial J2000) frame.
     found::Vec3 spatial;
-    /// Apparent magnitude stored as (true magnitude * 100), matching LOST's convention.
+    /// Apparent magnitude times 100, as in LOST.
     int magnitude;
-    /// Stable identifier (the HR number); survives catalog filtering.
+    /// The HR number.
     int name;
 };
 
@@ -33,15 +29,12 @@ struct CatalogStar {
 using Catalog = std::vector<CatalogStar>;
 
 /**
- * Loads the Yale Bright Star Catalog (BSC, Vizier V/50) from a pre-filtered TSV.
+ * Loads the Yale Bright Star Catalog (Vizier V/50) from the file written by
+ * download-bsc.sh: one star per line, `RA(deg)|Dec(deg)|HR|Multiple|Vmag`.
  *
- * The TSV is the output of download-bsc.sh: one star per line, pipe-separated as
- * `RA(deg)|Dec(deg)|HR|Multiple|Vmag`, where Vmag is written as `<high>.<low>`.
+ * @param path Path to the catalog file.
  *
- * @param path Path to the catalog TSV.
- *
- * @return The parsed catalog. Each star's spatial vector is a unit vector built
- *         from its J2000 right ascension and declination.
+ * @return The parsed catalog.
  *
  * @throws std::runtime_error if the file cannot be opened or no stars parse.
  */

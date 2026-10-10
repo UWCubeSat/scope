@@ -3,7 +3,6 @@
 #include <stb_image/stb_image.h>
 
 #include <cstdlib>
-#include <cstring>
 
 #include <iomanip>
 #include <iostream>
@@ -12,16 +11,13 @@
 #include <utility>
 
 #include "scope/common/style.hpp"
-#include "common/logging.hpp"
-#include "common/time/time.hpp"
 
 namespace scope {
 
 namespace {
 
-/// Significant digits printed for each result value: enough that a printed
-/// calibration can be passed back in as the next run's prior without a loss
-/// that matters at the sub-pixel level.
+/// Significant digits printed per value: enough to pass a printed calibration
+/// back in as the next prior without sub-pixel loss.
 constexpr int kOutputPrecision = 10;
 
 }  // namespace
@@ -53,8 +49,7 @@ PrimaryScopePipelineExecutor::~PrimaryScopePipelineExecutor() {
 
 void PrimaryScopePipelineExecutor::ExecutePipeline() {
     this->pipeline_.Run(this->options_.darkFrames);
-    // The noise-filter stage's dark frame is a malloc'd buffer that no pipeline
-    // stage owns; release it now that every downstream consumer has run.
+    // No stage owns the noise filter's malloc'd dark frame.
     Image *darkFrame = this->noiseStage_->GetProduct();
     if (darkFrame != nullptr) {
         std::free(darkFrame->image);
@@ -65,7 +60,7 @@ void PrimaryScopePipelineExecutor::OutputResults() {
     const CalibrationResult &result = *this->pipeline_.GetProduct();
     const CameraParameters &camera = result.camera;
 
-    // Each parameter is labelled with the command-line flag that takes it.
+    // Each parameter is labelled with its command-line flag.
     std::ostringstream text;
     text << std::setprecision(kOutputPrecision);
     text << "Calibration result:\n";

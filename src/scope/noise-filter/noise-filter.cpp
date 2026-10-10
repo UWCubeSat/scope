@@ -10,11 +10,7 @@ namespace scope {
 
 namespace {
 
-/// Validates that input images are non-empty, non-null, and shape-compatible.
-///
-/// @param images Input images to validate.
-/// @throws std::invalid_argument if the image collection is empty.
-/// @throws std::runtime_error if any image is null or has mismatched dimensions.
+/// Throws unless there is at least one image and all are non-null and the same shape.
 void ValidateInput(const Images &images) {
     if (images.empty()) {
         throw std::invalid_argument("DarkScreenFilter requires at least one image");
@@ -46,11 +42,10 @@ Image DarkScreenFilter::Run(const Images &images) {
     ValidateInput(images);
 
     const Image &reference = images.front();
-    const size_t valueCount = static_cast<size_t>(reference.width) * static_cast<size_t>(reference.height) *
-                              static_cast<size_t>(reference.channels);
+    const size_t valueCount = static_cast<size_t>(reference.width) * reference.height * reference.channels;
 
     unsigned char *buffer = static_cast<unsigned char *>(std::malloc(valueCount));
-    // GCOVR_EXCL_START — malloc failure on a CubeSat-sized image is unrecoverable and not unit-testable.
+    // GCOVR_EXCL_START: malloc failure is not unit-testable.
     if (buffer == nullptr) {
         throw std::runtime_error("DarkScreenFilter: failed to allocate output buffer");
     }

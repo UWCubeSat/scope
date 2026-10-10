@@ -20,13 +20,11 @@ std::optional<found::Vec2> ExtractCentroid(const Image &darkSubtracted,
     const int channels = darkSubtracted.channels;
     const int thr = threshold;
 
-    // Reads the first-channel intensity at (x, y). Grayscale is assumed; for a
-    // multi-channel image only the first channel participates (see header).
+    // First-channel intensity at (x, y).
     const auto intensity = [&](int x, int y) -> int {
         return darkSubtracted.image[(static_cast<std::size_t>(y) * width + x) * channels];
     };
 
-    // Round the expected location to the nearest pixel and clamp the ROI to the image.
     const int cx = static_cast<int>(DECIMAL_ROUND(expectedPixel.x()));
     const int cy = static_cast<int>(DECIMAL_ROUND(expectedPixel.y()));
     const int half = roiSize / 2;
@@ -35,7 +33,7 @@ std::optional<found::Vec2> ExtractCentroid(const Image &darkSubtracted,
     const int y0 = std::max(0, cy - half);
     const int y1 = std::min(height - 1, cy + half);
 
-    // Step 2: find the brightest pixel in the ROI.
+    // Brightest pixel in the ROI.
     int bx = -1;
     int by = -1;
     int brightest = -1;
@@ -50,14 +48,12 @@ std::optional<found::Vec2> ExtractCentroid(const Image &darkSubtracted,
         }
     }
 
-    // No pixel in the ROI (empty/clamped-away ROI), or the brightest does not
-    // clear the threshold, so nothing centroidable here.
+    // The ROI was clamped away entirely, or nothing in it clears the threshold.
     if (bx < 0 || brightest <= thr) {
         return std::nullopt;
     }
 
-    // Steps 3-5: recenter on the brightest pixel and accumulate the
-    // intensity-weighted center over the masked pixels within recenterRadius.
+    // Intensity-weighted center of the masked pixels around the brightest one.
     const int radius2 = recenterRadius * recenterRadius;
     const int mx0 = std::max(0, bx - recenterRadius);
     const int mx1 = std::min(width - 1, bx + recenterRadius);
@@ -84,12 +80,7 @@ std::optional<found::Vec2> ExtractCentroid(const Image &darkSubtracted,
         }
     }
 
-    // brightest > thr guarantees the brightest pixel itself joins the mask, so
-    // iTot is always positive here; the guard is purely defensive.
-    if (iTot == 0) {
-        return std::nullopt;  // GCOVR_EXCL_LINE
-    }
-
+    // The brightest pixel is always in the mask, so iTot > 0.
     return found::Vec2{sumU / DECIMAL(iTot), sumV / DECIMAL(iTot)};
 }
 

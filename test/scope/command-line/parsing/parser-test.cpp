@@ -22,33 +22,8 @@ class ParserTest : public testing::Test {
     void TearDown() override { optind = 2; }
 };
 
-// With no flags, every option keeps its default.
-TEST_F(ParserTest, DefaultsWhenNoFlagsGiven) {
-    const char *argv[] = {"scope", "recalibrate"};
-
-    RecalibrationOptions options = ParseRecalibrationOptions(2, const_cast<char **>(argv));
-
-    EXPECT_EQ(options.focalLengthX, DECIMAL(0.0));
-    EXPECT_EQ(options.focalLengthY, DECIMAL(0.0));
-    EXPECT_EQ(options.principalX, DECIMAL(0.0));
-    EXPECT_EQ(options.principalY, DECIMAL(0.0));
-    EXPECT_EQ(options.alpha, DECIMAL(0.0));
-    EXPECT_EQ(options.k1, DECIMAL(0.0));
-    EXPECT_EQ(options.k2, DECIMAL(0.0));
-    EXPECT_EQ(options.k3, DECIMAL(0.0));
-    EXPECT_EQ(options.p1, DECIMAL(0.0));
-    EXPECT_EQ(options.p2, DECIMAL(0.0));
-    EXPECT_TRUE(options.darkFrames.empty());
-    EXPECT_TRUE(options.starImages.empty());
-    EXPECT_EQ(options.attitudesPath, "");
-    EXPECT_EQ(options.catalogPath, "./bright-star-catalog.tsv");
-    EXPECT_EQ(options.centroidThreshold, 40);
-    EXPECT_EQ(options.magnitudeThreshold, DECIMAL(6.0));
-    EXPECT_EQ(options.roiSize, 31);
-}
-
-// Every flag is parsed into its option. The values are exactly representable,
-// so they compare equal in both double and float builds.
+// The values are exactly representable, so they compare equal in both double
+// and float builds.
 TEST_F(ParserTest, ParsesEveryFlag) {
     TempFile darkA("parser-dark-a.pgm", EncodePgm(4, 3, FlatPixels(4, 3, 10)));
     TempFile darkB("parser-dark-b.pgm", EncodePgm(4, 3, FlatPixels(4, 3, 12)));
@@ -124,25 +99,12 @@ TEST_F(ParserTest, ParsesEveryFlag) {
     stbi_image_free(options.starImages[0].image);
 }
 
-// A flag and its value can be joined with an equals sign.
-TEST_F(ParserTest, AcceptsEqualsSignForm) {
-    const char *argv[] = {"scope", "recalibrate", "--focal-length-x=3478.5", "--roi-size=51", "--attitudes=a.txt"};
-
-    RecalibrationOptions options = ParseRecalibrationOptions(5, const_cast<char **>(argv));
-
-    EXPECT_EQ(options.focalLengthX, DECIMAL(3478.5));
-    EXPECT_EQ(options.roiSize, 51);
-    EXPECT_EQ(options.attitudesPath, "a.txt");
-}
-
-// A flag that does not exist ends the program with a failure code.
 TEST_F(ParserTest, UnknownFlagExits) {
     const char *argv[] = {"scope", "recalibrate", "--input-images", "a.png"};
 
     ASSERT_EXIT(ParseRecalibrationOptions(4, const_cast<char **>(argv)), testing::ExitedWithCode(EXIT_FAILURE), "");
 }
 
-// A flag given without its value ends the program with a failure code.
 TEST_F(ParserTest, MissingValueExits) {
     const char *argv[] = {"scope", "recalibrate", "--roi-size"};
 

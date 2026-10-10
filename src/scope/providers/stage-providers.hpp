@@ -10,7 +10,6 @@
 
 #include "scope/attitude/attitude.hpp"
 #include "scope/catalog/catalog.hpp"
-#include "scope/command-line/execution/executors.hpp"
 #include "scope/noise-filter/noise-filter.hpp"
 #include "scope/optimization/optimization.hpp"
 #include "scope/projection/projection.hpp"
@@ -19,10 +18,8 @@
 namespace scope {
 
 /**
- * Builds the prior camera parameters from the command-line options.
- *
- * This is the one place that reads the ten prior parameters out of the options,
- * so validating them or filling in a default belongs here.
+ * Builds the prior camera parameters from the command-line options. Validate
+ * them or fill in defaults here.
  *
  * @param options Parsed recalibration options.
  *
@@ -58,12 +55,9 @@ inline std::unique_ptr<NoiseFilterAlgorithm> ProvideNoiseFilterAlgorithm(
 /**
  * Supplies the prior attitude for each star image.
  *
- * This is the one place that knows where attitudes come from, so a different
- * source (a star tracker, a plate solver) is swapped in here. Whatever the
- * source, the attitudes returned must already be in SCOPE's camera frame:
- * e_C = attitude * e_I with the boresight on +z. An attitude from LOST has to
- * go through LostAttitudeToScopeFrame (src/scope/projection/projection.hpp)
- * first; skipping that yields plausible-but-wrong pixels.
+ * Swap in a different source (a star tracker, a plate solver) here. The
+ * attitudes returned must be in SCOPE's camera frame, so one from LOST has to
+ * go through LostAttitudeToScopeFrame first.
  *
  * @param options Parsed recalibration options.
  *
@@ -87,7 +81,7 @@ inline std::vector<found::Quaternion> ProvideAttitudes(const RecalibrationOption
  *
  * @param options Parsed recalibration options.
  * @param camera The prior camera parameters.
- * @param catalog The star catalog (moved into the stage).
+ * @param catalog The star catalog.
  * @param attitudes One prior attitude per star image.
  *
  * @return The chosen StarCentroidAlgorithm.

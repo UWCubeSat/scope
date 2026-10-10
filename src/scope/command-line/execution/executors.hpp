@@ -19,17 +19,15 @@
 namespace scope {
 
 /**
- * Owns and runs the primary SCOPE calibration pipeline
+ * Owns and runs the calibration pipeline
  * (noise filter -> star centroid -> optimization).
  */
 class PrimaryScopePipelineExecutor : public found::PipelineExecutor {
  public:
     /**
-     * Constructs a PrimaryScopePipelineExecutor and assembles its pipeline.
-     *
-     * @param options Parsed recalibration options consumed by the run. The
-     *                executor takes ownership of the image buffers in
-     *                darkFrames and starImages, which must be malloc'd.
+     * @param options Parsed recalibration options. The executor takes ownership
+     *                of the image buffers in darkFrames and starImages, which
+     *                must be malloc'd.
      * @param noiseFilterAlgorithm Stage that reduces raw frames to one image.
      * @param starCentroidAlgorithm Stage that extracts star centroids.
      * @param optimizationAlgorithm Stage that fits camera parameters.
@@ -39,29 +37,26 @@ class PrimaryScopePipelineExecutor : public found::PipelineExecutor {
                                           std::unique_ptr<StarCentroidAlgorithm> starCentroidAlgorithm,
                                           std::unique_ptr<OptimizationAlgorithm> optimizationAlgorithm);
 
-    /**
-     * Releases the dark frames and star images held in the options. The CLI
-     * loads them with stb_image (see strtoimages) and nothing else frees them.
-     */
+    /// Frees the dark frames and star images held in the options.
     ~PrimaryScopePipelineExecutor() override;
 
-    /// Runs the assembled pipeline end-to-end.
+    /// Runs the pipeline end to end.
     void ExecutePipeline() override;
     /**
-     * Prints the calibration produced by the pipeline to standard output: whether
-     * the fit converged, the ten camera parameters, and the residual RMS.
+     * Prints whether the fit converged, the ten camera parameters and the
+     * residual RMS to standard output.
      *
      * @pre ExecutePipeline has run.
      */
     void OutputResults() override;
 
  private:
-    /// The options driving this pipeline run.
+    /// The options for this run, including the input images.
     const RecalibrationOptions options_;
-    /// The pipeline assembled for SCOPE operation.
+    /// The three-stage pipeline.
     PrimaryScopePipeline pipeline_;
-    /// Non-owning observer of the noise-filter stage, used to release its
-    /// malloc'd dark-frame product after the run (no pipeline stage owns it).
+    /// The noise-filter stage (not owned), kept so its malloc'd dark frame can
+    /// be freed after the run.
     found::FunctionStage<Images, Image> *noiseStage_ = nullptr;
 };
 

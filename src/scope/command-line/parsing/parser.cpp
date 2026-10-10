@@ -10,39 +10,20 @@
 
 int optind = 2;
 
-#define OPTIONAL_OPTARG()                                                                                     \
-    ((optarg == NULL && optind < argc && argv[optind][0] != '-') ? static_cast<bool>(optarg = argv[optind++]) \
-                                                                 : (optarg != NULL))
-
-#define REQ_ASSIGN(options, prop, value, default) options.prop = (value);
-
-#define OPT_ASSIGN(options, prop, value, default) \
-    if (OPTIONAL_OPTARG()) {                      \
-        options.prop = value;                     \
-    } else {                                      \
-        options.prop = default;                   \
-    }
-
 namespace scope {
 
-/// Sentinel for options with no default value.
-const char kNoDefaultArgument = 0;
-
 RecalibrationOptions ParseRecalibrationOptions(int argc, char **argv) {
-    // Each block below re-expands RECALIBRATE to derive a piece of getopt
-    // wiring from the option table in options.hpp.
+    // Each block below re-expands RECALIBRATE (options.hpp) into a piece of the
+    // getopt wiring.
     enum class ClientOption {
-#define SCOPE_CLI_OPTION(name, type, prop, defaultVal, converter, defaultArg, ASSIGN, doc) prop,
+#define SCOPE_CLI_OPTION(name, type, prop, defaultVal, converter, doc) prop,
         RECALIBRATE
 #undef SCOPE_CLI_OPTION
     };
 
     static option long_options[] = {
-#define SCOPE_CLI_OPTION(name, type, prop, defaultVal, converter, defaultArg, ASSIGN, doc) \
-    {name,                                                                                 \
-     defaultArg == kNoDefaultArgument ? required_argument : optional_argument,             \
-     0,                                                                                    \
-     static_cast<int>(ClientOption::prop)},
+#define SCOPE_CLI_OPTION(name, type, prop, defaultVal, converter, doc) \
+    {name, required_argument, 0, static_cast<int>(ClientOption::prop)},
         RECALIBRATE
 #undef SCOPE_CLI_OPTION
         {0}};
@@ -53,9 +34,9 @@ RecalibrationOptions ParseRecalibrationOptions(int argc, char **argv) {
 
     while ((option = getopt_long(argc, argv, "", long_options, &index)) != -1) {
         switch (option) {
-#define SCOPE_CLI_OPTION(name, type, prop, defaultVal, converter, defaultArg, ASSIGN, doc) \
-    case static_cast<int>(ClientOption::prop):                                             \
-        ASSIGN(options, prop, converter, defaultArg)                                       \
+#define SCOPE_CLI_OPTION(name, type, prop, defaultVal, converter, doc) \
+    case static_cast<int>(ClientOption::prop):                         \
+        options.prop = (converter);                                    \
         break;
             RECALIBRATE
 #undef SCOPE_CLI_OPTION

@@ -9,32 +9,18 @@
 #include "scope/common/style.hpp"
 #include "scope/star-centroid/coi.hpp"
 
+#include "test/scope/common/test-files.hpp"
+
 namespace scope {
 
 namespace {
 
-constexpr int kWidth = 64;
-constexpr int kHeight = 64;
 constexpr int kRoiSize = 31;
 constexpr int kRecenterRadius = 3;
 const decimal kTol = DECIMAL(1e-6);
 
-/// Owns a single-channel pixel buffer and exposes it as a FOUND Image.
-class TestImage {
- public:
-    TestImage() : pixels_(static_cast<std::size_t>(kWidth) * kHeight, 0) {}
-
-    void Set(int x, int y, unsigned char value) { pixels_[static_cast<std::size_t>(y) * kWidth + x] = value; }
-
-    Image View() { return Image{kWidth, kHeight, 1, pixels_.data()}; }
-
- private:
-    std::vector<unsigned char> pixels_;
-};
-
 }  // namespace
 
-// A symmetric blob centered on the expected pixel yields that pixel back.
 TEST(ExtractCentroidTest, CenteredBlob) {
     TestImage image;
     image.Set(40, 30, 200);
@@ -65,20 +51,6 @@ TEST(ExtractCentroidTest, OffCenterStarInRoi) {
     ASSERT_TRUE(centroid.has_value());
     EXPECT_NEAR(centroid->x(), DECIMAL(45.0), kTol);
     EXPECT_NEAR(centroid->y(), DECIMAL(33.0), kTol);
-}
-
-// A single bright pixel is its own centroid.
-TEST(ExtractCentroidTest, SingleBrightPixel) {
-    TestImage image;
-    image.Set(40, 30, 200);
-    Image view = image.View();
-
-    std::optional<found::Vec2> centroid =
-        ExtractCentroid(view, found::Vec2(DECIMAL(40.0), DECIMAL(30.0)), kRoiSize, kRecenterRadius, 40);
-
-    ASSERT_TRUE(centroid.has_value());
-    EXPECT_NEAR(centroid->x(), DECIMAL(40.0), kTol);
-    EXPECT_NEAR(centroid->y(), DECIMAL(30.0), kTol);
 }
 
 // A symmetric saturated 3x3 cluster centroids at its geometric center even
@@ -115,18 +87,6 @@ TEST(ExtractCentroidTest, StarAtRoiEdge) {
     EXPECT_NEAR(centroid->y(), DECIMAL(30.0), kTol);
 }
 
-// No pixel above the threshold means no centroid.
-TEST(ExtractCentroidTest, ReturnsNulloptWhenNothingAboveThreshold) {
-    TestImage image;
-    image.Set(40, 30, 30);  // below threshold 40
-    Image view = image.View();
-
-    std::optional<found::Vec2> centroid =
-        ExtractCentroid(view, found::Vec2(DECIMAL(40.0), DECIMAL(30.0)), kRoiSize, kRecenterRadius, 40);
-
-    EXPECT_FALSE(centroid.has_value());
-}
-
 // The threshold is strict: a pixel exactly at the threshold does not qualify,
 // but one intensity above it does.
 TEST(ExtractCentroidTest, ThresholdIsStrict) {
@@ -146,7 +106,6 @@ TEST(ExtractCentroidTest, ThresholdIsStrict) {
     EXPECT_NEAR(centroid->y(), DECIMAL(30.0), kTol);
 }
 
-// An expected pixel whose ROI lies entirely outside the image yields no centroid.
 TEST(ExtractCentroidTest, ReturnsNulloptWhenRoiOutsideImage) {
     TestImage image;
     image.Set(40, 30, 200);

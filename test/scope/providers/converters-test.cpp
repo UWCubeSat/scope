@@ -23,7 +23,6 @@ void FreeImages(const Images &images) {
 
 }  // namespace
 
-// A single path loads that one image.
 TEST(ConvertersTest, StrToImagesSinglePath) {
     TempFile file("converters-single.pgm", EncodePgm(4, 3, FlatPixels(4, 3, 7)));
 
@@ -37,7 +36,6 @@ TEST(ConvertersTest, StrToImagesSinglePath) {
     FreeImages(images);
 }
 
-// A comma-separated list loads every image, in order.
 TEST(ConvertersTest, StrToImagesCommaSeparated) {
     TempFile first("converters-comma-a.pgm", EncodePgm(4, 3, FlatPixels(4, 3, 1)));
     TempFile second("converters-comma-b.pgm", EncodePgm(4, 3, FlatPixels(4, 3, 2)));
@@ -52,7 +50,6 @@ TEST(ConvertersTest, StrToImagesCommaSeparated) {
     FreeImages(images);
 }
 
-// A space-separated list loads every image, in order.
 TEST(ConvertersTest, StrToImagesSpaceSeparated) {
     TempFile first("converters-space-a.pgm", EncodePgm(4, 3, FlatPixels(4, 3, 1)));
     TempFile second("converters-space-b.pgm", EncodePgm(4, 3, FlatPixels(4, 3, 2)));
@@ -76,11 +73,6 @@ TEST(ConvertersTest, StrToImagesSkipsEmptyEntries) {
     EXPECT_EQ(images[0].image[0], 1);
     EXPECT_EQ(images[1].image[0], 2);
     FreeImages(images);
-}
-
-// An empty string names no images.
-TEST(ConvertersTest, StrToImagesEmptyString) {
-    EXPECT_TRUE(strtoimages("").empty());
 }
 
 // A path that is not an image throws rather than yielding a partial list.

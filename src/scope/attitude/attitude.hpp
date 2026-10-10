@@ -16,24 +16,20 @@ namespace scope {
 /**
  * Loads one prior attitude per star image from a text file.
  *
- * Each attitude is a quaternion on its own line, written as four numbers
- * `w x y z` (real part first) separated by spaces, tabs or commas. Blank lines
- * are skipped and `#` starts a comment that runs to the end of the line. The
- * k-th attitude in the file belongs to the k-th star image.
+ * One quaternion per line, `w x y z`, separated by spaces, tabs or commas.
+ * Blank lines are skipped and `#` starts a comment. The k-th attitude belongs
+ * to the k-th star image.
  *
- * The quaternion must rotate an inertial (equatorial J2000) direction into
- * SCOPE's camera frame, e_C = q * e_I, with the boresight on +z. That is what
- * ProjectStarToPixel consumes, so the file is deliberately ignorant of where the
- * attitudes came from: whatever writes it (a plate solver, a star tracker) is
- * responsible for converting into this frame. For an attitude from LOST that
- * conversion is LostAttitudeToScopeFrame (src/scope/projection/projection.hpp).
+ * Each quaternion must rotate an inertial (J2000) direction into SCOPE's
+ * camera frame (boresight on +z), as ProjectStarToPixel expects. Whatever
+ * writes the file does that conversion; for LOST it is LostAttitudeToScopeFrame.
  *
  * @param path Path to the attitudes file.
  *
- * @return The attitudes in file order, each normalized to unit length.
+ * @return The attitudes in file order, normalized.
  *
- * @throws std::runtime_error if the file cannot be opened, or if a line is not
- *         exactly four numbers or has zero length.
+ * @throws std::runtime_error if the file cannot be opened, or a line is not
+ *         exactly four numbers or is the zero quaternion.
  */
 std::vector<found::Quaternion> LoadAttitudes(const std::string &path);
 

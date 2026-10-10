@@ -16,13 +16,8 @@ namespace scope {
 
 namespace {
 
-/// Converts a right ascension and declination (radians) to a unit vector in the
-/// equatorial frame, matching LOST's SphericalToSpatial convention: a star at
+/// Unit vector for a right ascension and declination in radians, as in LOST:
 /// (ra = 0, dec = 0) maps to (1, 0, 0).
-///
-/// @param ra Right ascension, in radians.
-/// @param dec Declination, in radians.
-/// @return The corresponding unit line-of-sight vector.
 found::Vec3 SphericalToSpatial(decimal ra, decimal dec) {
     return found::Vec3{
         DECIMAL_COS(ra) * DECIMAL_COS(dec),
@@ -40,23 +35,18 @@ Catalog LoadBsc(const std::string &path) {
     }
 
     Catalog catalog;
-    // Fields per line, pipe-separated: RA(deg), Dec(deg), HR name, single-char
-    // Multiple flag (discarded), and Vmag.
     double raDeg;
     double decDeg;
     int name;
-    char multiple;
+    char multiple;  // discarded
     double vmag;
 
-    // Read into double regardless of decimal width so the scanf format never
-    // disagrees with the storage type, then narrow to decimal during conversion.
+    // Scan as double whatever the width of decimal, then narrow.
     while (std::fscanf(file, "%lf|%lf|%d|%c|%lf", &raDeg, &decDeg, &name, &multiple, &vmag) == 5) {
         const decimal ra = found::DegToRad(DECIMAL(raDeg));
         const decimal dec = found::DegToRad(DECIMAL(decDeg));
-        // Store apparent magnitude scaled by 100, matching LOST's integer
-        // convention. Read Vmag as a single float and round so the sign survives
-        // for stars in (-1, 0) (e.g. -0.74); parsing the integer part on its own
-        // would read "-0" as 0 and silently drop the minus.
+        // Vmag is read whole and rounded so the sign survives for stars in
+        // (-1, 0): parsing the integer part alone reads "-0" as 0.
         const int magnitude = static_cast<int>(std::lround(vmag * 100.0));
         catalog.push_back(CatalogStar{SphericalToSpatial(ra, dec), magnitude, name});
     }
