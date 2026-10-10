@@ -1,0 +1,9 @@
+<map id="src/scope/attitude/attitude.hpp" name="src/scope/attitude/attitude.hpp">
+<area shape="rect" id="Node000001" title="Loader for the per&#45;image prior attitudes." alt="" coords="51,5,189,45"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,101,64,126"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="103,47,58,92,54,89,99,44"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="89,101,151,126"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="123,46,123,87,117,87,117,46"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="175,93,358,133"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="154,43,224,84,221,89,151,48"/>
+</map>

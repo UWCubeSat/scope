@@ -296,7 +296,7 @@ Model"). The image plane is normalized at z = 1, so the focal length is carried 
 
 <p>Converts a LOST attitude into SCOPE's camera-frame convention. </p>
 <p>LOST and FOUND put the optical axis (boresight) on camera +x: their forward model is pixel = (c_x - f*y/x, c_y - f*z/x) and they assert x &gt; 0 (see FOUND common/spatial/camera.cpp and LOST camera.cpp SpatialToCamera). SCOPE's ProjectStarToPixel instead puts the boresight on +z and projects x/z, y/z. Both share the equatorial inertial frame and both apply the attitude as e_C = attitude * e_I, so the conventions differ only by a fixed rotation of the camera frame. Requiring SCOPE's pixel to equal LOST's for every line of sight forces the signed permutation (x, y, z)_lost -&gt; (-y, -z, x)_scope.</p>
-<p>Feeding a raw LOST quaternion to ProjectStarToPixel without this conversion produces plausible-but-wrong pixels (the boresight star projects to z = 0 and is dropped, while stars 90 deg off-axis are accepted), so every per-image attitude arriving from LOST MUST pass through here first. This is the loud counterpart to the LOST-integration seam in <a class="el" href="factory_8hpp_source.html">providers/factory.hpp</a>.</p>
+<p>Feeding a raw LOST quaternion to ProjectStarToPixel without this conversion produces plausible-but-wrong pixels (the boresight star projects to z = 0 and is dropped, while stars 90 deg off-axis are accepted), so every per-image attitude arriving from LOST MUST pass through here first. The &ndash;attitudes file and ProvideAttitudes (<a class="el" href="stage-providers_8hpp_source.html">providers/stage-providers.hpp</a>) expect attitudes that are already in SCOPE's frame and do not call this for you.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">lostAttitude</td><td>Attitude from LOST: rotates an inertial line of sight into LOST's x-boresight camera frame (e_C = lostAttitude * e_I).</td></tr>
@@ -344,7 +344,7 @@ Model"). The image plane is normalized at z = 1, so the focal length is carried 
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">eI</td><td>Unit line-of-sight direction in the inertial frame (a CatalogStar's spatial vector). </td></tr>
-    <tr><td class="paramname">attitude</td><td>Prior attitude that rotates a vector from the inertial frame into the camera frame (e_C = attitude * e_I). The factory currently injects identity; LOST integration will supply real per-image attitudes at this seam. </td></tr>
+    <tr><td class="paramname">attitude</td><td>Prior attitude that rotates a vector from the inertial frame into the camera frame (e_C = attitude * e_I), with the boresight on +z. </td></tr>
     <tr><td class="paramname">options</td><td>Calibration options carrying the prior intrinsics and distortion coefficients.</td></tr>
   </table>
   </dd>

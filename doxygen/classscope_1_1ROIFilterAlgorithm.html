@@ -143,7 +143,7 @@ Public Member Functions</h2></td></tr>
 Private Attributes</h2></td></tr>
 <tr class="memitem:ab9f8d5498ee46e85dee0327cd65c43d7" id="r_ab9f8d5498ee46e85dee0327cd65c43d7"><td class="memItemLeft" align="right" valign="top"><a id="ab9f8d5498ee46e85dee0327cd65c43d7" name="ab9f8d5498ee46e85dee0327cd65c43d7"></a>
 const <a class="el" href="classRecalibrationOptions.html">RecalibrationOptions</a>&#160;</td><td class="memItemRight" valign="bottom"><b>options_</b></td></tr>
-<tr class="memdesc:ab9f8d5498ee46e85dee0327cd65c43d7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Captured calibration options (prior parameters + star images + threshold). <br /></td></tr>
+<tr class="memdesc:ab9f8d5498ee46e85dee0327cd65c43d7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Captured calibration options (prior parameters + star images + threshold + ROI size). <br /></td></tr>
 <tr class="separator:ab9f8d5498ee46e85dee0327cd65c43d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acc808e48198a9037cd89f71d9106d312" id="r_acc808e48198a9037cd89f71d9106d312"><td class="memItemLeft" align="right" valign="top"><a id="acc808e48198a9037cd89f71d9106d312" name="acc808e48198a9037cd89f71d9106d312"></a>
 const <a class="el" href="catalog_8hpp.html#a088b8f568074b9e555714a6a55b43614">Catalog</a>&#160;</td><td class="memItemRight" valign="bottom"><b>catalog_</b></td></tr>
@@ -157,7 +157,7 @@ const std::vector&lt; found::Quaternion &gt;&#160;</td><td class="memItemRight" 
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>A priori ROI + center-of-intensity star locator (Orion paper §"Image
 Processing and Star Centroiding"). </p>
-<p>For each star image, every catalog star bright enough to clear the magnitude threshold is projected to its expected pixel using the per-image prior attitude and the prior calibration. Stars behind the camera or outside the sensor (with ROI margin) are skipped; the rest are centroided via ExtractCentroid on the dark-subtracted image. Successful centroids become Observations, except that candidates whose centroids collide within one image (two catalog stars landing on the same blob) are dropped as ambiguous. </p>
+<p>For each star image, every catalog star bright enough to clear the magnitude threshold is projected to its expected pixel using the per-image prior attitude and the prior calibration. Stars behind the camera or outside the sensor (with ROI margin) are skipped; the rest are centroided via ExtractCentroid on the dark-subtracted image, searching a window of options.roiSize pixels around the predicted position. Successful centroids become Observations, except that candidates whose centroids collide within one image (two catalog stars landing on the same blob) are dropped as ambiguous. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a69b2edb32560fd4290329cd3ae44241c" name="a69b2edb32560fd4290329cd3ae44241c"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a69b2edb32560fd4290329cd3ae44241c">&#9670;&#160;</a></span>ROIFilterAlgorithm()</h2>
@@ -202,7 +202,7 @@ Processing and Star Centroiding"). </p>
 <p>Constructs a new <a class="el" href="classscope_1_1ROIFilterAlgorithm.html" title="A priori ROI + center-of-intensity star locator (Orion paper §&quot;Image Processing and Star Centroiding&quot;...">ROIFilterAlgorithm</a>. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">options</td><td>Parsed recalibration options (prior intrinsics + distortion, star images, and centroid threshold). Copied so the stage is self-contained. </td></tr>
+    <tr><td class="paramname">options</td><td>Parsed recalibration options (prior intrinsics + distortion, star images, centroid threshold, and ROI size). Copied so the stage is self-contained. </td></tr>
     <tr><td class="paramname">catalog</td><td>The star catalog to project and match against. Owned by the stage; the produced <a class="el" href="structscope_1_1CentroidObservations.html" title="The star-centroid stage&#39;s output: the measurements, the per-image prior attitudes (forwarded to LMA),...">CentroidObservations</a> references it. </td></tr>
     <tr><td class="paramname">attitudes</td><td>One prior attitude per star image (rotates inertial directions into the camera frame). </td></tr>
   </table>
@@ -246,7 +246,7 @@ Processing and Star Centroiding"). </p>
 <dl class="section return"><dt>Returns</dt><dd>The gathered observations, the forwarded attitudes, and a pointer to this stage's catalog.</dd></dl>
 <dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
-    <tr><td class="paramname">std::runtime_error</td><td>if the attitude count does not match the star image count, or a star image's dimensions do not match the dark frame. </td></tr>
+    <tr><td class="paramname">std::runtime_error</td><td>if the attitude count does not match the star image count, the ROI size is below 1, or a star image's dimensions do not match the dark frame. </td></tr>
   </table>
   </dd>
 </dl>

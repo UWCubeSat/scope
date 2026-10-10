@@ -193,11 +193,12 @@ Functions</h2></td></tr>
 <li>Build the mask of pixels within recenter_radius of the recentered point whose (dark-subtracted) intensity exceeds the threshold.</li>
 <li>Return the intensity-weighted center of the masked pixels.</li>
 </ol>
+<p>Pixel convention: an integer coordinate is the center of a pixel, so a star lit on the single pixel in column 40, row 30 centroids to exactly (40, 30). This matches FOUND, whose edge points are raw pixel indices with no half-pixel offset, and FOUND is what consumes SCOPE's calibration. LOST's centroider instead adds 0.5 (integers are pixel corners), so a LOST centroid must have 0.5 subtracted before it is compared with one from here.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">darkSubtracted</td><td>Single-channel, dark-frame-subtracted image. If the image has multiple channels, only the first channel is used. </td></tr>
     <tr><td class="paramname">expectedPixel</td><td>The expected star location [u, v] (column, row). </td></tr>
-    <tr><td class="paramname">roiSize</td><td>The ROI side length, in pixels (paper uses 31). </td></tr>
+    <tr><td class="paramname">roiSize</td><td>The ROI side length, in pixels (paper uses 31). The ROI spans roiSize / 2 pixels either side of the rounded expected pixel, so an even value covers the same pixels as the next odd one. </td></tr>
     <tr><td class="paramname">recenterRadius</td><td>The mask radius about the brightest pixel (paper uses 3). </td></tr>
     <tr><td class="paramname">threshold</td><td>Minimum intensity for a pixel to join the mask.</td></tr>
   </table>

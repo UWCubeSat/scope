@@ -1,6 +1,7 @@
 var classscope_1_1PrimaryScopePipelineExecutor =
 [
     [ "PrimaryScopePipelineExecutor", "classscope_1_1PrimaryScopePipelineExecutor.html#a004dd88c834c59bab54fc9bec20c5de9", null ],
+    [ "~PrimaryScopePipelineExecutor", "classscope_1_1PrimaryScopePipelineExecutor.html#a785518fd12328cddf1d89d9584a422c3", null ],
     [ "ExecutePipeline", "classscope_1_1PrimaryScopePipelineExecutor.html#a124855899b79d402140d9e8cf7c34968", null ],
     [ "OutputResults", "classscope_1_1PrimaryScopePipelineExecutor.html#a89553ccccb8276f1c2fb8c064ad12d21", null ],
     [ "noiseStage_", "classscope_1_1PrimaryScopePipelineExecutor.html#aa68c27991e46a72f3de2849451f82929", null ],

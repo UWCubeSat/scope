@@ -130,6 +130,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a004dd88c834c59bab54fc9bec20c5de9" id="r_a004dd88c834c59bab54fc9bec20c5de9"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classscope_1_1PrimaryScopePipelineExecutor.html#a004dd88c834c59bab54fc9bec20c5de9">PrimaryScopePipelineExecutor</a> (<a class="el" href="classRecalibrationOptions.html">RecalibrationOptions</a> &amp;&amp;options, std::unique_ptr&lt; <a class="el" href="classscope_1_1NoiseFilterAlgorithm.html">NoiseFilterAlgorithm</a> &gt; noiseFilterAlgorithm, std::unique_ptr&lt; <a class="el" href="classscope_1_1StarCentroidAlgorithm.html">StarCentroidAlgorithm</a> &gt; starCentroidAlgorithm, std::unique_ptr&lt; <a class="el" href="classscope_1_1OptimizationAlgorithm.html">OptimizationAlgorithm</a> &gt; optimizationAlgorithm)</td></tr>
 <tr class="memdesc:a004dd88c834c59bab54fc9bec20c5de9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a <a class="el" href="classscope_1_1PrimaryScopePipelineExecutor.html" title="Owns and runs the primary SCOPE calibration pipeline (noise filter -&gt; star centroid -&gt; optimization).">PrimaryScopePipelineExecutor</a> and assembles its pipeline.  <br /></td></tr>
 <tr class="separator:a004dd88c834c59bab54fc9bec20c5de9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a785518fd12328cddf1d89d9584a422c3" id="r_a785518fd12328cddf1d89d9584a422c3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classscope_1_1PrimaryScopePipelineExecutor.html#a785518fd12328cddf1d89d9584a422c3">~PrimaryScopePipelineExecutor</a> () override</td></tr>
+<tr class="memdesc:a785518fd12328cddf1d89d9584a422c3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Releases the dark frames and star images held in the options.  <br /></td></tr>
+<tr class="separator:a785518fd12328cddf1d89d9584a422c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a124855899b79d402140d9e8cf7c34968" id="r_a124855899b79d402140d9e8cf7c34968"><td class="memItemLeft" align="right" valign="top"><a id="a124855899b79d402140d9e8cf7c34968" name="a124855899b79d402140d9e8cf7c34968"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>ExecutePipeline</b> () override</td></tr>
 <tr class="memdesc:a124855899b79d402140d9e8cf7c34968"><td class="mdescLeft">&#160;</td><td class="mdescRight">Runs the assembled pipeline end-to-end. <br /></td></tr>
@@ -206,13 +209,41 @@ found::FunctionStage&lt; Images, Image &gt; *&#160;</td><td class="memItemRight"
 <p>Constructs a <a class="el" href="classscope_1_1PrimaryScopePipelineExecutor.html" title="Owns and runs the primary SCOPE calibration pipeline (noise filter -&gt; star centroid -&gt; optimization).">PrimaryScopePipelineExecutor</a> and assembles its pipeline. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">options</td><td>Parsed recalibration options consumed by the run. </td></tr>
+    <tr><td class="paramname">options</td><td>Parsed recalibration options consumed by the run. The executor takes ownership of the image buffers in darkFrames and starImages, which must be malloc'd. </td></tr>
     <tr><td class="paramname">noiseFilterAlgorithm</td><td>Stage that reduces raw frames to one image. </td></tr>
     <tr><td class="paramname">starCentroidAlgorithm</td><td>Stage that extracts star centroids. </td></tr>
     <tr><td class="paramname">optimizationAlgorithm</td><td>Stage that fits camera parameters. </td></tr>
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a id="a785518fd12328cddf1d89d9584a422c3" name="a785518fd12328cddf1d89d9584a422c3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a785518fd12328cddf1d89d9584a422c3">&#9670;&#160;</a></span>~PrimaryScopePipelineExecutor()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">scope::PrimaryScopePipelineExecutor::~PrimaryScopePipelineExecutor </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Releases the dark frames and star images held in the options. </p>
+<p>The CLI loads them with stb_image (see strtoimages) and nothing else frees them. </p>
 
 </div>
 </div>
