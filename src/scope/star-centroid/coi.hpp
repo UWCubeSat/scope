@@ -32,10 +32,19 @@ namespace scope {
  *      whose (dark-subtracted) intensity exceeds the threshold.
  *   5. Return the intensity-weighted center of the masked pixels.
  *
+ * Pixel convention: an integer coordinate is the center of a pixel, so a star
+ * lit on the single pixel in column 40, row 30 centroids to exactly (40, 30).
+ * This matches FOUND, whose edge points are raw pixel indices with no
+ * half-pixel offset, and FOUND is what consumes SCOPE's calibration. LOST's
+ * centroider instead adds 0.5 (integers are pixel corners), so a LOST centroid
+ * must have 0.5 subtracted before it is compared with one from here.
+ *
  * @param darkSubtracted Single-channel, dark-frame-subtracted image. If the
  *        image has multiple channels, only the first channel is used.
  * @param expectedPixel The expected star location [u, v] (column, row).
- * @param roiSize The ROI side length, in pixels (paper uses 31).
+ * @param roiSize The ROI side length, in pixels (paper uses 31). The ROI
+ *        spans roiSize / 2 pixels either side of the rounded expected pixel, so
+ *        an even value covers the same pixels as the next odd one.
  * @param recenterRadius The mask radius about the brightest pixel (paper uses 3).
  * @param threshold Minimum intensity for a pixel to join the mask.
  *

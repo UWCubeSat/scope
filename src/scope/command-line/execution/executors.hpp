@@ -27,7 +27,9 @@ class PrimaryScopePipelineExecutor : public found::PipelineExecutor {
     /**
      * Constructs a PrimaryScopePipelineExecutor and assembles its pipeline.
      *
-     * @param options Parsed recalibration options consumed by the run.
+     * @param options Parsed recalibration options consumed by the run. The
+     *                executor takes ownership of the image buffers in
+     *                darkFrames and starImages, which must be malloc'd.
      * @param noiseFilterAlgorithm Stage that reduces raw frames to one image.
      * @param starCentroidAlgorithm Stage that extracts star centroids.
      * @param optimizationAlgorithm Stage that fits camera parameters.
@@ -36,6 +38,12 @@ class PrimaryScopePipelineExecutor : public found::PipelineExecutor {
                                           std::unique_ptr<NoiseFilterAlgorithm> noiseFilterAlgorithm,
                                           std::unique_ptr<StarCentroidAlgorithm> starCentroidAlgorithm,
                                           std::unique_ptr<OptimizationAlgorithm> optimizationAlgorithm);
+
+    /**
+     * Releases the dark frames and star images held in the options. The CLI
+     * loads them with stb_image (see strtoimages) and nothing else frees them.
+     */
+    ~PrimaryScopePipelineExecutor() override;
 
     /// Runs the assembled pipeline end-to-end.
     void ExecutePipeline() override;

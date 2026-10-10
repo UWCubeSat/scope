@@ -284,4 +284,96 @@ TEST(ROIFilterAlgorithmTest, ThrowsOnDimensionMismatch) {
     EXPECT_THROW(algorithm.Run(darkView), std::runtime_error);
 }
 
+// The ROI size sets how far a star may sit from its predicted pixel and still
+// be found: a star 10 px off is inside the default 31 px window but outside an
+// 11 px one.
+TEST(ROIFilterAlgorithmTest, RoiSizeSetsSearchReach) {
+    TestImage dark(10);
+    TestImage star(10);
+    PaintStar(&star, 40, 30);  // 10 px to the right of the prediction
+
+    RecalibrationOptions options = CenteredOptions();  // roiSize defaults to 31
+    options.starImages = {star.View()};
+
+    Catalog catalog;
+    catalog.push_back(CatalogStar{DirectionForPixel(DECIMAL(30.0), DECIMAL(30.0)), 200, 1});
+
+    Image darkView = dark.View();
+    CentroidObservations wide = ROIFilterAlgorithm(options, catalog, {found::Quaternion::Identity()}).Run(darkView);
+    ASSERT_EQ(wide.observations.size(), 1u);
+    EXPECT_NEAR(wide.observations[0].measured_pixel.x(), DECIMAL(40.0), kTol);
+    EXPECT_NEAR(wide.observations[0].measured_pixel.y(), DECIMAL(30.0), kTol);
+
+    options.roiSize = 11;
+    CentroidObservations narrow = ROIFilterAlgorithm(options, catalog, {found::Quaternion::Identity()}).Run(darkView);
+    EXPECT_TRUE(narrow.observations.empty());
+}
+
+// The border in which predictions are skipped shrinks with the ROI: a star
+// predicted 10 px from the edge is skipped at the default size (16 px border)
+// and observed with an 11 px ROI (6 px border).
+TEST(ROIFilterAlgorithmTest, RoiSizeSetsEdgeMargin) {
+    TestImage dark(10);
+    TestImage star(10);
+    PaintStar(&star, 10, 32);
+
+    RecalibrationOptions options = CenteredOptions();
+    options.starImages = {star.View()};
+
+    Catalog catalog;
+    catalog.push_back(CatalogStar{DirectionForPixel(DECIMAL(10.0), DECIMAL(32.0)), 200, 1});
+
+    Image darkView = dark.View();
+    CentroidObservations wide = ROIFilterAlgorithm(options, catalog, {found::Quaternion::Identity()}).Run(darkView);
+    EXPECT_TRUE(wide.observations.empty());
+
+    options.roiSize = 11;
+    CentroidObservations narrow = ROIFilterAlgorithm(options, catalog, {found::Quaternion::Identity()}).Run(darkView);
+    ASSERT_EQ(narrow.observations.size(), 1u);
+    EXPECT_NEAR(narrow.observations[0].measured_pixel.x(), DECIMAL(10.0), kTol);
+    EXPECT_NEAR(narrow.observations[0].measured_pixel.y(), DECIMAL(32.0), kTol);
+}
+
+// The ROI is centered on a pixel, so an even size reaches as far as the next
+// odd one: 30 finds a star 15 px off just as 31 does, and 29 does not.
+TEST(ROIFilterAlgorithmTest, EvenRoiSizeActsAsNextOdd) {
+    TestImage dark(10);
+    TestImage star(10);
+    // One lit pixel 15 px to the right of the prediction. A blob would not do:
+    // its wing would reach into the 29 px window.
+    star.Set(45, 30, 210);
+
+    RecalibrationOptions options = CenteredOptions();
+    options.starImages = {star.View()};
+
+    Catalog catalog;
+    catalog.push_back(CatalogStar{DirectionForPixel(DECIMAL(30.0), DECIMAL(30.0)), 200, 1});
+
+    Image darkView = dark.View();
+    options.roiSize = 30;
+    CentroidObservations even = ROIFilterAlgorithm(options, catalog, {found::Quaternion::Identity()}).Run(darkView);
+    EXPECT_EQ(even.observations.size(), 1u);
+
+    options.roiSize = 29;
+    CentroidObservations odd = ROIFilterAlgorithm(options, catalog, {found::Quaternion::Identity()}).Run(darkView);
+    EXPECT_TRUE(odd.observations.empty());
+}
+
+// An ROI of less than one pixel cannot hold a star and throws.
+TEST(ROIFilterAlgorithmTest, ThrowsOnNonPositiveRoiSize) {
+    TestImage dark(10);
+    TestImage star(10);
+
+    RecalibrationOptions options = CenteredOptions();
+    options.starImages = {star.View()};
+    options.roiSize = 0;
+
+    Catalog catalog;
+    catalog.push_back(CatalogStar{DirectionForPixel(DECIMAL(40.0), DECIMAL(36.0)), 200, 1});
+
+    ROIFilterAlgorithm algorithm(options, catalog, {found::Quaternion::Identity()});
+    Image darkView = dark.View();
+    EXPECT_THROW(algorithm.Run(darkView), std::runtime_error);
+}
+
 }  // namespace scope

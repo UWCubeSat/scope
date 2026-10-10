@@ -1,5 +1,7 @@
 #include "scope/command-line/execution/executors.hpp"
 
+#include <stb_image/stb_image.h>
+
 #include <cstdlib>
 #include <cstring>
 
@@ -28,6 +30,15 @@ PrimaryScopePipelineExecutor::PrimaryScopePipelineExecutor(RecalibrationOptions 
     this->pipeline_.AddStage(std::move(noiseFilterStage))
         .AddStage(std::move(starCentroidStage))
         .Complete(std::move(optimizationStage));
+}
+
+PrimaryScopePipelineExecutor::~PrimaryScopePipelineExecutor() {
+    for (const Image &image : this->options_.darkFrames) {
+        stbi_image_free(image.image);
+    }
+    for (const Image &image : this->options_.starImages) {
+        stbi_image_free(image.image);
+    }
 }
 
 void PrimaryScopePipelineExecutor::ExecutePipeline() {

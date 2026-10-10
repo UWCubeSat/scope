@@ -48,8 +48,9 @@ found::Vec2 BrownDistort(const found::Vec2 &ideal, decimal k1, decimal k2, decim
  * Feeding a raw LOST quaternion to ProjectStarToPixel without this conversion
  * produces plausible-but-wrong pixels (the boresight star projects to z = 0 and
  * is dropped, while stars 90 deg off-axis are accepted), so every per-image
- * attitude arriving from LOST MUST pass through here first. This is the loud
- * counterpart to the LOST-integration seam in providers/factory.hpp.
+ * attitude arriving from LOST MUST pass through here first. The --attitudes
+ * file and ProvideAttitudes (providers/stage-providers.hpp) expect attitudes
+ * that are already in SCOPE's frame and do not call this for you.
  *
  * @param lostAttitude Attitude from LOST: rotates an inertial line of sight into
  *                     LOST's x-boresight camera frame (e_C = lostAttitude * e_I).
@@ -69,9 +70,8 @@ found::Quaternion LostAttitudeToScopeFrame(const found::Quaternion &lostAttitude
  * @param eI Unit line-of-sight direction in the inertial frame (a CatalogStar's
  *           spatial vector).
  * @param attitude Prior attitude that rotates a vector from the inertial frame
- *                 into the camera frame (e_C = attitude * e_I). The factory
- *                 currently injects identity; LOST integration will supply real
- *                 per-image attitudes at this seam.
+ *                 into the camera frame (e_C = attitude * e_I), with the
+ *                 boresight on +z.
  * @param options Calibration options carrying the prior intrinsics and
  *                distortion coefficients.
  *

@@ -32,9 +32,11 @@ SCOPE_CLI_OPTION("p1", decimal, p1, 0, found::strtodecimal(optarg), kNoDefaultAr
 SCOPE_CLI_OPTION("p2", decimal, p2, 0, found::strtodecimal(optarg), kNoDefaultArgument, REQ_ASSIGN, "Second tangential distortion coefficient")  \
 SCOPE_CLI_OPTION("dark-frames", scope::Images, darkFrames, {}, scope::strtoimages(optarg), kNoDefaultArgument, REQ_ASSIGN, "Dark calibration frames used to estimate fixed-pattern noise (list of comma or space separated file paths)")  \
 SCOPE_CLI_OPTION("star-images", scope::Images, starImages, {}, scope::strtoimages(optarg), kNoDefaultArgument, REQ_ASSIGN, "Star-field images to centroid (list of comma or space separated file paths)")  \
+SCOPE_CLI_OPTION("attitudes", std::string, attitudesPath, std::string(""), std::string(optarg), kNoDefaultArgument, REQ_ASSIGN, "Path to a text file with one prior attitude per star image, in the same order: a quaternion 'w x y z' per line that rotates inertial (J2000) directions into SCOPE's +z-boresight camera frame")  \
 SCOPE_CLI_OPTION("catalog-path", std::string, catalogPath, std::string("./bright-star-catalog.tsv"), std::string(optarg), kNoDefaultArgument, REQ_ASSIGN, "Path to the bright star catalog TSV (see download-bsc.sh)")  \
 SCOPE_CLI_OPTION("centroid-threshold", int, centroidThreshold, 40, std::atoi(optarg), kNoDefaultArgument, REQ_ASSIGN, "Minimum dark-subtracted intensity for a pixel to join a centroid mask (paper does not specify; 40 is a starting value)")  \
 SCOPE_CLI_OPTION("magnitude-threshold", decimal, magnitudeThreshold, 6, found::strtodecimal(optarg), kNoDefaultArgument, REQ_ASSIGN, "Faintest apparent magnitude to project from the catalog; fainter stars are skipped to keep the field sparse (default 6.0)")  \
+SCOPE_CLI_OPTION("roi-size", int, roiSize, 31, std::atoi(optarg), kNoDefaultArgument, REQ_ASSIGN, "Side length in pixels of the square window searched around each star's predicted position (default 31, the paper's value); the window is centered on a pixel, so an even value acts as the next odd one")  \
 
 // NOLINTEND
 

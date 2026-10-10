@@ -1,5 +1,6 @@
 #include <cstdlib>
 
+#include <exception>
 #include <iostream>
 #include <memory>
 #include <string>
@@ -32,7 +33,7 @@ void PrintHelp() {
 }  // namespace
 
 int main(int argc, char **argv) {
-    if (argc == 0) {
+    if (argc < 2) {
         std::cerr << "No command provided. " << HELP_MSG << std::endl;
         return EXIT_FAILURE;
     }
@@ -44,11 +45,18 @@ int main(int argc, char **argv) {
         return EXIT_SUCCESS;
     }
 
-    std::unique_ptr<found::PipelineExecutor> executor;
-    executor = CreatePrimaryScopePipelineExecutor(ParseRecalibrationOptions(argc, argv));
+    // Bad input (a missing catalog, an unreadable image, a malformed attitudes
+    // file) surfaces as an exception; report it and exit instead of aborting.
+    try {
+        std::unique_ptr<found::PipelineExecutor> executor;
+        executor = CreatePrimaryScopePipelineExecutor(ParseRecalibrationOptions(argc, argv));
 
-    executor->ExecutePipeline();
-    executor->OutputResults();
+        executor->ExecutePipeline();
+        executor->OutputResults();
+    } catch (const std::exception &e) {
+        std::cerr << "Error: " << e.what() << std::endl;
+        return EXIT_FAILURE;
+    }
 
     return EXIT_SUCCESS;
 }

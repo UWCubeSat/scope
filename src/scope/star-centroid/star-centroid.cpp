@@ -8,6 +8,7 @@
 #include <vector>
 
 #include "common/decimal.hpp"
+#include "common/logging.hpp"
 #include "common/spatial/attitude-utils.hpp"
 
 #include "scope/projection/projection.hpp"
@@ -17,12 +18,9 @@ namespace scope {
 
 namespace {
 
-/// ROI side length, in pixels (Orion paper §"Image Processing and Star Centroiding").
-constexpr int kRoiSize = 31;
-/// Mask radius about the brightest pixel, in pixels (paper, same section).
+/// Mask radius about the brightest pixel, in pixels (Orion paper §"Image
+/// Processing and Star Centroiding").
 constexpr int kRecenterRadius = 3;
-/// Keep this clear of every edge so a full ROI never overruns the image.
-constexpr int kSensorMargin = kRoiSize / 2 + 1;
 /// Two centroids closer than this (pixels) are treated as the same blob -- a
 /// collision the a-priori matcher cannot disambiguate. Sized to the mask radius.
 constexpr decimal kCentroidMatchTolerance = DECIMAL(3.0);
@@ -55,6 +53,11 @@ CentroidObservations ROIFilterAlgorithm::Run(const Image &darkFrame) {
     if (attitudes_.size() != options_.starImages.size()) {
         throw std::runtime_error("ROIFilterAlgorithm: attitude count does not match star image count");
     }
+    if (options_.roiSize < 1) {
+        throw std::runtime_error("ROIFilterAlgorithm: ROI size must be at least 1 pixel");
+    }
+    // Keep this clear of every edge so a full ROI never overruns the image.
+    const int sensorMargin = options_.roiSize / 2 + 1;
 
     CentroidObservations result;
     result.attitudes = attitudes_;
@@ -84,12 +87,12 @@ CentroidObservations ROIFilterAlgorithm::Run(const Image &darkFrame) {
 
             const std::optional<found::Vec2> expected =
                 ProjectStarToPixel(catalog_[j].spatial, attitudes_[i], options_);
-            if (!expected.has_value() || !InSensorWithMargin(*expected, star.width, star.height, kSensorMargin)) {
+            if (!expected.has_value() || !InSensorWithMargin(*expected, star.width, star.height, sensorMargin)) {
                 continue;
             }
 
             const std::optional<found::Vec2> centroid =
-                ExtractCentroid(darkSubtracted, *expected, kRoiSize, kRecenterRadius, threshold);
+                ExtractCentroid(darkSubtracted, *expected, options_.roiSize, kRecenterRadius, threshold);
             if (centroid.has_value()) {
                 candidates.push_back(Observation{static_cast<int>(i), static_cast<int>(j), *centroid});
             }
@@ -102,6 +105,7 @@ CentroidObservations ROIFilterAlgorithm::Run(const Image &darkFrame) {
         // that would feed the optimizer an outlier. Rather than guess which star
         // the blob belongs to, drop every candidate that collides with another in
         // this image.
+        [[maybe_unused]] const std::size_t observationsBefore = result.observations.size();
         for (std::size_t a = 0; a < candidates.size(); ++a) {
             bool ambiguous = false;
             for (std::size_t b = 0; b < candidates.size(); ++b) {
@@ -117,6 +121,8 @@ CentroidObservations ROIFilterAlgorithm::Run(const Image &darkFrame) {
                 result.observations.push_back(candidates[a]);
             }
         }
+        LOG_INFO("Star image " << i << ": " << result.observations.size() - observationsBefore << " of "
+                               << candidates.size() << " centroids kept");
     }
 
     return result;

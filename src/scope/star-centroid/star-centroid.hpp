@@ -36,7 +36,8 @@ class StarCentroidAlgorithm : public found::FunctionStage<Image, CentroidObserva
  * threshold is projected to its expected pixel using the per-image prior attitude
  * and the prior calibration. Stars behind the camera or outside the sensor (with
  * ROI margin) are skipped; the rest are centroided via ExtractCentroid on the
- * dark-subtracted image. Successful centroids become Observations, except that
+ * dark-subtracted image, searching a window of options.roiSize pixels around the
+ * predicted position. Successful centroids become Observations, except that
  * candidates whose centroids collide within one image (two catalog stars landing
  * on the same blob) are dropped as ambiguous.
  */
@@ -46,8 +47,8 @@ class ROIFilterAlgorithm : public StarCentroidAlgorithm {
      * Constructs a new ROIFilterAlgorithm.
      *
      * @param options Parsed recalibration options (prior intrinsics + distortion,
-     *                star images, and centroid threshold). Copied so the stage is
-     *                self-contained.
+     *                star images, centroid threshold, and ROI size). Copied so
+     *                the stage is self-contained.
      * @param catalog The star catalog to project and match against. Owned by the
      *                stage; the produced CentroidObservations references it.
      * @param attitudes One prior attitude per star image (rotates inertial
@@ -68,13 +69,13 @@ class ROIFilterAlgorithm : public StarCentroidAlgorithm {
      *         to this stage's catalog.
      *
      * @throws std::runtime_error if the attitude count does not match the star
-     *         image count, or a star image's dimensions do not match the dark
-     *         frame.
+     *         image count, the ROI size is below 1, or a star image's dimensions
+     *         do not match the dark frame.
      */
     CentroidObservations Run(const Image &darkFrame) override;
 
  private:
-    /// Captured calibration options (prior parameters + star images + threshold).
+    /// Captured calibration options (prior parameters + star images + threshold + ROI size).
     const RecalibrationOptions options_;
     /// The catalog the produced observations index into.
     const Catalog catalog_;

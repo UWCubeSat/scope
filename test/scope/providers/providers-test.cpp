@@ -1,0 +1,144 @@
+#include <gtest/gtest.h>
+#include <gmock/gmock.h>
+
+#include <memory>
+#include <stdexcept>
+#include <string>
+#include <utility>
+#include <vector>
+
+#include "common/decimal.hpp"
+#include "common/spatial/attitude-utils.hpp"
+
+#include "scope/catalog/catalog.hpp"
+#include "scope/command-line/execution/executors.hpp"
+#include "scope/command-line/parsing/options.hpp"
+#include "scope/common/style.hpp"
+#include "scope/noise-filter/noise-filter.hpp"
+#include "scope/optimization/optimization.hpp"
+#include "scope/providers/factory.hpp"
+#include "scope/providers/stage-providers.hpp"
+#include "scope/star-centroid/star-centroid.hpp"
+
+#include "test/scope/common/test-files.hpp"
+
+namespace scope {
+
+namespace {
+
+constexpr int kWidth = 64;
+constexpr int kHeight = 64;
+
+/// The small fixture catalog, relative to the repository root. Its first star
+/// sits at (ra = 0, dec = 0), i.e. along inertial +x.
+const char *kCatalogPath = "test/fixtures/bright-star-catalog-test.tsv";
+
+/// Attitude that turns inertial +x onto the camera boresight (+z), so the
+/// fixture catalog's first star lands on the principal point.
+const char *kInertialXOnBoresight = "0.7071067811865476 0 -0.7071067811865476 0\n";
+
+/// Pinhole options (focal 100, principal at the image center), no distortion.
+RecalibrationOptions CenteredOptions() {
+    RecalibrationOptions options;
+    options.focalLengthX = DECIMAL(100.0);
+    options.focalLengthY = DECIMAL(100.0);
+    options.principalX = DECIMAL(32.0);
+    options.principalY = DECIMAL(32.0);
+    options.catalogPath = kCatalogPath;
+    return options;
+}
+
+}  // namespace
+
+// Each stage provider hands back the implementation the pipeline expects.
+TEST(StageProvidersTest, ProvidesDarkScreenFilter) {
+    std::unique_ptr<NoiseFilterAlgorithm> algorithm = ProvideNoiseFilterAlgorithm(RecalibrationOptions());
+
+    EXPECT_NE(dynamic_cast<DarkScreenFilter *>(algorithm.get()), nullptr);
+}
+
+TEST(StageProvidersTest, ProvidesRoiFilter) {
+    std::unique_ptr<StarCentroidAlgorithm> algorithm =
+        ProvideStarCentroidAlgorithm(RecalibrationOptions(), Catalog(), std::vector<found::Quaternion>());
+
+    EXPECT_NE(dynamic_cast<ROIFilterAlgorithm *>(algorithm.get()), nullptr);
+}
+
+TEST(StageProvidersTest, ProvidesLmaOptimizer) {
+    std::unique_ptr<OptimizationAlgorithm> algorithm = ProvideOptimizationAlgorithm(RecalibrationOptions());
+
+    EXPECT_NE(dynamic_cast<LMAOptimizationAlgorithm *>(algorithm.get()), nullptr);
+}
+
+// The attitudes come from the file named in the options.
+TEST(ProvideAttitudesTest, LoadsAttitudesFile) {
+    TempFile file("providers-attitudes.txt", "1 0 0 0\n0 0 0 1\n");
+    RecalibrationOptions options;
+    options.attitudesPath = file.Path();
+
+    std::vector<found::Quaternion> attitudes = ProvideAttitudes(options);
+
+    ASSERT_EQ(attitudes.size(), 2u);
+    EXPECT_NEAR(attitudes[0].w(), DECIMAL(1.0), DECIMAL(1e-6));
+    EXPECT_NEAR(attitudes[1].z(), DECIMAL(1.0), DECIMAL(1e-6));
+}
+
+// Star images with no attitudes file is an error, not a silent identity.
+TEST(ProvideAttitudesTest, ThrowsWhenStarImagesHaveNoAttitudes) {
+    std::vector<unsigned char> pixels = FlatPixels(kWidth, kHeight, 10);
+    RecalibrationOptions options;
+    options.starImages = {Image{kWidth, kHeight, 1, pixels.data()}};
+
+    EXPECT_THROW(ProvideAttitudes(options), std::runtime_error);
+}
+
+// With no star images there is nothing to supply attitudes for.
+TEST(ProvideAttitudesTest, NoStarImagesNeedNoAttitudes) {
+    EXPECT_TRUE(ProvideAttitudes(RecalibrationOptions()).empty());
+}
+
+// The factory loads the catalog and the attitudes and wires up a pipeline that
+// runs. The attitude in the file is what puts the catalog star on the blob: the
+// star at inertial +x is only on the sensor because the attitude turns +x onto
+// the boresight.
+TEST(FactoryTest, BuildsExecutorThatUsesCatalogAndAttitudes) {
+    std::vector<unsigned char> dark = FlatPixels(kWidth, kHeight, 10);
+    std::vector<unsigned char> star = dark;
+    PaintStar(&star, kWidth, 32, 32);
+    TempFile attitudes("providers-factory-attitudes.txt", kInertialXOnBoresight);
+
+    // The executor takes ownership of the images, so they must be malloc'd.
+    RecalibrationOptions options = CenteredOptions();
+    options.darkFrames = {MallocImage(kWidth, kHeight, dark), MallocImage(kWidth, kHeight, dark)};
+    options.starImages = {MallocImage(kWidth, kHeight, star)};
+    options.attitudesPath = attitudes.Path();
+
+    std::unique_ptr<PrimaryScopePipelineExecutor> executor = CreatePrimaryScopePipelineExecutor(std::move(options));
+    ASSERT_NE(executor, nullptr);
+
+    testing::internal::CaptureStdout();
+    executor->ExecutePipeline();
+    const std::string output = testing::internal::GetCapturedStdout();
+
+    EXPECT_THAT(output, testing::HasSubstr("Star image 0: 1 of 1 centroids kept"));
+}
+
+// A catalog that cannot be opened throws before any pipeline is built.
+TEST(FactoryTest, MissingCatalogThrows) {
+    RecalibrationOptions options;
+    options.catalogPath = "test/fixtures/does-not-exist.tsv";
+
+    EXPECT_THROW(CreatePrimaryScopePipelineExecutor(std::move(options)), std::runtime_error);
+}
+
+// Star images without attitudes throw before any pipeline is built.
+TEST(FactoryTest, MissingAttitudesThrows) {
+    // No executor is built, so these stay owned by the test.
+    std::vector<unsigned char> pixels = FlatPixels(kWidth, kHeight, 10);
+    RecalibrationOptions options = CenteredOptions();
+    options.starImages = {Image{kWidth, kHeight, 1, pixels.data()}};
+
+    EXPECT_THROW(CreatePrimaryScopePipelineExecutor(std::move(options)), std::runtime_error);
+}
+
+}  // namespace scope
