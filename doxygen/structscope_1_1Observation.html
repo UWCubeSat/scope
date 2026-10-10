@@ -97,30 +97,52 @@ $(document).ready(function(){initNavTree('structscope_1_1Observation.html',''); 
 </div><!--header-->
 <div class="contents">
 
-<p>A single measured star: a catalog star paired with where it was actually observed (the raw, distorted pixel) in one of the star images.  
+<p>A single measured star: where a catalog star was actually observed (the raw, distorted pixel) in one of the star images.  
  <a href="structscope_1_1Observation.html#details">More...</a></p>
 
-<p><code>#include &lt;<a class="el" href="style_8hpp_source.html">style.hpp</a>&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="types_8hpp_source.html">types.hpp</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
-<tr class="memitem:a0b1a14ece184fe62001fbaa47c46a932" id="r_a0b1a14ece184fe62001fbaa47c46a932"><td class="memItemLeft" align="right" valign="top"><a id="a0b1a14ece184fe62001fbaa47c46a932" name="a0b1a14ece184fe62001fbaa47c46a932"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>image_index</b></td></tr>
-<tr class="memdesc:a0b1a14ece184fe62001fbaa47c46a932"><td class="mdescLeft">&#160;</td><td class="mdescRight">Index of the star image this observation came from. <br /></td></tr>
-<tr class="separator:a0b1a14ece184fe62001fbaa47c46a932"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a493835f4a9535c0df09f7914967826ba" id="r_a493835f4a9535c0df09f7914967826ba"><td class="memItemLeft" align="right" valign="top"><a id="a493835f4a9535c0df09f7914967826ba" name="a493835f4a9535c0df09f7914967826ba"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>catalog_index</b></td></tr>
-<tr class="memdesc:a493835f4a9535c0df09f7914967826ba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Index into the run's catalog. Stable for the duration of one run. <br /></td></tr>
-<tr class="separator:a493835f4a9535c0df09f7914967826ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8df5fbfd52e8597556b42edd085f1974" id="r_a8df5fbfd52e8597556b42edd085f1974"><td class="memItemLeft" align="right" valign="top"><a id="a8df5fbfd52e8597556b42edd085f1974" name="a8df5fbfd52e8597556b42edd085f1974"></a>
-found::Vec2&#160;</td><td class="memItemRight" valign="bottom"><b>measured_pixel</b></td></tr>
-<tr class="memdesc:a8df5fbfd52e8597556b42edd085f1974"><td class="mdescLeft">&#160;</td><td class="mdescRight">The measured (distorted) centroid in pixel coordinates [u', v']. <br /></td></tr>
-<tr class="separator:a8df5fbfd52e8597556b42edd085f1974"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad475fc57494afd5a7f45bf13f8ffe1a9" id="r_ad475fc57494afd5a7f45bf13f8ffe1a9"><td class="memItemLeft" align="right" valign="top"><a id="ad475fc57494afd5a7f45bf13f8ffe1a9" name="ad475fc57494afd5a7f45bf13f8ffe1a9"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>imageIndex</b></td></tr>
+<tr class="memdesc:ad475fc57494afd5a7f45bf13f8ffe1a9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Index of the star image this observation came from. <br /></td></tr>
+<tr class="separator:ad475fc57494afd5a7f45bf13f8ffe1a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0015265ea1ef785ad1f7a240bb9de36e" id="r_a0015265ea1ef785ad1f7a240bb9de36e"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structscope_1_1Observation.html#a0015265ea1ef785ad1f7a240bb9de36e">starName</a></td></tr>
+<tr class="memdesc:a0015265ea1ef785ad1f7a240bb9de36e"><td class="mdescLeft">&#160;</td><td class="mdescRight">The star's catalog identifier (<a class="el" href="structscope_1_1CatalogStar.html#a7ce5ac9bb9e0dc3291d8d716bd7f7af2" title="Stable identifier (the HR number); survives catalog filtering.">CatalogStar::name</a>, the HR number).  <br /></td></tr>
+<tr class="separator:a0015265ea1ef785ad1f7a240bb9de36e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae9981d012b7b9165c12c01be1bca5621" id="r_ae9981d012b7b9165c12c01be1bca5621"><td class="memItemLeft" align="right" valign="top"><a id="ae9981d012b7b9165c12c01be1bca5621" name="ae9981d012b7b9165c12c01be1bca5621"></a>
+found::Vec3&#160;</td><td class="memItemRight" valign="bottom"><b>inertialDirection</b></td></tr>
+<tr class="memdesc:ae9981d012b7b9165c12c01be1bca5621"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unit line of sight to the star in the inertial (equatorial J2000) frame: the e_I of the measurement model (<a class="el" href="structscope_1_1CatalogStar.html#a1512624e4326ce4ed14fc9db19e21a71" title="Unit line-of-sight vector in the inertial (equatorial J2000) frame.">CatalogStar::spatial</a>). <br /></td></tr>
+<tr class="separator:ae9981d012b7b9165c12c01be1bca5621"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab2c1c1c8ea54ae0bfe0e1d8aa67897ca" id="r_ab2c1c1c8ea54ae0bfe0e1d8aa67897ca"><td class="memItemLeft" align="right" valign="top"><a id="ab2c1c1c8ea54ae0bfe0e1d8aa67897ca" name="ab2c1c1c8ea54ae0bfe0e1d8aa67897ca"></a>
+found::Vec2&#160;</td><td class="memItemRight" valign="bottom"><b>measuredPixel</b></td></tr>
+<tr class="memdesc:ab2c1c1c8ea54ae0bfe0e1d8aa67897ca"><td class="mdescLeft">&#160;</td><td class="mdescRight">The measured (distorted) centroid in pixel coordinates [u', v']. <br /></td></tr>
+<tr class="separator:ab2c1c1c8ea54ae0bfe0e1d8aa67897ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>A single measured star: a catalog star paired with where it was actually observed (the raw, distorted pixel) in one of the star images. </p>
-</div><hr/>The documentation for this struct was generated from the following file:<ul>
-<li>src/scope/common/<a class="el" href="style_8hpp_source.html">style.hpp</a></li>
+<div class="textblock"><p>A single measured star: where a catalog star was actually observed (the raw, distorted pixel) in one of the star images. </p>
+<p>The star's inertial direction is carried along, so an observation stands on its own without the catalog. </p>
+</div><h2 class="groupheader">Member Data Documentation</h2>
+<a id="a0015265ea1ef785ad1f7a240bb9de36e" name="a0015265ea1ef785ad1f7a240bb9de36e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0015265ea1ef785ad1f7a240bb9de36e">&#9670;&#160;</a></span>starName</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int scope::Observation::starName</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>The star's catalog identifier (<a class="el" href="structscope_1_1CatalogStar.html#a7ce5ac9bb9e0dc3291d8d716bd7f7af2" title="Stable identifier (the HR number); survives catalog filtering.">CatalogStar::name</a>, the HR number). </p>
+<p>Not part of the measurement model; it lets a residual be traced to a star. </p>
+
+</div>
+</div>
+<hr/>The documentation for this struct was generated from the following file:<ul>
+<li>src/scope/common/<a class="el" href="types_8hpp_source.html">types.hpp</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->

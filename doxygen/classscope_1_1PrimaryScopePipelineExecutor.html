@@ -137,9 +137,8 @@ Public Member Functions</h2></td></tr>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>ExecutePipeline</b> () override</td></tr>
 <tr class="memdesc:a124855899b79d402140d9e8cf7c34968"><td class="mdescLeft">&#160;</td><td class="mdescRight">Runs the assembled pipeline end-to-end. <br /></td></tr>
 <tr class="separator:a124855899b79d402140d9e8cf7c34968"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a89553ccccb8276f1c2fb8c064ad12d21" id="r_a89553ccccb8276f1c2fb8c064ad12d21"><td class="memItemLeft" align="right" valign="top"><a id="a89553ccccb8276f1c2fb8c064ad12d21" name="a89553ccccb8276f1c2fb8c064ad12d21"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>OutputResults</b> () override</td></tr>
-<tr class="memdesc:a89553ccccb8276f1c2fb8c064ad12d21"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prints the calibrated parameters produced by the pipeline. <br /></td></tr>
+<tr class="memitem:a89553ccccb8276f1c2fb8c064ad12d21" id="r_a89553ccccb8276f1c2fb8c064ad12d21"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classscope_1_1PrimaryScopePipelineExecutor.html#a89553ccccb8276f1c2fb8c064ad12d21">OutputResults</a> () override</td></tr>
+<tr class="memdesc:a89553ccccb8276f1c2fb8c064ad12d21"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prints the calibration produced by the pipeline to standard output: whether the fit converged, the ten camera parameters, and the residual RMS.  <br /></td></tr>
 <tr class="separator:a89553ccccb8276f1c2fb8c064ad12d21"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-attribs" name="pri-attribs"></a>
@@ -244,6 +243,35 @@ found::FunctionStage&lt; Images, Image &gt; *&#160;</td><td class="memItemRight"
 
 <p>Releases the dark frames and star images held in the options. </p>
 <p>The CLI loads them with stb_image (see strtoimages) and nothing else frees them. </p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="a89553ccccb8276f1c2fb8c064ad12d21" name="a89553ccccb8276f1c2fb8c064ad12d21"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a89553ccccb8276f1c2fb8c064ad12d21">&#9670;&#160;</a></span>OutputResults()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void scope::PrimaryScopePipelineExecutor::OutputResults </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Prints the calibration produced by the pipeline to standard output: whether the fit converged, the ten camera parameters, and the residual RMS. </p>
+<dl class="section pre"><dt>Precondition</dt><dd>ExecutePipeline has run. </dd></dl>
 
 </div>
 </div>

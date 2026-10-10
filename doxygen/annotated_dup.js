@@ -1,6 +1,8 @@
 var annotated_dup =
 [
     [ "scope", null, [
+      [ "CalibrationResult", "structscope_1_1CalibrationResult.html", "structscope_1_1CalibrationResult" ],
+      [ "CameraParameters", "structscope_1_1CameraParameters.html", "structscope_1_1CameraParameters" ],
       [ "CatalogStar", "structscope_1_1CatalogStar.html", "structscope_1_1CatalogStar" ],
       [ "CentroidObservations", "structscope_1_1CentroidObservations.html", "structscope_1_1CentroidObservations" ],
       [ "DarkScreenFilter", "classscope_1_1DarkScreenFilter.html", "classscope_1_1DarkScreenFilter" ],

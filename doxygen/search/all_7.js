@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['magnitude_0',['magnitude',['../structscope_1_1CatalogStar.html#a77ea9eb5cc69fc8c241feed1ea6d8b9c',1,'scope::CatalogStar']]],
-  ['measured_5fpixel_1',['measured_pixel',['../structscope_1_1Observation.html#a8df5fbfd52e8597556b42edd085f1974',1,'scope::Observation']]]
+  ['lmaoptimizationalgorithm_0',['lmaoptimizationalgorithm',['../classscope_1_1LMAOptimizationAlgorithm.html',1,'scope::LMAOptimizationAlgorithm'],['../classscope_1_1LMAOptimizationAlgorithm.html#af25916d83d401b78ca4fbf0e0c08a06a',1,'scope::LMAOptimizationAlgorithm::LMAOptimizationAlgorithm()']]]
 ];

@@ -4,17 +4,22 @@
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="196,48,140,87,137,83,193,43"/>
 <area shape="rect" id="Node000003" href="$style_8hpp_source.html" title=" " alt="" coords="241,93,426,119"/>
 <area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="250,43,307,83,304,87,247,48"/>
-<area shape="poly" id="edge6_Node000003_Node000003" title=" " alt="" coords="388,91,431,92,446,97,453,106,448,114,436,119,401,122,401,117,435,114,444,110,447,106,443,101,431,97,388,96"/>
-<area shape="rect" id="Node000004" title=" " alt="" coords="179,247,242,273"/>
-<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="241,121,151,140,116,153,94,168,88,180,89,190,94,200,104,210,134,228,167,242,165,247,131,233,101,215,90,204,84,192,83,179,90,165,113,148,150,134,240,116"/>
-<area shape="rect" id="Node000005" title=" " alt="" coords="104,167,331,192"/>
-<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="316,121,249,162,247,157,313,116"/>
-<area shape="rect" id="Node000006" title=" " alt="" coords="493,240,675,280"/>
-<area shape="poly" id="edge5_Node000003_Node000006" title=" " alt="" coords="427,108,462,115,497,126,531,142,561,165,571,178,578,194,586,226,580,227,573,196,566,181,557,169,528,147,495,131,461,120,426,113"/>
-<area shape="rect" id="Node000007" href="$catalog_8hpp.html" title="Bright star catalog types and loader for SCOPE calibration." alt="" coords="355,167,547,192"/>
-<area shape="poly" id="edge7_Node000003_Node000007" title=" " alt="" coords="354,116,421,157,418,162,351,121"/>
-<area shape="poly" id="edge9_Node000007_Node000004" title=" " alt="" coords="417,195,256,247,254,242,415,189"/>
-<area shape="poly" id="edge10_Node000007_Node000006" title=" " alt="" coords="472,190,541,231,539,235,469,194"/>
-<area shape="rect" id="Node000008" title=" " alt="" coords="409,247,468,273"/>
-<area shape="poly" id="edge8_Node000007_Node000008" title=" " alt="" coords="452,193,445,234,440,234,446,192"/>
+<area shape="poly" id="edge5_Node000003_Node000003" title=" " alt="" coords="388,91,431,92,446,97,453,106,448,114,436,119,401,122,401,117,435,114,444,110,447,106,443,101,431,97,388,96"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="233,240,295,265"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="280,121,241,139,224,152,210,168,206,184,211,200,223,215,238,229,234,233,219,219,207,202,201,184,206,165,220,148,238,134,278,116"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="220,167,447,192"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="336,119,336,153,331,153,331,119"/>
+<area shape="rect" id="Node000006" href="$types_8hpp.html" title="Plain data passed between SCOPE&#39;s stages." alt="" coords="471,167,660,192"/>
+<area shape="poly" id="edge6_Node000003_Node000006" title=" " alt="" coords="371,116,516,160,514,165,370,121"/>
+<area shape="poly" id="edge7_Node000006_Node000004" title=" " alt="" coords="518,195,310,243,308,238,516,189"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="632,321,795,346"/>
+<area shape="poly" id="edge8_Node000006_Node000007" title=" " alt="" coords="613,190,655,208,675,221,693,238,703,254,710,272,715,306,710,307,704,274,698,257,689,242,672,226,653,213,611,194"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="323,313,506,353"/>
+<area shape="poly" id="edge9_Node000006_Node000008" title=" " alt="" coords="520,194,479,213,459,226,442,242,427,270,419,300,414,299,422,268,438,238,456,221,476,208,518,190"/>
+<area shape="rect" id="Node000009" href="$projection_8hpp.html" title="Forward camera projection (pinhole + Brown distortion + intrinsics)." alt="" coords="452,240,679,265"/>
+<area shape="poly" id="edge10_Node000006_Node000009" title=" " alt="" coords="568,192,568,226,563,226,563,192"/>
+<area shape="poly" id="edge12_Node000009_Node000007" title=" " alt="" coords="588,263,681,312,678,316,586,268"/>
+<area shape="poly" id="edge13_Node000009_Node000008" title=" " alt="" coords="544,268,464,309,462,305,542,263"/>
+<area shape="rect" id="Node000010" title=" " alt="" coords="531,321,605,346"/>
+<area shape="poly" id="edge11_Node000009_Node000010" title=" " alt="" coords="568,265,570,307,564,307,563,266"/>
 </map>

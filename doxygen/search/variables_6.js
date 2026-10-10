@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['pipeline_5f_0',['pipeline_',['../classscope_1_1PrimaryScopePipelineExecutor.html#af5af9aa3ff63ab731e2833d193cca9b9',1,'scope::PrimaryScopePipelineExecutor']]]
+  ['name_0',['name',['../structscope_1_1CatalogStar.html#a7ce5ac9bb9e0dc3291d8d716bd7f7af2',1,'scope::CatalogStar']]],
+  ['noisestage_5f_1',['noiseStage_',['../classscope_1_1PrimaryScopePipelineExecutor.html#aa68c27991e46a72f3de2849451f82929',1,'scope::PrimaryScopePipelineExecutor']]]
 ];

@@ -1,6 +1,7 @@
 var searchData=
 [
-  ['catalog_0',['catalog',['../structscope_1_1CentroidObservations.html#a36f795218e0e0b5e54aed660042880d7',1,'scope::CentroidObservations']]],
-  ['catalog_5f_1',['catalog_',['../classscope_1_1ROIFilterAlgorithm.html#acc808e48198a9037cd89f71d9106d312',1,'scope::ROIFilterAlgorithm']]],
-  ['catalog_5findex_2',['catalog_index',['../structscope_1_1Observation.html#a493835f4a9535c0df09f7914967826ba',1,'scope::Observation']]]
+  ['camera_0',['camera',['../structscope_1_1CalibrationResult.html#a693cf063784503f5efa6081f01d97be6',1,'scope::CalibrationResult']]],
+  ['camera_5f_1',['camera_',['../classscope_1_1ROIFilterAlgorithm.html#a64b3ec031f77b73d35ec61a6cc82e5e9',1,'scope::ROIFilterAlgorithm']]],
+  ['catalog_5f_2',['catalog_',['../classscope_1_1ROIFilterAlgorithm.html#acc808e48198a9037cd89f71d9106d312',1,'scope::ROIFilterAlgorithm']]],
+  ['converged_3',['converged',['../structscope_1_1CalibrationResult.html#ab964d3230f4a61c519f7c65a199a048a',1,'scope::CalibrationResult']]]
 ];

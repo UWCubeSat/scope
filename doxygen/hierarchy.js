@@ -1,5 +1,7 @@
 var hierarchy =
 [
+    [ "scope::CalibrationResult", "structscope_1_1CalibrationResult.html", null ],
+    [ "scope::CameraParameters", "structscope_1_1CameraParameters.html", null ],
     [ "scope::CatalogStar", "structscope_1_1CatalogStar.html", null ],
     [ "scope::CentroidObservations", "structscope_1_1CentroidObservations.html", null ],
     [ "found::FunctionStage", null, [

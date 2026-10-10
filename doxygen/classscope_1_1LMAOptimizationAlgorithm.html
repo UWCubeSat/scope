@@ -131,9 +131,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:af25916d83d401b78ca4fbf0e0c08a06a" id="r_af25916d83d401b78ca4fbf0e0c08a06a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classscope_1_1LMAOptimizationAlgorithm.html#af25916d83d401b78ca4fbf0e0c08a06a">LMAOptimizationAlgorithm</a> (const <a class="el" href="classRecalibrationOptions.html">RecalibrationOptions</a> &amp;options)</td></tr>
 <tr class="memdesc:af25916d83d401b78ca4fbf0e0c08a06a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a new <a class="el" href="classscope_1_1LMAOptimizationAlgorithm.html" title="Levenberg-Marquardt parameter optimizer.">LMAOptimizationAlgorithm</a>.  <br /></td></tr>
 <tr class="separator:af25916d83d401b78ca4fbf0e0c08a06a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8364da3b5207a9984ec17abdbcd63f7f" id="r_a8364da3b5207a9984ec17abdbcd63f7f"><td class="memItemLeft" align="right" valign="top">std::vector&lt; float &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classscope_1_1LMAOptimizationAlgorithm.html#a8364da3b5207a9984ec17abdbcd63f7f">Run</a> (const <a class="el" href="structscope_1_1CentroidObservations.html">CentroidObservations</a> &amp;observations) override</td></tr>
-<tr class="memdesc:a8364da3b5207a9984ec17abdbcd63f7f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fits camera parameters to the given star centroids.  <br /></td></tr>
-<tr class="separator:a8364da3b5207a9984ec17abdbcd63f7f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2e7343fdc6bd98e81078a71d54161f17" id="r_a2e7343fdc6bd98e81078a71d54161f17"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structscope_1_1CalibrationResult.html">CalibrationResult</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classscope_1_1LMAOptimizationAlgorithm.html#a2e7343fdc6bd98e81078a71d54161f17">Run</a> (const <a class="el" href="structscope_1_1CentroidObservations.html">CentroidObservations</a> &amp;observations) override</td></tr>
+<tr class="memdesc:a2e7343fdc6bd98e81078a71d54161f17"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fits camera parameters to the given star centroids.  <br /></td></tr>
+<tr class="separator:a2e7343fdc6bd98e81078a71d54161f17"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Levenberg-Marquardt parameter optimizer. </p>
@@ -174,8 +174,8 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a8364da3b5207a9984ec17abdbcd63f7f" name="a8364da3b5207a9984ec17abdbcd63f7f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8364da3b5207a9984ec17abdbcd63f7f">&#9670;&#160;</a></span>Run()</h2>
+<a id="a2e7343fdc6bd98e81078a71d54161f17" name="a2e7343fdc6bd98e81078a71d54161f17"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2e7343fdc6bd98e81078a71d54161f17">&#9670;&#160;</a></span>Run()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -184,7 +184,7 @@ Public Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">std::vector&lt; float &gt; scope::LMAOptimizationAlgorithm::Run </td>
+          <td class="memname"><a class="el" href="structscope_1_1CalibrationResult.html">CalibrationResult</a> scope::LMAOptimizationAlgorithm::Run </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="structscope_1_1CentroidObservations.html">CentroidObservations</a> &amp;&#160;</td>
           <td class="paramname"><em>observations</em></td><td>)</td>
@@ -201,11 +201,11 @@ Public Member Functions</h2></td></tr>
 <p>Fits camera parameters to the given star centroids. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">observations</td><td>Star measurements + prior attitudes + catalog from the star-centroid stage.</td></tr>
+    <tr><td class="paramname">observations</td><td>Star measurements + prior attitudes from the star-centroid stage.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>The updated camera parameter vector. The stub returns an empty vector. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The fitted calibration. The stub returns an empty, unconverged result. </dd></dl>
 
 </div>
 </div>

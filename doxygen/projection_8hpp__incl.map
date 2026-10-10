@@ -1,32 +1,9 @@
 <map id="src/scope/projection/projection.hpp" name="src/scope/projection/projection.hpp">
-<area shape="rect" id="Node000001" title="Forward camera projection (pinhole + Brown distortion + intrinsics)." alt="" coords="145,5,297,45"/>
-<area shape="rect" id="Node000002" title=" " alt="" coords="51,101,125,126"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="193,48,119,95,116,91,190,43"/>
-<area shape="rect" id="Node000003" title=" " alt="" coords="5,181,168,207"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="209,47,139,135,108,173,104,169,135,132,205,44"/>
-<area shape="rect" id="Node000004" title=" " alt="" coords="482,401,665,441"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="298,27,461,40,556,52,651,68,738,89,810,116,838,133,859,150,873,170,877,192,877,269,875,316,868,336,851,355,823,372,780,387,679,408,677,403,779,382,820,367,848,351,863,333,870,315,872,269,872,193,868,173,855,154,835,137,808,121,737,94,650,73,556,57,460,46,297,33"/>
-<area shape="rect" id="Node000005" href="$options_8hpp_source.html" title=" " alt="" coords="201,93,359,133"/>
-<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="237,44,262,81,257,84,232,47"/>
-<area shape="poly" id="edge6_Node000005_Node000003" title=" " alt="" coords="235,136,129,179,127,174,233,131"/>
-<area shape="rect" id="Node000006" title=" " alt="" coords="227,409,285,434"/>
-<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="263,135,246,157,233,182,226,211,223,240,226,300,237,353,249,395,244,396,232,354,221,300,218,240,221,210,228,180,241,154,259,132"/>
-<area shape="rect" id="Node000007" href="$style_8hpp_source.html" title=" " alt="" coords="434,255,619,280"/>
-<area shape="poly" id="edge7_Node000005_Node000007" title=" " alt="" coords="360,116,398,123,437,135,475,154,507,179,517,193,524,209,529,241,524,242,519,211,513,196,503,183,472,158,435,140,397,129,359,121"/>
-<area shape="rect" id="Node000011" href="$converters_8hpp_source.html" title=" " alt="" coords="243,181,469,207"/>
-<area shape="poly" id="edge16_Node000005_Node000011" title=" " alt="" coords="300,132,337,169,333,173,296,135"/>
-<area shape="poly" id="edge10_Node000007_Node000004" title=" " alt="" coords="533,279,566,387,561,389,528,281"/>
-<area shape="poly" id="edge11_Node000007_Node000007" title=" " alt="" coords="581,252,625,253,640,258,646,267,641,276,630,280,595,283,594,278,628,275,638,272,641,267,637,262,624,258,581,257"/>
-<area shape="rect" id="Node000008" title=" " alt="" coords="377,409,439,434"/>
-<area shape="poly" id="edge8_Node000007_Node000008" title=" " alt="" coords="528,281,519,316,500,355,473,383,443,404,440,399,469,379,495,352,514,314,522,279"/>
-<area shape="rect" id="Node000009" title=" " alt="" coords="611,328,837,353"/>
-<area shape="poly" id="edge9_Node000007_Node000009" title=" " alt="" coords="559,278,680,321,678,326,557,283"/>
-<area shape="rect" id="Node000010" href="$catalog_8hpp.html" title="Bright star catalog types and loader for SCOPE calibration." alt="" coords="293,328,485,353"/>
-<area shape="poly" id="edge12_Node000007_Node000010" title=" " alt="" coords="506,282,425,324,423,319,503,278"/>
-<area shape="poly" id="edge15_Node000010_Node000004" title=" " alt="" coords="417,351,518,394,516,398,415,356"/>
-<area shape="poly" id="edge13_Node000010_Node000006" title=" " alt="" coords="371,356,289,404,286,399,368,351"/>
-<area shape="poly" id="edge14_Node000010_Node000008" title=" " alt="" coords="395,353,405,395,399,396,389,354"/>
-<area shape="poly" id="edge17_Node000011_Node000006" title=" " alt="" coords="350,208,319,259,284,329,264,396,259,394,279,327,314,257,346,206"/>
-<area shape="poly" id="edge19_Node000011_Node000007" title=" " alt="" coords="384,204,487,247,485,252,382,209"/>
-<area shape="poly" id="edge18_Node000011_Node000011" title=" " alt="" coords="420,179,471,180,489,185,496,194,490,203,476,207,434,210,433,205,475,202,487,198,491,194,486,189,470,185,420,184"/>
+<area shape="rect" id="Node000001" title="Forward camera projection (pinhole + Brown distortion + intrinsics)." alt="" coords="109,5,261,45"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,101,80,126"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="155,48,75,96,72,91,153,43"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="104,101,267,126"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="188,46,188,87,183,87,183,46"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="291,93,474,133"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="230,43,328,85,326,90,228,48"/>
 </map>

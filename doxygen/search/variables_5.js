@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['observations_0',['observations',['../structscope_1_1CentroidObservations.html#ae27186ba847ab1348017a6725297f9f8',1,'scope::CentroidObservations']]],
-  ['options_5f_1',['options_',['../classscope_1_1PrimaryScopePipelineExecutor.html#a54bc6fbbbbe62ae9eba3467978998bc1',1,'scope::PrimaryScopePipelineExecutor::options_'],['../classscope_1_1ROIFilterAlgorithm.html#ab9f8d5498ee46e85dee0327cd65c43d7',1,'scope::ROIFilterAlgorithm::options_']]]
+  ['magnitude_0',['magnitude',['../structscope_1_1CatalogStar.html#a77ea9eb5cc69fc8c241feed1ea6d8b9c',1,'scope::CatalogStar']]],
+  ['measuredpixel_1',['measuredPixel',['../structscope_1_1Observation.html#ab2c1c1c8ea54ae0bfe0e1d8aa67897ca',1,'scope::Observation']]]
 ];

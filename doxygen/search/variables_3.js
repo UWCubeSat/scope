@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['magnitude_0',['magnitude',['../structscope_1_1CatalogStar.html#a77ea9eb5cc69fc8c241feed1ea6d8b9c',1,'scope::CatalogStar']]],
-  ['measured_5fpixel_1',['measured_pixel',['../structscope_1_1Observation.html#a8df5fbfd52e8597556b42edd085f1974',1,'scope::Observation']]]
+  ['imageindex_0',['imageIndex',['../structscope_1_1Observation.html#ad475fc57494afd5a7f45bf13f8ffe1a9',1,'scope::Observation']]],
+  ['inertialdirection_1',['inertialDirection',['../structscope_1_1Observation.html#ae9981d012b7b9165c12c01be1bca5621',1,'scope::Observation']]]
 ];

@@ -26,7 +26,7 @@
                 <span>src/scope/</span>
             </div>
             <div>File: optimization/optimization.hpp</div>
-            <div>Date: 2026-10-10 03:27:15</div>
+            <div>Date: 2026-10-10 04:42:56</div>
         </div>
         <div class="col-sm-12 col-lg-3 float-left d-flex flex-column text-right flex-justify-end p-3">
             <div class="d-flex">
@@ -59,10 +59,10 @@
       <th>Call count</th>
       <th>Block coverage</th>
     </tr>
-    <tr><td><a href="#l39">scope::LMAOptimizationAlgorithm::LMAOptimizationAlgorithm(RecalibrationOptions const&amp;) (line 39)</a></td><td>called 7 times</td><td>100.0%</td></tr>
-    <tr><td><a href="#l41">scope::LMAOptimizationAlgorithm::~LMAOptimizationAlgorithm() (line 41)</a></td><td>called 14 times</td><td>100.0%</td></tr>
-    <tr><td><a href="#l23">scope::OptimizationAlgorithm::OptimizationAlgorithm() (line 23)</a></td><td>called 7 times</td><td>100.0%</td></tr>
-    <tr><td><a href="#l24">scope::OptimizationAlgorithm::~OptimizationAlgorithm() (line 24)</a></td><td>called 7 times</td><td>100.0%</td></tr>
+    <tr><td><a href="#l37">scope::LMAOptimizationAlgorithm::LMAOptimizationAlgorithm(RecalibrationOptions const&amp;) (line 37)</a></td><td>called 7 times</td><td>100.0%</td></tr>
+    <tr><td><a href="#l39">scope::LMAOptimizationAlgorithm::~LMAOptimizationAlgorithm() (line 39)</a></td><td>called 14 times</td><td>100.0%</td></tr>
+    <tr><td><a href="#l21">scope::OptimizationAlgorithm::OptimizationAlgorithm() (line 21)</a></td><td>called 10 times</td><td>100.0%</td></tr>
+    <tr><td><a href="#l22">scope::OptimizationAlgorithm::~OptimizationAlgorithm() (line 22)</a></td><td>called 10 times</td><td>100.0%</td></tr>
   </table>
 </details>
 </div>
@@ -141,7 +141,7 @@
                 <td class="text-right src linenos ws-unset">
                 </td>
                 <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
-                <td class="src "><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;vector&gt;</span></td>
+                <td class="src "><span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;common/pipeline/stages.hpp&quot;</span></td>
             </tr>
             <tr>
                 <td class="text-right src linenos"><a class="normal" id="l10" href="#l10">10</a></td>
@@ -155,28 +155,28 @@
                 <td class="text-right src linenos ws-unset">
                 </td>
                 <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
-                <td class="src "><span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;common/pipeline/stages.hpp&quot;</span></td>
+                <td class="src "><span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;scope/command-line/parsing/options.hpp&quot;</span></td>
             </tr>
             <tr>
                 <td class="text-right src linenos"><a class="normal" id="l12" href="#l12">12</a></td>
                 <td class="text-right src linenos ws-unset">
                 </td>
                 <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
-                <td class="src "></td>
+                <td class="src "><span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;scope/common/style.hpp&quot;</span></td>
             </tr>
             <tr>
                 <td class="text-right src linenos"><a class="normal" id="l13" href="#l13">13</a></td>
                 <td class="text-right src linenos ws-unset">
                 </td>
                 <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
-                <td class="src "><span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;scope/command-line/parsing/options.hpp&quot;</span></td>
+                <td class="src "></td>
             </tr>
             <tr>
                 <td class="text-right src linenos"><a class="normal" id="l14" href="#l14">14</a></td>
                 <td class="text-right src linenos ws-unset">
                 </td>
                 <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
-                <td class="src "><span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;scope/common/style.hpp&quot;</span></td>
+                <td class="src "><span class="k">namespace</span><span class="w"> </span><span class="nn">scope</span><span class="w"> </span><span class="p">{</span></td>
             </tr>
             <tr>
                 <td class="text-right src linenos"><a class="normal" id="l15" href="#l15">15</a></td>
@@ -190,168 +190,168 @@
                 <td class="text-right src linenos ws-unset">
                 </td>
                 <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
-                <td class="src "><span class="k">namespace</span><span class="w"> </span><span class="nn">scope</span><span class="w"> </span><span class="p">{</span></td>
+                <td class="src "><span class="cm">/**</span></td>
             </tr>
             <tr>
                 <td class="text-right src linenos"><a class="normal" id="l17" href="#l17">17</a></td>
                 <td class="text-right src linenos ws-unset">
                 </td>
                 <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
-                <td class="src "></td>
+                <td class="src "><span class="cm"> * Produces updated camera intrinsic + distortion parameters from star centroids.</span></td>
             </tr>
             <tr>
                 <td class="text-right src linenos"><a class="normal" id="l18" href="#l18">18</a></td>
                 <td class="text-right src linenos ws-unset">
                 </td>
                 <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
-                <td class="src "><span class="cm">/**</span></td>
+                <td class="src "><span class="cm"> */</span></td>
             </tr>
             <tr>
                 <td class="text-right src linenos"><a class="normal" id="l19" href="#l19">19</a></td>
                 <td class="text-right src linenos ws-unset">
                 </td>
                 <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
-                <td class="src "><span class="cm"> * Produces updated camera intrinsic + distortion parameters from star centroids.</span></td>
+                <td class="src "><span class="k">class</span><span class="w"> </span><span class="nc">OptimizationAlgorithm</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="k">public</span><span class="w"> </span><span class="n">found</span><span class="o">::</span><span class="n">FunctionStage</span><span class="o">&lt;</span><span class="n">CentroidObservations</span><span class="p">,</span><span class="w"> </span><span class="n">CalibrationResult</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span></td>
             </tr>
             <tr>
                 <td class="text-right src linenos"><a class="normal" id="l20" href="#l20">20</a></td>
                 <td class="text-right src linenos ws-unset">
                 </td>
                 <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
-                <td class="src "><span class="cm"> */</span></td>
+                <td class="src "><span class="w"> </span><span class="k">public</span><span class="o">:</span></td>
             </tr>
             <tr>
                 <td class="text-right src linenos"><a class="normal" id="l21" href="#l21">21</a></td>
                 <td class="text-right src linenos ws-unset">
                 </td>
-                <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
-                <td class="src "><span class="k">class</span><span class="w"> </span><span class="nc">OptimizationAlgorithm</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="k">public</span><span class="w"> </span><span class="n">found</span><span class="o">::</span><span class="n">FunctionStage</span><span class="o">&lt;</span><span class="n">CentroidObservations</span><span class="p">,</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="p">{</span></td>
+                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">10</td>
+                <td class="src coveredLine"><span class="w">    </span><span class="n">OptimizationAlgorithm</span><span class="p">()</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">default</span><span class="p">;</span></td>
             </tr>
             <tr>
                 <td class="text-right src linenos"><a class="normal" id="l22" href="#l22">22</a></td>
                 <td class="text-right src linenos ws-unset">
                 </td>
-                <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
-                <td class="src "><span class="w"> </span><span class="k">public</span><span class="o">:</span></td>
-            </tr>
-            <tr>
-                <td class="text-right src linenos"><a class="normal" id="l23" href="#l23">23</a></td>
-                <td class="text-right src linenos ws-unset">
-                </td>
-                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">7</td>
-                <td class="src coveredLine"><span class="w">    </span><span class="n">OptimizationAlgorithm</span><span class="p">()</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">default</span><span class="p">;</span></td>
-            </tr>
-            <tr>
-                <td class="text-right src linenos"><a class="normal" id="l24" href="#l24">24</a></td>
-                <td class="text-right src linenos ws-unset">
-                </td>
-                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">14</td>
+                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">20</td>
                 <td class="src coveredLine"><span class="w">    </span><span class="k">virtual</span><span class="w"> </span><span class="o">~</span><span class="n">OptimizationAlgorithm</span><span class="p">()</span><span class="w"> </span><span class="p">{}</span></td>
             </tr>
             <tr>
-                <td class="text-right src linenos"><a class="normal" id="l25" href="#l25">25</a></td>
+                <td class="text-right src linenos"><a class="normal" id="l23" href="#l23">23</a></td>
                 <td class="text-right src linenos ws-unset">
                 </td>
                 <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
                 <td class="src "><span class="p">};</span></td>
             </tr>
             <tr>
-                <td class="text-right src linenos"><a class="normal" id="l26" href="#l26">26</a></td>
+                <td class="text-right src linenos"><a class="normal" id="l24" href="#l24">24</a></td>
                 <td class="text-right src linenos ws-unset">
                 </td>
                 <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
                 <td class="src "></td>
             </tr>
             <tr>
-                <td class="text-right src linenos"><a class="normal" id="l27" href="#l27">27</a></td>
+                <td class="text-right src linenos"><a class="normal" id="l25" href="#l25">25</a></td>
                 <td class="text-right src linenos ws-unset">
                 </td>
                 <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
                 <td class="src "><span class="cm">/**</span></td>
             </tr>
             <tr>
-                <td class="text-right src linenos"><a class="normal" id="l28" href="#l28">28</a></td>
+                <td class="text-right src linenos"><a class="normal" id="l26" href="#l26">26</a></td>
                 <td class="text-right src linenos ws-unset">
                 </td>
                 <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
                 <td class="src "><span class="cm"> * Levenberg-Marquardt parameter optimizer. Stub pending the real algorithm.</span></td>
             </tr>
             <tr>
-                <td class="text-right src linenos"><a class="normal" id="l29" href="#l29">29</a></td>
+                <td class="text-right src linenos"><a class="normal" id="l27" href="#l27">27</a></td>
                 <td class="text-right src linenos ws-unset">
                 </td>
                 <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
                 <td class="src "><span class="cm"> */</span></td>
             </tr>
             <tr>
-                <td class="text-right src linenos"><a class="normal" id="l30" href="#l30">30</a></td>
+                <td class="text-right src linenos"><a class="normal" id="l28" href="#l28">28</a></td>
                 <td class="text-right src linenos ws-unset">
                 </td>
                 <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
                 <td class="src "><span class="k">class</span><span class="w"> </span><span class="nc">LMAOptimizationAlgorithm</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="k">public</span><span class="w"> </span><span class="n">OptimizationAlgorithm</span><span class="w"> </span><span class="p">{</span></td>
             </tr>
             <tr>
-                <td class="text-right src linenos"><a class="normal" id="l31" href="#l31">31</a></td>
+                <td class="text-right src linenos"><a class="normal" id="l29" href="#l29">29</a></td>
                 <td class="text-right src linenos ws-unset">
                 </td>
                 <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
                 <td class="src "><span class="w"> </span><span class="k">public</span><span class="o">:</span></td>
             </tr>
             <tr>
-                <td class="text-right src linenos"><a class="normal" id="l32" href="#l32">32</a></td>
+                <td class="text-right src linenos"><a class="normal" id="l30" href="#l30">30</a></td>
                 <td class="text-right src linenos ws-unset">
                 </td>
                 <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
                 <td class="src "><span class="w">    </span><span class="n">LMAOptimizationAlgorithm</span><span class="p">()</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">default</span><span class="p">;</span></td>
             </tr>
             <tr>
-                <td class="text-right src linenos"><a class="normal" id="l33" href="#l33">33</a></td>
+                <td class="text-right src linenos"><a class="normal" id="l31" href="#l31">31</a></td>
                 <td class="text-right src linenos ws-unset">
                 </td>
                 <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
                 <td class="src "></td>
             </tr>
             <tr>
-                <td class="text-right src linenos"><a class="normal" id="l34" href="#l34">34</a></td>
+                <td class="text-right src linenos"><a class="normal" id="l32" href="#l32">32</a></td>
                 <td class="text-right src linenos ws-unset">
                 </td>
                 <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
                 <td class="src "><span class="w">    </span><span class="cm">/**</span></td>
             </tr>
             <tr>
-                <td class="text-right src linenos"><a class="normal" id="l35" href="#l35">35</a></td>
+                <td class="text-right src linenos"><a class="normal" id="l33" href="#l33">33</a></td>
                 <td class="text-right src linenos ws-unset">
                 </td>
                 <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
                 <td class="src "><span class="cm">     * Constructs a new LMAOptimizationAlgorithm.</span></td>
             </tr>
             <tr>
-                <td class="text-right src linenos"><a class="normal" id="l36" href="#l36">36</a></td>
+                <td class="text-right src linenos"><a class="normal" id="l34" href="#l34">34</a></td>
                 <td class="text-right src linenos ws-unset">
                 </td>
                 <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
                 <td class="src "><span class="cm">     *</span></td>
             </tr>
             <tr>
-                <td class="text-right src linenos"><a class="normal" id="l37" href="#l37">37</a></td>
+                <td class="text-right src linenos"><a class="normal" id="l35" href="#l35">35</a></td>
                 <td class="text-right src linenos ws-unset">
                 </td>
                 <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
                 <td class="src "><span class="cm">     * @param options Parsed recalibration options (currently unused).</span></td>
             </tr>
             <tr>
-                <td class="text-right src linenos"><a class="normal" id="l38" href="#l38">38</a></td>
+                <td class="text-right src linenos"><a class="normal" id="l36" href="#l36">36</a></td>
                 <td class="text-right src linenos ws-unset">
                 </td>
                 <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
                 <td class="src "><span class="cm">     */</span></td>
             </tr>
             <tr>
-                <td class="text-right src linenos"><a class="normal" id="l39" href="#l39">39</a></td>
+                <td class="text-right src linenos"><a class="normal" id="l37" href="#l37">37</a></td>
                 <td class="text-right src linenos ws-unset">
                 </td>
                 <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">7</td>
                 <td class="src coveredLine"><span class="w">    </span><span class="k">explicit</span><span class="w"> </span><span class="n">LMAOptimizationAlgorithm</span><span class="p">([[</span><span class="n">maybe_unused</span><span class="p">]]</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">RecalibrationOptions</span><span class="w"> </span><span class="o">&amp;</span><span class="n">options</span><span class="p">)</span><span class="w"> </span><span class="p">{}</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l38" href="#l38">38</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
+                <td class="src "></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l39" href="#l39">39</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">28</td>
+                <td class="src coveredLine"><span class="w">    </span><span class="o">~</span><span class="n">LMAOptimizationAlgorithm</span><span class="p">()</span><span class="w"> </span><span class="k">override</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">default</span><span class="p">;</span></td>
             </tr>
             <tr>
                 <td class="text-right src linenos"><a class="normal" id="l40" href="#l40">40</a></td>
@@ -364,116 +364,109 @@
                 <td class="text-right src linenos"><a class="normal" id="l41" href="#l41">41</a></td>
                 <td class="text-right src linenos ws-unset">
                 </td>
-                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">28</td>
-                <td class="src coveredLine"><span class="w">    </span><span class="o">~</span><span class="n">LMAOptimizationAlgorithm</span><span class="p">()</span><span class="w"> </span><span class="k">override</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">default</span><span class="p">;</span></td>
+                <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
+                <td class="src "><span class="w">    </span><span class="cm">/**</span></td>
             </tr>
             <tr>
                 <td class="text-right src linenos"><a class="normal" id="l42" href="#l42">42</a></td>
                 <td class="text-right src linenos ws-unset">
                 </td>
                 <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
-                <td class="src "></td>
+                <td class="src "><span class="cm">     * Fits camera parameters to the given star centroids.</span></td>
             </tr>
             <tr>
                 <td class="text-right src linenos"><a class="normal" id="l43" href="#l43">43</a></td>
                 <td class="text-right src linenos ws-unset">
                 </td>
                 <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
-                <td class="src "><span class="w">    </span><span class="cm">/**</span></td>
+                <td class="src "><span class="cm">     *</span></td>
             </tr>
             <tr>
                 <td class="text-right src linenos"><a class="normal" id="l44" href="#l44">44</a></td>
                 <td class="text-right src linenos ws-unset">
                 </td>
                 <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
-                <td class="src "><span class="cm">     * Fits camera parameters to the given star centroids.</span></td>
+                <td class="src "><span class="cm">     * @param observations Star measurements + prior attitudes from the</span></td>
             </tr>
             <tr>
                 <td class="text-right src linenos"><a class="normal" id="l45" href="#l45">45</a></td>
                 <td class="text-right src linenos ws-unset">
                 </td>
                 <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
-                <td class="src "><span class="cm">     *</span></td>
+                <td class="src "><span class="cm">     *                     star-centroid stage.</span></td>
             </tr>
             <tr>
                 <td class="text-right src linenos"><a class="normal" id="l46" href="#l46">46</a></td>
                 <td class="text-right src linenos ws-unset">
                 </td>
                 <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
-                <td class="src "><span class="cm">     * @param observations Star measurements + prior attitudes + catalog from the</span></td>
+                <td class="src "><span class="cm">     *</span></td>
             </tr>
             <tr>
                 <td class="text-right src linenos"><a class="normal" id="l47" href="#l47">47</a></td>
                 <td class="text-right src linenos ws-unset">
                 </td>
                 <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
-                <td class="src "><span class="cm">     *                     star-centroid stage.</span></td>
+                <td class="src "><span class="cm">     * @return The fitted calibration. The stub returns an empty, unconverged</span></td>
             </tr>
             <tr>
                 <td class="text-right src linenos"><a class="normal" id="l48" href="#l48">48</a></td>
                 <td class="text-right src linenos ws-unset">
                 </td>
                 <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
-                <td class="src "><span class="cm">     *</span></td>
+                <td class="src "><span class="cm">     *         result.</span></td>
             </tr>
             <tr>
                 <td class="text-right src linenos"><a class="normal" id="l49" href="#l49">49</a></td>
                 <td class="text-right src linenos ws-unset">
                 </td>
                 <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
-                <td class="src "><span class="cm">     * @return The updated camera parameter vector. The stub returns an empty vector.</span></td>
+                <td class="src "><span class="cm">     */</span></td>
             </tr>
             <tr>
                 <td class="text-right src linenos"><a class="normal" id="l50" href="#l50">50</a></td>
                 <td class="text-right src linenos ws-unset">
                 </td>
                 <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
-                <td class="src "><span class="cm">     */</span></td>
+                <td class="src "><span class="w">    </span><span class="n">CalibrationResult</span><span class="w"> </span><span class="nf">Run</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">CentroidObservations</span><span class="w"> </span><span class="o">&amp;</span><span class="n">observations</span><span class="p">)</span><span class="w"> </span><span class="k">override</span><span class="p">;</span></td>
             </tr>
             <tr>
                 <td class="text-right src linenos"><a class="normal" id="l51" href="#l51">51</a></td>
                 <td class="text-right src linenos ws-unset">
                 </td>
                 <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
-                <td class="src "><span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span><span class="w"> </span><span class="n">Run</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">CentroidObservations</span><span class="w"> </span><span class="o">&amp;</span><span class="n">observations</span><span class="p">)</span><span class="w"> </span><span class="k">override</span><span class="p">;</span></td>
+                <td class="src "><span class="p">};</span></td>
             </tr>
             <tr>
                 <td class="text-right src linenos"><a class="normal" id="l52" href="#l52">52</a></td>
                 <td class="text-right src linenos ws-unset">
                 </td>
                 <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
-                <td class="src "><span class="p">};</span></td>
+                <td class="src "></td>
             </tr>
             <tr>
                 <td class="text-right src linenos"><a class="normal" id="l53" href="#l53">53</a></td>
                 <td class="text-right src linenos ws-unset">
                 </td>
                 <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
-                <td class="src "></td>
+                <td class="src "><span class="p">}</span><span class="w">  </span><span class="c1">// namespace scope</span></td>
             </tr>
             <tr>
                 <td class="text-right src linenos"><a class="normal" id="l54" href="#l54">54</a></td>
                 <td class="text-right src linenos ws-unset">
                 </td>
                 <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
-                <td class="src "><span class="p">}</span><span class="w">  </span><span class="c1">// namespace scope</span></td>
+                <td class="src "></td>
             </tr>
             <tr>
                 <td class="text-right src linenos"><a class="normal" id="l55" href="#l55">55</a></td>
                 <td class="text-right src linenos ws-unset">
                 </td>
                 <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
-                <td class="src "></td>
-            </tr>
-            <tr>
-                <td class="text-right src linenos"><a class="normal" id="l56" href="#l56">56</a></td>
-                <td class="text-right src linenos ws-unset">
-                </td>
-                <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
                 <td class="src "><span class="cp">#endif  </span><span class="c1">// SRC_SCOPE_OPTIMIZATION_OPTIMIZATION_HPP_</span></td>
             </tr>
             <tr>
-                <td class="text-right src linenos"><a class="normal" id="l57" href="#l57">57</a></td>
+                <td class="text-right src linenos"><a class="normal" id="l56" href="#l56">56</a></td>
                 <td class="text-right src linenos ws-unset">
                 </td>
                 <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>

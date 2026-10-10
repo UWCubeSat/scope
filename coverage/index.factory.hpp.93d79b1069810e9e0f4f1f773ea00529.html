@@ -26,12 +26,12 @@
                 <span>src/scope/</span>
             </div>
             <div>File: providers/factory.hpp</div>
-            <div>Date: 2026-10-10 03:27:15</div>
+            <div>Date: 2026-10-10 04:42:56</div>
         </div>
         <div class="col-sm-12 col-lg-3 float-left d-flex flex-column text-right flex-justify-end p-3">
             <div class="d-flex">
                 <div class="mr-2">Lines:</div>
-                <div class="mr-2" style="margin: auto;">9/9</div>
+                <div class="mr-2" style="margin: auto;">10/10</div>
                 <div class="Label--minw"><span class="coverage-high IssueLabel color-fg-on-emphasis mr-1">100.0%</span></div>
             </div>
             <div class="d-flex">
@@ -59,7 +59,7 @@
       <th>Call count</th>
       <th>Block coverage</th>
     </tr>
-    <tr><td><a href="#l24">scope::CreatePrimaryScopePipelineExecutor(RecalibrationOptions&amp;&amp;) (line 24)</a></td><td>called 5 times</td><td>74.0%</td></tr>
+    <tr><td><a href="#l24">scope::CreatePrimaryScopePipelineExecutor(RecalibrationOptions&amp;&amp;) (line 24)</a></td><td>called 5 times</td><td>75.0%</td></tr>
   </table>
 </details>
 </div>
@@ -309,35 +309,23 @@
             <tr>
                 <td class="text-right src linenos"><a class="normal" id="l32" href="#l32">32</a></td>
                 <td class="text-right src linenos ws-unset">
-                    <details class="normal details-overlay">
-                        <summary>1/1</summary>
-                        <div class="text-left position-absolute color-bg-subtle p-3 mt-2" style="z-index: 1;">
-                            <div class="color-taken-branch">&check; Branch 2 taken 2 times.</div>
-                        </div>
-                    </details>
                 </td>
-                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">2</td>
-                <td class="src coveredLine"><span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">unique_ptr</span><span class="o">&lt;</span><span class="n">NoiseFilterAlgorithm</span><span class="o">&gt;</span><span class="w"> </span><span class="n">noiseAlg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ProvideNoiseFilterAlgorithm</span><span class="p">(</span><span class="n">options</span><span class="p">);</span></td>
+                <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
+                <td class="src "><span class="w">    </span><span class="c1">// The prior camera parameters, read out of the options once.</span></td>
             </tr>
             <tr>
                 <td class="text-right src linenos"><a class="normal" id="l33" href="#l33">33</a></td>
                 <td class="text-right src linenos ws-unset">
                 </td>
                 <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">2</td>
-                <td class="src coveredLine"><span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">unique_ptr</span><span class="o">&lt;</span><span class="n">StarCentroidAlgorithm</span><span class="o">&gt;</span><span class="w"> </span><span class="n">starAlg</span><span class="w"> </span><span class="o">=</span></td>
+                <td class="src coveredLine"><span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="n">CameraParameters</span><span class="w"> </span><span class="n">camera</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ProvideCameraParameters</span><span class="p">(</span><span class="n">options</span><span class="p">);</span></td>
             </tr>
             <tr>
                 <td class="text-right src linenos"><a class="normal" id="l34" href="#l34">34</a></td>
                 <td class="text-right src linenos ws-unset">
-                    <details class="normal details-overlay">
-                        <summary>1/1</summary>
-                        <div class="text-left position-absolute color-bg-subtle p-3 mt-2" style="z-index: 1;">
-                            <div class="color-taken-branch">&check; Branch 7 taken 2 times.</div>
-                        </div>
-                    </details>
                 </td>
-                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">2</td>
-                <td class="src coveredLine"><span class="w">        </span><span class="n">ProvideStarCentroidAlgorithm</span><span class="p">(</span><span class="n">options</span><span class="p">,</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">catalog</span><span class="p">),</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">attitudes</span><span class="p">));</span></td>
+                <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
+                <td class="src "></td>
             </tr>
             <tr>
                 <td class="text-right src linenos"><a class="normal" id="l35" href="#l35">35</a></td>
@@ -350,24 +338,57 @@
                     </details>
                 </td>
                 <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">2</td>
-                <td class="src coveredLine"><span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">unique_ptr</span><span class="o">&lt;</span><span class="n">OptimizationAlgorithm</span><span class="o">&gt;</span><span class="w"> </span><span class="n">optAlg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ProvideOptimizationAlgorithm</span><span class="p">(</span><span class="n">options</span><span class="p">);</span></td>
+                <td class="src coveredLine"><span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">unique_ptr</span><span class="o">&lt;</span><span class="n">NoiseFilterAlgorithm</span><span class="o">&gt;</span><span class="w"> </span><span class="n">noiseAlg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ProvideNoiseFilterAlgorithm</span><span class="p">(</span><span class="n">options</span><span class="p">);</span></td>
             </tr>
             <tr>
                 <td class="text-right src linenos"><a class="normal" id="l36" href="#l36">36</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">2</td>
+                <td class="src coveredLine"><span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">unique_ptr</span><span class="o">&lt;</span><span class="n">StarCentroidAlgorithm</span><span class="o">&gt;</span><span class="w"> </span><span class="n">starAlg</span><span class="w"> </span><span class="o">=</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l37" href="#l37">37</a></td>
+                <td class="text-right src linenos ws-unset">
+                    <details class="normal details-overlay">
+                        <summary>1/1</summary>
+                        <div class="text-left position-absolute color-bg-subtle p-3 mt-2" style="z-index: 1;">
+                            <div class="color-taken-branch">&check; Branch 7 taken 2 times.</div>
+                        </div>
+                    </details>
+                </td>
+                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">2</td>
+                <td class="src coveredLine"><span class="w">        </span><span class="n">ProvideStarCentroidAlgorithm</span><span class="p">(</span><span class="n">options</span><span class="p">,</span><span class="w"> </span><span class="n">camera</span><span class="p">,</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">catalog</span><span class="p">),</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">attitudes</span><span class="p">));</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l38" href="#l38">38</a></td>
+                <td class="text-right src linenos ws-unset">
+                    <details class="normal details-overlay">
+                        <summary>1/1</summary>
+                        <div class="text-left position-absolute color-bg-subtle p-3 mt-2" style="z-index: 1;">
+                            <div class="color-taken-branch">&check; Branch 2 taken 2 times.</div>
+                        </div>
+                    </details>
+                </td>
+                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">2</td>
+                <td class="src coveredLine"><span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">unique_ptr</span><span class="o">&lt;</span><span class="n">OptimizationAlgorithm</span><span class="o">&gt;</span><span class="w"> </span><span class="n">optAlg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ProvideOptimizationAlgorithm</span><span class="p">(</span><span class="n">options</span><span class="p">);</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l39" href="#l39">39</a></td>
                 <td class="text-right src linenos ws-unset">
                 </td>
                 <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
                 <td class="src "></td>
             </tr>
             <tr>
-                <td class="text-right src linenos"><a class="normal" id="l37" href="#l37">37</a></td>
+                <td class="text-right src linenos"><a class="normal" id="l40" href="#l40">40</a></td>
                 <td class="text-right src linenos ws-unset">
                 </td>
                 <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
                 <td class="src "><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">make_unique</span><span class="o">&lt;</span><span class="n">PrimaryScopePipelineExecutor</span><span class="o">&gt;</span><span class="p">(</span></td>
             </tr>
             <tr>
-                <td class="text-right src linenos"><a class="normal" id="l38" href="#l38">38</a></td>
+                <td class="text-right src linenos"><a class="normal" id="l41" href="#l41">41</a></td>
                 <td class="text-right src linenos ws-unset">
                     <details class="normal details-overlay">
                         <summary>1/1</summary>
@@ -380,42 +401,42 @@
                 <td class="src coveredLine"><span class="w">        </span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">options</span><span class="p">),</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">noiseAlg</span><span class="p">),</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">starAlg</span><span class="p">),</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">optAlg</span><span class="p">));</span></td>
             </tr>
             <tr>
-                <td class="text-right src linenos"><a class="normal" id="l39" href="#l39">39</a></td>
+                <td class="text-right src linenos"><a class="normal" id="l42" href="#l42">42</a></td>
                 <td class="text-right src linenos ws-unset">
                 </td>
                 <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">3</td>
                 <td class="src coveredLine"><span class="p">}</span></td>
             </tr>
             <tr>
-                <td class="text-right src linenos"><a class="normal" id="l40" href="#l40">40</a></td>
+                <td class="text-right src linenos"><a class="normal" id="l43" href="#l43">43</a></td>
                 <td class="text-right src linenos ws-unset">
                 </td>
                 <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
                 <td class="src "></td>
             </tr>
             <tr>
-                <td class="text-right src linenos"><a class="normal" id="l41" href="#l41">41</a></td>
+                <td class="text-right src linenos"><a class="normal" id="l44" href="#l44">44</a></td>
                 <td class="text-right src linenos ws-unset">
                 </td>
                 <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
                 <td class="src "><span class="p">}</span><span class="w">  </span><span class="c1">// namespace scope</span></td>
             </tr>
             <tr>
-                <td class="text-right src linenos"><a class="normal" id="l42" href="#l42">42</a></td>
+                <td class="text-right src linenos"><a class="normal" id="l45" href="#l45">45</a></td>
                 <td class="text-right src linenos ws-unset">
                 </td>
                 <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
                 <td class="src "></td>
             </tr>
             <tr>
-                <td class="text-right src linenos"><a class="normal" id="l43" href="#l43">43</a></td>
+                <td class="text-right src linenos"><a class="normal" id="l46" href="#l46">46</a></td>
                 <td class="text-right src linenos ws-unset">
                 </td>
                 <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
                 <td class="src "><span class="cp">#endif  </span><span class="c1">// SRC_SCOPE_PROVIDERS_FACTORY_HPP_</span></td>
             </tr>
             <tr>
-                <td class="text-right src linenos"><a class="normal" id="l44" href="#l44">44</a></td>
+                <td class="text-right src linenos"><a class="normal" id="l47" href="#l47">47</a></td>
                 <td class="text-right src linenos ws-unset">
                 </td>
                 <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>

@@ -26,7 +26,7 @@
                 <span>src/scope/</span>
             </div>
             <div>File: optimization/optimization.cpp</div>
-            <div>Date: 2026-10-10 03:27:15</div>
+            <div>Date: 2026-10-10 04:42:56</div>
         </div>
         <div class="col-sm-12 col-lg-3 float-left d-flex flex-column text-right flex-justify-end p-3">
             <div class="d-flex">
@@ -59,7 +59,7 @@
       <th>Call count</th>
       <th>Block coverage</th>
     </tr>
-    <tr><td><a href="#l7">scope::LMAOptimizationAlgorithm::Run(scope::CentroidObservations const&amp;) (line 7)</a></td><td>called 6 times</td><td>100.0%</td></tr>
+    <tr><td><a href="#l5">scope::LMAOptimizationAlgorithm::Run(scope::CentroidObservations const&amp;) (line 5)</a></td><td>called 6 times</td><td>100.0%</td></tr>
   </table>
 </details>
 </div>
@@ -96,7 +96,7 @@
                 <td class="text-right src linenos ws-unset">
                 </td>
                 <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
-                <td class="src "><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;vector&gt;</span></td>
+                <td class="src "><span class="k">namespace</span><span class="w"> </span><span class="nn">scope</span><span class="w"> </span><span class="p">{</span></td>
             </tr>
             <tr>
                 <td class="text-right src linenos"><a class="normal" id="l4" href="#l4">4</a></td>
@@ -109,53 +109,39 @@
                 <td class="text-right src linenos"><a class="normal" id="l5" href="#l5">5</a></td>
                 <td class="text-right src linenos ws-unset">
                 </td>
-                <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
-                <td class="src "><span class="k">namespace</span><span class="w"> </span><span class="nn">scope</span><span class="w"> </span><span class="p">{</span></td>
+                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">6</td>
+                <td class="src coveredLine"><span class="n">CalibrationResult</span><span class="w"> </span><span class="nf">LMAOptimizationAlgorithm::Run</span><span class="p">([[</span><span class="n">maybe_unused</span><span class="p">]]</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">CentroidObservations</span><span class="w"> </span><span class="o">&amp;</span><span class="n">observations</span><span class="p">)</span><span class="w"> </span><span class="p">{</span></td>
             </tr>
             <tr>
                 <td class="text-right src linenos"><a class="normal" id="l6" href="#l6">6</a></td>
                 <td class="text-right src linenos ws-unset">
                 </td>
-                <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
-                <td class="src "></td>
+                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">6</td>
+                <td class="src coveredLine"><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">CalibrationResult</span><span class="p">();</span></td>
             </tr>
             <tr>
                 <td class="text-right src linenos"><a class="normal" id="l7" href="#l7">7</a></td>
-                <td class="text-right src linenos ws-unset">
-                </td>
-                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">6</td>
-                <td class="src coveredLine"><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span><span class="w"> </span><span class="n">LMAOptimizationAlgorithm</span><span class="o">::</span><span class="n">Run</span><span class="p">([[</span><span class="n">maybe_unused</span><span class="p">]]</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">CentroidObservations</span><span class="w"> </span><span class="o">&amp;</span><span class="n">observations</span><span class="p">)</span><span class="w"> </span><span class="p">{</span></td>
-            </tr>
-            <tr>
-                <td class="text-right src linenos"><a class="normal" id="l8" href="#l8">8</a></td>
-                <td class="text-right src linenos ws-unset">
-                </td>
-                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">6</td>
-                <td class="src coveredLine"><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span><span class="p">();</span></td>
-            </tr>
-            <tr>
-                <td class="text-right src linenos"><a class="normal" id="l9" href="#l9">9</a></td>
                 <td class="text-right src linenos ws-unset">
                 </td>
                 <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
                 <td class="src "><span class="p">}</span></td>
             </tr>
             <tr>
-                <td class="text-right src linenos"><a class="normal" id="l10" href="#l10">10</a></td>
+                <td class="text-right src linenos"><a class="normal" id="l8" href="#l8">8</a></td>
                 <td class="text-right src linenos ws-unset">
                 </td>
                 <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
                 <td class="src "></td>
             </tr>
             <tr>
-                <td class="text-right src linenos"><a class="normal" id="l11" href="#l11">11</a></td>
+                <td class="text-right src linenos"><a class="normal" id="l9" href="#l9">9</a></td>
                 <td class="text-right src linenos ws-unset">
                 </td>
                 <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
                 <td class="src "><span class="p">}</span><span class="w">  </span><span class="c1">// namespace scope</span></td>
             </tr>
             <tr>
-                <td class="text-right src linenos"><a class="normal" id="l12" href="#l12">12</a></td>
+                <td class="text-right src linenos"><a class="normal" id="l10" href="#l10">10</a></td>
                 <td class="text-right src linenos ws-unset">
                 </td>
                 <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>

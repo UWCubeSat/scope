@@ -98,8 +98,7 @@ $(document).ready(function(){initNavTree('optimization_8hpp.html',''); initResiz
 
 <p>Parameter-fit optimization algorithms for SCOPE calibration.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &lt;vector&gt;</code><br />
-<code>#include &quot;common/pipeline/stages.hpp&quot;</code><br />
+<div class="textblock"><code>#include &quot;common/pipeline/stages.hpp&quot;</code><br />
 <code>#include &quot;scope/command-line/parsing/options.hpp&quot;</code><br />
 <code>#include &quot;scope/common/style.hpp&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
@@ -107,36 +106,40 @@ Include dependency graph for optimization.hpp:</div>
 <div class="dyncontent">
 <div class="center"><img src="optimization_8hpp__incl.png" border="0" usemap="#asrc_2scope_2optimization_2optimization_8hpp" alt=""/></div>
 <map name="asrc_2scope_2optimization_2optimization_8hpp" id="asrc_2scope_2optimization_2optimization_8hpp">
-<area shape="rect" title="Parameter&#45;fit optimization algorithms for SCOPE calibration." alt="" coords="86,5,255,45"/>
-<area shape="rect" title=" " alt="" coords="25,409,87,434"/>
-<area shape="poly" title=" " alt="" coords="131,48,91,72,51,104,34,124,20,145,11,168,8,193,8,269,12,304,21,339,45,396,40,398,16,340,6,305,3,269,3,192,6,167,16,142,30,120,47,100,88,67,128,43"/>
-<area shape="rect" title=" " alt="" coords="359,101,569,126"/>
-<area shape="poly" title=" " alt="" coords="236,43,412,94,411,99,234,48"/>
-<area shape="rect" href="options_8hpp_source.html" title=" " alt="" coords="175,93,334,133"/>
-<area shape="poly" title=" " alt="" coords="191,44,229,82,225,85,187,47"/>
-<area shape="rect" href="style_8hpp_source.html" title=" " alt="" coords="70,255,255,280"/>
-<area shape="poly" title=" " alt="" coords="171,46,167,93,165,241,159,241,161,93,166,46"/>
-<area shape="rect" title=" " alt="" coords="595,409,653,434"/>
-<area shape="poly" title=" " alt="" coords="335,128,347,131,416,136,507,140,552,144,593,151,628,163,651,180,667,205,675,234,677,264,674,295,658,352,639,397,634,395,653,351,669,294,672,264,670,235,662,207,647,183,625,167,592,156,551,149,506,145,416,141,346,136,334,134"/>
-<area shape="rect" title=" " alt="" coords="200,181,363,207"/>
-<area shape="poly" title=" " alt="" coords="264,133,275,167,270,169,259,134"/>
-<area shape="poly" title=" " alt="" coords="233,135,210,157,190,183,177,212,169,242,164,241,172,211,186,180,206,153,229,131"/>
-<area shape="rect" href="converters_8hpp_source.html" title=" " alt="" coords="387,181,613,207"/>
-<area shape="poly" title=" " alt="" coords="314,131,452,175,451,180,313,136"/>
-<area shape="poly" title=" " alt="" coords="157,282,74,399,70,396,152,279"/>
-<area shape="poly" title=" " alt="" coords="217,252,261,253,276,258,282,267,277,276,266,280,231,283,230,278,264,275,274,272,277,267,273,262,260,258,217,257"/>
-<area shape="rect" title=" " alt="" coords="360,328,587,353"/>
-<area shape="poly" title=" " alt="" coords="213,277,411,322,409,328,212,283"/>
-<area shape="rect" title=" " alt="" coords="130,401,313,441"/>
-<area shape="poly" title=" " alt="" coords="155,282,135,315,131,334,134,352,150,374,172,392,168,396,146,378,130,354,125,334,130,313,150,279"/>
-<area shape="rect" href="catalog_8hpp.html" title="Bright star catalog types and loader for SCOPE calibration." alt="" coords="144,328,336,353"/>
-<area shape="poly" title=" " alt="" coords="177,278,219,317,215,320,173,282"/>
-<area shape="poly" title=" " alt="" coords="214,356,96,406,94,401,212,351"/>
-<area shape="poly" title=" " alt="" coords="296,351,581,409,580,414,295,356"/>
-<area shape="poly" title=" " alt="" coords="240,354,232,389,226,387,235,353"/>
-<area shape="poly" title=" " alt="" coords="513,205,555,255,580,290,601,327,614,361,622,394,617,395,609,363,596,329,575,293,551,259,509,208"/>
-<area shape="poly" title=" " alt="" coords="446,209,231,254,230,249,445,204"/>
-<area shape="poly" title=" " alt="" coords="564,179,615,180,633,185,640,194,634,203,620,207,578,210,577,205,619,202,631,198,635,194,630,189,614,185,564,184"/>
+<area shape="rect" title="Parameter&#45;fit optimization algorithms for SCOPE calibration." alt="" coords="169,5,338,45"/>
+<area shape="rect" title=" " alt="" coords="5,101,216,126"/>
+<area shape="poly" title=" " alt="" coords="223,48,143,96,140,91,221,43"/>
+<area shape="rect" href="options_8hpp_source.html" title=" " alt="" coords="375,93,534,133"/>
+<area shape="poly" title=" " alt="" coords="299,43,399,85,397,90,296,48"/>
+<area shape="rect" href="style_8hpp_source.html" title=" " alt="" coords="209,255,394,280"/>
+<area shape="poly" title=" " alt="" coords="260,45,299,240,294,242,254,46"/>
+<area shape="rect" title=" " alt="" coords="513,255,572,280"/>
+<area shape="poly" title=" " alt="" coords="535,129,575,149,592,163,606,180,611,199,605,217,591,234,575,248,571,244,587,231,600,215,606,199,602,183,588,167,572,153,533,134"/>
+<area shape="rect" title=" " alt="" coords="488,482,651,507"/>
+<area shape="poly" title=" " alt="" coords="536,131,586,150,634,178,654,196,670,216,680,240,684,266,684,342,682,363,675,384,654,421,626,452,599,476,595,472,622,448,650,418,670,382,676,362,679,342,679,266,675,241,665,219,650,199,631,182,584,155,534,136"/>
+<area shape="poly" title=" " alt="" coords="400,136,363,155,331,183,315,211,307,241,302,240,310,209,327,180,360,151,398,131"/>
+<area shape="rect" href="converters_8hpp_source.html" title=" " alt="" coords="341,181,568,207"/>
+<area shape="poly" title=" " alt="" coords="457,134,457,167,452,167,452,134"/>
+<area shape="poly" title=" " alt="" coords="356,252,399,253,414,258,421,267,416,276,404,280,369,283,369,278,403,275,412,272,415,267,411,262,399,258,356,257"/>
+<area shape="rect" title=" " alt="" coords="151,401,214,427"/>
+<area shape="poly" title=" " alt="" coords="262,282,225,301,208,314,194,329,184,358,182,388,177,388,178,357,190,327,204,310,222,296,260,278"/>
+<area shape="rect" title=" " alt="" coords="417,328,644,353"/>
+<area shape="poly" title=" " alt="" coords="339,277,481,321,479,326,337,283"/>
+<area shape="rect" href="types_8hpp.html" title="Plain data passed between SCOPE&#39;s stages." alt="" coords="204,328,393,353"/>
+<area shape="poly" title=" " alt="" coords="304,280,302,315,297,314,298,280"/>
+<area shape="poly" title=" " alt="" coords="385,351,480,370,519,384,546,399,558,415,565,433,572,468,566,469,560,434,553,418,542,403,517,388,478,375,384,356"/>
+<area shape="poly" title=" " alt="" coords="281,356,215,396,212,392,279,351"/>
+<area shape="rect" title=" " alt="" coords="177,475,359,515"/>
+<area shape="poly" title=" " alt="" coords="299,354,277,462,272,461,294,353"/>
+<area shape="rect" href="projection_8hpp.html" title="Forward camera projection (pinhole + Brown distortion + intrinsics)." alt="" coords="305,401,532,427"/>
+<area shape="poly" title=" " alt="" coords="319,351,388,392,386,396,317,356"/>
+<area shape="poly" title=" " alt="" coords="442,424,536,473,534,478,440,429"/>
+<area shape="poly" title=" " alt="" coords="398,429,318,471,315,466,395,424"/>
+<area shape="rect" title=" " alt="" coords="384,482,459,507"/>
+<area shape="poly" title=" " alt="" coords="422,427,423,468,418,468,416,427"/>
+<area shape="poly" title=" " alt="" coords="470,205,519,244,516,248,467,209"/>
+<area shape="poly" title=" " alt="" coords="431,209,340,251,338,246,429,204"/>
+<area shape="poly" title=" " alt="" coords="519,179,570,180,587,185,595,194,589,203,575,207,532,210,532,205,574,202,586,198,589,194,584,189,569,185,519,184"/>
 </map>
 </div>
 </div><div class="textblock"><div class="dynheader">
