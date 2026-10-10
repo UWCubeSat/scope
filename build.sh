@@ -11,7 +11,6 @@ execute_cmd() {
 display_help() {
     echo "Usage:"
     echo "  ./build.sh cmake \"[CMake Config Options]\" [CMake Build Options]"
-    echo "  ./build.sh make [GNU Make Options]"
     echo "  ./build.sh clean"
     echo "  ./build.sh clean_all"
     echo "  ./build.sh --help | -h"
@@ -33,11 +32,6 @@ case "$1" in
         if [ $# -gt 0 ]; then shift; fi
 
         CMD="cmake $CONFIG_OPTS .. && cmake --build . $*"
-        ;;
-
-    make)
-        shift
-        CMD="make $*"
         ;;
 
     clean)

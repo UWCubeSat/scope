@@ -143,7 +143,9 @@ set(FOUND_LIB found::found_lib)
 FetchContent_Declare(
   found
   GIT_REPOSITORY https://github.com/UWCubeSat/found.git
-  GIT_TAG main
+  # Pinned to a commit so a change on FOUND's main cannot alter a build. To move
+  # to a newer FOUND, change this hash.
+  GIT_TAG 747d29b71aa0276080398c9ef912cd562b260bcc
 )
 
 FetchContent_MakeAvailable(found)
@@ -162,6 +164,9 @@ target_include_directories(scope_lib
 target_compile_definitions(scope_lib PRIVATE 
         $<$<NOT:$<BOOL:${DISABLE_LOGGING}>>:ENABLE_LOGGING>
         $<$<NOT:$<BOOL:${DISABLE_LOGGING}>>:LOGGING_LEVEL=${LOGGING_LEVEL}>)
+# The strict flags are only added for the whole directory under Targets below,
+# after the fetched libraries, so this library has to be given them here.
+target_compile_options(scope_lib PRIVATE -Wdouble-promotion -Werror)
 add_library(scope::scope_lib ALIAS scope_lib)
 
 ########## Test Libraries ##########
