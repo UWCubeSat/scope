@@ -1,0 +1,55 @@
+<map id="src/scope/projection/projection.hpp" name="src/scope/projection/projection.hpp">
+<area shape="rect" id="Node000001" title="Forward camera projection (pinhole + Brown distortion + intrinsics)." alt="" coords="701,5,853,45"/>
+<area shape="rect" id="Node000002" href="$types_8hpp.html" title="Plain data passed between SCOPE&#39;s stages, independent of FOUND&#39;s pipeline and of the command line." alt="" coords="517,101,729,126"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="733,54,645,103,642,98,730,50"/>
+<area shape="rect" id="Node000008" href="$stage-providers_8hpp_source.html" title=" " alt="" coords="867,533,1023,573"/>
+<area shape="poly" id="edge34_Node000001_Node000008" title=" " alt="" coords="868,34,944,52,983,65,1019,83,1051,104,1077,131,1094,163,1100,200,1100,379,1097,405,1088,430,1074,453,1057,474,1018,509,981,535,978,531,1015,505,1053,470,1070,450,1083,428,1092,404,1095,379,1095,200,1089,164,1073,134,1048,108,1016,87,981,70,942,57,867,39"/>
+<area shape="rect" id="Node000009" href="$star-centroid_8hpp.html" title="Star centroid algorithms for SCOPE calibration." alt="" coords="431,445,601,485"/>
+<area shape="poly" id="edge35_Node000001_Node000009" title=" " alt="" coords="688,31,495,40,383,51,271,67,168,89,84,118,52,135,28,155,13,176,8,200,8,290,11,298,20,307,54,326,105,348,167,369,308,410,436,443,435,448,307,415,166,374,103,353,51,331,16,311,6,301,3,291,3,200,8,174,24,151,49,131,82,113,167,84,270,62,382,46,495,35,687,25"/>
+<area shape="rect" id="Node000011" href="$optimization_8hpp.html" title="Parameter&#45;fit optimization algorithms for SCOPE calibration." alt="" coords="810,269,979,309"/>
+<area shape="poly" id="edge33_Node000001_Node000011" title=" " alt="" coords="777,59,777,94,780,136,789,180,806,220,829,247,858,267,855,271,826,251,802,223,784,181,774,137,771,94,772,59"/>
+<area shape="rect" id="Node000015" href="$calibration-fit_8hpp.html" title="The Levenberg&#45;Marquardt calibration fit (Orion paper, Christian et al." alt="" coords="815,181,985,221"/>
+<area shape="poly" id="edge31_Node000001_Node000015" title=" " alt="" coords="801,55,889,180,884,183,796,58"/>
+<area shape="rect" id="Node000016" href="$synthetic_8hpp.html" title="Synthetic star fields from a known camera and known attitudes, for testing the pipeline end to end." alt="" coords="337,181,484,221"/>
+<area shape="poly" id="edge36_Node000001_Node000016" title=" " alt="" coords="688,37,596,57,549,73,505,96,480,115,457,138,424,183,420,179,453,135,476,111,503,91,547,69,595,52,687,32"/>
+<area shape="rect" id="Node000017" href="$measurement-model_8hpp.html" title="Partial derivatives of a predicted star centroid (Orion paper, Christian et al." alt="" coords="1135,93,1326,133"/>
+<area shape="poly" id="edge32_Node000001_Node000017" title=" " alt="" coords="868,41,1136,91,1135,97,867,46"/>
+<area shape="rect" id="Node000003" href="$style_8hpp_source.html" title=" " alt="" coords="508,189,716,214"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="622,140,616,188,611,188,617,140"/>
+<area shape="poly" id="edge27_Node000002_Node000015" title=" " alt="" coords="674,128,840,179,838,184,672,133"/>
+<area shape="poly" id="edge30_Node000002_Node000016" title=" " alt="" coords="582,134,458,184,456,179,580,129"/>
+<area shape="poly" id="edge14_Node000003_Node000003" title=" " alt="" coords="665,184,717,184,735,190,743,201,734,213,712,219,683,220,652,217,652,211,683,215,711,214,731,209,737,201,732,194,716,189,665,189"/>
+<area shape="rect" id="Node000004" href="$executors_8hpp.html" title="Pipeline executor for the primary SCOPE calibration chain." alt="" coords="485,533,669,573"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="557,221,479,250,434,271,388,296,343,326,302,361,267,401,240,446,233,466,234,475,239,484,255,496,277,507,340,525,413,537,485,544,485,549,413,542,339,530,276,512,252,501,235,487,229,476,228,466,235,444,263,398,299,357,340,322,385,291,431,266,477,245,555,216"/>
+<area shape="rect" id="Node000006" href="$options_8hpp_source.html" title=" " alt="" coords="676,357,857,397"/>
+<area shape="poly" id="edge6_Node000003_Node000006" title=" " alt="" coords="655,218,690,239,723,268,739,289,751,313,765,356,760,358,746,315,734,292,719,271,687,243,652,222"/>
+<area shape="poly" id="edge26_Node000003_Node000009" title=" " alt="" coords="581,224,553,244,527,271,507,302,495,330,492,360,496,397,510,444,505,446,491,398,487,360,490,329,502,300,523,268,549,240,578,219"/>
+<area shape="rect" id="Node000010" href="$noise-filter_8hpp.html" title="Noise filtering algorithms for SCOPE calibration." alt="" coords="249,445,407,485"/>
+<area shape="poly" id="edge15_Node000003_Node000010" title=" " alt="" coords="575,223,537,244,498,271,449,317,405,366,343,447,339,443,401,362,445,313,494,267,534,240,573,218"/>
+<area shape="poly" id="edge18_Node000003_Node000011" title=" " alt="" coords="664,216,833,267,832,272,663,221"/>
+<area shape="rect" id="Node000012" href="$converters_8hpp_source.html" title=" " alt="" coords="538,269,686,309"/>
+<area shape="poly" id="edge21_Node000003_Node000012" title=" " alt="" coords="615,228,615,269,609,269,609,228"/>
+<area shape="rect" id="Node000014" href="$coi_8hpp.html" title="Center&#45;of&#45;intensity star centroiding kernel." alt="" coords="43,269,213,309"/>
+<area shape="poly" id="edge25_Node000003_Node000014" title=" " alt="" coords="534,219,232,272,214,275,213,270,232,267,533,214"/>
+<area shape="poly" id="edge4_Node000004_Node000004" title=" " alt="" coords="684,540,693,545,696,554,688,565,671,571,669,566,685,561,691,553,689,548,681,544"/>
+<area shape="rect" id="Node000005" href="$factory_8hpp_source.html" title=" " alt="" coords="657,621,805,661"/>
+<area shape="poly" id="edge5_Node000004_Node000005" title=" " alt="" coords="624,578,698,619,696,624,622,582"/>
+<area shape="poly" id="edge7_Node000006_Node000004" title=" " alt="" coords="722,407,666,447,624,493,592,535,588,532,619,489,662,443,719,402"/>
+<area shape="rect" id="Node000007" href="$parser_8hpp_source.html" title=" " alt="" coords="676,445,857,485"/>
+<area shape="poly" id="edge8_Node000006_Node000007" title=" " alt="" coords="769,411,769,445,764,445,764,411"/>
+<area shape="poly" id="edge9_Node000006_Node000008" title=" " alt="" coords="816,402,844,421,871,443,910,489,937,532,933,534,905,492,867,447,841,425,813,407"/>
+<area shape="poly" id="edge11_Node000006_Node000009" title=" " alt="" coords="700,404,572,448,570,443,698,399"/>
+<area shape="poly" id="edge10_Node000008_Node000005" title=" " alt="" coords="887,581,779,624,777,619,885,576"/>
+<area shape="poly" id="edge12_Node000009_Node000004" title=" " alt="" coords="540,495,566,532,562,535,535,498"/>
+<area shape="poly" id="edge13_Node000009_Node000008" title=" " alt="" coords="615,484,868,534,867,539,614,489"/>
+<area shape="poly" id="edge16_Node000010_Node000004" title=" " alt="" coords="397,487,524,531,522,536,395,492"/>
+<area shape="poly" id="edge17_Node000010_Node000008" title=" " alt="" coords="421,483,669,518,867,541,867,547,668,524,420,488"/>
+<area shape="poly" id="edge19_Node000011_Node000004" title=" " alt="" coords="903,323,907,360,905,404,895,448,885,469,871,487,858,498,838,508,788,524,670,545,669,540,787,519,836,503,855,494,867,483,880,466,889,447,900,403,901,361,898,324"/>
+<area shape="poly" id="edge20_Node000011_Node000008" title=" " alt="" coords="907,322,916,357,934,456,946,533,940,533,929,456,911,358,902,323"/>
+<area shape="poly" id="edge22_Node000012_Node000006" title=" " alt="" coords="659,314,734,355,732,360,657,318"/>
+<area shape="poly" id="edge23_Node000012_Node000012" title=" " alt="" coords="701,275,709,280,713,290,705,302,687,308,686,302,702,298,707,289,705,284,698,279"/>
+<area shape="rect" id="Node000013" href="$synthetic-cli_8hpp.html" title="Command line of scope&#45;synth, which writes a synthetic data set for the scope command: dark frames,..." alt="" coords="505,357,652,397"/>
+<area shape="poly" id="edge24_Node000012_Node000013" title=" " alt="" coords="602,323,589,358,584,356,597,321"/>
+<area shape="poly" id="edge29_Node000015_Node000008" title=" " alt="" coords="955,227,977,245,994,268,1007,304,1012,342,1010,381,1003,418,981,486,958,534,953,532,976,484,998,417,1005,380,1007,342,1002,305,990,271,973,249,952,231"/>
+<area shape="poly" id="edge28_Node000015_Node000011" title=" " alt="" coords="901,235,899,269,893,269,895,235"/>
+</map>

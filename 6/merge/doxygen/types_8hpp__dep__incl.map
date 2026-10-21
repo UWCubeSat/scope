@@ -1,0 +1,46 @@
+<map id="src/scope/common/types.hpp" name="src/scope/common/types.hpp">
+<area shape="rect" id="Node000001" title="Plain data passed between SCOPE&#39;s stages, independent of FOUND&#39;s pipeline and of the command line." alt="" coords="617,5,829,31"/>
+<area shape="rect" id="Node000002" href="$style_8hpp_source.html" title=" " alt="" coords="365,86,573,111"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="673,37,507,89,505,83,672,32"/>
+<area shape="rect" id="Node000014" href="$calibration-fit_8hpp.html" title="The Levenberg&#45;Marquardt calibration fit (Orion paper, Christian et al." alt="" coords="681,255,850,295"/>
+<area shape="poly" id="edge26_Node000001_Node000014" title=" " alt="" coords="729,44,765,254,759,255,724,45"/>
+<area shape="rect" id="Node000015" href="$synthetic_8hpp.html" title="Synthetic star fields from a known camera and known attitudes, for testing the pipeline end to end." alt="" coords="760,79,907,119"/>
+<area shape="poly" id="edge29_Node000001_Node000015" title=" " alt="" coords="751,36,808,76,805,81,748,41"/>
+<area shape="poly" id="edge13_Node000002_Node000002" title=" " alt="" coords="530,82,577,83,593,89,600,99,592,110,572,115,516,114,516,109,571,110,589,105,595,99,590,93,576,88,530,87"/>
+<area shape="rect" id="Node000003" href="$executors_8hpp.html" title="Pipeline executor for the primary SCOPE calibration chain." alt="" coords="256,431,440,471"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="352,114,206,136,143,151,100,169,76,187,61,205,38,256,23,292,11,322,10,351,16,365,26,381,40,393,61,403,119,421,188,433,256,440,255,446,187,438,118,426,59,408,37,397,22,384,11,368,5,352,6,321,18,290,33,254,56,202,72,183,97,164,142,146,205,131,351,109"/>
+<area shape="rect" id="Node000005" href="$options_8hpp_source.html" title=" " alt="" coords="48,255,229,295"/>
+<area shape="poly" id="edge5_Node000002_Node000005" title=" " alt="" coords="352,109,280,116,210,128,151,145,130,156,115,168,107,188,109,211,117,233,128,253,123,256,112,236,103,212,102,187,111,165,127,152,149,141,209,123,279,111,351,104"/>
+<area shape="rect" id="Node000008" href="$star-centroid_8hpp.html" title="Star centroid algorithms for SCOPE calibration." alt="" coords="253,343,424,383"/>
+<area shape="poly" id="edge25_Node000002_Node000008" title=" " alt="" coords="489,122,508,162,512,185,508,208,481,252,445,291,407,322,373,345,370,340,404,318,442,287,476,249,503,206,507,185,503,163,484,124"/>
+<area shape="rect" id="Node000009" href="$noise-filter_8hpp.html" title="Noise filtering algorithms for SCOPE calibration." alt="" coords="499,343,656,383"/>
+<area shape="poly" id="edge14_Node000002_Node000009" title=" " alt="" coords="503,117,529,138,551,165,570,212,579,262,582,307,581,342,576,342,577,307,574,263,565,214,547,168,526,141,500,121"/>
+<area shape="rect" id="Node000010" href="$optimization_8hpp.html" title="Parameter&#45;fit optimization algorithms for SCOPE calibration." alt="" coords="681,343,850,383"/>
+<area shape="poly" id="edge17_Node000002_Node000010" title=" " alt="" coords="507,115,543,137,579,165,608,198,625,229,642,259,670,293,701,319,733,340,730,345,698,323,666,297,638,262,621,232,604,201,575,169,540,141,504,120"/>
+<area shape="rect" id="Node000011" href="$converters_8hpp_source.html" title=" " alt="" coords="126,167,274,207"/>
+<area shape="poly" id="edge20_Node000002_Node000011" title=" " alt="" coords="421,118,260,169,258,164,419,113"/>
+<area shape="rect" id="Node000013" href="$coi_8hpp.html" title="Center&#45;of&#45;intensity star centroiding kernel." alt="" coords="323,167,493,207"/>
+<area shape="poly" id="edge24_Node000002_Node000013" title=" " alt="" coords="455,124,424,168,419,165,451,121"/>
+<area shape="poly" id="edge3_Node000003_Node000003" title=" " alt="" coords="455,437,463,442,467,451,459,462,441,468,439,463,456,458,461,450,459,446,452,441"/>
+<area shape="rect" id="Node000004" href="$factory_8hpp_source.html" title=" " alt="" coords="383,519,531,559"/>
+<area shape="poly" id="edge4_Node000003_Node000004" title=" " alt="" coords="385,477,435,516,431,521,381,481"/>
+<area shape="poly" id="edge6_Node000005_Node000003" title=" " alt="" coords="87,304,61,321,41,340,31,361,32,371,38,381,51,392,71,403,126,419,191,432,256,440,256,445,190,437,125,425,69,408,48,397,34,384,27,372,26,360,36,337,58,317,84,299"/>
+<area shape="rect" id="Node000006" href="$parser_8hpp_source.html" title=" " alt="" coords="48,343,229,383"/>
+<area shape="poly" id="edge7_Node000005_Node000006" title=" " alt="" coords="141,309,141,342,136,342,136,309"/>
+<area shape="rect" id="Node000007" href="$stage-providers_8hpp_source.html" title=" " alt="" coords="494,431,650,471"/>
+<area shape="poly" id="edge8_Node000005_Node000007" title=" " alt="" coords="243,294,363,320,437,340,464,359,488,381,549,428,546,433,485,385,461,363,435,345,362,325,242,300"/>
+<area shape="poly" id="edge10_Node000005_Node000008" title=" " alt="" coords="196,298,296,340,294,345,194,303"/>
+<area shape="poly" id="edge9_Node000007_Node000004" title=" " alt="" coords="537,481,484,521,481,516,534,477"/>
+<area shape="poly" id="edge11_Node000008_Node000003" title=" " alt="" coords="345,396,348,430,343,431,339,397"/>
+<area shape="poly" id="edge12_Node000008_Node000007" title=" " alt="" coords="403,385,522,428,520,433,402,390"/>
+<area shape="poly" id="edge15_Node000009_Node000003" title=" " alt="" coords="515,390,399,433,397,428,513,385"/>
+<area shape="poly" id="edge16_Node000009_Node000007" title=" " alt="" coords="578,397,576,431,570,430,572,396"/>
+<area shape="poly" id="edge18_Node000010_Node000003" title=" " alt="" coords="667,387,440,433,439,428,666,382"/>
+<area shape="poly" id="edge19_Node000010_Node000007" title=" " alt="" coords="711,391,615,433,613,428,709,386"/>
+<area shape="poly" id="edge21_Node000011_Node000005" title=" " alt="" coords="180,220,154,256,150,253,176,216"/>
+<area shape="poly" id="edge22_Node000011_Node000011" title=" " alt="" coords="289,172,297,178,301,187,293,199,275,205,273,200,290,195,295,186,293,181,286,177"/>
+<area shape="rect" id="Node000012" href="$synthetic-cli_8hpp.html" title="Command line of scope&#45;synth, which writes a synthetic data set for the scope command: dark frames,..." alt="" coords="253,255,400,295"/>
+<area shape="poly" id="edge23_Node000011_Node000012" title=" " alt="" coords="241,212,300,252,297,257,238,217"/>
+<area shape="poly" id="edge28_Node000014_Node000007" title=" " alt="" coords="816,300,841,317,862,338,871,361,870,373,863,384,849,396,829,407,775,424,712,436,650,445,650,440,711,431,774,419,827,402,846,392,859,381,865,371,866,361,857,341,838,321,813,304"/>
+<area shape="poly" id="edge27_Node000014_Node000010" title=" " alt="" coords="768,309,768,342,763,342,763,309"/>
+</map>

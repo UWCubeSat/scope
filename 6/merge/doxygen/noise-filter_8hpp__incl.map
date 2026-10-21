@@ -1,0 +1,28 @@
+<map id="src/scope/noise&#45;filter/noise&#45;filter.hpp" name="src/scope/noise&#45;filter/noise&#45;filter.hpp">
+<area shape="rect" id="Node000001" title="Noise filtering algorithms for SCOPE calibration." alt="" coords="143,5,300,45"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,93,216,119"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="196,48,140,87,137,83,193,43"/>
+<area shape="rect" id="Node000003" href="$style_8hpp_source.html" title=" " alt="" coords="241,93,426,119"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="250,43,307,83,304,87,247,48"/>
+<area shape="poly" id="edge5_Node000003_Node000003" title=" " alt="" coords="388,91,431,92,446,97,453,106,448,114,436,119,401,122,401,117,435,114,444,110,447,106,443,101,431,97,388,96"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="105,240,167,265"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="310,121,271,142,228,169,190,201,158,232,154,228,186,197,225,165,268,137,308,116"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="452,167,679,192"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="371,116,516,160,514,165,370,121"/>
+<area shape="rect" id="Node000006" href="$types_8hpp.html" title="Plain data passed between SCOPE&#39;s stages, independent of FOUND&#39;s pipeline and of the command line." alt="" coords="239,167,428,192"/>
+<area shape="poly" id="edge6_Node000003_Node000006" title=" " alt="" coords="336,119,336,153,331,153,331,119"/>
+<area shape="poly" id="edge8_Node000006_Node000004" title=" " alt="" coords="303,195,181,238,180,233,301,190"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="177,321,233,346"/>
+<area shape="poly" id="edge7_Node000006_Node000007" title=" " alt="" coords="301,194,265,213,248,226,233,242,217,274,210,308,204,307,212,273,228,238,244,222,262,209,299,190"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="356,321,519,346"/>
+<area shape="poly" id="edge9_Node000006_Node000008" title=" " alt="" coords="408,190,449,207,468,221,484,239,490,258,485,278,475,297,462,313,458,309,470,294,480,276,484,258,479,241,465,225,447,212,406,195"/>
+<area shape="rect" id="Node000009" title=" " alt="" coords="543,313,726,353"/>
+<area shape="poly" id="edge10_Node000006_Node000009" title=" " alt="" coords="377,189,438,209,504,238,557,269,602,302,599,307,554,274,501,242,436,214,375,195"/>
+<area shape="rect" id="Node000010" href="$projection_8hpp.html" title="Forward camera projection (pinhole + Brown distortion + intrinsics)." alt="" coords="243,240,469,265"/>
+<area shape="poly" id="edge11_Node000006_Node000010" title=" " alt="" coords="340,192,351,226,346,228,335,193"/>
+<area shape="poly" id="edge12_Node000010_Node000007" title=" " alt="" coords="335,268,241,317,238,312,333,263"/>
+<area shape="poly" id="edge14_Node000010_Node000008" title=" " alt="" coords="370,264,417,309,414,313,366,267"/>
+<area shape="poly" id="edge15_Node000010_Node000009" title=" " alt="" coords="397,263,556,307,554,312,396,268"/>
+<area shape="rect" id="Node000011" title=" " alt="" coords="257,321,332,346"/>
+<area shape="poly" id="edge13_Node000010_Node000011" title=" " alt="" coords="349,267,314,312,310,308,345,264"/>
+</map>

@@ -1,0 +1,1535 @@
+<!DOCTYPE html>
+<html class="theme-green" >
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>SCOPE Coverage Report</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" href="index.css"/>
+  </head>
+  <body>
+    <div class="Layout-main">
+      <div class="Layout-main-centered-lg" style="max-width: 1280px;">
+        <div class="d-flex flex-justify-center">
+          <h1>SCOPE Coverage Report</h1>
+        </div>
+        <hr/>
+        <div class="summary">
+<div>
+    <div class="containter-xl clearfix">
+        <div class="col-sm-12 col-lg-9 float-left d-flex flex-column p-3">
+            <div class="d-flex">
+                <div class="mr-2 color-fg-accent transy-2">
+                    <svg aria-label="Directory" aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-file-directory-fill hx_color-icon-directory">
+                        <path d="M1.75 1A1.75 1.75 0 0 0 0 2.75v10.5C0 14.216.784 15 1.75 15h12.5A1.75 1.75 0 0 0 16 13.25v-8.5A1.75 1.75 0 0 0 14.25 3H7.5a.25.25 0 0 1-.2-.1l-.9-1.2C6.07 1.26 5.55 1 5 1H1.75Z"></path>
+                    </svg>
+                </div>
+                <span>src/scope/</span>
+            </div>
+            <div>File: providers/stage-providers.hpp</div>
+            <div>Date: 2026-10-21 21:11:59</div>
+        </div>
+        <div class="col-sm-12 col-lg-3 float-left d-flex flex-column text-right flex-justify-end p-3">
+            <div class="d-flex">
+                <div class="mr-2">Lines:</div>
+                <div class="mr-2" style="margin: auto;">58/58</div>
+                <div class="Label--minw"><span class="coverage-high IssueLabel color-fg-on-emphasis mr-1">100.0%</span></div>
+            </div>
+            <div class="d-flex">
+                <div class="mr-2">Functions:</div>
+                <div class="mr-2" style="margin: auto;">6/6</div>
+                <div class="Label--minw"><span class="coverage-high IssueLabel color-fg-on-emphasis mr-1">100.0%</span></div>
+            </div>
+            <div class="d-flex">
+                <div class="mr-2">Branches:</div>
+                <div class="mr-2" style="margin: auto;">52/53</div>
+                <div class="Label--minw"><span class="coverage-high IssueLabel color-fg-on-emphasis mr-1">98.1%</span></div>
+            </div>
+        </div>
+    </div>
+</div>
+        </div>
+        <hr/>
+        <nav>
+<div class="m-3">
+<details>
+  <summary>List of functions</summary>
+  <table class="functionslist text-mono text-small wb-break-word listOfFunctions">
+    <tr class="text-left">
+      <th class="css-truncate css-truncate-target">Function (Line)</th>
+      <th>Call count</th>
+      <th>Block coverage</th>
+    </tr>
+    <tr><td><a href="#l82">scope::ProvideAttitudes(RecalibrationOptions const&amp;) (line 82)</a></td><td>called 6 times</td><td>92.0%</td></tr>
+    <tr><td><a href="#l35">scope::ProvideCameraParameters(RecalibrationOptions const&amp;) (line 35)</a></td><td>called 4 times</td><td>93.0%</td></tr>
+    <tr><td><a href="#l120">scope::ProvideFitSettings(RecalibrationOptions const&amp;) (line 120)</a></td><td>called 11 times</td><td>77.0%</td></tr>
+    <tr><td><a href="#l63">scope::ProvideNoiseFilterAlgorithm(RecalibrationOptions const&amp;) (line 63)</a></td><td>called 2 times</td><td>88.0%</td></tr>
+    <tr><td><a href="#l172">scope::ProvideOptimizationAlgorithm(RecalibrationOptions const&amp;, scope::CameraParameters const&amp;) (line 172)</a></td><td>called 2 times</td><td>77.0%</td></tr>
+    <tr><td><a href="#l102">scope::ProvideStarCentroidAlgorithm(RecalibrationOptions const&amp;, scope::CameraParameters const&amp;, std::vector&lt;scope::CatalogStar, std::allocator&lt;scope::CatalogStar&gt; &gt;, std::vector&lt;Eigen::Quaternion&lt;double, 0&gt;, std::allocator&lt;Eigen::Quaternion&lt;double, 0&gt; &gt; &gt;) (line 102)</a></td><td>called 2 times</td><td>90.0%</td></tr>
+  </table>
+</details>
+</div>
+
+        </nav>
+        <main>
+<div class="Box m-3">
+    <div class="Box-header d-flex flex-space-between">
+    </div>
+    <div style="overflow-x: auto;">
+        <table class="text-mono text-small" style="width:100%;">
+            <tr>
+                <th class="p-2">Line</th>
+                <th class="p-2">Branch</th>
+                <th class="p-2">Exec</th>
+                <th class="p-2 text-left" style="width: 100%;">Source</th>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l1" href="#l1">1</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
+                <td class="src "><span class="cp">#ifndef SRC_SCOPE_PROVIDERS_STAGE_PROVIDERS_HPP_</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l2" href="#l2">2</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
+                <td class="src "><span class="cp">#define SRC_SCOPE_PROVIDERS_STAGE_PROVIDERS_HPP_</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l3" href="#l3">3</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
+                <td class="src "></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l4" href="#l4">4</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
+                <td class="src "><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;algorithm&gt;</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l5" href="#l5">5</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
+                <td class="src "><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;cstddef&gt;</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l6" href="#l6">6</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
+                <td class="src "><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;memory&gt;</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l7" href="#l7">7</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
+                <td class="src "><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;sstream&gt;</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l8" href="#l8">8</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
+                <td class="src "><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdexcept&gt;</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l9" href="#l9">9</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
+                <td class="src "><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;string&gt;</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l10" href="#l10">10</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
+                <td class="src "><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;utility&gt;</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l11" href="#l11">11</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
+                <td class="src "><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;vector&gt;</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l12" href="#l12">12</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
+                <td class="src "></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l13" href="#l13">13</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
+                <td class="src "><span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;common/decimal.hpp&quot;</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l14" href="#l14">14</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
+                <td class="src "><span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;common/spatial/attitude-utils.hpp&quot;</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l15" href="#l15">15</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
+                <td class="src "></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l16" href="#l16">16</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
+                <td class="src "><span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;scope/attitude/attitude.hpp&quot;</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l17" href="#l17">17</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
+                <td class="src "><span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;scope/catalog/catalog.hpp&quot;</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l18" href="#l18">18</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
+                <td class="src "><span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;scope/command-line/parsing/options.hpp&quot;</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l19" href="#l19">19</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
+                <td class="src "><span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;scope/noise-filter/noise-filter.hpp&quot;</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l20" href="#l20">20</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
+                <td class="src "><span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;scope/optimization/calibration-fit.hpp&quot;</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l21" href="#l21">21</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
+                <td class="src "><span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;scope/optimization/optimization.hpp&quot;</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l22" href="#l22">22</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
+                <td class="src "><span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;scope/projection/projection.hpp&quot;</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l23" href="#l23">23</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
+                <td class="src "><span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;scope/star-centroid/star-centroid.hpp&quot;</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l24" href="#l24">24</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
+                <td class="src "></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l25" href="#l25">25</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
+                <td class="src "><span class="k">namespace</span><span class="w"> </span><span class="nn">scope</span><span class="w"> </span><span class="p">{</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l26" href="#l26">26</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
+                <td class="src "></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l27" href="#l27">27</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
+                <td class="src "><span class="cm">/**</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l28" href="#l28">28</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
+                <td class="src "><span class="cm"> * Builds the prior camera parameters from the command-line options. Validate</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l29" href="#l29">29</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
+                <td class="src "><span class="cm"> * them or fill in defaults here.</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l30" href="#l30">30</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
+                <td class="src "><span class="cm"> *</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l31" href="#l31">31</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
+                <td class="src "><span class="cm"> * @param options Parsed recalibration options.</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l32" href="#l32">32</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
+                <td class="src "><span class="cm"> *</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l33" href="#l33">33</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
+                <td class="src "><span class="cm"> * @return The prior intrinsics and distortion coefficients.</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l34" href="#l34">34</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
+                <td class="src "><span class="cm"> */</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l35" href="#l35">35</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">4</td>
+                <td class="src coveredLine"><span class="kr">inline</span><span class="w"> </span><span class="n">CameraParameters</span><span class="w"> </span><span class="nf">ProvideCameraParameters</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">RecalibrationOptions</span><span class="w"> </span><span class="o">&amp;</span><span class="n">options</span><span class="p">)</span><span class="w"> </span><span class="p">{</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l36" href="#l36">36</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
+                <td class="src "><span class="w">    </span><span class="c1">// A zero focal length projects every star onto the principal point, so</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l37" href="#l37">37</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
+                <td class="src "><span class="w">    </span><span class="c1">// stage 2 would quietly find nothing.</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l38" href="#l38">38</a></td>
+                <td class="text-right src linenos ws-unset">
+                    <details class="normal details-overlay">
+                        <summary>7/8</summary>
+                        <div class="text-left position-absolute color-bg-subtle p-3 mt-2" style="z-index: 1;">
+                            <div class="color-taken-branch">&check; Branch 1 taken 3 times.</div>
+                            <div class="color-taken-branch">&check; Branch 2 taken 1 times.</div>
+                            <div class="color-taken-branch">&check; Branch 3 taken 3 times.</div>
+                            <div class="color-fg-danger">&cross; Branch 4 not taken.</div>
+                            <div class="color-taken-branch">&check; Branch 5 taken 1 times.</div>
+                            <div class="color-taken-branch">&check; Branch 6 taken 2 times.</div>
+                            <div class="color-taken-branch">&check; Branch 7 taken 1 times.</div>
+                            <div class="color-taken-branch">&check; Branch 8 taken 3 times.</div>
+                        </div>
+                    </details>
+                </td>
+                <td class="src partialCoveredLine pr-2 pl-2 color-fg-muted text-right">4</td>
+                <td class="src partialCoveredLine"><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">options</span><span class="p">.</span><span class="n">starImages</span><span class="p">.</span><span class="n">empty</span><span class="p">()</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="o">!</span><span class="p">(</span><span class="n">options</span><span class="p">.</span><span class="n">focalLengthX</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">DECIMAL</span><span class="p">(</span><span class="mf">0.0</span><span class="p">)</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">options</span><span class="p">.</span><span class="n">focalLengthY</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">DECIMAL</span><span class="p">(</span><span class="mf">0.0</span><span class="p">)))</span><span class="w"> </span><span class="p">{</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l39" href="#l39">39</a></td>
+                <td class="text-right src linenos ws-unset">
+                    <details class="normal details-overlay">
+                        <summary>1/1</summary>
+                        <div class="text-left position-absolute color-bg-subtle p-3 mt-2" style="z-index: 1;">
+                            <div class="color-taken-branch">&check; Branch 2 taken 1 times.</div>
+                        </div>
+                    </details>
+                </td>
+                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">1</td>
+                <td class="src coveredLine"><span class="w">        </span><span class="k">throw</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">runtime_error</span><span class="p">(</span><span class="s">&quot;--focal-length-x and --focal-length-y must be positive&quot;</span><span class="p">);</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l40" href="#l40">40</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
+                <td class="src "><span class="w">    </span><span class="p">}</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l41" href="#l41">41</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
+                <td class="src "></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l42" href="#l42">42</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">3</td>
+                <td class="src coveredLine"><span class="w">    </span><span class="n">CameraParameters</span><span class="w"> </span><span class="n">camera</span><span class="p">;</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l43" href="#l43">43</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">3</td>
+                <td class="src coveredLine"><span class="w">    </span><span class="n">camera</span><span class="p">.</span><span class="n">focalLengthX</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">options</span><span class="p">.</span><span class="n">focalLengthX</span><span class="p">;</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l44" href="#l44">44</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">3</td>
+                <td class="src coveredLine"><span class="w">    </span><span class="n">camera</span><span class="p">.</span><span class="n">alpha</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">options</span><span class="p">.</span><span class="n">alpha</span><span class="p">;</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l45" href="#l45">45</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">3</td>
+                <td class="src coveredLine"><span class="w">    </span><span class="n">camera</span><span class="p">.</span><span class="n">focalLengthY</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">options</span><span class="p">.</span><span class="n">focalLengthY</span><span class="p">;</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l46" href="#l46">46</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">3</td>
+                <td class="src coveredLine"><span class="w">    </span><span class="n">camera</span><span class="p">.</span><span class="n">principalX</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">options</span><span class="p">.</span><span class="n">principalX</span><span class="p">;</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l47" href="#l47">47</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">3</td>
+                <td class="src coveredLine"><span class="w">    </span><span class="n">camera</span><span class="p">.</span><span class="n">principalY</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">options</span><span class="p">.</span><span class="n">principalY</span><span class="p">;</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l48" href="#l48">48</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">3</td>
+                <td class="src coveredLine"><span class="w">    </span><span class="n">camera</span><span class="p">.</span><span class="n">k1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">options</span><span class="p">.</span><span class="n">k1</span><span class="p">;</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l49" href="#l49">49</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">3</td>
+                <td class="src coveredLine"><span class="w">    </span><span class="n">camera</span><span class="p">.</span><span class="n">k2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">options</span><span class="p">.</span><span class="n">k2</span><span class="p">;</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l50" href="#l50">50</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">3</td>
+                <td class="src coveredLine"><span class="w">    </span><span class="n">camera</span><span class="p">.</span><span class="n">k3</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">options</span><span class="p">.</span><span class="n">k3</span><span class="p">;</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l51" href="#l51">51</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">3</td>
+                <td class="src coveredLine"><span class="w">    </span><span class="n">camera</span><span class="p">.</span><span class="n">p1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">options</span><span class="p">.</span><span class="n">p1</span><span class="p">;</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l52" href="#l52">52</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">3</td>
+                <td class="src coveredLine"><span class="w">    </span><span class="n">camera</span><span class="p">.</span><span class="n">p2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">options</span><span class="p">.</span><span class="n">p2</span><span class="p">;</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l53" href="#l53">53</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">3</td>
+                <td class="src coveredLine"><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">camera</span><span class="p">;</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l54" href="#l54">54</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
+                <td class="src "><span class="p">}</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l55" href="#l55">55</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
+                <td class="src "></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l56" href="#l56">56</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
+                <td class="src "><span class="cm">/**</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l57" href="#l57">57</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
+                <td class="src "><span class="cm"> * Selects a NoiseFilterAlgorithm implementation for the run.</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l58" href="#l58">58</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
+                <td class="src "><span class="cm"> *</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l59" href="#l59">59</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
+                <td class="src "><span class="cm"> * @param options Parsed recalibration options.</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l60" href="#l60">60</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
+                <td class="src "><span class="cm"> *</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l61" href="#l61">61</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
+                <td class="src "><span class="cm"> * @return The chosen NoiseFilterAlgorithm.</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l62" href="#l62">62</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
+                <td class="src "><span class="cm"> */</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l63" href="#l63">63</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">2</td>
+                <td class="src coveredLine"><span class="kr">inline</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">unique_ptr</span><span class="o">&lt;</span><span class="n">NoiseFilterAlgorithm</span><span class="o">&gt;</span><span class="w"> </span><span class="n">ProvideNoiseFilterAlgorithm</span><span class="p">(</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l64" href="#l64">64</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
+                <td class="src "><span class="w">    </span><span class="p">[[</span><span class="n">maybe_unused</span><span class="p">]]</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">RecalibrationOptions</span><span class="w"> </span><span class="o">&amp;</span><span class="n">options</span><span class="p">)</span><span class="w"> </span><span class="p">{</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l65" href="#l65">65</a></td>
+                <td class="text-right src linenos ws-unset">
+                    <details class="normal details-overlay">
+                        <summary>1/1</summary>
+                        <div class="text-left position-absolute color-bg-subtle p-3 mt-2" style="z-index: 1;">
+                            <div class="color-taken-branch">&check; Branch 2 taken 2 times.</div>
+                        </div>
+                    </details>
+                </td>
+                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">2</td>
+                <td class="src coveredLine"><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">make_unique</span><span class="o">&lt;</span><span class="n">DarkScreenFilter</span><span class="o">&gt;</span><span class="p">();</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l66" href="#l66">66</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
+                <td class="src "><span class="p">}</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l67" href="#l67">67</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
+                <td class="src "></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l68" href="#l68">68</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
+                <td class="src "><span class="cm">/**</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l69" href="#l69">69</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
+                <td class="src "><span class="cm"> * Supplies the prior attitude for each star image.</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l70" href="#l70">70</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
+                <td class="src "><span class="cm"> *</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l71" href="#l71">71</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
+                <td class="src "><span class="cm"> * Swap in a different source (a star tracker, a plate solver) here. The</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l72" href="#l72">72</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
+                <td class="src "><span class="cm"> * attitudes returned must be in SCOPE&#39;s camera frame, so one from LOST has to</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l73" href="#l73">73</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
+                <td class="src "><span class="cm"> * go through LostAttitudeToScopeFrame first.</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l74" href="#l74">74</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
+                <td class="src "><span class="cm"> *</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l75" href="#l75">75</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
+                <td class="src "><span class="cm"> * @param options Parsed recalibration options.</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l76" href="#l76">76</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
+                <td class="src "><span class="cm"> *</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l77" href="#l77">77</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
+                <td class="src "><span class="cm"> * @return One attitude per star image, in star-image order.</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l78" href="#l78">78</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
+                <td class="src "><span class="cm"> *</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l79" href="#l79">79</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
+                <td class="src "><span class="cm"> * @throws std::runtime_error if there are star images but no attitudes file,</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l80" href="#l80">80</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
+                <td class="src "><span class="cm"> *         or the attitudes file cannot be read.</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l81" href="#l81">81</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
+                <td class="src "><span class="cm"> */</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l82" href="#l82">82</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">6</td>
+                <td class="src coveredLine"><span class="kr">inline</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">found</span><span class="o">::</span><span class="n">Quaternion</span><span class="o">&gt;</span><span class="w"> </span><span class="n">ProvideAttitudes</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">RecalibrationOptions</span><span class="w"> </span><span class="o">&amp;</span><span class="n">options</span><span class="p">)</span><span class="w"> </span><span class="p">{</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l83" href="#l83">83</a></td>
+                <td class="text-right src linenos ws-unset">
+                    <details class="normal details-overlay">
+                        <summary>2/2</summary>
+                        <div class="text-left position-absolute color-bg-subtle p-3 mt-2" style="z-index: 1;">
+                            <div class="color-taken-branch">&check; Branch 1 taken 3 times.</div>
+                            <div class="color-taken-branch">&check; Branch 2 taken 3 times.</div>
+                        </div>
+                    </details>
+                </td>
+                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">6</td>
+                <td class="src coveredLine"><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">options</span><span class="p">.</span><span class="n">attitudesPath</span><span class="p">.</span><span class="n">empty</span><span class="p">())</span><span class="w"> </span><span class="p">{</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l84" href="#l84">84</a></td>
+                <td class="text-right src linenos ws-unset">
+                    <details class="normal details-overlay">
+                        <summary>2/2</summary>
+                        <div class="text-left position-absolute color-bg-subtle p-3 mt-2" style="z-index: 1;">
+                            <div class="color-taken-branch">&check; Branch 1 taken 2 times.</div>
+                            <div class="color-taken-branch">&check; Branch 2 taken 1 times.</div>
+                        </div>
+                    </details>
+                </td>
+                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">3</td>
+                <td class="src coveredLine"><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">options</span><span class="p">.</span><span class="n">starImages</span><span class="p">.</span><span class="n">empty</span><span class="p">())</span><span class="w"> </span><span class="p">{</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l85" href="#l85">85</a></td>
+                <td class="text-right src linenos ws-unset">
+                    <details class="normal details-overlay">
+                        <summary>1/1</summary>
+                        <div class="text-left position-absolute color-bg-subtle p-3 mt-2" style="z-index: 1;">
+                            <div class="color-taken-branch">&check; Branch 2 taken 2 times.</div>
+                        </div>
+                    </details>
+                </td>
+                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">2</td>
+                <td class="src coveredLine"><span class="w">            </span><span class="k">throw</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">runtime_error</span><span class="p">(</span><span class="s">&quot;No attitudes given: --attitudes needs one attitude per star image&quot;</span><span class="p">);</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l86" href="#l86">86</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
+                <td class="src "><span class="w">        </span><span class="p">}</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l87" href="#l87">87</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">1</td>
+                <td class="src coveredLine"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="p">{};</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l88" href="#l88">88</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
+                <td class="src "><span class="w">    </span><span class="p">}</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l89" href="#l89">89</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">3</td>
+                <td class="src coveredLine"><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">LoadAttitudes</span><span class="p">(</span><span class="n">options</span><span class="p">.</span><span class="n">attitudesPath</span><span class="p">);</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l90" href="#l90">90</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
+                <td class="src "><span class="p">}</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l91" href="#l91">91</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
+                <td class="src "></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l92" href="#l92">92</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
+                <td class="src "><span class="cm">/**</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l93" href="#l93">93</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
+                <td class="src "><span class="cm"> * Selects a StarCentroidAlgorithm implementation for the run.</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l94" href="#l94">94</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
+                <td class="src "><span class="cm"> *</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l95" href="#l95">95</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
+                <td class="src "><span class="cm"> * @param options Parsed recalibration options.</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l96" href="#l96">96</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
+                <td class="src "><span class="cm"> * @param camera The prior camera parameters.</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l97" href="#l97">97</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
+                <td class="src "><span class="cm"> * @param catalog The star catalog.</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l98" href="#l98">98</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
+                <td class="src "><span class="cm"> * @param attitudes One prior attitude per star image.</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l99" href="#l99">99</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
+                <td class="src "><span class="cm"> *</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l100" href="#l100">100</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
+                <td class="src "><span class="cm"> * @return The chosen StarCentroidAlgorithm.</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l101" href="#l101">101</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
+                <td class="src "><span class="cm"> */</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l102" href="#l102">102</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">2</td>
+                <td class="src coveredLine"><span class="kr">inline</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">unique_ptr</span><span class="o">&lt;</span><span class="n">StarCentroidAlgorithm</span><span class="o">&gt;</span><span class="w"> </span><span class="n">ProvideStarCentroidAlgorithm</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">RecalibrationOptions</span><span class="w"> </span><span class="o">&amp;</span><span class="n">options</span><span class="p">,</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l103" href="#l103">103</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
+                <td class="src "><span class="w">                                                                           </span><span class="k">const</span><span class="w"> </span><span class="n">CameraParameters</span><span class="w"> </span><span class="o">&amp;</span><span class="n">camera</span><span class="p">,</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l104" href="#l104">104</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
+                <td class="src "><span class="w">                                                                           </span><span class="n">Catalog</span><span class="w"> </span><span class="n">catalog</span><span class="p">,</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l105" href="#l105">105</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
+                <td class="src "><span class="w">                                                                           </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">found</span><span class="o">::</span><span class="n">Quaternion</span><span class="o">&gt;</span><span class="w"> </span><span class="n">attitudes</span><span class="p">)</span><span class="w"> </span><span class="p">{</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l106" href="#l106">106</a></td>
+                <td class="text-right src linenos ws-unset">
+                    <details class="normal details-overlay">
+                        <summary>1/1</summary>
+                        <div class="text-left position-absolute color-bg-subtle p-3 mt-2" style="z-index: 1;">
+                            <div class="color-taken-branch">&check; Branch 4 taken 2 times.</div>
+                        </div>
+                    </details>
+                </td>
+                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">2</td>
+                <td class="src coveredLine"><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">make_unique</span><span class="o">&lt;</span><span class="n">ROIFilterAlgorithm</span><span class="o">&gt;</span><span class="p">(</span><span class="n">options</span><span class="p">,</span><span class="w"> </span><span class="n">camera</span><span class="p">,</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">catalog</span><span class="p">),</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">attitudes</span><span class="p">));</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l107" href="#l107">107</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
+                <td class="src "><span class="p">}</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l108" href="#l108">108</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
+                <td class="src "></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l109" href="#l109">109</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
+                <td class="src "><span class="cm">/**</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l110" href="#l110">110</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
+                <td class="src "><span class="cm"> * Builds the fit settings from the command-line options.</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l111" href="#l111">111</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
+                <td class="src "><span class="cm"> *</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l112" href="#l112">112</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
+                <td class="src "><span class="cm"> * @param options Parsed recalibration options.</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l113" href="#l113">113</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
+                <td class="src "><span class="cm"> *</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l114" href="#l114">114</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
+                <td class="src "><span class="cm"> * @return The settings for FitCalibration.</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l115" href="#l115">115</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
+                <td class="src "><span class="cm"> *</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l116" href="#l116">116</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
+                <td class="src "><span class="cm"> * @throws std::runtime_error if --fixed-parameters names an unknown parameter,</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l117" href="#l117">117</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
+                <td class="src "><span class="cm"> *         --attitude-correction is not &#39;per-image&#39; or &#39;shared&#39;,</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l118" href="#l118">118</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
+                <td class="src "><span class="cm"> *         --outlier-threshold is negative or --max-iterations is below 1.</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l119" href="#l119">119</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
+                <td class="src "><span class="cm"> */</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l120" href="#l120">120</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">11</td>
+                <td class="src coveredLine"><span class="kr">inline</span><span class="w"> </span><span class="n">FitSettings</span><span class="w"> </span><span class="n">ProvideFitSettings</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">RecalibrationOptions</span><span class="w"> </span><span class="o">&amp;</span><span class="n">options</span><span class="p">)</span><span class="w"> </span><span class="p">{</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l121" href="#l121">121</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">11</td>
+                <td class="src coveredLine"><span class="w">    </span><span class="n">FitSettings</span><span class="w"> </span><span class="n">settings</span><span class="p">;</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l122" href="#l122">122</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
+                <td class="src "></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l123" href="#l123">123</a></td>
+                <td class="text-right src linenos ws-unset">
+                    <details class="normal details-overlay">
+                        <summary>1/1</summary>
+                        <div class="text-left position-absolute color-bg-subtle p-3 mt-2" style="z-index: 1;">
+                            <div class="color-taken-branch">&check; Branch 2 taken 11 times.</div>
+                        </div>
+                    </details>
+                </td>
+                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">11</td>
+                <td class="src coveredLine"><span class="w">    </span><span class="n">settings</span><span class="p">.</span><span class="n">estimate</span><span class="p">.</span><span class="n">fill</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l124" href="#l124">124</a></td>
+                <td class="text-right src linenos ws-unset">
+                    <details class="normal details-overlay">
+                        <summary>1/1</summary>
+                        <div class="text-left position-absolute color-bg-subtle p-3 mt-2" style="z-index: 1;">
+                            <div class="color-taken-branch">&check; Branch 2 taken 11 times.</div>
+                        </div>
+                    </details>
+                </td>
+                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">11</td>
+                <td class="src coveredLine"><span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">names</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">options</span><span class="p">.</span><span class="n">fixedParameters</span><span class="p">;</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l125" href="#l125">125</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">11</td>
+                <td class="src coveredLine"><span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">replace</span><span class="p">(</span><span class="n">names</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span><span class="w"> </span><span class="n">names</span><span class="p">.</span><span class="n">end</span><span class="p">(),</span><span class="w"> </span><span class="sc">&#39;,&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39; &#39;</span><span class="p">);</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l126" href="#l126">126</a></td>
+                <td class="text-right src linenos ws-unset">
+                    <details class="normal details-overlay">
+                        <summary>1/1</summary>
+                        <div class="text-left position-absolute color-bg-subtle p-3 mt-2" style="z-index: 1;">
+                            <div class="color-taken-branch">&check; Branch 2 taken 11 times.</div>
+                        </div>
+                    </details>
+                </td>
+                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">11</td>
+                <td class="src coveredLine"><span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">istringstream</span><span class="w"> </span><span class="nf">list</span><span class="p">(</span><span class="n">names</span><span class="p">);</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l127" href="#l127">127</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">11</td>
+                <td class="src coveredLine"><span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">name</span><span class="p">;</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l128" href="#l128">128</a></td>
+                <td class="text-right src linenos ws-unset">
+                    <details class="normal details-overlay">
+                        <summary>4/4</summary>
+                        <div class="text-left position-absolute color-bg-subtle p-3 mt-2" style="z-index: 1;">
+                            <div class="color-taken-branch">&check; Branch 1 taken 30 times.</div>
+                            <div class="color-taken-branch">&check; Branch 4 taken 30 times.</div>
+                            <div class="color-taken-branch">&check; Branch 6 taken 20 times.</div>
+                            <div class="color-taken-branch">&check; Branch 7 taken 10 times.</div>
+                        </div>
+                    </details>
+                </td>
+                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">30</td>
+                <td class="src coveredLine"><span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">list</span><span class="w"> </span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">name</span><span class="p">)</span><span class="w"> </span><span class="p">{</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l129" href="#l129">129</a></td>
+                <td class="text-right src linenos ws-unset">
+                    <details class="normal details-overlay">
+                        <summary>3/3</summary>
+                        <div class="text-left position-absolute color-bg-subtle p-3 mt-2" style="z-index: 1;">
+                            <div class="color-taken-branch">&check; Branch 1 taken 20 times.</div>
+                            <div class="color-taken-branch">&check; Branch 3 taken 1 times.</div>
+                            <div class="color-taken-branch">&check; Branch 4 taken 19 times.</div>
+                        </div>
+                    </details>
+                </td>
+                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">20</td>
+                <td class="src coveredLine"><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">name</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s">&quot;none&quot;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l130" href="#l130">130</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">1</td>
+                <td class="src coveredLine"><span class="w">            </span><span class="k">continue</span><span class="p">;</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l131" href="#l131">131</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
+                <td class="src "><span class="w">        </span><span class="p">}</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l132" href="#l132">132</a></td>
+                <td class="text-right src linenos ws-unset">
+                    <details class="normal details-overlay">
+                        <summary>3/3</summary>
+                        <div class="text-left position-absolute color-bg-subtle p-3 mt-2" style="z-index: 1;">
+                            <div class="color-taken-branch">&check; Branch 1 taken 19 times.</div>
+                            <div class="color-taken-branch">&check; Branch 3 taken 1 times.</div>
+                            <div class="color-taken-branch">&check; Branch 4 taken 18 times.</div>
+                        </div>
+                    </details>
+                </td>
+                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">19</td>
+                <td class="src coveredLine"><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">name</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s">&quot;all&quot;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l133" href="#l133">133</a></td>
+                <td class="text-right src linenos ws-unset">
+                    <details class="normal details-overlay">
+                        <summary>1/1</summary>
+                        <div class="text-left position-absolute color-bg-subtle p-3 mt-2" style="z-index: 1;">
+                            <div class="color-taken-branch">&check; Branch 2 taken 1 times.</div>
+                        </div>
+                    </details>
+                </td>
+                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">1</td>
+                <td class="src coveredLine"><span class="w">            </span><span class="n">settings</span><span class="p">.</span><span class="n">estimate</span><span class="p">.</span><span class="n">fill</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l134" href="#l134">134</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">1</td>
+                <td class="src coveredLine"><span class="w">            </span><span class="k">continue</span><span class="p">;</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l135" href="#l135">135</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
+                <td class="src "><span class="w">        </span><span class="p">}</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l136" href="#l136">136</a></td>
+                <td class="text-right src linenos ws-unset">
+                    <details class="normal details-overlay">
+                        <summary>1/1</summary>
+                        <div class="text-left position-absolute color-bg-subtle p-3 mt-2" style="z-index: 1;">
+                            <div class="color-taken-branch">&check; Branch 3 taken 18 times.</div>
+                        </div>
+                    </details>
+                </td>
+                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">18</td>
+                <td class="src coveredLine"><span class="w">        </span><span class="k">const</span><span class="w"> </span><span class="k">auto</span><span class="w"> </span><span class="n">match</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">find</span><span class="p">(</span><span class="n">kCameraParameterNames</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span><span class="w"> </span><span class="n">kCameraParameterNames</span><span class="p">.</span><span class="n">end</span><span class="p">(),</span><span class="w"> </span><span class="n">name</span><span class="p">);</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l137" href="#l137">137</a></td>
+                <td class="text-right src linenos ws-unset">
+                    <details class="normal details-overlay">
+                        <summary>2/2</summary>
+                        <div class="text-left position-absolute color-bg-subtle p-3 mt-2" style="z-index: 1;">
+                            <div class="color-taken-branch">&check; Branch 1 taken 1 times.</div>
+                            <div class="color-taken-branch">&check; Branch 2 taken 17 times.</div>
+                        </div>
+                    </details>
+                </td>
+                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">18</td>
+                <td class="src coveredLine"><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">match</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">kCameraParameterNames</span><span class="p">.</span><span class="n">end</span><span class="p">())</span><span class="w"> </span><span class="p">{</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l138" href="#l138">138</a></td>
+                <td class="text-right src linenos ws-unset">
+                    <details class="normal details-overlay">
+                        <summary>3/3</summary>
+                        <div class="text-left position-absolute color-bg-subtle p-3 mt-2" style="z-index: 1;">
+                            <div class="color-taken-branch">&check; Branch 4 taken 1 times.</div>
+                            <div class="color-taken-branch">&check; Branch 7 taken 1 times.</div>
+                            <div class="color-taken-branch">&check; Branch 10 taken 1 times.</div>
+                        </div>
+                    </details>
+                </td>
+                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">1</td>
+                <td class="src coveredLine"><span class="w">            </span><span class="k">throw</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">runtime_error</span><span class="p">(</span><span class="s">&quot;--fixed-parameters: unknown camera parameter &#39;&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot;&#39;&quot;</span><span class="p">);</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l139" href="#l139">139</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
+                <td class="src "><span class="w">        </span><span class="p">}</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l140" href="#l140">140</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">17</td>
+                <td class="src coveredLine"><span class="w">        </span><span class="n">settings</span><span class="p">.</span><span class="n">estimate</span><span class="p">[</span><span class="k">static_cast</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="kt">size_t</span><span class="o">&gt;</span><span class="p">(</span><span class="n">match</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">kCameraParameterNames</span><span class="p">.</span><span class="n">begin</span><span class="p">())]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l141" href="#l141">141</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
+                <td class="src "><span class="w">    </span><span class="p">}</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l142" href="#l142">142</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
+                <td class="src "></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l143" href="#l143">143</a></td>
+                <td class="text-right src linenos ws-unset">
+                    <details class="normal details-overlay">
+                        <summary>3/3</summary>
+                        <div class="text-left position-absolute color-bg-subtle p-3 mt-2" style="z-index: 1;">
+                            <div class="color-taken-branch">&check; Branch 1 taken 10 times.</div>
+                            <div class="color-taken-branch">&check; Branch 3 taken 8 times.</div>
+                            <div class="color-taken-branch">&check; Branch 4 taken 2 times.</div>
+                        </div>
+                    </details>
+                </td>
+                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">10</td>
+                <td class="src coveredLine"><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">options</span><span class="p">.</span><span class="n">attitudeCorrection</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s">&quot;per-image&quot;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l144" href="#l144">144</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">8</td>
+                <td class="src coveredLine"><span class="w">        </span><span class="n">settings</span><span class="p">.</span><span class="n">attitudeModel</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">AttitudeCorrectionModel</span><span class="o">::</span><span class="n">kPerImage</span><span class="p">;</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l145" href="#l145">145</a></td>
+                <td class="text-right src linenos ws-unset">
+                    <details class="normal details-overlay">
+                        <summary>3/3</summary>
+                        <div class="text-left position-absolute color-bg-subtle p-3 mt-2" style="z-index: 1;">
+                            <div class="color-taken-branch">&check; Branch 1 taken 2 times.</div>
+                            <div class="color-taken-branch">&check; Branch 3 taken 1 times.</div>
+                            <div class="color-taken-branch">&check; Branch 4 taken 1 times.</div>
+                        </div>
+                    </details>
+                </td>
+                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">2</td>
+                <td class="src coveredLine"><span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">options</span><span class="p">.</span><span class="n">attitudeCorrection</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s">&quot;shared&quot;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l146" href="#l146">146</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">1</td>
+                <td class="src coveredLine"><span class="w">        </span><span class="n">settings</span><span class="p">.</span><span class="n">attitudeModel</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">AttitudeCorrectionModel</span><span class="o">::</span><span class="n">kShared</span><span class="p">;</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l147" href="#l147">147</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
+                <td class="src "><span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l148" href="#l148">148</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">1</td>
+                <td class="src coveredLine"><span class="w">        </span><span class="k">throw</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">runtime_error</span><span class="p">(</span><span class="s">&quot;--attitude-correction must be &#39;per-image&#39; or &#39;shared&#39;, not &#39;&quot;</span><span class="w"> </span><span class="o">+</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l149" href="#l149">149</a></td>
+                <td class="text-right src linenos ws-unset">
+                    <details class="normal details-overlay">
+                        <summary>3/3</summary>
+                        <div class="text-left position-absolute color-bg-subtle p-3 mt-2" style="z-index: 1;">
+                            <div class="color-taken-branch">&check; Branch 4 taken 1 times.</div>
+                            <div class="color-taken-branch">&check; Branch 7 taken 1 times.</div>
+                            <div class="color-taken-branch">&check; Branch 10 taken 1 times.</div>
+                        </div>
+                    </details>
+                </td>
+                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">2</td>
+                <td class="src coveredLine"><span class="w">                                 </span><span class="n">options</span><span class="p">.</span><span class="n">attitudeCorrection</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot;&#39;&quot;</span><span class="p">);</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l150" href="#l150">150</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
+                <td class="src "><span class="w">    </span><span class="p">}</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l151" href="#l151">151</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
+                <td class="src "></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l152" href="#l152">152</a></td>
+                <td class="text-right src linenos ws-unset">
+                    <details class="normal details-overlay">
+                        <summary>2/2</summary>
+                        <div class="text-left position-absolute color-bg-subtle p-3 mt-2" style="z-index: 1;">
+                            <div class="color-taken-branch">&check; Branch 0 taken 1 times.</div>
+                            <div class="color-taken-branch">&check; Branch 1 taken 8 times.</div>
+                        </div>
+                    </details>
+                </td>
+                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">9</td>
+                <td class="src coveredLine"><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="p">(</span><span class="n">options</span><span class="p">.</span><span class="n">outlierThreshold</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="n">DECIMAL</span><span class="p">(</span><span class="mf">0.0</span><span class="p">)))</span><span class="w"> </span><span class="p">{</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l153" href="#l153">153</a></td>
+                <td class="text-right src linenos ws-unset">
+                    <details class="normal details-overlay">
+                        <summary>1/1</summary>
+                        <div class="text-left position-absolute color-bg-subtle p-3 mt-2" style="z-index: 1;">
+                            <div class="color-taken-branch">&check; Branch 2 taken 1 times.</div>
+                        </div>
+                    </details>
+                </td>
+                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">1</td>
+                <td class="src coveredLine"><span class="w">        </span><span class="k">throw</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">runtime_error</span><span class="p">(</span><span class="s">&quot;--outlier-threshold must not be negative&quot;</span><span class="p">);</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l154" href="#l154">154</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
+                <td class="src "><span class="w">    </span><span class="p">}</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l155" href="#l155">155</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">8</td>
+                <td class="src coveredLine"><span class="w">    </span><span class="n">settings</span><span class="p">.</span><span class="n">outlierThreshold</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">options</span><span class="p">.</span><span class="n">outlierThreshold</span><span class="p">;</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l156" href="#l156">156</a></td>
+                <td class="text-right src linenos ws-unset">
+                    <details class="normal details-overlay">
+                        <summary>2/2</summary>
+                        <div class="text-left position-absolute color-bg-subtle p-3 mt-2" style="z-index: 1;">
+                            <div class="color-taken-branch">&check; Branch 0 taken 1 times.</div>
+                            <div class="color-taken-branch">&check; Branch 1 taken 7 times.</div>
+                        </div>
+                    </details>
+                </td>
+                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">8</td>
+                <td class="src coveredLine"><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">options</span><span class="p">.</span><span class="n">maxIterations</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="p">{</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l157" href="#l157">157</a></td>
+                <td class="text-right src linenos ws-unset">
+                    <details class="normal details-overlay">
+                        <summary>1/1</summary>
+                        <div class="text-left position-absolute color-bg-subtle p-3 mt-2" style="z-index: 1;">
+                            <div class="color-taken-branch">&check; Branch 2 taken 1 times.</div>
+                        </div>
+                    </details>
+                </td>
+                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">1</td>
+                <td class="src coveredLine"><span class="w">        </span><span class="k">throw</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">runtime_error</span><span class="p">(</span><span class="s">&quot;--max-iterations must be at least 1&quot;</span><span class="p">);</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l158" href="#l158">158</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
+                <td class="src "><span class="w">    </span><span class="p">}</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l159" href="#l159">159</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">7</td>
+                <td class="src coveredLine"><span class="w">    </span><span class="n">settings</span><span class="p">.</span><span class="n">maxIterations</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">options</span><span class="p">.</span><span class="n">maxIterations</span><span class="p">;</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l160" href="#l160">160</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
+                <td class="src "></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l161" href="#l161">161</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">14</td>
+                <td class="src coveredLine"><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">settings</span><span class="p">;</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l162" href="#l162">162</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">19</td>
+                <td class="src coveredLine"><span class="p">}</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l163" href="#l163">163</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
+                <td class="src "></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l164" href="#l164">164</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
+                <td class="src "><span class="cm">/**</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l165" href="#l165">165</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
+                <td class="src "><span class="cm"> * Selects an OptimizationAlgorithm implementation for the run.</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l166" href="#l166">166</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
+                <td class="src "><span class="cm"> *</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l167" href="#l167">167</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
+                <td class="src "><span class="cm"> * @param options Parsed recalibration options.</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l168" href="#l168">168</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
+                <td class="src "><span class="cm"> * @param camera The prior camera parameters.</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l169" href="#l169">169</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
+                <td class="src "><span class="cm"> *</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l170" href="#l170">170</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
+                <td class="src "><span class="cm"> * @return The chosen OptimizationAlgorithm.</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l171" href="#l171">171</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
+                <td class="src "><span class="cm"> */</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l172" href="#l172">172</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">2</td>
+                <td class="src coveredLine"><span class="kr">inline</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">unique_ptr</span><span class="o">&lt;</span><span class="n">OptimizationAlgorithm</span><span class="o">&gt;</span><span class="w"> </span><span class="n">ProvideOptimizationAlgorithm</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">RecalibrationOptions</span><span class="w"> </span><span class="o">&amp;</span><span class="n">options</span><span class="p">,</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l173" href="#l173">173</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
+                <td class="src "><span class="w">                                                                           </span><span class="k">const</span><span class="w"> </span><span class="n">CameraParameters</span><span class="w"> </span><span class="o">&amp;</span><span class="n">camera</span><span class="p">)</span><span class="w"> </span><span class="p">{</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l174" href="#l174">174</a></td>
+                <td class="text-right src linenos ws-unset">
+                    <details class="normal details-overlay">
+                        <summary>2/2</summary>
+                        <div class="text-left position-absolute color-bg-subtle p-3 mt-2" style="z-index: 1;">
+                            <div class="color-taken-branch">&check; Branch 3 taken 2 times.</div>
+                            <div class="color-taken-branch">&check; Branch 6 taken 2 times.</div>
+                        </div>
+                    </details>
+                </td>
+                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">2</td>
+                <td class="src coveredLine"><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">make_unique</span><span class="o">&lt;</span><span class="n">LMAOptimizationAlgorithm</span><span class="o">&gt;</span><span class="p">(</span><span class="n">camera</span><span class="p">,</span><span class="w"> </span><span class="n">ProvideFitSettings</span><span class="p">(</span><span class="n">options</span><span class="p">));</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l175" href="#l175">175</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
+                <td class="src "><span class="p">}</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l176" href="#l176">176</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
+                <td class="src "></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l177" href="#l177">177</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
+                <td class="src "><span class="p">}</span><span class="w">  </span><span class="c1">// namespace scope</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l178" href="#l178">178</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
+                <td class="src "></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l179" href="#l179">179</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
+                <td class="src "><span class="cp">#endif  </span><span class="c1">// SRC_SCOPE_PROVIDERS_STAGE_PROVIDERS_HPP_</span></td>
+            </tr>
+            <tr>
+                <td class="text-right src linenos"><a class="normal" id="l180" href="#l180">180</a></td>
+                <td class="text-right src linenos ws-unset">
+                </td>
+                <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
+                <td class="src "></td>
+            </tr>
+
+        </table>
+    </div>
+</div>
+          <hr/>
+        </main>
+        <footer class="text-center">
+          Generated by: <a href="http://gcovr.com/en/8.3">GCOVR (Version 8.3)</a>
+        </footer>
+      </div>
+    </div>
+  </body>
+</html>

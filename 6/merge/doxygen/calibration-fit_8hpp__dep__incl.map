@@ -1,0 +1,14 @@
+<map id="src/scope/optimization/calibration&#45;fit.hpp" name="src/scope/optimization/calibration&#45;fit.hpp">
+<area shape="rect" id="Node000001" title="The Levenberg&#45;Marquardt calibration fit (Orion paper, Christian et al." alt="" coords="170,5,339,45"/>
+<area shape="rect" id="Node000002" href="$optimization_8hpp.html" title="Parameter&#45;fit optimization algorithms for SCOPE calibration." alt="" coords="109,93,278,133"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="235,58,209,95,205,92,231,55"/>
+<area shape="rect" id="Node000005" href="$stage-providers_8hpp_source.html" title=" " alt="" coords="238,181,394,221"/>
+<area shape="poly" id="edge7_Node000001_Node000005" title=" " alt="" coords="276,56,293,92,307,140,316,181,310,182,302,141,288,94,271,59"/>
+<area shape="rect" id="Node000003" href="$executors_8hpp.html" title="Pipeline executor for the primary SCOPE calibration chain." alt="" coords="5,181,189,221"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="163,145,120,183,117,179,160,141"/>
+<area shape="poly" id="edge5_Node000002_Node000005" title=" " alt="" coords="233,139,290,179,287,183,230,143"/>
+<area shape="poly" id="edge3_Node000003_Node000003" title=" " alt="" coords="204,188,213,193,216,202,208,213,191,219,189,214,205,209,211,201,209,196,201,192"/>
+<area shape="rect" id="Node000004" href="$factory_8hpp_source.html" title=" " alt="" coords="133,269,281,309"/>
+<area shape="poly" id="edge4_Node000003_Node000004" title=" " alt="" coords="134,228,184,267,181,271,131,232"/>
+<area shape="poly" id="edge6_Node000005_Node000004" title=" " alt="" coords="283,232,233,271,229,267,279,228"/>
+</map>

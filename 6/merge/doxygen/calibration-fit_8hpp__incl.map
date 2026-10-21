@@ -1,0 +1,23 @@
+<map id="src/scope/optimization/calibration&#45;fit.hpp" name="src/scope/optimization/calibration&#45;fit.hpp">
+<area shape="rect" id="Node000001" title="The Levenberg&#45;Marquardt calibration fit (Orion paper, Christian et al." alt="" coords="222,5,391,45"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="501,247,557,273"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="392,41,444,61,469,74,491,91,505,106,515,124,528,162,534,201,534,234,529,234,528,201,523,164,511,126,501,110,488,95,466,79,442,65,390,46"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="5,247,168,273"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="254,48,212,67,168,93,127,127,94,168,88,184,85,201,85,234,80,234,79,200,83,182,90,165,123,123,165,89,210,62,252,43"/>
+<area shape="rect" id="Node000004" href="$types_8hpp.html" title="Plain data passed between SCOPE&#39;s stages, independent of FOUND&#39;s pipeline and of the command line." alt="" coords="288,93,477,119"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="327,44,364,81,360,85,323,47"/>
+<area shape="rect" id="Node000007" href="$projection_8hpp.html" title="Forward camera projection (pinhole + Brown distortion + intrinsics)." alt="" coords="124,167,351,192"/>
+<area shape="poly" id="edge13_Node000001_Node000007" title=" " alt="" coords="300,46,278,94,251,155,246,153,274,92,296,44"/>
+<area shape="poly" id="edge4_Node000004_Node000002" title=" " alt="" coords="425,116,466,135,486,148,503,165,522,199,530,233,525,234,517,201,499,168,483,153,464,140,423,121"/>
+<area shape="poly" id="edge6_Node000004_Node000003" title=" " alt="" coords="288,120,185,139,142,153,114,169,103,183,96,200,89,234,84,233,91,198,98,180,110,165,140,148,183,134,287,115"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="426,167,489,192"/>
+<area shape="poly" id="edge5_Node000004_Node000005" title=" " alt="" coords="396,117,437,155,433,159,393,121"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="294,240,477,280"/>
+<area shape="poly" id="edge7_Node000004_Node000006" title=" " alt="" coords="386,119,387,226,382,226,380,119"/>
+<area shape="poly" id="edge8_Node000004_Node000007" title=" " alt="" coords="360,121,274,163,272,158,358,116"/>
+<area shape="poly" id="edge9_Node000007_Node000002" title=" " alt="" coords="303,189,392,209,490,237,495,239,493,244,489,243,391,214,301,195"/>
+<area shape="poly" id="edge11_Node000007_Node000003" title=" " alt="" coords="216,195,122,243,120,239,214,190"/>
+<area shape="poly" id="edge12_Node000007_Node000006" title=" " alt="" coords="260,190,339,231,336,236,258,195"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="195,247,269,273"/>
+<area shape="poly" id="edge10_Node000007_Node000008" title=" " alt="" coords="239,192,236,234,231,233,234,192"/>
+</map>

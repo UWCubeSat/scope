@@ -1,0 +1,18 @@
+<map id="src/scope/common/types.hpp" name="src/scope/common/types.hpp">
+<area shape="rect" id="Node000001" title="Plain data passed between SCOPE&#39;s stages, independent of FOUND&#39;s pipeline and of the command line." alt="" coords="203,5,415,31"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,159,61,185"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="277,33,224,54,167,81,108,118,60,153,57,149,105,113,164,76,222,49,275,28"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="498,79,561,104"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="345,28,486,73,484,78,344,33"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="85,159,248,185"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="262,33,221,51,202,64,186,80,177,95,172,112,168,146,163,145,167,111,173,93,182,77,198,60,218,46,260,28"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="371,152,554,192"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="356,28,398,47,419,60,437,77,454,107,462,138,457,139,449,109,433,80,415,64,396,51,353,33"/>
+<area shape="rect" id="Node000006" href="$projection_8hpp.html" title="Forward camera projection (pinhole + Brown distortion + intrinsics)." alt="" coords="196,79,423,104"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="312,31,312,65,307,65,307,31"/>
+<area shape="poly" id="edge6_Node000006_Node000002" title=" " alt="" coords="252,107,167,127,74,155,69,156,67,151,72,149,166,121,251,101"/>
+<area shape="poly" id="edge8_Node000006_Node000004" title=" " alt="" coords="290,107,201,155,198,150,287,102"/>
+<area shape="poly" id="edge9_Node000006_Node000005" title=" " alt="" coords="333,102,415,143,412,148,331,107"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="272,159,347,185"/>
+<area shape="poly" id="edge7_Node000006_Node000007" title=" " alt="" coords="312,104,312,145,307,145,307,104"/>
+</map>
