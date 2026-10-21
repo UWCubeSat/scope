@@ -7,6 +7,7 @@
 #ifndef SRC_SCOPE_COMMON_TYPES_HPP_
 #define SRC_SCOPE_COMMON_TYPES_HPP_
 
+#include <array>
 #include <vector>
 
 #include "common/decimal.hpp"
@@ -48,12 +49,26 @@ struct CentroidObservations {
 struct CalibrationResult {
     /// The fitted intrinsics and distortion coefficients.
     CameraParameters camera;
-    /// One refined attitude per star image, in the prior attitudes' order and frame.
+    /// Which parameters were estimated, in kCameraParameterFields order; the
+    /// rest are the prior's.
+    std::array<bool, kCameraParameterCount> estimated{};
+    /// One-sigma uncertainty of each parameter: zero if fixed, NaN if the fit
+    /// could not determine it.
+    CameraParameters uncertainty;
+    /// One refined attitude per star image, in the prior attitudes' order and
+    /// frame.
     std::vector<found::Quaternion> attitudes;
-    /// Measured minus predicted pixel [du, dv] for each observation, in order.
+    /// The mean of the per-image corrections refined * prior^-1: with two
+    /// cameras, the correction to their alignment.
+    found::Quaternion alignmentCorrection = found::Quaternion::Identity();
+    /// Measured minus predicted pixel [du, dv] for every observation, in order.
     std::vector<found::Vec2> residuals;
-    /// RMS of the residuals' u and v components pooled together, in pixels.
+    /// Whether each observation was used in the final fit.
+    std::vector<bool> inliers;
+    /// RMS of the inliers' residual u and v components pooled together, in pixels.
     decimal residualRms = DECIMAL(0.0);
+    /// Levenberg-Marquardt steps taken, over all outlier-rejection rounds.
+    int iterations = 0;
     /// Whether the fit converged.
     bool converged = false;
 };

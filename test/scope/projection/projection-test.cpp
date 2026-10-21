@@ -7,6 +7,8 @@
 
 #include "scope/projection/projection.hpp"
 
+#include "test/scope/common/cameras.hpp"
+
 namespace scope {
 
 namespace {
@@ -99,6 +101,49 @@ TEST(ProjectStarToPixelTest, RejectsStarBehindCamera) {
     // A star 30 deg off the anti-boresight is still behind the image plane.
     found::Vec3 offAxisBehind(DECIMAL(0.5), DECIMAL(0.0), DECIMAL(-1.0));
     EXPECT_FALSE(ProjectStarToPixel(offAxisBehind.normalized(), found::Quaternion::Identity(), camera).has_value());
+}
+
+// The paper's Table 1 lens (k3 = -12.6) folds back about 26 degrees off axis,
+// so a star at 32 degrees, far outside its 12.8 degree half-diagonal, would
+// land back on the sensor. It is rejected; one inside the field is not.
+TEST(ProjectStarToPixelTest, RejectsStarPastDistortionFold) {
+    const CameraParameters camera = PaperCamera();
+    const auto offAxis = [](decimal degrees) {
+        const decimal angle = found::DegToRad(degrees);
+        return found::Vec3(DECIMAL_SIN(angle), DECIMAL(0.0), DECIMAL_COS(angle));
+    };
+
+    EXPECT_TRUE(ProjectStarToPixel(offAxis(DECIMAL(10.0)), found::Quaternion::Identity(), camera).has_value());
+    EXPECT_FALSE(ProjectStarToPixel(offAxis(DECIMAL(32.0)), found::Quaternion::Identity(), camera).has_value());
+}
+
+// The radial map can fold and then turn upward again, so a star whose own
+// slope is positive is still rejected if a fold lies between it and the axis.
+// Here the slope 1 - 3 s + 1.4 s^3 (s = r^2) is negative near s = 0.5 and
+// positive again at s = 2.
+TEST(ProjectStarToPixelTest, RejectsStarBeyondFoldThatUnfolds) {
+    CameraParameters camera = PinholeCamera(DECIMAL(100.0), DECIMAL(100.0), DECIMAL(320.0), DECIMAL(240.0));
+    camera.k1 = DECIMAL(-1.0);
+    camera.k3 = DECIMAL(0.2);
+
+    // r^2 = 2 and r^2 = 0.04.
+    EXPECT_FALSE(ProjectStarToPixel(found::Vec3(DECIMAL(1.0), DECIMAL(1.0), DECIMAL(1.0)).normalized(),
+                                    found::Quaternion::Identity(),
+                                    camera)
+                     .has_value());
+    EXPECT_TRUE(ProjectStarToPixel(found::Vec3(DECIMAL(0.2), DECIMAL(0.0), DECIMAL(1.0)).normalized(),
+                                   found::Quaternion::Identity(),
+                                   camera)
+                    .has_value());
+}
+
+// Barrel distortion that never folds (the datasheet fit for the 6 mm lens)
+// keeps stars however far off axis.
+TEST(ProjectStarToPixelTest, KeepsStarsWhenDistortionNeverFolds) {
+    EXPECT_TRUE(ProjectStarToPixel(found::Vec3(DECIMAL(2.0), DECIMAL(1.5), DECIMAL(1.0)).normalized(),
+                                   found::Quaternion::Identity(),
+                                   DatasheetCamera())
+                    .has_value());
 }
 
 TEST(BrownDistortTest, PureRadial) {

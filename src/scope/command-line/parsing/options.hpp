@@ -35,6 +35,12 @@ SCOPE_CLI_OPTION("catalog-path", std::string, catalogPath, std::string("./bright
 SCOPE_CLI_OPTION("centroid-threshold", int, centroidThreshold, 40, std::atoi(optarg), "Minimum dark-subtracted intensity for a pixel to join a centroid mask (paper does not specify; 40 is a starting value)")  \
 SCOPE_CLI_OPTION("magnitude-threshold", decimal, magnitudeThreshold, 6, found::strtodecimal(optarg), "Faintest apparent magnitude to project from the catalog; fainter stars are skipped to keep the field sparse (default 6.0)")  \
 SCOPE_CLI_OPTION("roi-size", int, roiSize, 31, std::atoi(optarg), "Side length in pixels of the square window searched around each star's predicted position (default 31, the paper's value); the window is centered on a pixel, so an even value acts as the next odd one")  \
+SCOPE_CLI_OPTION("fixed-parameters", std::string, fixedParameters, std::string("principal-point-x,principal-point-y"), std::string(optarg), "Comma-separated camera parameters to hold at the prior instead of estimating, named as in the flags above; 'none', or 'all' to refine only the attitudes (default principal-point-x,principal-point-y)")  \
+SCOPE_CLI_OPTION("attitude-correction", std::string, attitudeCorrection, std::string("per-image"), std::string(optarg), "'per-image' for one attitude correction per star image (the paper's Method 1, default) or 'shared' for one common to all (Method 2)")  \
+SCOPE_CLI_OPTION("outlier-threshold", decimal, outlierThreshold, 4, found::strtodecimal(optarg), "Observations whose residual exceeds this many robust standard deviations are rejected and the fit repeated; 0 disables rejection (default 4)")  \
+SCOPE_CLI_OPTION("max-iterations", int, maxIterations, 100, std::atoi(optarg), "Most Levenberg-Marquardt steps per fit (default 100)")  \
+SCOPE_CLI_OPTION("output-attitudes", std::string, outputAttitudesPath, std::string(""), std::string(optarg), "If given, write the refined attitudes here, in the --attitudes format")  \
+SCOPE_CLI_OPTION("output-residuals", std::string, outputResidualsPath, std::string(""), std::string(optarg), "If given, write a CSV here of each observation's measured and predicted pixel and whether the fit used it")  \
 
 // NOLINTEND
 

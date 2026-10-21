@@ -10,6 +10,7 @@
 #ifndef SRC_SCOPE_PROJECTION_PROJECTION_HPP_
 #define SRC_SCOPE_PROJECTION_PROJECTION_HPP_
 
+#include <array>
 #include <optional>
 
 #include "common/decimal.hpp"
@@ -43,6 +44,38 @@ struct CameraParameters {
     decimal p1 = DECIMAL(0.0);
     /// Second decentering (tangential) coefficient.
     decimal p2 = DECIMAL(0.0);
+};
+
+/// Number of parameters in CameraParameters.
+constexpr int kCameraParameterCount = 10;
+
+/// CameraParameters' fields in the paper's state order [k; xi], for code that
+/// treats the parameters as a vector: camera.*kCameraParameterFields[i].
+inline constexpr std::array<decimal CameraParameters::*, kCameraParameterCount> kCameraParameterFields = {
+    &CameraParameters::focalLengthX,
+    &CameraParameters::alpha,
+    &CameraParameters::focalLengthY,
+    &CameraParameters::principalX,
+    &CameraParameters::principalY,
+    &CameraParameters::k1,
+    &CameraParameters::k2,
+    &CameraParameters::k3,
+    &CameraParameters::p1,
+    &CameraParameters::p2,
+};
+
+/// Each parameter's command-line flag name, in kCameraParameterFields order.
+inline constexpr std::array<const char *, kCameraParameterCount> kCameraParameterNames = {
+    "focal-length-x",
+    "alpha",
+    "focal-length-y",
+    "principal-point-x",
+    "principal-point-y",
+    "k1",
+    "k2",
+    "k3",
+    "p1",
+    "p2",
 };
 
 /**
@@ -83,12 +116,14 @@ found::Quaternion LostAttitudeToScopeFrame(const found::Quaternion &lostAttitude
  *
  * @param eI Unit line of sight in the inertial frame.
  * @param attitude Rotation from the inertial frame into the camera frame
- *                 (e_C = attitude * e_I), boresight on +z.
+ *                 (e_C = attitude * e_I), boresight on +z, as a unit
+ *                 quaternion.
  * @param camera The intrinsics and distortion coefficients.
  *
  * @return The predicted pixel [u', v'], or std::nullopt if the star is at or
- *         behind the image plane (camera-frame z <= 0). The pixel may lie
- *         outside the sensor; check it with InSensorWithMargin.
+ *         behind the image plane, or past the radius where the radial
+ *         distortion folds back on itself. The pixel may lie outside the
+ *         sensor; check it with InSensorWithMargin.
  */
 std::optional<found::Vec2> ProjectStarToPixel(const found::Vec3 &eI,
                                               const found::Quaternion &attitude,

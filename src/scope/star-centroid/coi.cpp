@@ -4,6 +4,7 @@
 #include <cstddef>
 #include <cstdint>
 #include <optional>
+#include <vector>
 
 #include "common/decimal.hpp"
 #include "common/spatial/attitude-utils.hpp"
@@ -14,7 +15,8 @@ std::optional<found::Vec2> ExtractCentroid(const Image &darkSubtracted,
                                            const found::Vec2 &expectedPixel,
                                            int roiSize,
                                            int recenterRadius,
-                                           unsigned char threshold) {
+                                           unsigned char threshold,
+                                           const std::vector<found::Vec2> &neighbours) {
     const int width = darkSubtracted.width;
     const int height = darkSubtracted.height;
     const int channels = darkSubtracted.channels;
@@ -33,12 +35,24 @@ std::optional<found::Vec2> ExtractCentroid(const Image &darkSubtracted,
     const int y0 = std::max(0, cy - half);
     const int y1 = std::min(height - 1, cy + half);
 
-    // Brightest pixel in the ROI.
+    // Whether (x, y) is a neighbour's to search rather than this star's.
+    const auto nearerNeighbour = [&](int x, int y) {
+        const found::Vec2 pixel(DECIMAL(x), DECIMAL(y));
+        const decimal own = (pixel - expectedPixel).squaredNorm();
+        return std::any_of(neighbours.begin(), neighbours.end(), [&](const found::Vec2 &neighbour) {
+            return (pixel - neighbour).squaredNorm() < own;
+        });
+    };
+
+    // Brightest searched pixel in the ROI.
     int bx = -1;
     int by = -1;
     int brightest = -1;
     for (int y = y0; y <= y1; ++y) {
         for (int x = x0; x <= x1; ++x) {
+            if (nearerNeighbour(x, y)) {
+                continue;
+            }
             const int val = intensity(x, y);
             if (val > brightest) {
                 brightest = val;
@@ -48,7 +62,8 @@ std::optional<found::Vec2> ExtractCentroid(const Image &darkSubtracted,
         }
     }
 
-    // The ROI was clamped away entirely, or nothing in it clears the threshold.
+    // Nothing was searched (the ROI was clamped away, or every pixel in it is
+    // a neighbour's), or nothing searched clears the threshold.
     if (bx < 0 || brightest <= thr) {
         return std::nullopt;
     }

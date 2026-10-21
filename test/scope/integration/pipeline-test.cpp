@@ -14,6 +14,7 @@
 #include "scope/command-line/parsing/options.hpp"
 #include "scope/common/style.hpp"
 #include "scope/noise-filter/noise-filter.hpp"
+#include "scope/optimization/calibration-fit.hpp"
 #include "scope/optimization/optimization.hpp"
 #include "scope/projection/projection.hpp"
 #include "scope/star-centroid/star-centroid.hpp"
@@ -54,16 +55,18 @@ TEST(PipelineIntegrationTest, RunsEndToEnd) {
     found::FunctionStage<Image, CentroidObservations> *starPtr = starStage.get();
 
     std::unique_ptr<found::FunctionStage<CentroidObservations, CalibrationResult>> optStage =
-        std::make_unique<LMAOptimizationAlgorithm>(options);
+        std::make_unique<LMAOptimizationAlgorithm>(camera, FitSettings());
 
     PrimaryScopePipeline pipeline;
     pipeline.AddStage(std::move(noiseStage)).AddStage(std::move(starStage)).Complete(std::move(optStage));
 
     CalibrationResult result = pipeline.Run(darkFrames);
 
-    // The optimizer is a stub, so the result is empty and unconverged.
+    // One star cannot determine 13 states, so the fit hands back the prior,
+    // unconverged, with the one residual it predicts.
     EXPECT_FALSE(result.converged);
-    EXPECT_TRUE(result.residuals.empty());
+    ASSERT_EQ(result.residuals.size(), 1u);
+    EXPECT_NEAR(result.residuals[0].norm(), DECIMAL(0.0), DECIMAL(1e-3));
 
     CentroidObservations *observations = starPtr->GetProduct();
     ASSERT_NE(observations, nullptr);

@@ -8,8 +8,9 @@
 
 #include "common/pipeline/stages.hpp"
 
-#include "scope/command-line/parsing/options.hpp"
 #include "scope/common/style.hpp"
+#include "scope/optimization/calibration-fit.hpp"
+#include "scope/projection/projection.hpp"
 
 namespace scope {
 
@@ -19,23 +20,32 @@ namespace scope {
 class OptimizationAlgorithm : public found::FunctionStage<CentroidObservations, CalibrationResult> {};
 
 /**
- * Levenberg-Marquardt parameter optimizer. Stub pending the real algorithm.
+ * Levenberg-Marquardt parameter optimizer (Orion paper §"Estimation of Camera
+ * Calibration Parameters"); a pipeline wrapper around FitCalibration.
  */
 class LMAOptimizationAlgorithm : public OptimizationAlgorithm {
  public:
     /**
-     * @param options Parsed recalibration options (currently unused).
+     * @param prior The prior camera parameters, where the fit starts.
+     * @param settings Which parameters to estimate and how.
      */
-    explicit LMAOptimizationAlgorithm([[maybe_unused]] const RecalibrationOptions &options) {}
+    LMAOptimizationAlgorithm(const CameraParameters &prior, const FitSettings &settings)
+        : prior_(prior), settings_(settings) {}
 
     /**
      * Fits camera parameters to the star centroids.
      *
      * @param observations The star-centroid stage's output.
      *
-     * @return The fitted calibration; from the stub, an empty, unconverged result.
+     * @return The fitted calibration (see FitCalibration).
      */
     CalibrationResult Run(const CentroidObservations &observations) override;
+
+ private:
+    /// The prior camera parameters.
+    const CameraParameters prior_;
+    /// Which parameters to estimate and how.
+    const FitSettings settings_;
 };
 
 }  // namespace scope
