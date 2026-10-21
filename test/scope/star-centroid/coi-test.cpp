@@ -117,4 +117,44 @@ TEST(ExtractCentroidTest, ReturnsNulloptWhenRoiOutsideImage) {
     EXPECT_FALSE(centroid.has_value());
 }
 
+// With a neighbour expected 6 px to the right, pixels past the midpoint are
+// the neighbour's, so the brighter star there is skipped for the dimmer one.
+TEST(ExtractCentroidTest, SkipsPixelsNearerANeighbour) {
+    TestImage image;
+    image.Set(45, 30, 200);
+    image.Set(37, 30, 100);
+    Image view = image.View();
+    const found::Vec2 expected(DECIMAL(40.0), DECIMAL(30.0));
+    const std::vector<found::Vec2> neighbours = {found::Vec2(DECIMAL(46.0), DECIMAL(30.0))};
+
+    std::optional<found::Vec2> whole = ExtractCentroid(view, expected, kRoiSize, kRecenterRadius, 40);
+    ASSERT_TRUE(whole.has_value());
+    EXPECT_NEAR(whole->x(), DECIMAL(45.0), kTol);
+
+    std::optional<found::Vec2> own = ExtractCentroid(view, expected, kRoiSize, kRecenterRadius, 40, neighbours);
+    ASSERT_TRUE(own.has_value());
+    EXPECT_NEAR(own->x(), DECIMAL(37.0), kTol);
+    EXPECT_NEAR(own->y(), DECIMAL(30.0), kTol);
+}
+
+// A pixel as near the neighbour as this star is searched by both, and one
+// strictly nearer the neighbour by the neighbour only.
+TEST(ExtractCentroidTest, MidpointBelongsToBothStars) {
+    const found::Vec2 expected(DECIMAL(40.0), DECIMAL(30.0));
+    const std::vector<found::Vec2> neighbours = {found::Vec2(DECIMAL(46.0), DECIMAL(30.0))};
+
+    TestImage midpoint;
+    midpoint.Set(43, 30, 200);
+    Image midpointView = midpoint.View();
+    std::optional<found::Vec2> centroid =
+        ExtractCentroid(midpointView, expected, kRoiSize, kRecenterRadius, 40, neighbours);
+    ASSERT_TRUE(centroid.has_value());
+    EXPECT_NEAR(centroid->x(), DECIMAL(43.0), kTol);
+
+    TestImage past;
+    past.Set(44, 30, 200);
+    Image pastView = past.View();
+    EXPECT_FALSE(ExtractCentroid(pastView, expected, kRoiSize, kRecenterRadius, 40, neighbours).has_value());
+}
+
 }  // namespace scope

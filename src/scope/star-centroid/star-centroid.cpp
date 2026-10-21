@@ -1,5 +1,6 @@
 #include "scope/star-centroid/star-centroid.hpp"
 
+#include <algorithm>
 #include <cstddef>
 #include <cstdlib>
 
@@ -24,6 +25,15 @@ constexpr int kRecenterRadius = 3;
 /// Two centroids closer than this (pixels) are treated as the same blob. Sized
 /// to the mask radius.
 constexpr decimal kCentroidMatchTolerance = DECIMAL(3.0);
+/// The median offset is applied only when at least this many isolated stars
+/// measure it, so that one wrong match cannot move it far.
+constexpr std::size_t kMinOffsetStars = 3;
+
+/// A catalog star and the pixel the prior puts it at.
+struct Prediction {
+    std::size_t catalogIndex;
+    found::Vec2 pixel;
+};
 
 /// Subtracts the dark frame from a star image, clamping at zero. The caller
 /// must std::free the returned buffer.
@@ -39,6 +49,79 @@ unsigned char *DarkSubtract(const Image &star, const Image &dark) {
         out[i] = star.image[i] > dark.image[i] ? static_cast<unsigned char>(star.image[i] - dark.image[i]) : 0;
     }
     return out;
+}
+
+/// For each prediction, the indices of the others within roiSize of it in both
+/// u and v. A star any farther away could reach its window only from beyond
+/// its own.
+std::vector<std::vector<std::size_t>> FindNeighbours(const std::vector<Prediction> &predictions, int roiSize) {
+    const decimal reach = DECIMAL(roiSize);
+    std::vector<std::vector<std::size_t>> neighbours(predictions.size());
+    for (std::size_t a = 0; a < predictions.size(); ++a) {
+        for (std::size_t b = a + 1; b < predictions.size(); ++b) {
+            const found::Vec2 apart = predictions[b].pixel - predictions[a].pixel;
+            if (DECIMAL_ABS(apart.x()) <= reach && DECIMAL_ABS(apart.y()) <= reach) {
+                neighbours[a].push_back(b);
+                neighbours[b].push_back(a);
+            }
+        }
+    }
+    return neighbours;
+}
+
+/// The median of the values (the lower one for an even count).
+decimal Median(std::vector<decimal> values) {
+    const auto middle = values.begin() + static_cast<std::ptrdiff_t>((values.size() - 1) / 2);
+    std::nth_element(values.begin(), middle, values.end());
+    return *middle;
+}
+
+/// How far the stars sit from their predictions, from the stars with no
+/// neighbour: each has its window to itself, so its centroid measures the
+/// prior's error there. The median over them, mostly the attitude error, or
+/// zero if fewer than kMinOffsetStars centroid.
+found::Vec2 MedianOffset(const Image &darkSubtracted,
+                         const std::vector<Prediction> &predictions,
+                         const std::vector<std::vector<std::size_t>> &neighbours,
+                         int roiSize,
+                         int sensorMargin,
+                         unsigned char threshold) {
+    std::vector<decimal> offsetsU;
+    std::vector<decimal> offsetsV;
+    for (std::size_t k = 0; k < predictions.size(); ++k) {
+        const found::Vec2 &expected = predictions[k].pixel;
+        if (!neighbours[k].empty() ||
+            !InSensorWithMargin(expected, darkSubtracted.width, darkSubtracted.height, sensorMargin)) {
+            continue;
+        }
+        const std::optional<found::Vec2> centroid =
+            ExtractCentroid(darkSubtracted, expected, roiSize, kRecenterRadius, threshold);
+        if (centroid.has_value()) {
+            offsetsU.push_back(centroid->x() - expected.x());
+            offsetsV.push_back(centroid->y() - expected.y());
+        }
+    }
+    if (offsetsU.size() < kMinOffsetStars) {
+        return found::Vec2(DECIMAL(0.0), DECIMAL(0.0));
+    }
+    return found::Vec2(Median(offsetsU), Median(offsetsV));
+}
+
+/// Appends to observations each candidate whose centroid no other candidate's
+/// is within kCentroidMatchTolerance of. Two stars can still share a blob that
+/// sits about halfway between their predictions, where it could be either.
+/// Rather than guess, both are dropped.
+void KeepUnambiguous(const std::vector<Observation> &candidates, std::vector<Observation> *observations) {
+    for (std::size_t a = 0; a < candidates.size(); ++a) {
+        bool ambiguous = false;
+        for (std::size_t b = 0; b < candidates.size() && !ambiguous; ++b) {
+            ambiguous =
+                a != b && (candidates[a].measuredPixel - candidates[b].measuredPixel).norm() < kCentroidMatchTolerance;
+        }
+        if (!ambiguous) {
+            observations->push_back(candidates[a]);
+        }
+    }
 }
 
 }  // namespace
@@ -70,42 +153,53 @@ CentroidObservations ROIFilterAlgorithm::Run(const Image &darkFrame) {
         unsigned char *subtracted = DarkSubtract(star, darkFrame);
         const Image darkSubtracted{star.width, star.height, star.channels, subtracted};
 
-        std::vector<Observation> candidates;
+        // Every star bright enough to search for that the prior puts on the
+        // sensor or near enough to light its edge.
+        std::vector<Prediction> predictions;
         for (std::size_t j = 0; j < catalog_.size(); ++j) {
             if (catalog_[j].magnitude > magnitudeLimit) {
                 continue;
             }
+            const std::optional<found::Vec2> pixel = ProjectStarToPixel(catalog_[j].spatial, attitudes_[i], camera_);
+            if (pixel.has_value() && InSensorWithMargin(*pixel, star.width, star.height, -options_.roiSize)) {
+                predictions.push_back(Prediction{j, *pixel});
+            }
+        }
+        const std::vector<std::vector<std::size_t>> neighbours = FindNeighbours(predictions, options_.roiSize);
 
-            const std::optional<found::Vec2> expected = ProjectStarToPixel(catalog_[j].spatial, attitudes_[i], camera_);
-            if (!expected.has_value() || !InSensorWithMargin(*expected, star.width, star.height, sensorMargin)) {
+        const found::Vec2 offset =
+            MedianOffset(darkSubtracted, predictions, neighbours, options_.roiSize, sensorMargin, threshold);
+
+        // Every window moves by the offset, and each star searches only the
+        // part of its window nearer its own prediction than a neighbour's, so a
+        // star too faint to centroid does not take a brighter neighbour's blob
+        // instead.
+        std::vector<Observation> candidates;
+        for (std::size_t k = 0; k < predictions.size(); ++k) {
+            const found::Vec2 expected = predictions[k].pixel + offset;
+            if (!InSensorWithMargin(expected, star.width, star.height, sensorMargin)) {
                 continue;
             }
-
+            std::vector<found::Vec2> nearby;
+            for (std::size_t n : neighbours[k]) {
+                nearby.push_back(predictions[n].pixel + offset);
+            }
             const std::optional<found::Vec2> centroid =
-                ExtractCentroid(darkSubtracted, *expected, options_.roiSize, kRecenterRadius, threshold);
+                ExtractCentroid(darkSubtracted, expected, options_.roiSize, kRecenterRadius, threshold, nearby);
             if (centroid.has_value()) {
+                const CatalogStar &catalogStar = catalog_[predictions[k].catalogIndex];
                 candidates.push_back(
-                    Observation{static_cast<int>(i), catalog_[j].name, catalog_[j].spatial, *centroid});
+                    Observation{static_cast<int>(i), catalogStar.name, catalogStar.spatial, *centroid});
             }
         }
 
         std::free(subtracted);
 
-        // Two catalog stars sharing a blob would hand the optimizer an outlier.
-        // Rather than guess which star the blob belongs to, drop both.
         [[maybe_unused]] const std::size_t observationsBefore = result.observations.size();
-        for (std::size_t a = 0; a < candidates.size(); ++a) {
-            bool ambiguous = false;
-            for (std::size_t b = 0; b < candidates.size() && !ambiguous; ++b) {
-                ambiguous = a != b && (candidates[a].measuredPixel - candidates[b].measuredPixel).norm() <
-                                          kCentroidMatchTolerance;
-            }
-            if (!ambiguous) {
-                result.observations.push_back(candidates[a]);
-            }
-        }
+        KeepUnambiguous(candidates, &result.observations);
         LOG_INFO("Star image " << i << ": " << result.observations.size() - observationsBefore << " of "
-                               << candidates.size() << " centroids kept");
+                               << candidates.size() << " centroids kept, windows moved by (" << offset.x() << ", "
+                               << offset.y() << ") px");
     }
 
     return result;

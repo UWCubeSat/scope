@@ -151,7 +151,8 @@ TEST(ROIFilterAlgorithmTest, SkipsStarFainterThanMagnitudeThreshold) {
     EXPECT_EQ(result.observations[0].starName, 1);
 }
 
-// Two catalog stars a pixel apart lock onto the same blob; both are dropped.
+// Two catalog stars a pixel apart share one blob, which could be either's; both
+// are dropped.
 TEST(ROIFilterAlgorithmTest, DropsCollidingObservations) {
     TestImage dark(10);
     TestImage star(10);
@@ -189,6 +190,144 @@ TEST(ROIFilterAlgorithmTest, KeepsWellSeparatedStars) {
     CentroidObservations result = algorithm.Run(darkView);
 
     EXPECT_EQ(result.observations.size(), 2u);
+}
+
+// A star too faint to show, 8 px from a bright one, finds nothing on its side
+// of the midpoint instead of taking the bright star's blob, so the bright star
+// is kept.
+TEST(ROIFilterAlgorithmTest, KeepsBrightStarNextToFaintOne) {
+    TestImage dark(10);
+    TestImage star(10);
+    star.PaintStar(40, 36);
+
+    RecalibrationOptions options;
+    options.starImages = {star.View()};
+
+    Catalog catalog;
+    catalog.push_back(CatalogStar{DirectionForPixel(DECIMAL(40.0), DECIMAL(36.0)), 200, 1});
+    catalog.push_back(CatalogStar{DirectionForPixel(DECIMAL(32.0), DECIMAL(36.0)), 590, 2});
+
+    ROIFilterAlgorithm algorithm(options, CenteredCamera(), catalog, {found::Quaternion::Identity()});
+    Image darkView = dark.View();
+    CentroidObservations result = algorithm.Run(darkView);
+
+    ASSERT_EQ(result.observations.size(), 1u);
+    EXPECT_EQ(result.observations[0].starName, 1);
+    EXPECT_NEAR(result.observations[0].measuredPixel.x(), DECIMAL(40.0), kTol);
+    EXPECT_NEAR(result.observations[0].measuredPixel.y(), DECIMAL(36.0), kTol);
+}
+
+// Each window holds both stars of a pair 8 px apart, and the brighter one's
+// peak would win both searches; each star finds its own blob instead.
+TEST(ROIFilterAlgorithmTest, KeepsBothStarsOfAClosePair) {
+    TestImage dark(10);
+    TestImage star(10);
+    star.PaintStar(40, 36);
+    star.Set(32, 36, 120);
+
+    RecalibrationOptions options;
+    options.starImages = {star.View()};
+
+    Catalog catalog;
+    catalog.push_back(CatalogStar{DirectionForPixel(DECIMAL(40.0), DECIMAL(36.0)), 200, 1});
+    catalog.push_back(CatalogStar{DirectionForPixel(DECIMAL(32.0), DECIMAL(36.0)), 300, 2});
+
+    ROIFilterAlgorithm algorithm(options, CenteredCamera(), catalog, {found::Quaternion::Identity()});
+    Image darkView = dark.View();
+    CentroidObservations result = algorithm.Run(darkView);
+
+    ASSERT_EQ(result.observations.size(), 2u);
+    EXPECT_EQ(result.observations[0].starName, 1);
+    EXPECT_NEAR(result.observations[0].measuredPixel.x(), DECIMAL(40.0), kTol);
+    EXPECT_EQ(result.observations[1].starName, 2);
+    EXPECT_NEAR(result.observations[1].measuredPixel.x(), DECIMAL(32.0), kTol);
+    EXPECT_NEAR(result.observations[1].measuredPixel.y(), DECIMAL(36.0), kTol);
+}
+
+namespace {
+
+/// Every star sits 4 px left of where the prior puts it. Three are alone in
+/// their 11 px windows; the other two are a faint star with no blob, predicted
+/// at (26, 40), and a bright one predicted 6 px to its right but imaged at
+/// (28, 40), nearer the faint star's prediction than its own.
+struct OffsetScene {
+    TestImage dark{10};
+    TestImage star{10};
+    Catalog catalog;
+
+    explicit OffsetScene(int isolatedStars) {
+        const int isolatedColumns[] = {12, 32, 52};
+        for (int s = 0; s < 3; ++s) {
+            const decimal column = DECIMAL(isolatedColumns[s]);
+            catalog.push_back(CatalogStar{DirectionForPixel(column, DECIMAL(12.0)), 200, s + 1});
+            if (s < isolatedStars) {
+                star.PaintStar(isolatedColumns[s] - 4, 12);
+            }
+        }
+        catalog.push_back(CatalogStar{DirectionForPixel(DECIMAL(26.0), DECIMAL(40.0)), 590, 4});
+        catalog.push_back(CatalogStar{DirectionForPixel(DECIMAL(32.0), DECIMAL(40.0)), 200, 5});
+        star.Set(28, 40, 210);
+    }
+
+    CentroidObservations Run() {
+        RecalibrationOptions options;
+        options.starImages = {star.View()};
+        options.roiSize = 11;
+        Image darkView = dark.View();
+        return ROIFilterAlgorithm(options, CenteredCamera(), catalog, {found::Quaternion::Identity()})
+            .Run(darkView);
+    }
+};
+
+}  // namespace
+
+// The isolated stars measure the 4 px offset, the windows and the midpoint
+// between the pair move with it, and the bright star's blob falls on its own
+// side.
+TEST(ROIFilterAlgorithmTest, MovesWindowsByTheMedianOffset) {
+    CentroidObservations result = OffsetScene(3).Run();
+
+    ASSERT_EQ(result.observations.size(), 4u);
+    for (int s = 0; s < 3; ++s) {
+        EXPECT_EQ(result.observations[s].starName, s + 1);
+        EXPECT_NEAR(result.observations[s].measuredPixel.y(), DECIMAL(12.0), kTol);
+    }
+    EXPECT_NEAR(result.observations[0].measuredPixel.x(), DECIMAL(8.0), kTol);
+    EXPECT_EQ(result.observations[3].starName, 5);
+    EXPECT_NEAR(result.observations[3].measuredPixel.x(), DECIMAL(28.0), kTol);
+    EXPECT_NEAR(result.observations[3].measuredPixel.y(), DECIMAL(40.0), kTol);
+}
+
+// Two isolated stars are too few to trust their offset, so the windows stay
+// put and the faint star takes the bright one's blob, the mistake the offset
+// prevents.
+TEST(ROIFilterAlgorithmTest, NeedsThreeIsolatedStarsToMoveWindows) {
+    CentroidObservations result = OffsetScene(2).Run();
+
+    ASSERT_EQ(result.observations.size(), 3u);
+    EXPECT_EQ(result.observations[2].starName, 4);
+    EXPECT_NEAR(result.observations[2].measuredPixel.x(), DECIMAL(28.0), kTol);
+}
+
+// A star the prior puts just off the sensor still claims its side of the
+// midpoint, so a faint star near the edge does not take its blob.
+TEST(ROIFilterAlgorithmTest, StarJustOffTheSensorKeepsItsBlob) {
+    TestImage dark(10);
+    TestImage star(10);
+    star.PaintStar(1, 30);
+
+    RecalibrationOptions options;
+    options.starImages = {star.View()};
+
+    Catalog catalog;
+    catalog.push_back(CatalogStar{DirectionForPixel(DECIMAL(-3.0), DECIMAL(30.0)), 200, 1});
+    catalog.push_back(CatalogStar{DirectionForPixel(DECIMAL(17.0), DECIMAL(30.0)), 590, 2});
+
+    ROIFilterAlgorithm algorithm(options, CenteredCamera(), catalog, {found::Quaternion::Identity()});
+    Image darkView = dark.View();
+    CentroidObservations result = algorithm.Run(darkView);
+
+    EXPECT_TRUE(result.observations.empty());
 }
 
 // A visible star in the same catalog is still observed.

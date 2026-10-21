@@ -30,10 +30,15 @@ class StarCentroidAlgorithm : public found::FunctionStage<Image, CentroidObserva
  * Processing and Star Centroiding").
  *
  * For each star image, every catalog star brighter than the magnitude threshold
- * is projected with the prior attitude and calibration. Those that land on the
- * sensor (less an ROI margin) are centroided with ExtractCentroid on the
- * dark-subtracted image. Centroids that collide within one image (two catalog
- * stars on the same blob) are dropped as ambiguous.
+ * is projected with the prior attitude and calibration. The stars with no
+ * other within a window's width are centroided first, and the median of their
+ * offsets from the predictions moves every window, which takes out most of an
+ * attitude error. Those that then land on the sensor (less an ROI margin) are
+ * centroided with ExtractCentroid on the dark-subtracted image, each searching
+ * only the part of its window nearer its own prediction than another star's.
+ * Neither step is in the paper, whose narrow field rarely puts two stars in
+ * one window. Centroids that still collide within one image (two catalog stars
+ * on the same blob) are dropped as ambiguous.
  */
 class ROIFilterAlgorithm : public StarCentroidAlgorithm {
  public:
