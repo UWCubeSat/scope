@@ -35,7 +35,9 @@ jobs:
       uses: nick-fields/retry@v3.0.2
       with:
         max_attempts: 3
-        timeout_minutes: 3
+        # The optimizer's fits and the synthetic end-to-end tests run for
+        # about two minutes under valgrind in an unoptimized build.
+        timeout_minutes: 10
         command: |
           ./build.sh clean
           ./build.sh cmake -DOMIT_ASAN=ON --target scope-test --parallel 16

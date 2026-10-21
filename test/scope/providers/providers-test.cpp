@@ -15,6 +15,7 @@
 #include "scope/command-line/parsing/options.hpp"
 #include "scope/common/style.hpp"
 #include "scope/noise-filter/noise-filter.hpp"
+#include "scope/optimization/calibration-fit.hpp"
 #include "scope/optimization/optimization.hpp"
 #include "scope/projection/projection.hpp"
 #include "scope/providers/factory.hpp"
@@ -72,6 +73,81 @@ TEST(ProvideCameraParametersTest, CopiesEveryPriorParameter) {
     EXPECT_EQ(camera.p2, DECIMAL(10.0));
 }
 
+TEST(ProvideCameraParametersTest, ZeroFocalLengthWithStarImagesThrows) {
+    std::vector<unsigned char> pixels = FlatPixels(kWidth, kHeight, 10);
+    RecalibrationOptions options;
+    options.focalLengthX = DECIMAL(100.0);
+    options.starImages = {Image{kWidth, kHeight, 1, pixels.data()}};
+
+    EXPECT_THROW(ProvideCameraParameters(options), std::runtime_error);
+}
+
+// The command line's default and FitSettings' own default agree: everything
+// but the principal point is estimated.
+TEST(ProvideFitSettingsTest, DefaultFixesPrincipalPoint) {
+    const FitSettings settings = ProvideFitSettings(RecalibrationOptions());
+
+    EXPECT_EQ(settings.estimate, FitSettings().estimate);
+    EXPECT_FALSE(settings.estimate[3]);
+    EXPECT_FALSE(settings.estimate[4]);
+    EXPECT_EQ(settings.attitudeModel, AttitudeCorrectionModel::kPerImage);
+    EXPECT_EQ(settings.outlierThreshold, FitSettings().outlierThreshold);
+    EXPECT_EQ(settings.maxIterations, FitSettings().maxIterations);
+}
+
+TEST(ProvideFitSettingsTest, ParsesFixedParameters) {
+    RecalibrationOptions options;
+    options.fixedParameters = "k3, p2,alpha";
+
+    const FitSettings settings = ProvideFitSettings(options);
+
+    for (int p = 0; p < kCameraParameterCount; ++p) {
+        const std::string name = kCameraParameterNames[p];
+        EXPECT_EQ(settings.estimate[p], name != "k3" && name != "p2" && name != "alpha") << name;
+    }
+}
+
+TEST(ProvideFitSettingsTest, NoneAndAll) {
+    RecalibrationOptions options;
+    options.fixedParameters = "none";
+    for (const bool estimated : ProvideFitSettings(options).estimate) {
+        EXPECT_TRUE(estimated);
+    }
+    options.fixedParameters = "all";
+    for (const bool estimated : ProvideFitSettings(options).estimate) {
+        EXPECT_FALSE(estimated);
+    }
+}
+
+TEST(ProvideFitSettingsTest, ParsesTheRest) {
+    RecalibrationOptions options;
+    options.attitudeCorrection = "shared";
+    options.outlierThreshold = DECIMAL(3.5);
+    options.maxIterations = 12;
+
+    const FitSettings settings = ProvideFitSettings(options);
+
+    EXPECT_EQ(settings.attitudeModel, AttitudeCorrectionModel::kShared);
+    EXPECT_EQ(settings.outlierThreshold, DECIMAL(3.5));
+    EXPECT_EQ(settings.maxIterations, 12);
+}
+
+TEST(ProvideFitSettingsTest, RejectsBadValues) {
+    RecalibrationOptions unknownParameter;
+    unknownParameter.fixedParameters = "focal-length";
+    RecalibrationOptions unknownModel;
+    unknownModel.attitudeCorrection = "per-frame";
+    RecalibrationOptions negativeThreshold;
+    negativeThreshold.outlierThreshold = DECIMAL(-1.0);
+    RecalibrationOptions noIterations;
+    noIterations.maxIterations = 0;
+
+    EXPECT_THROW(ProvideFitSettings(unknownParameter), std::runtime_error);
+    EXPECT_THROW(ProvideFitSettings(unknownModel), std::runtime_error);
+    EXPECT_THROW(ProvideFitSettings(negativeThreshold), std::runtime_error);
+    EXPECT_THROW(ProvideFitSettings(noIterations), std::runtime_error);
+}
+
 TEST(ProvideAttitudesTest, LoadsAttitudesFile) {
     TempFile file("providers-attitudes.txt", "1 0 0 0\n0 0 0 1\n");
     RecalibrationOptions options;
@@ -82,6 +158,10 @@ TEST(ProvideAttitudesTest, LoadsAttitudesFile) {
     ASSERT_EQ(attitudes.size(), 2u);
     EXPECT_NEAR(attitudes[0].w(), DECIMAL(1.0), DECIMAL(1e-6));
     EXPECT_NEAR(attitudes[1].z(), DECIMAL(1.0), DECIMAL(1e-6));
+}
+
+TEST(ProvideAttitudesTest, NoStarImagesNeedNoAttitudes) {
+    EXPECT_TRUE(ProvideAttitudes(RecalibrationOptions()).empty());
 }
 
 // Star images with no attitudes file is an error, not a silent identity.

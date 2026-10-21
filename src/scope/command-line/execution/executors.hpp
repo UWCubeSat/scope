@@ -43,10 +43,14 @@ class PrimaryScopePipelineExecutor : public found::PipelineExecutor {
     /// Runs the pipeline end to end.
     void ExecutePipeline() override;
     /**
-     * Prints whether the fit converged, the ten camera parameters and the
-     * residual RMS to standard output.
+     * Prints whether the fit converged, the ten camera parameters with their
+     * uncertainties, the residual RMS and the alignment correction to
+     * standard output. Writes the refined attitudes if --output-attitudes is
+     * set and the per-observation residuals if --output-residuals is.
      *
      * @pre ExecutePipeline has run.
+     *
+     * @throws std::runtime_error if an output file cannot be written.
      */
     void OutputResults() override;
 
@@ -58,6 +62,9 @@ class PrimaryScopePipelineExecutor : public found::PipelineExecutor {
     /// The noise-filter stage (not owned), kept so its malloc'd dark frame can
     /// be freed after the run.
     found::FunctionStage<Images, Image> *noiseStage_ = nullptr;
+    /// The star-centroid stage (not owned), kept so its observations can be
+    /// written beside their residuals.
+    found::FunctionStage<Image, CentroidObservations> *starStage_ = nullptr;
 };
 
 }  // namespace scope

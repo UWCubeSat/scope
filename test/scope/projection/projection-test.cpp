@@ -1,5 +1,6 @@
 #include <gtest/gtest.h>
 
+#include <cmath>
 #include <optional>
 
 #include "common/decimal.hpp"
@@ -99,6 +100,82 @@ TEST(ProjectStarToPixelTest, RejectsStarBehindCamera) {
     // A star 30 deg off the anti-boresight is still behind the image plane.
     found::Vec3 offAxisBehind(DECIMAL(0.5), DECIMAL(0.0), DECIMAL(-1.0));
     EXPECT_FALSE(ProjectStarToPixel(offAxisBehind.normalized(), found::Quaternion::Identity(), camera).has_value());
+}
+
+// The paper's Table 1 lens (k3 = -12.6) folds back about 26 degrees off axis,
+// so a star at 32 degrees, far outside its 12.8 degree half-diagonal, would
+// land back on the sensor. It is rejected; one inside the field is not.
+TEST(ProjectStarToPixelTest, RejectsStarPastDistortionFold) {
+    CameraParameters camera = PinholeCamera(DECIMAL(7308.2), DECIMAL(7307.2), DECIMAL(1295.5), DECIMAL(1023.5));
+    camera.k1 = DECIMAL(-0.075);
+    camera.k2 = DECIMAL(0.883);
+    camera.k3 = DECIMAL(-12.60);
+    const auto offAxis = [](decimal degrees) {
+        const decimal angle = found::DegToRad(degrees);
+        return found::Vec3(DECIMAL_SIN(angle), DECIMAL(0.0), DECIMAL_COS(angle));
+    };
+
+    EXPECT_TRUE(ProjectStarToPixel(offAxis(DECIMAL(10.0)), found::Quaternion::Identity(), camera).has_value());
+    EXPECT_FALSE(ProjectStarToPixel(offAxis(DECIMAL(32.0)), found::Quaternion::Identity(), camera).has_value());
+}
+
+TEST(DistortionFoldRadiusSquaredTest, FindsTheFold) {
+    CameraParameters paper = PinholeCamera(DECIMAL(7308.2), DECIMAL(7307.2), DECIMAL(1295.5), DECIMAL(1023.5));
+    paper.k1 = DECIMAL(-0.075);
+    paper.k2 = DECIMAL(0.883);
+    paper.k3 = DECIMAL(-12.60);
+    CameraParameters lens = PinholeCamera(DECIMAL(1739.13), DECIMAL(1739.13), DECIMAL(1031.5), DECIMAL(771.5));
+    lens.k1 = DECIMAL(-0.157);
+    lens.k2 = DECIMAL(0.082);
+
+    // The paper's lens folds where the slope 1 + 3 k1 s + 5 k2 s^2 + 7 k3 s^3
+    // first crosses zero, near s = 0.239 (26 degrees off axis).
+    const decimal fold = DistortionFoldRadiusSquared(paper);
+    const decimal slope = DECIMAL(1.0) + DECIMAL(3.0) * paper.k1 * fold + DECIMAL(5.0) * paper.k2 * fold * fold +
+                          DECIMAL(7.0) * paper.k3 * fold * fold * fold;
+    EXPECT_NEAR(fold, DECIMAL(0.239), DECIMAL(0.001));
+    EXPECT_NEAR(slope, DECIMAL(0.0), DECIMAL(1e-9));
+    const decimal r = DECIMAL_SQRT(fold);
+    const decimal tiny = DECIMAL(1e-6);
+    EXPECT_TRUE(ProjectStarToPixel(found::Vec3(r - tiny, DECIMAL(0.0), DECIMAL(1.0)), found::Quaternion::Identity(),
+                                   paper)
+                    .has_value());
+    EXPECT_FALSE(ProjectStarToPixel(found::Vec3(r + tiny, DECIMAL(0.0), DECIMAL(1.0)), found::Quaternion::Identity(),
+                                    paper)
+                     .has_value());
+    EXPECT_TRUE(std::isinf(DistortionFoldRadiusSquared(lens)));
+    EXPECT_TRUE(std::isinf(DistortionFoldRadiusSquared(PinholeCamera(DECIMAL(1.0), DECIMAL(1.0), DECIMAL(0.0),
+                                                                     DECIMAL(0.0)))));
+}
+
+// The radial map can fold and then turn upward again, so a star whose own
+// slope is positive is still rejected if a fold lies between it and the axis.
+// Here the slope 1 - 3 s + 1.4 s^3 (s = r^2) is negative near s = 0.5 and
+// positive again at s = 2.
+TEST(ProjectStarToPixelTest, RejectsStarBeyondFoldThatUnfolds) {
+    CameraParameters camera = PinholeCamera(DECIMAL(100.0), DECIMAL(100.0), DECIMAL(320.0), DECIMAL(240.0));
+    camera.k1 = DECIMAL(-1.0);
+    camera.k3 = DECIMAL(0.2);
+
+    // r^2 = 2 and r^2 = 0.04.
+    EXPECT_FALSE(ProjectStarToPixel(found::Vec3(DECIMAL(1.0), DECIMAL(1.0), DECIMAL(1.0)).normalized(),
+                                    found::Quaternion::Identity(), camera)
+                     .has_value());
+    EXPECT_TRUE(ProjectStarToPixel(found::Vec3(DECIMAL(0.2), DECIMAL(0.0), DECIMAL(1.0)).normalized(),
+                                   found::Quaternion::Identity(), camera)
+                    .has_value());
+}
+
+// Barrel distortion that never folds (the datasheet fit for the 6 mm lens)
+// keeps stars however far off axis.
+TEST(ProjectStarToPixelTest, KeepsStarsWhenDistortionNeverFolds) {
+    CameraParameters camera = PinholeCamera(DECIMAL(1739.13), DECIMAL(1739.13), DECIMAL(1031.5), DECIMAL(771.5));
+    camera.k1 = DECIMAL(-0.157);
+    camera.k2 = DECIMAL(0.082);
+
+    EXPECT_TRUE(ProjectStarToPixel(found::Vec3(DECIMAL(2.0), DECIMAL(1.5), DECIMAL(1.0)).normalized(),
+                                   found::Quaternion::Identity(), camera)
+                    .has_value());
 }
 
 TEST(BrownDistortTest, PureRadial) {
