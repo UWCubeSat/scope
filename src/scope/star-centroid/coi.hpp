@@ -35,11 +35,9 @@ namespace scope {
  *        to the image, so an even value acts as the next odd one.
  * @param recenterRadius The mask radius about the brightest pixel (paper uses 3).
  * @param threshold Intensity a pixel must exceed to join the mask.
- * @param neighbours The expected pixels of other stars near this one. The
- *        search for the brightest pixel skips every pixel strictly nearer one
- *        of them than expectedPixel, so a star does not take a neighbour's blob
- *        for its own. The mask is not restricted. With none, the whole ROI is
- *        searched, as in the paper.
+ * @param neighbours The expected pixels of nearby stars. The search for the
+ *        brightest pixel skips pixels strictly nearer one of them than
+ *        expectedPixel; the mask is not restricted.
  *
  * @return The measured centroid [u', v'] (column, row), or std::nullopt if no
  *         searched pixel exceeds the threshold.

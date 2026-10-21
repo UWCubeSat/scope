@@ -4,10 +4,8 @@
 #include <cmath>
 #include <cstddef>
 
-#include <fstream>
 #include <optional>
 #include <random>
-#include <stdexcept>
 #include <string>
 #include <vector>
 
@@ -15,6 +13,7 @@
 #include "common/spatial/attitude-utils.hpp"
 
 #include "scope/attitude/attitude.hpp"
+#include "scope/common/files.hpp"
 #include "scope/projection/projection.hpp"
 
 namespace scope {
@@ -32,11 +31,7 @@ constexpr decimal kHotPixelMax = DECIMAL(200.0);
 /// A unit vector drawn uniformly over the sphere.
 found::Vec3 RandomDirection(Random *random) {
     std::normal_distribution<decimal> normal;
-    found::Vec3 direction;
-    do {
-        direction = found::Vec3(normal(*random), normal(*random), normal(*random));
-    } while (direction.norm() == DECIMAL(0.0));
-    return direction.normalized();
+    return found::Vec3(normal(*random), normal(*random), normal(*random)).normalized();
 }
 
 /// The standard normal cumulative distribution function.
@@ -55,11 +50,7 @@ found::Quaternion RandomAttitude(Random *random) {
     // A normalized 4-D Gaussian is uniform on the unit 3-sphere, which is a
     // uniform rotation.
     std::normal_distribution<decimal> normal;
-    found::Quaternion attitude;
-    do {
-        attitude = found::Quaternion(normal(*random), normal(*random), normal(*random), normal(*random));
-    } while (attitude.norm() == DECIMAL(0.0));
-    return attitude.normalized();
+    return found::Quaternion(normal(*random), normal(*random), normal(*random), normal(*random)).normalized();
 }
 
 found::Quaternion RandomSmallRotation(decimal sigma, Random *random) {
@@ -109,18 +100,8 @@ std::vector<VisibleStar> VisibleStars(const Catalog &catalog,
                                       int width,
                                       int height,
                                       int margin) {
-    // Neither a star behind the camera nor one past the distortion's fold can
-    // land on the sensor, and a dot product with the boresight rules both out
-    // more cheaply than the projection would: tan(angle)^2 <= fold exactly
-    // when cos(angle) >= 1 / sqrt(1 + fold).
-    const found::Vec3 boresight = attitude.conjugate() * found::Vec3::UnitZ();
-    const decimal fold = DistortionFoldRadiusSquared(camera);
-    const decimal minCosine = std::isinf(fold) ? DECIMAL(0.0) : DECIMAL(1.0) / DECIMAL_SQRT(DECIMAL(1.0) + fold);
     std::vector<VisibleStar> visible;
     for (std::size_t i = 0; i < catalog.size(); ++i) {
-        if (catalog[i].spatial.dot(boresight) <= minCosine) {
-            continue;
-        }
         const std::optional<found::Vec2> pixel = ProjectStarToPixel(catalog[i].spatial, attitude, camera);
         if (pixel.has_value() && InSensorWithMargin(*pixel, width, height, margin)) {
             visible.push_back(VisibleStar{i, *pixel});
@@ -129,11 +110,8 @@ std::vector<VisibleStar> VisibleStars(const Catalog &catalog,
     return visible;
 }
 
-CentroidObservations SimulateObservations(const SyntheticScene &scene,
-                                          const Catalog &catalog,
-                                          int margin,
-                                          decimal centroidNoise,
-                                          Random *random) {
+CentroidObservations SimulateObservations(
+    const SyntheticScene &scene, const Catalog &catalog, int margin, decimal centroidNoise, Random *random) {
     std::normal_distribution<decimal> normal;
     CentroidObservations observations;
     observations.attitudes = scene.priorAttitudes;
@@ -237,20 +215,8 @@ std::vector<unsigned char> RenderDarkFrame(const std::vector<decimal> &fixedPatt
 }
 
 void WritePgm(const std::string &path, int width, int height, const std::vector<unsigned char> &pixels) {
-    if (pixels.size() != static_cast<std::size_t>(width) * static_cast<std::size_t>(height)) {
-        throw std::invalid_argument("WritePgm: pixel count does not match " + std::to_string(width) + " x " +
-                                    std::to_string(height));
-    }
-    std::ofstream file(path, std::ios::binary);
-    if (!file.is_open()) {
-        throw std::runtime_error("WritePgm: failed to open '" + path + "' for writing");
-    }
-    file << "P5\n" << width << " " << height << "\n255\n";
-    file.write(reinterpret_cast<const char *>(pixels.data()), static_cast<std::streamsize>(pixels.size()));
-    file.close();
-    if (file.fail()) {
-        throw std::runtime_error("WritePgm: failed to write '" + path + "'");
-    }
+    const std::string header = "P5\n" + std::to_string(width) + " " + std::to_string(height) + "\n255\n";
+    WriteFile(path, header + std::string(pixels.begin(), pixels.end()));
 }
 
 }  // namespace scope

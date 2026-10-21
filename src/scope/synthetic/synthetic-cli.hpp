@@ -15,11 +15,11 @@
 #include "common/decimal.hpp"
 #include "providers/converters.hpp"
 
-// Arguments to SCOPE_CLI_OPTION, as for RECALIBRATE (options.hpp): flag name,
-// type, property name, default value, converter from optarg, help text.
-
 // NOLINTBEGIN
 
+/// scope-synth's flags, one SCOPE_CLI_OPTION each, with the arguments
+/// RECALIBRATE's take (options.hpp): flag name, type, property name, default
+/// value, converter from optarg, help text.
 #define SYNTHESIZE \
 SCOPE_CLI_OPTION("output-dir", std::string, outputDir, std::string(""), std::string(optarg), "Directory to write the data set to; created if missing (required)")  \
 SCOPE_CLI_OPTION("catalog-path", std::string, catalogPath, std::string("./bright-star-catalog.tsv"), std::string(optarg), "Path to the bright star catalog TSV the stars are drawn from (see download-bsc.sh)")  \
@@ -57,6 +57,7 @@ namespace scope {
 /** Parsed scope-synth options. */
 class SynthesisOptions {
  public:
+/// Expands SYNTHESIZE into one member per flag.
 #define SCOPE_CLI_OPTION(name, type, prop, defaultVal, converter, doc) type prop = defaultVal;
     SYNTHESIZE
 #undef SCOPE_CLI_OPTION

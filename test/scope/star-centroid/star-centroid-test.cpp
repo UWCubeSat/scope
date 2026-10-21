@@ -274,8 +274,7 @@ struct OffsetScene {
         options.starImages = {star.View()};
         options.roiSize = 11;
         Image darkView = dark.View();
-        return ROIFilterAlgorithm(options, CenteredCamera(), catalog, {found::Quaternion::Identity()})
-            .Run(darkView);
+        return ROIFilterAlgorithm(options, CenteredCamera(), catalog, {found::Quaternion::Identity()}).Run(darkView);
     }
 };
 

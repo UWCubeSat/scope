@@ -209,9 +209,10 @@ TEST(AverageQuaternionsTest, IgnoresSign) {
 // Rotations about one axis average to the mean angle when they are small.
 TEST(AverageQuaternionsTest, AveragesSmallRotationsAboutOneAxis) {
     const found::Vec3 axis = found::Vec3(DECIMAL(1.0), DECIMAL(2.0), DECIMAL(-1.0)).normalized();
-    const std::vector<found::Quaternion> rotations = {
-        AttitudeCorrection(DECIMAL(1e-4) * axis), AttitudeCorrection(DECIMAL(3e-4) * axis),
-        AttitudeCorrection(DECIMAL(-1e-4) * axis), AttitudeCorrection(DECIMAL(5e-4) * axis)};
+    const std::vector<found::Quaternion> rotations = {AttitudeCorrection(DECIMAL(1e-4) * axis),
+                                                      AttitudeCorrection(DECIMAL(3e-4) * axis),
+                                                      AttitudeCorrection(DECIMAL(-1e-4) * axis),
+                                                      AttitudeCorrection(DECIMAL(5e-4) * axis)};
 
     const found::Vec3 average = CorrectionRotationVector(AverageQuaternions(rotations));
 
@@ -226,8 +227,8 @@ TEST(AverageQuaternionsTest, SymmetricSetAveragesToIdentity) {
         AttitudeCorrection(found::Vec3(DECIMAL(0.0), DECIMAL(0.0), DECIMAL(0.3))),
         AttitudeCorrection(found::Vec3(DECIMAL(0.0), DECIMAL(0.0), DECIMAL(-0.3)))};
 
-    EXPECT_NEAR(AverageQuaternions(rotations).angularDistance(found::Quaternion::Identity()), DECIMAL(0.0),
-                DECIMAL(1e-12));
+    EXPECT_NEAR(
+        AverageQuaternions(rotations).angularDistance(found::Quaternion::Identity()), DECIMAL(0.0), DECIMAL(1e-12));
 }
 
 // Whichever sign the decomposition picks, the result has a non-negative real
@@ -235,10 +236,11 @@ TEST(AverageQuaternionsTest, SymmetricSetAveragesToIdentity) {
 TEST(AverageQuaternionsTest, RealPartIsNeverNegative) {
     for (int i = 0; i < 40; ++i) {
         const decimal t = DECIMAL(i);
-        const found::Quaternion q =
-            found::Quaternion(DECIMAL_COS(t), DECIMAL_SIN(DECIMAL(1.7) * t), DECIMAL_COS(DECIMAL(2.3) * t),
-                              DECIMAL_SIN(DECIMAL(0.6) * t))
-                .normalized();
+        const found::Quaternion q = found::Quaternion(DECIMAL_COS(t),
+                                                      DECIMAL_SIN(DECIMAL(1.7) * t),
+                                                      DECIMAL_COS(DECIMAL(2.3) * t),
+                                                      DECIMAL_SIN(DECIMAL(0.6) * t))
+                                        .normalized();
 
         const found::Quaternion average = AverageQuaternions({q});
 

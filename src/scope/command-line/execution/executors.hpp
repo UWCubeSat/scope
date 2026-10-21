@@ -43,10 +43,8 @@ class PrimaryScopePipelineExecutor : public found::PipelineExecutor {
     /// Runs the pipeline end to end.
     void ExecutePipeline() override;
     /**
-     * Prints whether the fit converged, the ten camera parameters with their
-     * uncertainties, the residual RMS and the alignment correction to
-     * standard output. Writes the refined attitudes if --output-attitudes is
-     * set and the per-observation residuals if --output-residuals is.
+     * Prints the calibration to standard output and writes the files that
+     * --output-attitudes and --output-residuals ask for.
      *
      * @pre ExecutePipeline has run.
      *

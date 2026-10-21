@@ -2,13 +2,10 @@
 
 #include <getopt.h>
 
-#include <cstddef>
-#include <cstdio>
 #include <cstdlib>
 
 #include <exception>
 #include <filesystem>  // NOLINT(build/c++17)
-#include <fstream>
 #include <iomanip>
 #include <iostream>
 #include <sstream>
@@ -21,6 +18,7 @@
 
 #include "scope/attitude/attitude.hpp"
 #include "scope/catalog/catalog.hpp"
+#include "scope/common/files.hpp"
 #include "scope/projection/projection.hpp"
 #include "scope/synthetic/synthetic.hpp"
 
@@ -28,8 +26,6 @@ namespace scope {
 
 namespace {
 
-/// Margin used to count the stars stage 2 can search for at --roi-size 31.
-constexpr int kDefaultSearchMargin = 16;
 /// Significant digits in truth.txt, well past what any fit resolves.
 constexpr int kTruthPrecision = 12;
 
@@ -61,15 +57,6 @@ std::string NumberedName(const std::string &prefix, int index) {
     std::ostringstream name;
     name << prefix << "-" << std::setw(3) << std::setfill('0') << index << ".pgm";
     return name.str();
-}
-
-void WriteTextFile(const std::string &path, const std::string &contents) {
-    std::ofstream file(path);
-    file << contents;
-    file.close();
-    if (file.fail()) {
-        throw std::runtime_error("scope-synth: failed to write '" + path + "'");
-    }
 }
 
 }  // namespace
@@ -179,16 +166,14 @@ std::string WriteSyntheticDataSet(const SynthesisOptions &options) {
     std::vector<std::string> starPaths;
     for (int k = 0; k < options.starImageCount; ++k) {
         starPaths.push_back((directory / NumberedName("star", k)).string());
-        WritePgm(starPaths.back(),
-                 options.width,
-                 options.height,
-                 RenderStarImage(
-                     catalog, scene.trueAttitudes[k], camera, fixedPattern, options.width, options.height, sensor,
-                     &random));
+        WritePgm(
+            starPaths.back(),
+            options.width,
+            options.height,
+            RenderStarImage(
+                catalog, scene.trueAttitudes[k], camera, fixedPattern, options.width, options.height, sensor, &random));
         summary << "star image " << k << ": "
-                << VisibleStars(catalog, scene.trueAttitudes[k], camera, options.width, options.height,
-                                kDefaultSearchMargin)
-                       .size()
+                << VisibleStars(catalog, scene.trueAttitudes[k], camera, options.width, options.height, 0).size()
                 << " catalog stars on the sensor\n";
     }
 
@@ -211,14 +196,14 @@ std::string WriteSyntheticDataSet(const SynthesisOptions &options) {
           << " " << found::RadToArcSec(misalignment.z()) << "\n";
     truth << "# The true attitude of each star image: w x y z.\n";
     for (const found::Quaternion &attitude : scene.trueAttitudes) {
-        truth << "true-attitude: " << attitude.w() << " " << attitude.x() << " " << attitude.y() << " "
-              << attitude.z() << "\n";
+        truth << "true-attitude: " << attitude.w() << " " << attitude.x() << " " << attitude.y() << " " << attitude.z()
+              << "\n";
     }
-    WriteTextFile((directory / "truth.txt").string(), truth.str());
+    WriteFile((directory / "truth.txt").string(), truth.str());
 
     const std::string arguments = "--dark-frames " + JoinPaths(darkPaths) + " --star-images " + JoinPaths(starPaths) +
                                   " --attitudes " + attitudesPath + " --catalog-path " + options.catalogPath;
-    WriteTextFile((directory / "scope-args.txt").string(), arguments + "\n");
+    WriteFile((directory / "scope-args.txt").string(), arguments + "\n");
 
     summary << "Wrote " << options.darkFrameCount << " dark frames, " << options.starImageCount
             << " star images, attitudes.txt, truth.txt and scope-args.txt to " << options.outputDir << "\n";

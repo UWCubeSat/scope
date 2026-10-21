@@ -36,13 +36,9 @@ constexpr int kImagesPerScenario = 15;
 constexpr decimal kMisalignmentArcsec = DECIMAL(15.0);
 constexpr decimal kStarTrackerErrorArcsec = DECIMAL(10.0);
 constexpr decimal kCentroidNoise = DECIMAL(0.15);
-/// Stage 2's edge margin at the default 31-pixel window.
-constexpr int kMargin = 16;
-/// The paper used SKY2000 to an unstated magnitude, so the star density is
-/// not known. At the Bright Star Catalog's density (9100 stars, about 70 per
-/// image) every camera parameter's error comes out 0.53 times Table 1's for
-/// both methods, which is what about 3.4 times fewer stars would undo. At
-/// this density (about 20 stars per image) Table 1 is reproduced.
+/// The paper does not give its star density. At the Bright Star Catalog's
+/// (about 70 stars per image) every error comes out 0.53 times Table 1's; at
+/// this one (about 20 per image) Table 1 is reproduced.
 constexpr int kCatalogSize = 2650;
 constexpr decimal kCatalogFaintest = DECIMAL(6.5);
 
@@ -117,11 +113,9 @@ void Finish(int scenarios, MonteCarloStatistics *statistics) {
     }
 }
 
-/// Fits both methods to each scenario, as the paper does: with no outlier
-/// rejection, which is not in the paper and which Gaussian noise does not
-/// need. The fits start from the truth: the spread of the solution does not
-/// depend on where the search starts, and convergence from a poor prior is
-/// tested elsewhere.
+/// Fits both methods to each scenario without outlier rejection, as the paper
+/// does. The fits start from the truth, since the spread of the solution does
+/// not depend on where the search starts.
 MonteCarloComparison RunMonteCarlo(int scenarios, std::uint64_t seed) {
     Random skyRandom(1);
     const Catalog catalog = RandomCatalog(kCatalogSize, kCatalogFaintest, &skyRandom);
@@ -143,7 +137,7 @@ MonteCarloComparison RunMonteCarlo(int scenarios, std::uint64_t seed) {
                                                  found::ArcSecToRad(kMisalignmentArcsec),
                                                  &random);
         const CentroidObservations observations =
-            SimulateObservations(scene, catalog, kMargin, kCentroidNoise, &random);
+            SimulateObservations(scene, catalog, kDefaultSearchMargin, kCentroidNoise, &random);
         Accumulate(FitCalibration(observations, PaperCamera(), method1), scene, &comparison.method1);
         Accumulate(FitCalibration(observations, PaperCamera(), method2), scene, &comparison.method2);
     }

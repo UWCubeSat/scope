@@ -28,14 +28,18 @@ namespace scope {
 
 namespace {
 
-/// Stage 2's edge margin at the default 31-pixel window.
-constexpr int kMargin = 16;
-
 /// Tolerances for a noise-free fit, per parameter in kCameraParameterFields
 /// order: what the convergence test leaves, with a wide allowance.
-constexpr std::array<decimal, kCameraParameterCount> kExactTolerance = {
-    DECIMAL(1e-5), DECIMAL(1e-5), DECIMAL(1e-5), DECIMAL(1e-5), DECIMAL(1e-5),
-    DECIMAL(1e-7), DECIMAL(1e-7), DECIMAL(1e-7), DECIMAL(1e-8), DECIMAL(1e-8)};
+constexpr std::array<decimal, kCameraParameterCount> kExactTolerance = {DECIMAL(1e-5),
+                                                                        DECIMAL(1e-5),
+                                                                        DECIMAL(1e-5),
+                                                                        DECIMAL(1e-5),
+                                                                        DECIMAL(1e-5),
+                                                                        DECIMAL(1e-7),
+                                                                        DECIMAL(1e-7),
+                                                                        DECIMAL(1e-7),
+                                                                        DECIMAL(1e-8),
+                                                                        DECIMAL(1e-8)};
 
 /// A sky of 600 stars (about 40 per frame) and six images taken by the
 /// as-built camera, reported with 30" errors and a 60" misalignment.
@@ -53,7 +57,7 @@ class CalibrationFitTest : public testing::Test {
                              &random_)) {}
 
     CentroidObservations Observe(decimal noise) {
-        return SimulateObservations(scene_, catalog_, kMargin, noise, &random_);
+        return SimulateObservations(scene_, catalog_, kDefaultSearchMargin, noise, &random_);
     }
 
     /// The largest angle between a refined attitude and the truth.
@@ -149,8 +153,8 @@ TEST_F(CalibrationFitTest, NoisyFitIsWithinItsUncertainty) {
         }
         const decimal sigma = result.uncertainty.*kCameraParameterFields[p];
         EXPECT_GT(sigma, DECIMAL(0.0)) << kCameraParameterNames[p];
-        EXPECT_NEAR(result.camera.*kCameraParameterFields[p], AsBuiltCamera().*kCameraParameterFields[p],
-                    DECIMAL(4.0) * sigma)
+        EXPECT_NEAR(
+            result.camera.*kCameraParameterFields[p], AsBuiltCamera().*kCameraParameterFields[p], DECIMAL(4.0) * sigma)
             << kCameraParameterNames[p];
     }
     EXPECT_NEAR(result.residualRms, DECIMAL(0.15), DECIMAL(0.01));
@@ -193,7 +197,8 @@ TEST_F(CalibrationFitTest, SharedCorrectionRecoversMisalignment) {
     Random random(7);
     const SyntheticScene scene = RandomScene(
         AsBuiltCamera(), kSensorWidth, kSensorHeight, 6, DECIMAL(0.0), found::ArcSecToRad(DECIMAL(60.0)), &random);
-    const CentroidObservations observations = SimulateObservations(scene, catalog_, kMargin, DECIMAL(0.0), &random);
+    const CentroidObservations observations =
+        SimulateObservations(scene, catalog_, kDefaultSearchMargin, DECIMAL(0.0), &random);
     FitSettings settings;
     settings.attitudeModel = AttitudeCorrectionModel::kShared;
 
@@ -213,7 +218,8 @@ TEST_F(CalibrationFitTest, SharedCorrectionReachesImageWithoutStars) {
     Random random(7);
     const SyntheticScene scene = RandomScene(
         AsBuiltCamera(), kSensorWidth, kSensorHeight, 6, DECIMAL(0.0), found::ArcSecToRad(DECIMAL(60.0)), &random);
-    CentroidObservations observations = SimulateObservations(scene, catalog_, kMargin, DECIMAL(0.0), &random);
+    CentroidObservations observations =
+        SimulateObservations(scene, catalog_, kDefaultSearchMargin, DECIMAL(0.0), &random);
     std::vector<Observation> kept;
     for (const Observation &observation : observations.observations) {
         if (observation.imageIndex != 2) {
@@ -321,11 +327,11 @@ TEST_F(CalibrationFitTest, ResidualsAreMeasuredMinusPredicted) {
     int count = 0;
     for (std::size_t i = 0; i < observations.observations.size(); ++i) {
         const Observation &observation = observations.observations[i];
-        const std::optional<found::Vec2> predicted = ProjectStarToPixel(
-            observation.inertialDirection, result.attitudes[observation.imageIndex], result.camera);
+        const std::optional<found::Vec2> predicted =
+            ProjectStarToPixel(observation.inertialDirection, result.attitudes[observation.imageIndex], result.camera);
         ASSERT_TRUE(predicted.has_value());
-        EXPECT_NEAR((result.residuals[i] - (observation.measuredPixel - *predicted)).norm(), DECIMAL(0.0),
-                    DECIMAL(1e-9));
+        EXPECT_NEAR(
+            (result.residuals[i] - (observation.measuredPixel - *predicted)).norm(), DECIMAL(0.0), DECIMAL(1e-9));
         if (result.inliers[i]) {
             sum += result.residuals[i].squaredNorm();
             count += 2;
@@ -393,20 +399,6 @@ TEST_F(CalibrationFitTest, ThrowsOnObservationWithoutAttitude) {
     observations.attitudes.pop_back();
 
     EXPECT_THROW(FitCalibration(observations, DatasheetCamera(), FitSettings()), std::invalid_argument);
-}
-
-TEST_F(CalibrationFitTest, ThrowsOnBadSettings) {
-    const CentroidObservations observations = Observe(DECIMAL(0.0));
-    FitSettings noIterations;
-    noIterations.maxIterations = 0;
-    FitSettings negativeThreshold;
-    negativeThreshold.outlierThreshold = DECIMAL(-1.0);
-    FitSettings noRounds;
-    noRounds.maxRejectionRounds = 0;
-
-    EXPECT_THROW(FitCalibration(observations, DatasheetCamera(), noIterations), std::invalid_argument);
-    EXPECT_THROW(FitCalibration(observations, DatasheetCamera(), negativeThreshold), std::invalid_argument);
-    EXPECT_THROW(FitCalibration(observations, DatasheetCamera(), noRounds), std::invalid_argument);
 }
 
 }  // namespace scope

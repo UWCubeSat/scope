@@ -30,33 +30,27 @@ namespace scope {
 
 namespace {
 
-/// An image needs this many inlier observations for its attitude correction
-/// (three angles) to be well determined.
+/// Inliers an image needs to pin its three attitude angles.
 constexpr int kMinObservationsPerImage = 3;
-/// Paper step 4: the initial damping. In the Jacobi-scaled normal equations
-/// used here diag(N) is the identity, so the step's "0.001 times the mean of
-/// diag(N)" and Eq. 26's lambda * diag(N) agree on this value.
+/// Paper step 4. With the Jacobi scaling used here diag(N) is the identity,
+/// so step 4's 0.001 * mean(diag N) and Eq. 26's lambda * diag(N) agree.
 constexpr double kInitialDamping = 1e-3;
-/// Paper step 6: the damping falls or rises by an order of magnitude.
+/// Paper step 6.
 constexpr double kDampingFactor = 10.0;
-/// The damping never falls below this, so that after many steps a poor
-/// Gauss-Newton step is still backed off in a few tries.
+/// Keeps a poor Gauss-Newton step late in the fit only a few tries from being
+/// backed off.
 constexpr double kMinDamping = 1e-12;
-/// If the damping passes this before any step reduces the cost, the fit has
-/// stalled.
+/// Past this with no step accepted, the fit has stalled.
 constexpr double kMaxDamping = 1e20;
-/// The paper stops on a residual tolerance (step 7), which real data never
-/// reaches. Instead the fit has converged when an iteration's first step
-/// would move no prediction by more than kStepTolerance (RMS over all
-/// residuals, in pixels), or would remove less than kCostTolerance of the
-/// cost, which is as close as round-off allows (MINPACK's default ftol).
+/// Convergence limits (see RunLevenbergMarquardt): RMS step in pixels, and
+/// fraction of the cost (MINPACK's default ftol).
 constexpr double kStepTolerance = 1e-8;
 const double kCostTolerance = std::sqrt(static_cast<double>(std::numeric_limits<decimal>::epsilon()));
-/// Median of a Rayleigh distribution in units of its sigma, sqrt(2 ln 2):
-/// the median 2-D residual distance under Gaussian centroid noise.
+/// sqrt(2 ln 2): the median of a Rayleigh distribution, i.e. of the 2-D
+/// residual distance under Gaussian noise, in units of the per-axis sigma.
 constexpr double kRayleighMedian = 1.1774100225154747;
-/// Residuals this small are never outliers, so that noise-free data is not
-/// clipped at round-off level. In pixels.
+/// No residual under this is an outlier, so noise-free data is not clipped at
+/// round-off. In pixels.
 constexpr double kMinOutlierDistance = 0.1;
 
 /// The quantities the fit refines.
@@ -113,11 +107,10 @@ std::vector<found::Vec2> ComputeResiduals(const std::vector<Observation> &observ
     std::vector<found::Vec2> residuals;
     residuals.reserve(observations.size());
     for (const Observation &observation : observations) {
-        const std::optional<found::Vec2> predicted = ProjectStarToPixel(
-            observation.inertialDirection, state.attitudes[observation.imageIndex], state.camera);
-        residuals.push_back(predicted.has_value()
-                                ? found::Vec2(observation.measuredPixel - *predicted)
-                                : found::Vec2::Constant(std::numeric_limits<decimal>::quiet_NaN()));
+        const std::optional<found::Vec2> predicted =
+            ProjectStarToPixel(observation.inertialDirection, state.attitudes[observation.imageIndex], state.camera);
+        residuals.push_back(predicted.has_value() ? found::Vec2(observation.measuredPixel - *predicted)
+                                                  : found::Vec2::Constant(std::numeric_limits<decimal>::quiet_NaN()));
     }
     return residuals;
 }
@@ -252,9 +245,11 @@ LevenbergMarquardtOutcome RunLevenbergMarquardt(const std::vector<Observation> &
         const Eigen::MatrixXd scaledNormal = scale.asDiagonal() * normal * scale.asDiagonal();
         const Eigen::VectorXd scaledGradient = scale.cwiseProduct(gradient);
 
-        // Steps 5 and 6: raise the damping until a step reduces the cost.
-        // Convergence is judged on the first, least damped step only: more
-        // damping shrinks the step whether or not the fit is at a minimum.
+        // Steps 5 and 6: raise the damping until a step reduces the cost. The
+        // paper stops on a residual tolerance (step 7) that real data never
+        // reaches, so instead the fit has converged when the first, least
+        // damped step is negligible. Later steps are not tested, since more
+        // damping shrinks a step whether or not the fit is at a minimum.
         bool firstStep = true;
         while (true) {
             Eigen::MatrixXd damped = scaledNormal;
@@ -262,12 +257,10 @@ LevenbergMarquardtOutcome RunLevenbergMarquardt(const std::vector<Observation> &
             const Eigen::VectorXd scaledStep = damped.ldlt().solve(scaledGradient);
 
             if (firstStep) {
-                // A scaled step is the change it makes to the residual vector,
-                // ||J_i|| delta_i, so the first limit is in pixels. The second
-                // is the cost the linearized model says the step removes,
-                // ||r||^2 - ||r - J delta||^2.
-                const double predictedReduction =
-                    scaledStep.dot(2.0 * scaledGradient - scaledNormal * scaledStep);
+                // A scaled step ||J_i|| delta_i is its change to the residuals,
+                // so stepLimit is in pixels. predictedReduction is
+                // ||r||^2 - ||r - J delta||^2 under the linearized model.
+                const double predictedReduction = scaledStep.dot(2.0 * scaledGradient - scaledNormal * scaledStep);
                 if (scaledStep.lpNorm<Eigen::Infinity>() < stepLimit ||
                     (std::isfinite(cost) && predictedReduction <= kCostTolerance * cost)) {
                     outcome.converged = true;
@@ -330,7 +323,7 @@ CameraParameters ParameterUncertainty(const std::vector<Observation> &observatio
         }
         const Eigen::VectorXd column = factor.solve(Eigen::VectorXd::Unit(layout.Size(), index));
         const double sigma = scale(index) * std::sqrt(variance * column(index));
-        uncertainty.*kCameraParameterFields[p] = std::isfinite(sigma) ? static_cast<decimal>(sigma) : undetermined;
+        uncertainty.*kCameraParameterFields[p] = static_cast<decimal>(sigma);
     }
     return uncertainty;
 }
@@ -347,6 +340,25 @@ double RobustSigma(const std::vector<found::Vec2> &residuals, const std::vector<
     const auto middle = distances.begin() + static_cast<std::ptrdiff_t>(distances.size() / 2);
     std::nth_element(distances.begin(), middle, distances.end());
     return *middle / kRayleighMedian;
+}
+
+/// The observations within threshold robust standard deviations of their
+/// prediction. Every observation is judged, used or not, so one rejected under
+/// a poor early fit can come back.
+std::vector<bool> FindInliers(const std::vector<found::Vec2> &residuals,
+                              const std::vector<bool> &used,
+                              double threshold) {
+    const double limit = std::max(threshold * RobustSigma(residuals, used), kMinOutlierDistance);
+    std::vector<bool> inliers(residuals.size());
+    for (std::size_t i = 0; i < residuals.size(); ++i) {
+        inliers[i] = static_cast<double>(residuals[i].norm()) <= limit;
+    }
+    return inliers;
+}
+
+/// RMS of the used residuals' u and v components pooled together.
+double Rms(const std::vector<found::Vec2> &residuals, const std::vector<bool> &used) {
+    return std::sqrt(SumOfSquares(residuals, used) / (2.0 * static_cast<double>(CountUsed(used))));
 }
 
 /// Mean of the per-image corrections refined * prior^-1 over the images in
@@ -374,12 +386,6 @@ CalibrationResult FitCalibration(const CentroidObservations &observations,
         if (observation.imageIndex < 0 || static_cast<std::size_t>(observation.imageIndex) >= priorAttitudes.size()) {
             throw std::invalid_argument("FitCalibration: an observation refers to an image with no attitude");
         }
-    }
-    if (settings.maxIterations < 1 || settings.maxRejectionRounds < 1) {
-        throw std::invalid_argument("FitCalibration: maxIterations and maxRejectionRounds must be at least 1");
-    }
-    if (!(settings.outlierThreshold >= DECIMAL(0.0))) {
-        throw std::invalid_argument("FitCalibration: outlierThreshold must not be negative");
     }
 
     const int minObservations =
@@ -418,8 +424,8 @@ CalibrationResult FitCalibration(const CentroidObservations &observations,
         const std::size_t usedCount = CountUsed(roundUsed);
         const bool anyImage = std::find(imageInFit.begin(), imageInFit.end(), true) != imageInFit.end();
         if (!anyImage || 2 * usedCount < static_cast<std::size_t>(roundLayout.Size())) {
-            LOG_WARN("Optimization: too few observations to fit (" << usedCount << " usable for "
-                                                                    << roundLayout.Size() << " states)");
+            LOG_WARN("Optimization: too few observations to fit (" << usedCount << " usable for " << roundLayout.Size()
+                                                                   << " states)");
             result.converged = false;
             settled = true;
             break;
@@ -442,21 +448,14 @@ CalibrationResult FitCalibration(const CentroidObservations &observations,
         const std::vector<found::Vec2> residuals = ComputeResiduals(measured, state);
         LOG_INFO("Optimization round " << round << ": " << usedCount << " observations, " << roundLayout.Size()
                                        << " states, " << outcome.iterations << " steps, residual RMS "
-                                       << std::sqrt(SumOfSquares(residuals, used) / (2.0 * usedCount)) << " px"
+                                       << Rms(residuals, used) << " px"
                                        << (outcome.converged ? "" : " (not converged)"));
         if (settings.outlierThreshold == DECIMAL(0.0)) {
             settled = true;
             break;
         }
 
-        // Every observation is re-judged against the new fit, so one rejected
-        // under a poor early fit can come back.
-        const double limit = std::max(static_cast<double>(settings.outlierThreshold) * RobustSigma(residuals, used),
-                                      kMinOutlierDistance);
-        std::vector<bool> nextInliers(measured.size());
-        for (std::size_t i = 0; i < measured.size(); ++i) {
-            nextInliers[i] = static_cast<double>(residuals[i].norm()) <= limit;
-        }
+        std::vector<bool> nextInliers = FindInliers(residuals, used, static_cast<double>(settings.outlierThreshold));
         if (nextInliers == inliers) {
             settled = true;
             break;
@@ -464,8 +463,7 @@ CalibrationResult FitCalibration(const CentroidObservations &observations,
         inliers = std::move(nextInliers);
     }
     if (!settled) {
-        LOG_WARN("Optimization: the inlier set was still changing after " << settings.maxRejectionRounds
-                                                                           << " rounds");
+        LOG_WARN("Optimization: the inlier set was still changing after " << settings.maxRejectionRounds << " rounds");
     }
 
     result.camera = state.camera;
@@ -481,8 +479,7 @@ CalibrationResult FitCalibration(const CentroidObservations &observations,
         return result;
     }
 
-    result.residualRms = static_cast<decimal>(std::sqrt(SumOfSquares(result.residuals, used) /
-                                                        (2.0 * static_cast<double>(CountUsed(used)))));
+    result.residualRms = static_cast<decimal>(Rms(result.residuals, used));
     result.uncertainty = ParameterUncertainty(measured, used, state, *layout);
     result.alignmentCorrection = meanCorrection;
     return result;

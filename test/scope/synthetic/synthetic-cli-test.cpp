@@ -79,8 +79,19 @@ class SynthCliTest : public testing::Test {
 
 // Unlike scope, scope-synth has no command word, so the flags start at argv[1].
 TEST_F(SynthCliTest, ParsesFlags) {
-    const char *argv[] = {"scope-synth", "--output-dir", "out", "--star-images", "3", "--k1", "-0.125",
-                          "--psf-sigma", "1.5", "--seed", "9", "--misalignment", "0"};
+    const char *argv[] = {"scope-synth",
+                          "--output-dir",
+                          "out",
+                          "--star-images",
+                          "3",
+                          "--k1",
+                          "-0.125",
+                          "--psf-sigma",
+                          "1.5",
+                          "--seed",
+                          "9",
+                          "--misalignment",
+                          "0"};
     const int argc = static_cast<int>(sizeof(argv) / sizeof(argv[0]));
 
     const SynthesisOptions options = ParseSynthesisOptions(argc, const_cast<char **>(argv));
@@ -191,8 +202,19 @@ TEST_F(SynthCliTest, MainPrintsHelp) {
 
 TEST_F(SynthCliTest, MainWritesDataSetAndReportsErrors) {
     const std::string directoryFlag = directory_;
-    const char *good[] = {"scope-synth", "--output-dir", directoryFlag.c_str(), "--catalog-path", kFixtureCatalog,
-                          "--width", "32", "--height", "24", "--star-images", "1", "--dark-frames", "1"};
+    const char *good[] = {"scope-synth",
+                          "--output-dir",
+                          directoryFlag.c_str(),
+                          "--catalog-path",
+                          kFixtureCatalog,
+                          "--width",
+                          "32",
+                          "--height",
+                          "24",
+                          "--star-images",
+                          "1",
+                          "--dark-frames",
+                          "1"};
     const char *bad[] = {"scope-synth", "--bogus"};
 
     testing::internal::CaptureStdout();

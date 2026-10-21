@@ -26,45 +26,33 @@ enum class AttitudeCorrectionModel {
 
 /// Settings for FitCalibration.
 struct FitSettings {
-    /// Which camera parameters to estimate, in kCameraParameterFields order.
-    /// The others stay at their prior values. The default holds the principal
-    /// point fixed, as the paper recommends (§"Observability Considerations").
+    /// Which camera parameters to estimate, in kCameraParameterFields order;
+    /// the rest stay at the prior. The principal point is fixed by default,
+    /// as the paper recommends.
     std::array<bool, kCameraParameterCount> estimate = {true, true, true, false, false, true, true, true, true, true};
     /// How the prior attitudes are corrected.
     AttitudeCorrectionModel attitudeModel = AttitudeCorrectionModel::kPerImage;
     /// The most Levenberg-Marquardt steps in one fit.
     int maxIterations = 100;
-    /// Observations whose residual is more than this many robust standard
-    /// deviations from their prediction are rejected and the fit is repeated.
-    /// Zero disables rejection.
+    /// Observations more than this many robust standard deviations from their
+    /// prediction are rejected and the fit repeated. Zero disables rejection.
     decimal outlierThreshold = DECIMAL(4.0);
-    /// The most fits in a row; rejection stops when the inlier set stops
-    /// changing or this many fits have run.
+    /// The most fits; rejection stops sooner if the inlier set stops changing.
     int maxRejectionRounds = 10;
 };
 
 /**
- * Fits the camera parameters and attitude corrections to star centroids.
+ * Fits the camera parameters and attitude corrections to star centroids with
+ * the paper's Levenberg-Marquardt method (Eqs. 20-37), refining the attitude
+ * of image k as AttitudeCorrection(dtheta_k) * prior_k (Eq. 11). Outliers are
+ * rejected by refitting without them, which the paper does not do.
  *
- * Minimizes the sum of squared differences between the measured centroids and
- * ProjectStarToPixel's predictions (paper Eq. 20) with the paper's
- * Levenberg-Marquardt variant (Eq. 26 and its steps 1-7) and analytic
- * Jacobians (Eqs. 27-37). The attitude of image k is refined as
- * AttitudeCorrection(dtheta_k) * prior_k (Eq. 11).
+ * An image with fewer than three inliers (one under the shared model) is left
+ * out, and gets the mean correction of the others applied to its prior.
  *
- * Two additions to the paper, both from the project's plan: outliers are
- * rejected by repeating the fit without them, and each parameter's
- * uncertainty is estimated from the covariance of the fit.
- *
- * An image is left out of the fit if fewer than three of its observations
- * are inliers (fewer than one under the shared model). Its attitude is then
- * the average correction of the images in the fit applied to its prior.
- *
- * If no image is left, or there are fewer residuals than states, before any
- * fit has run, the result holds the prior and is not converged. If outlier
- * rejection leaves too few later on, the result is the last fit that ran,
- * marked not converged. Otherwise converged means the last fit stopped on its
- * convergence test, not on maxIterations or a stall.
+ * The result is not converged if the last fit hit maxIterations or stalled,
+ * or if too few observations were left to fit; with none fitted at all, it
+ * holds the prior.
  *
  * @param observations The star-centroid stage's output.
  * @param prior The prior camera parameters, where the fit starts.
@@ -73,8 +61,7 @@ struct FitSettings {
  * @return The fitted calibration.
  *
  * @throws std::invalid_argument if an observation refers to an image with no
- *         attitude, or the settings are out of range (maxIterations or
- *         maxRejectionRounds below 1, outlierThreshold negative).
+ *         attitude.
  */
 CalibrationResult FitCalibration(const CentroidObservations &observations,
                                  const CameraParameters &prior,

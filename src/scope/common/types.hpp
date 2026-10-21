@@ -49,27 +49,21 @@ struct CentroidObservations {
 struct CalibrationResult {
     /// The fitted intrinsics and distortion coefficients.
     CameraParameters camera;
-    /// Which parameters were estimated, in kCameraParameterFields order. The
-    /// others are the prior's values.
+    /// Which parameters were estimated, in kCameraParameterFields order; the
+    /// rest are the prior's.
     std::array<bool, kCameraParameterCount> estimated{};
-    /// One standard deviation of each fitted parameter, from the covariance of
-    /// the fit. Zero for a parameter held at its prior, NaN if the fit could
-    /// not determine it.
+    /// One-sigma uncertainty of each parameter: zero if fixed, NaN if the fit
+    /// could not determine it.
     CameraParameters uncertainty;
     /// One refined attitude per star image, in the prior attitudes' order and
-    /// frame. An image left out of the fit gets alignmentCorrection applied to
-    /// its prior attitude.
+    /// frame.
     std::vector<found::Quaternion> attitudes;
-    /// The average of the per-image corrections (refined * prior^-1), which
-    /// with two cameras is the correction to the camera-to-star-tracker
-    /// alignment (paper §"Calculation of OPNAV Camera to Star Tracker
-    /// Alignment"). Apply it as alignmentCorrection * attitude.
+    /// The mean of the per-image corrections refined * prior^-1: with two
+    /// cameras, the correction to their alignment.
     found::Quaternion alignmentCorrection = found::Quaternion::Identity();
-    /// Measured minus predicted pixel [du, dv] for each observation, in order,
-    /// whether or not it was used in the fit.
+    /// Measured minus predicted pixel [du, dv] for every observation, in order.
     std::vector<found::Vec2> residuals;
-    /// Whether each observation was used in the final fit. False for outliers
-    /// and for observations in images left out of the fit.
+    /// Whether each observation was used in the final fit.
     std::vector<bool> inliers;
     /// RMS of the inliers' residual u and v components pooled together, in pixels.
     decimal residualRms = DECIMAL(0.0);

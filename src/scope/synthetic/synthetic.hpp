@@ -147,11 +147,8 @@ std::vector<VisibleStar> VisibleStars(const Catalog &catalog,
  *
  * @return The observations, image by image, with the prior attitudes.
  */
-CentroidObservations SimulateObservations(const SyntheticScene &scene,
-                                          const Catalog &catalog,
-                                          int margin,
-                                          decimal centroidNoise,
-                                          Random *random);
+CentroidObservations SimulateObservations(
+    const SyntheticScene &scene, const Catalog &catalog, int margin, decimal centroidNoise, Random *random);
 
 /**
  * How the synthetic sensor turns starlight into 8-bit pixel values. Levels

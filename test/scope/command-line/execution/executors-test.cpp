@@ -145,11 +145,11 @@ TEST(ExecutorsTest, UnwritableOutputThrows) {
         options.outputResidualsPath = path;
         std::unique_ptr<StarCentroidAlgorithm> starAlgorithm = std::make_unique<ROIFilterAlgorithm>(
             options, CameraParameters(), Catalog(), std::vector<found::Quaternion>());
-        PrimaryScopePipelineExecutor executor(std::move(options),
-                                              std::make_unique<DarkScreenFilter>(),
-                                              std::move(starAlgorithm),
-                                              std::make_unique<LMAOptimizationAlgorithm>(CameraParameters(),
-                                                                                         FitSettings()));
+        PrimaryScopePipelineExecutor executor(
+            std::move(options),
+            std::make_unique<DarkScreenFilter>(),
+            std::move(starAlgorithm),
+            std::make_unique<LMAOptimizationAlgorithm>(CameraParameters(), FitSettings()));
 
         testing::internal::CaptureStdout();
         executor.ExecutePipeline();
@@ -176,7 +176,8 @@ TEST(ExecutorsTest, PrintsCalibrationResult) {
     result.estimated = {true, true, true, false, true, true, true, true, true, true};
     result.uncertainty.focalLengthX = DECIMAL(0.5);
     result.uncertainty.k1 = DECIMAL(0.00125);
-    result.residuals = {found::Vec2(DECIMAL(0.25), DECIMAL(-0.25)), found::Vec2(DECIMAL(-0.25), DECIMAL(0.25)),
+    result.residuals = {found::Vec2(DECIMAL(0.25), DECIMAL(-0.25)),
+                        found::Vec2(DECIMAL(-0.25), DECIMAL(0.25)),
                         found::Vec2(DECIMAL(9.0), DECIMAL(9.0))};
     result.inliers = {true, true, false};
     result.residualRms = DECIMAL(0.25);

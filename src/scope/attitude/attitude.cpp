@@ -16,6 +16,8 @@
 #include "common/decimal.hpp"
 #include "common/spatial/attitude-utils.hpp"
 
+#include "scope/common/files.hpp"
+
 namespace scope {
 
 std::vector<found::Quaternion> LoadAttitudes(const std::string &path) {
@@ -63,28 +65,19 @@ std::vector<found::Quaternion> LoadAttitudes(const std::string &path) {
 void WriteAttitudes(const std::string &path,
                     const std::vector<found::Quaternion> &attitudes,
                     const std::string &header) {
-    std::ofstream file(path);
-    if (!file.is_open()) {
-        throw std::runtime_error("WriteAttitudes: failed to open '" + path + "' for writing");
-    }
-
+    std::ostringstream text;
     std::istringstream headerLines(header);
     std::string line;
     while (std::getline(headerLines, line)) {
-        file << "# " << line << "\n";
+        text << "# " << line << "\n";
     }
 
     // Enough digits that the attitudes read back exactly.
-    file << std::setprecision(std::numeric_limits<decimal>::max_digits10);
+    text << std::setprecision(std::numeric_limits<decimal>::max_digits10);
     for (const found::Quaternion &attitude : attitudes) {
-        file << attitude.w() << " " << attitude.x() << " " << attitude.y() << " " << attitude.z() << "\n";
+        text << attitude.w() << " " << attitude.x() << " " << attitude.y() << " " << attitude.z() << "\n";
     }
-
-    // Closing flushes, which is where a full disk shows up.
-    file.close();
-    if (file.fail()) {
-        throw std::runtime_error("WriteAttitudes: failed to write '" + path + "'");
-    }
+    WriteFile(path, text.str());
 }
 
 found::Quaternion AttitudeCorrection(const found::Vec3 &dtheta) {
@@ -99,9 +92,6 @@ found::Quaternion AttitudeCorrection(const found::Vec3 &dtheta) {
 
 found::Vec3 CorrectionRotationVector(const found::Quaternion &correction) {
     const found::AngleAxis angleAxis(correction);
-    if (angleAxis.angle() == DECIMAL(0.0)) {
-        return found::Vec3::Zero();
-    }
     return -angleAxis.angle() * angleAxis.axis();
 }
 
@@ -116,10 +106,9 @@ found::Quaternion AverageQuaternions(const std::vector<found::Quaternion> &quate
         sum += v * v.transpose();
     }
 
-    // sum is positive semi-definite, so its singular vectors are its
-    // eigenvectors, and the first goes with the largest eigenvalue. (The
-    // self-adjoint eigensolver would do as well, but trips a false
-    // maybe-uninitialized warning in GCC 13 at -O2.)
+    // sum is positive semi-definite, so its first singular vector is the
+    // eigenvector of the largest eigenvalue. (SelfAdjointEigenSolver trips a
+    // false maybe-uninitialized warning in GCC 13 at -O2.)
     const Eigen::JacobiSVD<Eigen::Matrix<decimal, 4, 4>> svd(sum, Eigen::ComputeFullU);
     Eigen::Matrix<decimal, 4, 1> mean = svd.matrixU().col(0);
     // Either sign is the same rotation; a non-negative real part reads better.

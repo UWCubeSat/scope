@@ -6,19 +6,19 @@
 #include <cstddef>
 #include <cstdlib>
 
-#include <fstream>
 #include <iomanip>
 #include <iostream>
 #include <memory>
 #include <sstream>
-#include <stdexcept>
 #include <string>
 #include <utility>
 #include <vector>
 
+#include "common/decimal.hpp"
 #include "common/spatial/attitude-utils.hpp"
 
 #include "scope/attitude/attitude.hpp"
+#include "scope/common/files.hpp"
 #include "scope/common/style.hpp"
 #include "scope/common/types.hpp"
 #include "scope/projection/projection.hpp"
@@ -31,31 +31,32 @@ namespace {
 /// back in as the next prior without sub-pixel loss.
 constexpr int kOutputPrecision = 10;
 /// Significant digits printed for an uncertainty or an angle.
-constexpr int kUncertaintyPrecision = 3;
+constexpr int kShortPrecision = 3;
+
+/// The value to kShortPrecision significant digits.
+std::string FormatShort(decimal value) {
+    std::ostringstream text;
+    text << std::setprecision(kShortPrecision) << value;
+    return text.str();
+}
 
 /// Writes one CSV row per observation: where it was measured, where the fit
 /// predicts it, and whether the fit used it.
 void WriteResiduals(const std::string &path,
                     const std::vector<Observation> &observations,
                     const CalibrationResult &result) {
-    std::ofstream file(path);
-    if (!file.is_open()) {
-        throw std::runtime_error("failed to open '" + path + "' for writing");
-    }
-    file << std::setprecision(kOutputPrecision);
-    file << "image,star,measured_u,measured_v,predicted_u,predicted_v,residual_u,residual_v,inlier\n";
+    std::ostringstream text;
+    text << std::setprecision(kOutputPrecision);
+    text << "image,star,measured_u,measured_v,predicted_u,predicted_v,residual_u,residual_v,inlier\n";
     for (std::size_t i = 0; i < observations.size(); ++i) {
         const Observation &observation = observations[i];
         const found::Vec2 &residual = result.residuals[i];
         const found::Vec2 predicted = observation.measuredPixel - residual;
-        file << observation.imageIndex << "," << observation.starName << "," << observation.measuredPixel.x() << ","
+        text << observation.imageIndex << "," << observation.starName << "," << observation.measuredPixel.x() << ","
              << observation.measuredPixel.y() << "," << predicted.x() << "," << predicted.y() << "," << residual.x()
              << "," << residual.y() << "," << (result.inliers[i] ? 1 : 0) << "\n";
     }
-    file.close();
-    if (file.fail()) {
-        throw std::runtime_error("failed to write '" + path + "'");
-    }
+    WriteFile(path, text.str());
 }
 
 }  // namespace
@@ -106,8 +107,7 @@ void PrimaryScopePipelineExecutor::OutputResults() {
     for (int p = 0; p < kCameraParameterCount; ++p) {
         text << "    " << kCameraParameterNames[p] << ": " << result.camera.*kCameraParameterFields[p];
         if (result.estimated[p]) {
-            text << " +/- " << std::setprecision(kUncertaintyPrecision) << result.uncertainty.*kCameraParameterFields[p]
-                 << std::setprecision(kOutputPrecision) << "\n";
+            text << " +/- " << FormatShort(result.uncertainty.*kCameraParameterFields[p]) << "\n";
         } else {
             text << " (fixed)\n";
         }
@@ -122,10 +122,9 @@ void PrimaryScopePipelineExecutor::OutputResults() {
     text << "\n";
 
     const found::Vec3 alignment = CorrectionRotationVector(result.alignmentCorrection);
-    text << "    alignment-correction: " << std::setprecision(kUncertaintyPrecision)
-         << found::RadToArcSec(alignment.x()) << " " << found::RadToArcSec(alignment.y()) << " "
-         << found::RadToArcSec(alignment.z()) << " arcsec (rotation vector, camera frame)\n"
-         << std::setprecision(kOutputPrecision);
+    text << "    alignment-correction: " << FormatShort(found::RadToArcSec(alignment.x())) << " "
+         << FormatShort(found::RadToArcSec(alignment.y())) << " " << FormatShort(found::RadToArcSec(alignment.z()))
+         << " arcsec (rotation vector, camera frame)\n";
 
     // The fitted parameters as flags, to centroid again with a better prior.
     text << "    as-prior:";

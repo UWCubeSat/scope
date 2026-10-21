@@ -2,7 +2,6 @@
 
 #include <cmath>
 
-#include <limits>
 #include <optional>
 
 #include "common/decimal.hpp"
@@ -72,30 +71,9 @@ found::Quaternion LostAttitudeToScopeFrame(const found::Quaternion &lostAttitude
     return found::Quaternion(framePermutation) * lostAttitude;
 }
 
-decimal DistortionFoldRadiusSquared(const CameraParameters &camera) {
-    // tan(89.99 degrees)^2: nothing farther off axis is worth a fold.
-    constexpr decimal kFarthest = DECIMAL(3.3e7);
-    if (RadialDistortionIsMonotonic(kFarthest, camera.k1, camera.k2, camera.k3)) {
-        return std::numeric_limits<decimal>::infinity();
-    }
-    // Monotonic up to r^2 is true below the fold and false past it, so bisect.
-    decimal below = DECIMAL(0.0);
-    decimal above = kFarthest;
-    for (int i = 0; i < 200 && above - below > std::numeric_limits<decimal>::epsilon() * above; ++i) {
-        const decimal middle = DECIMAL(0.5) * (below + above);
-        if (RadialDistortionIsMonotonic(middle, camera.k1, camera.k2, camera.k3)) {
-            below = middle;
-        } else {
-            above = middle;
-        }
-    }
-    return above;
-}
-
 std::optional<found::Vec2> ProjectStarToPixel(const found::Vec3 &eI,
                                               const found::Quaternion &attitude,
                                               const CameraParameters &camera) {
-    // A rotation keeps eI's length, and x/z, y/z do not depend on it anyway.
     const found::Vec3 eC = attitude * eI;
 
     // Dividing by z <= 0 would mirror the rear hemisphere onto the sensor (the

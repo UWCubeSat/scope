@@ -15,6 +15,9 @@ constexpr int kSensorHeight = 1544;
 constexpr int kPaperSensorWidth = 2592;
 constexpr int kPaperSensorHeight = 2048;
 
+/// Stage 2's edge margin at the default 31-pixel window.
+constexpr int kDefaultSearchMargin = 16;
+
 /// The Edmund #35-142 lens's datasheet values on the candidate sensor
 /// (LENS.md §4), the prior a first calibration would start from.
 inline CameraParameters DatasheetCamera() {

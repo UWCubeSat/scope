@@ -51,9 +51,8 @@ unsigned char *DarkSubtract(const Image &star, const Image &dark) {
     return out;
 }
 
-/// For each prediction, the indices of the others within roiSize of it in both
-/// u and v. A star any farther away could reach its window only from beyond
-/// its own.
+/// For each prediction, the indices of the others whose windows overlap its
+/// own: those within roiSize of it in both u and v.
 std::vector<std::vector<std::size_t>> FindNeighbours(const std::vector<Prediction> &predictions, int roiSize) {
     const decimal reach = DECIMAL(roiSize);
     std::vector<std::vector<std::size_t>> neighbours(predictions.size());
@@ -76,10 +75,9 @@ decimal Median(std::vector<decimal> values) {
     return *middle;
 }
 
-/// How far the stars sit from their predictions, from the stars with no
-/// neighbour: each has its window to itself, so its centroid measures the
-/// prior's error there. The median over them, mostly the attitude error, or
-/// zero if fewer than kMinOffsetStars centroid.
+/// The median offset of the centroids from their predictions over the stars
+/// with no neighbour, which have their windows to themselves; zero if fewer
+/// than kMinOffsetStars of them centroid. Mostly the attitude error.
 found::Vec2 MedianOffset(const Image &darkSubtracted,
                          const std::vector<Prediction> &predictions,
                          const std::vector<std::vector<std::size_t>> &neighbours,
@@ -107,10 +105,9 @@ found::Vec2 MedianOffset(const Image &darkSubtracted,
     return found::Vec2(Median(offsetsU), Median(offsetsV));
 }
 
-/// Appends to observations each candidate whose centroid no other candidate's
-/// is within kCentroidMatchTolerance of. Two stars can still share a blob that
-/// sits about halfway between their predictions, where it could be either.
-/// Rather than guess, both are dropped.
+/// Appends to observations each candidate with no other candidate's centroid
+/// within kCentroidMatchTolerance. A blob about halfway between two
+/// predictions could be either star's, so both are dropped.
 void KeepUnambiguous(const std::vector<Observation> &candidates, std::vector<Observation> *observations) {
     for (std::size_t a = 0; a < candidates.size(); ++a) {
         bool ambiguous = false;
@@ -153,8 +150,8 @@ CentroidObservations ROIFilterAlgorithm::Run(const Image &darkFrame) {
         unsigned char *subtracted = DarkSubtract(star, darkFrame);
         const Image darkSubtracted{star.width, star.height, star.channels, subtracted};
 
-        // Every star bright enough to search for that the prior puts on the
-        // sensor or near enough to light its edge.
+        // Stars bright enough to search for, on the sensor or within a window
+        // of its edge, where they still claim their side of a neighbour's.
         std::vector<Prediction> predictions;
         for (std::size_t j = 0; j < catalog_.size(); ++j) {
             if (catalog_[j].magnitude > magnitudeLimit) {
@@ -170,10 +167,8 @@ CentroidObservations ROIFilterAlgorithm::Run(const Image &darkFrame) {
         const found::Vec2 offset =
             MedianOffset(darkSubtracted, predictions, neighbours, options_.roiSize, sensorMargin, threshold);
 
-        // Every window moves by the offset, and each star searches only the
-        // part of its window nearer its own prediction than a neighbour's, so a
-        // star too faint to centroid does not take a brighter neighbour's blob
-        // instead.
+        // Searching only its own side of each neighbour keeps a star too faint
+        // to centroid from taking a brighter neighbour's blob.
         std::vector<Observation> candidates;
         for (std::size_t k = 0; k < predictions.size(); ++k) {
             const found::Vec2 expected = predictions[k].pixel + offset;
