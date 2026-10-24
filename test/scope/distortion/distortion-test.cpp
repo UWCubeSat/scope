@@ -123,16 +123,23 @@ TEST(BrownDistortJacobianTest, IdentityWithoutDistortion) {
 }
 
 // Undistorting a distorted point recovers it, for both the real lens and the
-// paper's camera, across the whole sensor.
+// paper's camera, across each one's whole field of view.
 TEST(BrownUndistortTest, InvertsBrownDistort) {
-    for (const CameraParameters &camera : {LensCamera(), PaperCamera()}) {
-        for (decimal x = DECIMAL(-0.6); x <= DECIMAL(0.6); x += DECIMAL(0.1)) {
-            for (decimal y = DECIMAL(-0.45); y <= DECIMAL(0.45); y += DECIMAL(0.15)) {
-                // The paper camera's field is far smaller; keep it on its sensor.
-                const decimal scale = camera.focalLengthX > DECIMAL(5000.0) ? DECIMAL(0.3) : DECIMAL(1.0);
-                const found::Vec2 ideal{x * scale, y * scale};
+    struct Case {
+        CameraParameters camera;
+        int width;
+        int height;
+    };
+    const Case cases[] = {{LensCamera(), kLensWidth, kLensHeight}, {PaperCamera(), kPaperWidth, kPaperHeight}};
+    for (const Case &c : cases) {
+        // Half the field of view on the normalized image plane.
+        const decimal halfX = DECIMAL(c.width) / (DECIMAL(2.0) * c.camera.focalLengthX);
+        const decimal halfY = DECIMAL(c.height) / (DECIMAL(2.0) * c.camera.focalLengthY);
+        for (int i = -4; i <= 4; ++i) {
+            for (int j = -4; j <= 4; ++j) {
+                const found::Vec2 ideal{halfX * DECIMAL(i) / DECIMAL(4.0), halfY * DECIMAL(j) / DECIMAL(4.0)};
 
-                const std::optional<found::Vec2> recovered = BrownUndistort(Distort(ideal, camera), camera);
+                const std::optional<found::Vec2> recovered = BrownUndistort(Distort(ideal, c.camera), c.camera);
 
                 ASSERT_TRUE(recovered.has_value());
                 EXPECT_NEAR(recovered->x(), ideal.x(), DECIMAL(1e-12));
@@ -307,8 +314,7 @@ TEST(ComputeDistortionMapTest, ZeroWithoutDistortion) {
 // from the principal point, and pixels at the same radius get the same size of
 // correction.
 TEST(ComputeDistortionMapTest, BarrelCorrectionIsRadialAndOutward) {
-    CameraParameters camera = LensCamera();
-    camera.focalLengthY = camera.focalLengthX;
+    const CameraParameters camera = LensCamera();
     const found::Vec2 principal{camera.principalX, camera.principalY};
 
     for (const DistortionSample &sample : ComputeDistortionMap(camera, kLensWidth, kLensHeight, 200)) {

@@ -16,6 +16,7 @@
 #define SRC_SCOPE_DISTORTION_DISTORTION_HPP_
 
 #include <cstddef>
+
 #include <optional>
 #include <string>
 #include <vector>

@@ -1,6 +1,5 @@
 #include "scope/distortion/distortion.hpp"
 
-#include <cstddef>
 #include <iomanip>
 #include <limits>
 #include <optional>
@@ -38,6 +37,12 @@ std::vector<int> GridCoordinates(int size, int spacing) {
     return coordinates;
 }
 
+/// The undistorted image-plane point [x, y] a raw pixel observes, or
+/// std::nullopt if BrownUndistort fails.
+std::optional<found::Vec2> PixelToUndistortedImagePlane(const found::Vec2 &pixel, const CameraParameters &camera) {
+    return BrownUndistort(PixelToImagePlane(pixel, camera), camera);
+}
+
 }  // namespace
 
 found::Mat2 BrownDistortJacobian(const found::Vec2 &ideal, const CameraParameters &camera) {
@@ -47,7 +52,7 @@ found::Mat2 BrownDistortJacobian(const found::Vec2 &ideal, const CameraParameter
     const decimal r4 = r2 * r2;
     const decimal r6 = r4 * r2;
 
-    // Eq. 37: gradients of r^2, r^4 and r^6 (as row vectors).
+    // Eq. 37: gradients of r^2, r^4 and r^6.
     const found::Vec2 dr2{DECIMAL(2.0) * x, DECIMAL(2.0) * y};
     const found::Vec2 dr4 = DECIMAL(2.0) * r2 * dr2;
     const found::Vec2 dr6 = DECIMAL(3.0) * r4 * dr2;
@@ -104,7 +109,7 @@ found::Vec2 PixelToImagePlane(const found::Vec2 &pixel, const CameraParameters &
 }
 
 std::optional<found::Vec3> PixelToLineOfSight(const found::Vec2 &pixel, const CameraParameters &camera) {
-    const std::optional<found::Vec2> ideal = BrownUndistort(PixelToImagePlane(pixel, camera), camera);
+    const std::optional<found::Vec2> ideal = PixelToUndistortedImagePlane(pixel, camera);
     if (!ideal.has_value()) {
         return std::nullopt;
     }
@@ -113,7 +118,7 @@ std::optional<found::Vec3> PixelToLineOfSight(const found::Vec2 &pixel, const Ca
 }
 
 std::optional<found::Vec2> UndistortPixel(const found::Vec2 &pixel, const CameraParameters &camera) {
-    const std::optional<found::Vec2> ideal = BrownUndistort(PixelToImagePlane(pixel, camera), camera);
+    const std::optional<found::Vec2> ideal = PixelToUndistortedImagePlane(pixel, camera);
     if (!ideal.has_value()) {
         return std::nullopt;
     }
@@ -140,11 +145,9 @@ std::vector<DistortionSample> ComputeDistortionMap(const CameraParameters &camer
     samples.reserve(columns.size() * rows.size());
     for (const int row : rows) {
         for (const int column : columns) {
-            const found::Vec2 pixel{DECIMAL(column), DECIMAL(row)};
-            const std::optional<found::Vec2> undistorted = UndistortPixel(pixel, camera);
-            DistortionSample sample{pixel, std::nullopt};
-            if (undistorted.has_value()) {
-                sample.correction = *undistorted - pixel;
+            DistortionSample sample{found::Vec2{DECIMAL(column), DECIMAL(row)}, std::nullopt};
+            if (const std::optional<found::Vec2> undistorted = UndistortPixel(sample.pixel, camera)) {
+                sample.correction = *undistorted - sample.pixel;
             }
             samples.push_back(sample);
         }
