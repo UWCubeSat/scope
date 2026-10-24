@@ -2,13 +2,16 @@
 
 # Fetches the Yale Bright Star Catalog (VizieR V/50) into ./bright-star-catalog.tsv,
 # the file scope reads by default (--catalog-path). One star per line:
-#   RA(deg)|Dec(deg)|HR|Multiple|Vmag     (J2000, decimal degrees)
+#   RA(deg)|Dec(deg)|HR|Multiple|Vmag|pmRA|pmDE
+# with positions at equinox J2000, epoch 2000.0, in decimal degrees, and proper
+# motions in arcsec/yr (pmRA already multiplied by cos(Dec)).
 #
-# The request is LOST's: the VizieR query form as copied from Firefox dev tools.
-# The grep keeps the data rows and drops VizieR's header.
+# The request is LOST's, the VizieR query form as copied from Firefox dev tools,
+# with pmRA and pmDE added as output columns. The grep keeps the data rows and
+# drops VizieR's header.
 
 url='https://vizier.cds.unistra.fr/viz-bin/asu-tsv'
-query='-ref=VIZ5f9b96c42e6d&-to=4&-from=-3&-this=-3&%2F%2Fsource=V%2F50%2Fcatalog&%2F%2Ftables=V%2F50%2Fcatalog&-out.max=unlimited&%2F%2FCDSportal=http%3A%2F%2Fcdsportal.u-strasbg.fr%2FStoreVizierData.html&-out.form=%7C+-Separated-Values&-out.add=_RAJ%2C_DEJ&%2F%2Foutaddvalue=default&-oc.form=dec&-nav=cat%3AV%2F50%26tab%3A%7BV%2F50%2Fcatalog%7D%26key%3Asource%3DV%2F50%2Fcatalog%26HTTPPRM%3A%26&-c=&-c.eq=J2000&-c.r=++2&-c.u=arcmin&-c.geom=r&-source=V%2F50%2Fcatalog&-order=I&recno=&-out=HR&HR=&Name=&DM=&HD=&SAO=&FK5=&IRflag=&r_IRflag=&-out=Multiple&Multiple=&ADS=&ADScomp=&VarID=&RAJ2000=&DEJ2000=&GLON=&GLAT=&-out=Vmag&Vmag=&n_Vmag=&u_Vmag=&B-V=&u_B-V=&U-B=&u_U-B=&R-I=&n_R-I=&SpType=&n_SpType=&pmRA=&pmDE=&n_Parallax=&Parallax=&RadVel=&n_RadVel=&l_RotVel=&RotVel=&u_RotVel=&Dmag=&Sep=&MultID=&MultCnt=&NoteFlag=&%2F%2Fnoneucd1p=on&-file=.&-meta.ucd=2&-meta=1&-meta.foot=1&-usenav=1&-bmark=POST'
+query='-ref=VIZ5f9b96c42e6d&-to=4&-from=-3&-this=-3&%2F%2Fsource=V%2F50%2Fcatalog&%2F%2Ftables=V%2F50%2Fcatalog&-out.max=unlimited&%2F%2FCDSportal=http%3A%2F%2Fcdsportal.u-strasbg.fr%2FStoreVizierData.html&-out.form=%7C+-Separated-Values&-out.add=_RAJ%2C_DEJ&%2F%2Foutaddvalue=default&-oc.form=dec&-nav=cat%3AV%2F50%26tab%3A%7BV%2F50%2Fcatalog%7D%26key%3Asource%3DV%2F50%2Fcatalog%26HTTPPRM%3A%26&-c=&-c.eq=J2000&-c.r=++2&-c.u=arcmin&-c.geom=r&-source=V%2F50%2Fcatalog&-order=I&recno=&-out=HR&HR=&Name=&DM=&HD=&SAO=&FK5=&IRflag=&r_IRflag=&-out=Multiple&Multiple=&ADS=&ADScomp=&VarID=&RAJ2000=&DEJ2000=&GLON=&GLAT=&-out=Vmag&Vmag=&n_Vmag=&u_Vmag=&B-V=&u_B-V=&U-B=&u_U-B=&R-I=&n_R-I=&SpType=&n_SpType=&-out=pmRA&pmRA=&-out=pmDE&pmDE=&n_Parallax=&Parallax=&RadVel=&n_RadVel=&l_RotVel=&RotVel=&u_RotVel=&Dmag=&Sep=&MultID=&MultCnt=&NoteFlag=&%2F%2Fnoneucd1p=on&-file=.&-meta.ucd=2&-meta=1&-meta.foot=1&-usenav=1&-bmark=POST'
 out=bright-star-catalog.tsv
 
 if command -v curl > /dev/null; then
@@ -31,6 +34,16 @@ fetch | grep -E '^[0-9]{3}\.[0-9]{6}' > "$out.tmp"
 if [ ! -s "$out.tmp" ]; then
     rm -f "$out.tmp"
     echo "download-bsc.sh: no catalog rows received from $url" >&2
+    exit 1
+fi
+
+# Check the columns against a star whose values are known: Groombridge 1830
+# (HR 4550), Vmag 6.45, pmRA +4.003, pmDE -5.813. A change in VizieR's column
+# order would otherwise pass silently, with magnitudes read as proper motions.
+if ! awk -F'|' '$3 + 0 == 4550 { found = 1; ok = (NF == 7 && $5 + 0 == 6.45 && $6 + 0 == 4.003 && $7 + 0 == -5.813) }
+                END { exit !(found && ok) }' "$out.tmp"; then
+    rm -f "$out.tmp"
+    echo "download-bsc.sh: unexpected column layout (expected RA|Dec|HR|Multiple|Vmag|pmRA|pmDE)" >&2
     exit 1
 fi
 mv "$out.tmp" "$out"
