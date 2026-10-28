@@ -1,0 +1,71 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+# The runners are the same Ubuntu release as the devcontainer, so the same GCC.
+jobs:
+  test:
+    name: Debug, sanitizers, coverage
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - run: pipx install gcovr==8.3
+      - run: cmake -S . -B build -DCOVERAGE=ON
+      - run: cmake --build build -j "$(nproc)"
+      - run: ./build/bin/scope-test
+      - name: Coverage report
+        run: |
+          gcovr | tee build/coverage/summary.txt
+          { echo '```'; cat build/coverage/summary.txt; echo '```'; } >> "$GITHUB_STEP_SUMMARY"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: coverage
+          path: build/coverage
+
+  release:
+    name: Optimized, end to end, valgrind
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - run: sudo apt-get update && sudo apt-get install -y valgrind
+      - run: cmake -S . -B build -DCMAKE_BUILD_TYPE=RelWithDebInfo -DSANITIZE=OFF
+      - run: cmake --build build -j "$(nproc)"
+      - name: Paper Table 1 reproduction
+        run: >
+          ./build/bin/scope-test --gtest_also_run_disabled_tests
+          --gtest_filter=PaperMonteCarloTest.DISABLED_FullTable1
+      - uses: actions/cache@v4
+        with:
+          path: bright-star-catalog.tsv
+          key: bright-star-catalog-${{ hashFiles('download-bsc.sh') }}
+      - name: Synthetic end to end
+        # The catalog comes from VizieR, which is sometimes down. Without a
+        # cached copy or a download, this step is skipped with a warning.
+        run: |
+          if [ ! -f bright-star-catalog.tsv ] && ! ./download-bsc.sh; then
+            echo "::warning::Could not download the star catalog, so synthetic-e2e.sh did not run"
+            exit 0
+          fi
+          ./synthetic-e2e.sh
+      - name: Tests under valgrind
+        run: valgrind --error-exitcode=1 ./build/bin/scope-test
+
+  lint:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - run: pipx install cpplint==2.0.0
+      - run: cpplint --recursive --quiet src test
