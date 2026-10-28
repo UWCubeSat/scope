@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.21)
+cmake_minimum_required(VERSION 3.25)
 project(scope LANGUAGES CXX)
 
 include(FetchContent)
@@ -20,11 +20,13 @@ option(COVERAGE "Build scope-test with gcov instrumentation, for gcovr" OFF)
 
 # FOUND brings stb_image and Eigen with it. Pinned to a commit so a change on
 # FOUND's main cannot alter a build. To move to a newer FOUND, change this hash.
+# SYSTEM keeps the warnings in their headers out of SCOPE's -Werror build.
 FetchContent_Declare(
     found
     GIT_REPOSITORY https://github.com/UWCubeSat/found.git
     GIT_TAG 747d29b71aa0276080398c9ef912cd562b260bcc
     EXCLUDE_FROM_ALL
+    SYSTEM
 )
 FetchContent_Declare(
     googletest
@@ -32,6 +34,7 @@ FetchContent_Declare(
     GIT_TAG release-1.12.1
     GIT_SHALLOW ON
     EXCLUDE_FROM_ALL
+    SYSTEM
 )
 FetchContent_MakeAvailable(found googletest)
 
@@ -83,4 +86,6 @@ endif()
 if(COVERAGE)
     target_compile_options(scope-test PRIVATE --coverage)
     target_link_options(scope-test PRIVATE --coverage)
+    # Where gcovr.cfg puts the report; gcovr does not create it.
+    file(MAKE_DIRECTORY ${PROJECT_BINARY_DIR}/coverage)
 endif()
