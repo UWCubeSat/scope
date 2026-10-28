@@ -1,10 +1,8 @@
-FROM ubuntu:latest
-    
-# Copy the install script into the container
-COPY install.sh /tmp/install.sh
+# Ubuntu 24.04, as on the CI runners, so both build with the same GCC.
+FROM ubuntu:24.04
 
-# Run the script with loggin on and remove it in a single layer
-RUN chmod +x /tmp/install.sh && /tmp/install.sh || (cat /tmp/install.log && exit 1) && \
-    rm -f /tmp/install.sh /tmp/install.log && \
-    rm -rf /var/lib/apt/lists/*
-    
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends \
+        build-essential ca-certificates clang-format cmake curl git python3-pip valgrind \
+    && pip install --no-cache-dir --break-system-packages cpplint==2.0.0 gcovr==8.3 \
+    && rm -rf /var/lib/apt/lists/*
