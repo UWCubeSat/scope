@@ -6,7 +6,6 @@ services:
       - ..:/workspace:cached
     environment:
       # On arm64 ASan's stack-use-after-return check makes the Eigen-heavy tests
-      # about 50 times slower (several minutes instead of seconds). CI, on
-      # x86-64, keeps it.
+      # over 100 times slower (minutes instead of 2 s). CI, on x86-64, keeps it.
       ASAN_OPTIONS: detect_stack_use_after_return=0
     command: sleep infinity
