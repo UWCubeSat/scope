@@ -26,7 +26,7 @@
                 <span>src/scope/</span>
             </div>
             <div>File: optimization/measurement-model.cpp</div>
-            <div>Date: 2026-11-16 11:33:45</div>
+            <div>Date: 2026-11-16 11:40:52</div>
         </div>
         <div class="col-sm-12 col-lg-3 float-left d-flex flex-column text-right flex-justify-end p-3">
             <div class="d-flex">
@@ -233,7 +233,7 @@
                 <td class="text-right src linenos ws-unset">
                 </td>
                 <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
-                <td class="src "><span class="w">    </span><span class="c1">// Ideal and distorted image-plane points (Eqs. 1 and 6).</span></td>
+                <td class="src "><span class="w">    </span><span class="c1">// Ideal and distorted image-plane points.</span></td>
             </tr>
             <tr>
                 <td class="text-right src linenos"><a class="normal" id="l21" href="#l21">21</a></td>
@@ -323,7 +323,7 @@
                 <td class="text-right src linenos ws-unset">
                 </td>
                 <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
-                <td class="src "><span class="w">    </span><span class="c1">// Eq. 29: du&#39;/dk.</span></td>
+                <td class="src "><span class="w">    </span><span class="c1">// Intrinsics: u&#39; is linear in them.</span></td>
             </tr>
             <tr>
                 <td class="text-right src linenos"><a class="normal" id="l33" href="#l33">33</a></td>
@@ -372,7 +372,7 @@
                 <td class="text-right src linenos ws-unset">
                 </td>
                 <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
-                <td class="src "><span class="w">    </span><span class="c1">// Eq. 32: du&#39;/dx&#39;.</span></td>
+                <td class="src "><span class="w">    </span><span class="c1">// du&#39;/dx&#39;</span></td>
             </tr>
             <tr>
                 <td class="text-right src linenos"><a class="normal" id="l37" href="#l37">37</a></td>
@@ -427,7 +427,7 @@
                 <td class="text-right src linenos ws-unset">
                 </td>
                 <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
-                <td class="src "><span class="w">    </span><span class="c1">// Eq. 33: dx&#39;/dxi.</span></td>
+                <td class="src "><span class="w">    </span><span class="c1">// dx&#39;/d(distortion coefficients)</span></td>
             </tr>
             <tr>
                 <td class="text-right src linenos"><a class="normal" id="l42" href="#l42">42</a></td>
@@ -488,7 +488,7 @@
                 <td class="text-right src linenos ws-unset">
                 </td>
                 <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
-                <td class="src "><span class="w">    </span><span class="c1">// Eq. 30.</span></td>
+                <td class="src "><span class="w">    </span><span class="c1">// Distortion coefficients, by the chain rule.</span></td>
             </tr>
             <tr>
                 <td class="text-right src linenos"><a class="normal" id="l47" href="#l47">47</a></td>
@@ -517,7 +517,7 @@
                 <td class="text-right src linenos ws-unset">
                 </td>
                 <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
-                <td class="src "><span class="w">    </span><span class="c1">// Eq. 37.</span></td>
+                <td class="src "><span class="w">    </span><span class="c1">// Derivatives of r^2, r^4 and r^6 with respect to (x, y).</span></td>
             </tr>
             <tr>
                 <td class="text-right src linenos"><a class="normal" id="l50" href="#l50">50</a></td>
@@ -572,7 +572,7 @@
                 <td class="text-right src linenos ws-unset">
                 </td>
                 <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
-                <td class="src "><span class="w">    </span><span class="c1">// Eq. 36: dx&#39;/dx.</span></td>
+                <td class="src "><span class="w">    </span><span class="c1">// dx&#39;/dx: how distortion moves with the ideal point.</span></td>
             </tr>
             <tr>
                 <td class="text-right src linenos"><a class="normal" id="l55" href="#l55">55</a></td>
@@ -678,7 +678,7 @@
                 <td class="text-right src linenos ws-unset">
                 </td>
                 <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
-                <td class="src "><span class="w">    </span><span class="c1">// Eq. 34: dx/de.</span></td>
+                <td class="src "><span class="w">    </span><span class="c1">// dx/de: the pinhole projection.</span></td>
             </tr>
             <tr>
                 <td class="text-right src linenos"><a class="normal" id="l63" href="#l63">63</a></td>
@@ -735,7 +735,7 @@
                 <td class="text-right src linenos ws-unset">
                 </td>
                 <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
-                <td class="src "><span class="w">    </span><span class="c1">// Eq. 35: de/d(dtheta) = [e_C x].</span></td>
+                <td class="src "><span class="w">    </span><span class="c1">// de/d(dtheta) = [e_C x]</span></td>
             </tr>
             <tr>
                 <td class="text-right src linenos"><a class="normal" id="l68" href="#l68">68</a></td>
@@ -807,7 +807,7 @@
                 <td class="text-right src linenos ws-unset">
                 </td>
                 <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
-                <td class="src "><span class="w">    </span><span class="c1">// Eq. 31.</span></td>
+                <td class="src "><span class="w">    </span><span class="c1">// Attitude, by the chain rule.</span></td>
             </tr>
             <tr>
                 <td class="text-right src linenos"><a class="normal" id="l74" href="#l74">74</a></td>

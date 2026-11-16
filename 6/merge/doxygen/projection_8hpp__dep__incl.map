@@ -8,11 +8,11 @@
 <area shape="poly" id="edge35_Node000001_Node000009" title=" " alt="" coords="688,31,495,40,383,51,271,67,168,89,84,118,52,135,28,155,13,176,8,200,8,290,11,298,20,307,54,326,105,348,167,369,308,410,436,443,435,448,307,415,166,374,103,353,51,331,16,311,6,301,3,291,3,200,8,174,24,151,49,131,82,113,167,84,270,62,382,46,495,35,687,25"/>
 <area shape="rect" id="Node000011" href="$optimization_8hpp.html" title="Parameter&#45;fit optimization algorithms for SCOPE calibration." alt="" coords="810,269,979,309"/>
 <area shape="poly" id="edge33_Node000001_Node000011" title=" " alt="" coords="777,59,777,94,780,136,789,180,806,220,829,247,858,267,855,271,826,251,802,223,784,181,774,137,771,94,772,59"/>
-<area shape="rect" id="Node000015" href="$calibration-fit_8hpp.html" title="The Levenberg&#45;Marquardt calibration fit (Orion paper, Christian et al." alt="" coords="815,181,985,221"/>
+<area shape="rect" id="Node000015" href="$calibration-fit_8hpp.html" title="The Levenberg&#45;Marquardt calibration fit, following the Orion paper (Christian et al." alt="" coords="815,181,985,221"/>
 <area shape="poly" id="edge31_Node000001_Node000015" title=" " alt="" coords="801,55,889,180,884,183,796,58"/>
 <area shape="rect" id="Node000016" href="$synthetic_8hpp.html" title="Synthetic star fields from a known camera and known attitudes, for testing the pipeline end to end." alt="" coords="337,181,484,221"/>
 <area shape="poly" id="edge36_Node000001_Node000016" title=" " alt="" coords="688,37,596,57,549,73,505,96,480,115,457,138,424,183,420,179,453,135,476,111,503,91,547,69,595,52,687,32"/>
-<area shape="rect" id="Node000017" href="$measurement-model_8hpp.html" title="Partial derivatives of a predicted star centroid (Orion paper, Christian et al." alt="" coords="1135,93,1326,133"/>
+<area shape="rect" id="Node000017" href="$measurement-model_8hpp.html" title="Partial derivatives of a predicted star centroid, for the fit." alt="" coords="1135,93,1326,133"/>
 <area shape="poly" id="edge32_Node000001_Node000017" title=" " alt="" coords="868,41,1136,91,1135,97,867,46"/>
 <area shape="rect" id="Node000003" href="$style_8hpp_source.html" title=" " alt="" coords="508,189,716,214"/>
 <area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="622,140,616,188,611,188,617,140"/>

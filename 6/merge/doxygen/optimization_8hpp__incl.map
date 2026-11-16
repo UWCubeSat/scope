@@ -6,7 +6,7 @@
 <area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="418,48,360,94,357,90,415,44"/>
 <area shape="rect" id="Node000010" href="$projection_8hpp.html" title="Forward camera projection (pinhole + Brown distortion + intrinsics)." alt="" coords="515,255,741,280"/>
 <area shape="poly" id="edge21_Node000001_Node000010" title=" " alt="" coords="525,31,556,39,586,51,613,68,635,92,645,110,652,130,654,171,649,210,640,242,635,241,643,209,649,170,646,131,641,112,631,95,610,73,583,56,554,44,524,36"/>
-<area shape="rect" id="Node000012" href="$calibration-fit_8hpp.html" title="The Levenberg&#45;Marquardt calibration fit (Orion paper, Christian et al." alt="" coords="475,93,621,133"/>
+<area shape="rect" id="Node000012" href="$calibration-fit_8hpp.html" title="The Levenberg&#45;Marquardt calibration fit, following the Orion paper (Christian et al." alt="" coords="475,93,621,133"/>
 <area shape="poly" id="edge16_Node000001_Node000012" title=" " alt="" coords="466,44,515,83,512,87,462,48"/>
 <area shape="poly" id="edge5_Node000003_Node000003" title=" " alt="" coords="376,98,427,97,445,103,453,113,447,123,432,129,390,130,390,125,431,123,443,119,447,113,442,107,426,102,376,103"/>
 <area shape="rect" id="Node000004" title=" " alt="" coords="263,255,326,280"/>

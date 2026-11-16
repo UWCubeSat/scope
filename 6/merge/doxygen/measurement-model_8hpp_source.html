@@ -99,20 +99,20 @@ $(document).ready(function(){initNavTree('measurement-model_8hpp_source.html',''
 </div><!--header-->
 <div class="contents">
 <a href="measurement-model_8hpp.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span> </div>
-<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="preprocessor">#ifndef SRC_SCOPE_OPTIMIZATION_MEASUREMENT_MODEL_HPP_</span></div>
-<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#define SRC_SCOPE_OPTIMIZATION_MEASUREMENT_MODEL_HPP_</span></div>
-<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span> </div>
-<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="preprocessor">#include &lt;Eigen/Core&gt;</span></div>
-<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span> </div>
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="preprocessor">#include &quot;common/decimal.hpp&quot;</span></div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="preprocessor">#include &quot;common/spatial/attitude-utils.hpp&quot;</span></div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span> </div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="preprocessor">#include &quot;<a class="code" href="projection_8hpp.html">scope/projection/projection.hpp</a>&quot;</span></div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span> </div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="keyword">namespace </span>scope {</div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span> </div>
-<div class="foldopen" id="foldopen00023" data-start="{" data-end="};">
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno"><a class="line" href="structscope_1_1MeasurementJacobian.html">   23</a></span><span class="keyword">struct </span><a class="code hl_struct" href="structscope_1_1MeasurementJacobian.html">MeasurementJacobian</a> {</div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#ifndef SRC_SCOPE_OPTIMIZATION_MEASUREMENT_MODEL_HPP_</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="preprocessor">#define SRC_SCOPE_OPTIMIZATION_MEASUREMENT_MODEL_HPP_</span></div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span> </div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="preprocessor">#include &lt;Eigen/Core&gt;</span></div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span> </div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="preprocessor">#include &quot;common/decimal.hpp&quot;</span></div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="preprocessor">#include &quot;common/spatial/attitude-utils.hpp&quot;</span></div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span> </div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="preprocessor">#include &quot;<a class="code" href="projection_8hpp.html">scope/projection/projection.hpp</a>&quot;</span></div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span> </div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="keyword">namespace </span>scope {</div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span> </div>
+<div class="foldopen" id="foldopen00022" data-start="{" data-end="};">
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno"><a class="line" href="structscope_1_1MeasurementJacobian.html">   22</a></span><span class="keyword">struct </span><a class="code hl_struct" href="structscope_1_1MeasurementJacobian.html">MeasurementJacobian</a> {</div>
 <div class="line"><a id="l00025" name="l00025"></a><span class="lineno"><a class="line" href="structscope_1_1MeasurementJacobian.html#ae6027497909e6e932585e4dc76aa04c2">   25</a></span>    Eigen::Matrix&lt;decimal, 2, kCameraParameterCount&gt; <a class="code hl_variable" href="structscope_1_1MeasurementJacobian.html#ae6027497909e6e932585e4dc76aa04c2">camera</a>;</div>
 <div class="line"><a id="l00027" name="l00027"></a><span class="lineno"><a class="line" href="structscope_1_1MeasurementJacobian.html#a9f18f156c1f6ffcd4634ce9dbefb97f8">   27</a></span>    Eigen::Matrix&lt;decimal, 2, 3&gt; <a class="code hl_variable" href="structscope_1_1MeasurementJacobian.html#a9f18f156c1f6ffcd4634ce9dbefb97f8">attitude</a>;</div>
 <div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>};</div>
@@ -125,9 +125,9 @@ $(document).ready(function(){initNavTree('measurement-model_8hpp_source.html',''
 <div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span><span class="preprocessor">#endif  </span><span class="comment">// SRC_SCOPE_OPTIMIZATION_MEASUREMENT_MODEL_HPP_</span></div>
 <div class="ttc" id="aprojection_8hpp_html"><div class="ttname"><a href="projection_8hpp.html">projection.hpp</a></div><div class="ttdoc">Forward camera projection (pinhole + Brown distortion + intrinsics).</div></div>
 <div class="ttc" id="astructscope_1_1CameraParameters_html"><div class="ttname"><a href="structscope_1_1CameraParameters.html">scope::CameraParameters</a></div><div class="ttdoc">The ten parameters of the paper's camera model: the intrinsics k = [d_x, alpha, d_y,...</div><div class="ttdef"><b>Definition</b> projection.hpp:26</div></div>
-<div class="ttc" id="astructscope_1_1MeasurementJacobian_html"><div class="ttname"><a href="structscope_1_1MeasurementJacobian.html">scope::MeasurementJacobian</a></div><div class="ttdoc">The Jacobian of one predicted centroid u' (ProjectStarToPixel), split into the columns every image sh...</div><div class="ttdef"><b>Definition</b> measurement-model.hpp:23</div></div>
-<div class="ttc" id="astructscope_1_1MeasurementJacobian_html_a9f18f156c1f6ffcd4634ce9dbefb97f8"><div class="ttname"><a href="structscope_1_1MeasurementJacobian.html#a9f18f156c1f6ffcd4634ce9dbefb97f8">scope::MeasurementJacobian::attitude</a></div><div class="ttdeci">Eigen::Matrix&lt; decimal, 2, 3 &gt; attitude</div><div class="ttdoc">du'/d(dtheta) for the image's attitude correction, at dtheta = 0 (Eq. 31).</div><div class="ttdef"><b>Definition</b> measurement-model.hpp:27</div></div>
-<div class="ttc" id="astructscope_1_1MeasurementJacobian_html_ae6027497909e6e932585e4dc76aa04c2"><div class="ttname"><a href="structscope_1_1MeasurementJacobian.html#ae6027497909e6e932585e4dc76aa04c2">scope::MeasurementJacobian::camera</a></div><div class="ttdeci">Eigen::Matrix&lt; decimal, 2, kCameraParameterCount &gt; camera</div><div class="ttdoc">du'/d[k; xi], columns in kCameraParameterFields order (paper Eqs. 29-30).</div><div class="ttdef"><b>Definition</b> measurement-model.hpp:25</div></div>
+<div class="ttc" id="astructscope_1_1MeasurementJacobian_html"><div class="ttname"><a href="structscope_1_1MeasurementJacobian.html">scope::MeasurementJacobian</a></div><div class="ttdoc">The Jacobian of one predicted centroid u' (ProjectStarToPixel), split into the columns every image sh...</div><div class="ttdef"><b>Definition</b> measurement-model.hpp:22</div></div>
+<div class="ttc" id="astructscope_1_1MeasurementJacobian_html_a9f18f156c1f6ffcd4634ce9dbefb97f8"><div class="ttname"><a href="structscope_1_1MeasurementJacobian.html#a9f18f156c1f6ffcd4634ce9dbefb97f8">scope::MeasurementJacobian::attitude</a></div><div class="ttdeci">Eigen::Matrix&lt; decimal, 2, 3 &gt; attitude</div><div class="ttdoc">Derivatives with respect to the image's attitude correction, at zero.</div><div class="ttdef"><b>Definition</b> measurement-model.hpp:27</div></div>
+<div class="ttc" id="astructscope_1_1MeasurementJacobian_html_ae6027497909e6e932585e4dc76aa04c2"><div class="ttname"><a href="structscope_1_1MeasurementJacobian.html#ae6027497909e6e932585e4dc76aa04c2">scope::MeasurementJacobian::camera</a></div><div class="ttdeci">Eigen::Matrix&lt; decimal, 2, kCameraParameterCount &gt; camera</div><div class="ttdoc">Derivatives with respect to the camera parameters, in kCameraParameterFields order.</div><div class="ttdef"><b>Definition</b> measurement-model.hpp:25</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

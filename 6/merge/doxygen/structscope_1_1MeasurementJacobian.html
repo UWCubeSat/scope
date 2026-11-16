@@ -106,11 +106,11 @@ $(document).ready(function(){initNavTree('structscope_1_1MeasurementJacobian.htm
 Public Attributes</h2></td></tr>
 <tr class="memitem:ae6027497909e6e932585e4dc76aa04c2" id="r_ae6027497909e6e932585e4dc76aa04c2"><td class="memItemLeft" align="right" valign="top"><a id="ae6027497909e6e932585e4dc76aa04c2" name="ae6027497909e6e932585e4dc76aa04c2"></a>
 Eigen::Matrix&lt; decimal, 2, <a class="el" href="projection_8hpp.html#af8d5f5ade4ec60543dfd90b11338161a">kCameraParameterCount</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>camera</b></td></tr>
-<tr class="memdesc:ae6027497909e6e932585e4dc76aa04c2"><td class="mdescLeft">&#160;</td><td class="mdescRight">du'/d[k; xi], columns in kCameraParameterFields order (paper Eqs. 29-30). <br /></td></tr>
+<tr class="memdesc:ae6027497909e6e932585e4dc76aa04c2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Derivatives with respect to the camera parameters, in kCameraParameterFields order. <br /></td></tr>
 <tr class="separator:ae6027497909e6e932585e4dc76aa04c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9f18f156c1f6ffcd4634ce9dbefb97f8" id="r_a9f18f156c1f6ffcd4634ce9dbefb97f8"><td class="memItemLeft" align="right" valign="top"><a id="a9f18f156c1f6ffcd4634ce9dbefb97f8" name="a9f18f156c1f6ffcd4634ce9dbefb97f8"></a>
 Eigen::Matrix&lt; decimal, 2, 3 &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>attitude</b></td></tr>
-<tr class="memdesc:a9f18f156c1f6ffcd4634ce9dbefb97f8"><td class="mdescLeft">&#160;</td><td class="mdescRight">du'/d(dtheta) for the image's attitude correction, at dtheta = 0 (Eq. 31). <br /></td></tr>
+<tr class="memdesc:a9f18f156c1f6ffcd4634ce9dbefb97f8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Derivatives with respect to the image's attitude correction, at zero. <br /></td></tr>
 <tr class="separator:a9f18f156c1f6ffcd4634ce9dbefb97f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>

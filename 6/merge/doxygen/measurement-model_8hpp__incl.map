@@ -1,5 +1,5 @@
 <map id="src/scope/optimization/measurement&#45;model.hpp" name="src/scope/optimization/measurement&#45;model.hpp">
-<area shape="rect" id="Node000001" title="Partial derivatives of a predicted star centroid (Orion paper, Christian et al." alt="" coords="87,5,278,45"/>
+<area shape="rect" id="Node000001" title="Partial derivatives of a predicted star centroid, for the fit." alt="" coords="87,5,278,45"/>
 <area shape="rect" id="Node000002" title=" " alt="" coords="27,93,119,119"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="158,48,102,87,99,83,155,43"/>
 <area shape="rect" id="Node000003" title=" " alt="" coords="5,174,168,199"/>

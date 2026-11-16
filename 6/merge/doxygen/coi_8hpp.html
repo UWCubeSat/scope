@@ -142,13 +142,12 @@ Include dependency graph for coi.hpp:</div>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:a73f94628f97d1d97533038c9a6253654" id="r_a73f94628f97d1d97533038c9a6253654"><td class="memItemLeft" align="right" valign="top">std::optional&lt; found::Vec2 &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="coi_8cpp.html#a73f94628f97d1d97533038c9a6253654">scope::ExtractCentroid</a> (const Image &amp;darkSubtracted, const found::Vec2 &amp;expectedPixel, int roiSize, int recenterRadius, unsigned char threshold, const std::vector&lt; found::Vec2 &gt; &amp;neighbours={})</td></tr>
-<tr class="memdesc:a73f94628f97d1d97533038c9a6253654"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extracts one star centroid by center of intensity (paper Eqs.  <br /></td></tr>
+<tr class="memdesc:a73f94628f97d1d97533038c9a6253654"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extracts one star centroid by center of intensity: find the brightest pixel in a ROI around the expected pixel, then take the intensity-weighted center of the pixels within recenterRadius of it that exceed the threshold.  <br /></td></tr>
 <tr class="separator:a73f94628f97d1d97533038c9a6253654"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Center-of-intensity star centroiding kernel. </p>
-<p>From the Orion paper (Christian et al. 2016, §"Image Processing and Star
-Centroiding", Eqs. 8-9). </p>
+<p>From the Orion paper's star centroiding. </p>
 </div><h2 class="groupheader">Function Documentation</h2>
 <a id="a73f94628f97d1d97533038c9a6253654" name="a73f94628f97d1d97533038c9a6253654"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a73f94628f97d1d97533038c9a6253654">&#9670;&#160;</a></span>ExtractCentroid()</h2>
@@ -200,8 +199,7 @@ Centroiding", Eqs. 8-9). </p>
       </table>
 </div><div class="memdoc">
 
-<p>Extracts one star centroid by center of intensity (paper Eqs. </p>
-<p>8-9): find the brightest pixel in a ROI around the expected pixel, then take the intensity-weighted center of the pixels within recenterRadius of it that exceed the threshold.</p>
+<p>Extracts one star centroid by center of intensity: find the brightest pixel in a ROI around the expected pixel, then take the intensity-weighted center of the pixels within recenterRadius of it that exceed the threshold. </p>
 <p>An integer coordinate is the center of a pixel, as in FOUND: a star lit on the single pixel in column 40, row 30 centroids to exactly (40, 30). LOST's centroider adds 0.5, so subtract 0.5 from a LOST centroid before comparing.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">

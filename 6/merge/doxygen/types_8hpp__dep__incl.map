@@ -2,7 +2,7 @@
 <area shape="rect" id="Node000001" title="Plain data passed between SCOPE&#39;s stages, independent of FOUND&#39;s pipeline and of the command line." alt="" coords="617,5,829,31"/>
 <area shape="rect" id="Node000002" href="$style_8hpp_source.html" title=" " alt="" coords="365,86,573,111"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="673,37,507,89,505,83,672,32"/>
-<area shape="rect" id="Node000014" href="$calibration-fit_8hpp.html" title="The Levenberg&#45;Marquardt calibration fit (Orion paper, Christian et al." alt="" coords="681,255,850,295"/>
+<area shape="rect" id="Node000014" href="$calibration-fit_8hpp.html" title="The Levenberg&#45;Marquardt calibration fit, following the Orion paper (Christian et al." alt="" coords="681,255,850,295"/>
 <area shape="poly" id="edge26_Node000001_Node000014" title=" " alt="" coords="729,44,765,254,759,255,724,45"/>
 <area shape="rect" id="Node000015" href="$synthetic_8hpp.html" title="Synthetic star fields from a known camera and known attitudes, for testing the pipeline end to end." alt="" coords="760,79,907,119"/>
 <area shape="poly" id="edge29_Node000001_Node000015" title=" " alt="" coords="751,36,808,76,805,81,748,41"/>

@@ -98,7 +98,7 @@ $(document).ready(function(){initNavTree('calibration-fit_8hpp.html',''); initRe
 </div><!--header-->
 <div class="contents">
 
-<p>The Levenberg-Marquardt calibration fit (Orion paper, Christian et al.  
+<p>The Levenberg-Marquardt calibration fit, following the Orion paper (Christian et al.  
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &lt;array&gt;</code><br />
 <code>#include &quot;common/decimal.hpp&quot;</code><br />
@@ -109,7 +109,7 @@ Include dependency graph for calibration-fit.hpp:</div>
 <div class="dyncontent">
 <div class="center"><img src="calibration-fit_8hpp__incl.png" border="0" usemap="#asrc_2scope_2optimization_2calibration-fit_8hpp" alt=""/></div>
 <map name="asrc_2scope_2optimization_2calibration-fit_8hpp" id="asrc_2scope_2optimization_2calibration-fit_8hpp">
-<area shape="rect" title="The Levenberg&#45;Marquardt calibration fit (Orion paper, Christian et al." alt="" coords="222,5,391,45"/>
+<area shape="rect" title="The Levenberg&#45;Marquardt calibration fit, following the Orion paper (Christian et al." alt="" coords="222,5,391,45"/>
 <area shape="rect" title=" " alt="" coords="501,247,557,273"/>
 <area shape="poly" title=" " alt="" coords="392,41,444,61,469,74,491,91,505,106,515,124,528,162,534,201,534,234,529,234,528,201,523,164,511,126,501,110,488,95,466,79,442,65,390,46"/>
 <area shape="rect" title=" " alt="" coords="5,247,168,273"/>
@@ -137,7 +137,7 @@ This graph shows which files directly or indirectly include this file:</div>
 <div class="dyncontent">
 <div class="center"><img src="calibration-fit_8hpp__dep__incl.png" border="0" usemap="#asrc_2scope_2optimization_2calibration-fit_8hppdep" alt=""/></div>
 <map name="asrc_2scope_2optimization_2calibration-fit_8hppdep" id="asrc_2scope_2optimization_2calibration-fit_8hppdep">
-<area shape="rect" title="The Levenberg&#45;Marquardt calibration fit (Orion paper, Christian et al." alt="" coords="170,5,339,45"/>
+<area shape="rect" title="The Levenberg&#45;Marquardt calibration fit, following the Orion paper (Christian et al." alt="" coords="170,5,339,45"/>
 <area shape="rect" href="optimization_8hpp.html" title="Parameter&#45;fit optimization algorithms for SCOPE calibration." alt="" coords="109,93,278,133"/>
 <area shape="poly" title=" " alt="" coords="235,58,209,95,205,92,231,55"/>
 <area shape="rect" href="stage-providers_8hpp_source.html" title=" " alt="" coords="238,181,394,221"/>
@@ -171,12 +171,12 @@ Enumerations</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:a879bd9a42dc23b087b7a09be7beab2d5" id="r_a879bd9a42dc23b087b7a09be7beab2d5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structscope_1_1CalibrationResult.html">CalibrationResult</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="calibration-fit_8cpp.html#a879bd9a42dc23b087b7a09be7beab2d5">scope::FitCalibration</a> (const <a class="el" href="structscope_1_1CentroidObservations.html">CentroidObservations</a> &amp;observations, const <a class="el" href="structscope_1_1CameraParameters.html">CameraParameters</a> &amp;prior, const <a class="el" href="structscope_1_1FitSettings.html">FitSettings</a> &amp;settings)</td></tr>
-<tr class="memdesc:a879bd9a42dc23b087b7a09be7beab2d5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fits the camera parameters and attitude corrections to star centroids with the paper's Levenberg-Marquardt method (Eqs.  <br /></td></tr>
+<tr class="memdesc:a879bd9a42dc23b087b7a09be7beab2d5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fits the camera parameters and attitude corrections to star centroids with the paper's Levenberg-Marquardt method.  <br /></td></tr>
 <tr class="separator:a879bd9a42dc23b087b7a09be7beab2d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>The Levenberg-Marquardt calibration fit (Orion paper, Christian et al. </p>
-<p>2016, §"Estimation of Camera Calibration Parameters"). </p>
+<div class="textblock"><p>The Levenberg-Marquardt calibration fit, following the Orion paper (Christian et al. </p>
+<p>2016). </p>
 </div><h2 class="groupheader">Enumeration Type Documentation</h2>
 <a id="a3bcc8e564a4e3935b43f36f2c8dfe47a" name="a3bcc8e564a4e3935b43f36f2c8dfe47a"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a3bcc8e564a4e3935b43f36f2c8dfe47a">&#9670;&#160;</a></span>AttitudeCorrectionModel</h2>
@@ -200,9 +200,9 @@ Functions</h2></td></tr>
 
 <p>How the fit corrects the prior attitudes. </p>
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a3bcc8e564a4e3935b43f36f2c8dfe47aad639c8bd11e95dd744efb08aa464aba2" name="a3bcc8e564a4e3935b43f36f2c8dfe47aad639c8bd11e95dd744efb08aa464aba2"></a>kPerImage&#160;</td><td class="fielddoc"><p>One correction per image, 10 + 3m states (paper Eq. 16, "Method 1"). </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a3bcc8e564a4e3935b43f36f2c8dfe47aad639c8bd11e95dd744efb08aa464aba2" name="a3bcc8e564a4e3935b43f36f2c8dfe47aad639c8bd11e95dd744efb08aa464aba2"></a>kPerImage&#160;</td><td class="fielddoc"><p>One correction per image (the paper's Method 1). </p>
 </td></tr>
-<tr><td class="fieldname"><a id="a3bcc8e564a4e3935b43f36f2c8dfe47aa767e1337acb2aa20d7ce4e903a75ca16" name="a3bcc8e564a4e3935b43f36f2c8dfe47aa767e1337acb2aa20d7ce4e903a75ca16"></a>kShared&#160;</td><td class="fielddoc"><p>One correction shared by every image, 13 states (Eq. 17, "Method 2"). </p>
+<tr><td class="fieldname"><a id="a3bcc8e564a4e3935b43f36f2c8dfe47aa767e1337acb2aa20d7ce4e903a75ca16" name="a3bcc8e564a4e3935b43f36f2c8dfe47aa767e1337acb2aa20d7ce4e903a75ca16"></a>kShared&#160;</td><td class="fielddoc"><p>One correction shared by every image (the paper's Method 2). </p>
 </td></tr>
 </table>
 
@@ -241,8 +241,8 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Fits the camera parameters and attitude corrections to star centroids with the paper's Levenberg-Marquardt method (Eqs. </p>
-<p>20-37), refining the attitude of image k as AttitudeCorrection(dtheta_k) * prior_k (Eq. 11). Outliers are rejected by refitting without them, which the paper does not do.</p>
+<p>Fits the camera parameters and attitude corrections to star centroids with the paper's Levenberg-Marquardt method. </p>
+<p>Each image's attitude is refined as AttitudeCorrection(dtheta) * prior. Unlike the paper, outliers are rejected and the fit rerun without them.</p>
 <p>An image with fewer than three inliers (one under the shared model) is left out, and gets the mean correction of the others applied to its prior.</p>
 <p>The result is not converged if the last fit hit maxIterations or stalled, or if too few observations were left to fit; with none fitted at all, it holds the prior.</p>
 <dl class="params"><dt>Parameters</dt><dd>

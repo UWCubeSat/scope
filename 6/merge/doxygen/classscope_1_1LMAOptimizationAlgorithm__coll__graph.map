@@ -1,5 +1,5 @@
 <map id="scope::LMAOptimizationAlgorithm" name="scope::LMAOptimizationAlgorithm">
-<area shape="rect" id="Node000001" title="Levenberg&#45;Marquardt parameter optimizer (Orion paper §&quot;Estimation of Camera Calibration Parameters&quot;);..." alt="" coords="221,197,465,223"/>
+<area shape="rect" id="Node000001" title="Pipeline wrapper around FitCalibration." alt="" coords="221,197,465,223"/>
 <area shape="rect" id="Node000002" href="$classscope_1_1OptimizationAlgorithm.html" title="Fits the camera intrinsics and distortion parameters to star centroids." alt="" coords="5,109,221,135"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="158,137,313,195,311,200,156,142"/>
 <area shape="rect" id="Node000003" title=" " alt="" coords="22,5,205,60"/>

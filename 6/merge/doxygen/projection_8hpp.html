@@ -134,11 +134,11 @@ This graph shows which files directly or indirectly include this file:</div>
 <area shape="poly" title=" " alt="" coords="688,31,495,40,383,51,271,67,168,89,84,118,52,135,28,155,13,176,8,200,8,290,11,298,20,307,54,326,105,348,167,369,308,410,436,443,435,448,307,415,166,374,103,353,51,331,16,311,6,301,3,291,3,200,8,174,24,151,49,131,82,113,167,84,270,62,382,46,495,35,687,25"/>
 <area shape="rect" href="optimization_8hpp.html" title="Parameter&#45;fit optimization algorithms for SCOPE calibration." alt="" coords="810,269,979,309"/>
 <area shape="poly" title=" " alt="" coords="777,59,777,94,780,136,789,180,806,220,829,247,858,267,855,271,826,251,802,223,784,181,774,137,771,94,772,59"/>
-<area shape="rect" href="calibration-fit_8hpp.html" title="The Levenberg&#45;Marquardt calibration fit (Orion paper, Christian et al." alt="" coords="815,181,985,221"/>
+<area shape="rect" href="calibration-fit_8hpp.html" title="The Levenberg&#45;Marquardt calibration fit, following the Orion paper (Christian et al." alt="" coords="815,181,985,221"/>
 <area shape="poly" title=" " alt="" coords="801,55,889,180,884,183,796,58"/>
 <area shape="rect" href="synthetic_8hpp.html" title="Synthetic star fields from a known camera and known attitudes, for testing the pipeline end to end." alt="" coords="337,181,484,221"/>
 <area shape="poly" title=" " alt="" coords="688,37,596,57,549,73,505,96,480,115,457,138,424,183,420,179,453,135,476,111,503,91,547,69,595,52,687,32"/>
-<area shape="rect" href="measurement-model_8hpp.html" title="Partial derivatives of a predicted star centroid (Orion paper, Christian et al." alt="" coords="1135,93,1326,133"/>
+<area shape="rect" href="measurement-model_8hpp.html" title="Partial derivatives of a predicted star centroid, for the fit." alt="" coords="1135,93,1326,133"/>
 <area shape="poly" title=" " alt="" coords="868,41,1136,91,1135,97,867,46"/>
 <area shape="rect" href="style_8hpp_source.html" title=" " alt="" coords="508,189,716,214"/>
 <area shape="poly" title=" " alt="" coords="622,140,616,188,611,188,617,140"/>
@@ -186,19 +186,19 @@ This graph shows which files directly or indirectly include this file:</div>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structscope_1_1CameraParameters.html">scope::CameraParameters</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">The ten parameters of the paper's camera model: the intrinsics k = [d_x, alpha, d_y, u_p, v_p] (Eq.  <a href="structscope_1_1CameraParameters.html#details">More...</a><br /></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">The ten parameters of the paper's camera model: the intrinsics k = [d_x, alpha, d_y, u_p, v_p] followed by the Brown distortion coefficients xi = [k1, k2, k3, p1, p2], in that order.  <a href="structscope_1_1CameraParameters.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:a5a92e01b9cd2bff95caab1bf24a16a3e" id="r_a5a92e01b9cd2bff95caab1bf24a16a3e"><td class="memItemLeft" align="right" valign="top">found::Vec2&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="projection_8cpp.html#a5a92e01b9cd2bff95caab1bf24a16a3e">scope::BrownDistort</a> (const found::Vec2 &amp;ideal, decimal k1, decimal k2, decimal k3, decimal p1, decimal p2)</td></tr>
-<tr class="memdesc:a5a92e01b9cd2bff95caab1bf24a16a3e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Applies Brown radial and decentering distortion (paper Eq.  <br /></td></tr>
+<tr class="memdesc:a5a92e01b9cd2bff95caab1bf24a16a3e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Applies Brown radial and decentering distortion.  <br /></td></tr>
 <tr class="separator:a5a92e01b9cd2bff95caab1bf24a16a3e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2e88f3a61f811653510ebd144d0578b6" id="r_a2e88f3a61f811653510ebd144d0578b6"><td class="memItemLeft" align="right" valign="top">found::Quaternion&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="projection_8cpp.html#a2e88f3a61f811653510ebd144d0578b6">scope::LostAttitudeToScopeFrame</a> (const found::Quaternion &amp;lostAttitude)</td></tr>
 <tr class="memdesc:a2e88f3a61f811653510ebd144d0578b6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts a LOST attitude into SCOPE's camera-frame convention.  <br /></td></tr>
 <tr class="separator:a2e88f3a61f811653510ebd144d0578b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac9e87762fdeca4213ec187b7960aa57f" id="r_ac9e87762fdeca4213ec187b7960aa57f"><td class="memItemLeft" align="right" valign="top">std::optional&lt; found::Vec2 &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="projection_8cpp.html#ac9e87762fdeca4213ec187b7960aa57f">scope::ProjectStarToPixel</a> (const found::Vec3 &amp;eI, const found::Quaternion &amp;attitude, const <a class="el" href="structscope_1_1CameraParameters.html">CameraParameters</a> &amp;camera)</td></tr>
-<tr class="memdesc:ac9e87762fdeca4213ec187b7960aa57f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Projects an inertial line of sight to a raw (distorted) pixel: rotate into the camera frame, pinhole-project (paper Eq.  <br /></td></tr>
+<tr class="memdesc:ac9e87762fdeca4213ec187b7960aa57f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Projects an inertial line of sight to a raw (distorted) pixel: rotate into the camera frame, pinhole-project, distort, apply the intrinsics.  <br /></td></tr>
 <tr class="separator:ac9e87762fdeca4213ec187b7960aa57f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a60ef460dac329178fbd5a21d38da0a77" id="r_a60ef460dac329178fbd5a21d38da0a77"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="projection_8cpp.html#a60ef460dac329178fbd5a21d38da0a77">scope::InSensorWithMargin</a> (const found::Vec2 &amp;pixel, int width, int height, int margin)</td></tr>
 <tr class="memdesc:a60ef460dac329178fbd5a21d38da0a77"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tests whether a pixel lies inside the sensor with a margin on every side.  <br /></td></tr>
@@ -271,8 +271,7 @@ constexpr int&#160;</td><td class="memItemRight" valign="bottom"><b>scope::kCame
       </table>
 </div><div class="memdoc">
 
-<p>Applies Brown radial and decentering distortion (paper Eq. </p>
-<p>6).</p>
+<p>Applies Brown radial and decentering distortion. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">ideal</td><td>Undistorted point [x, y] on the normalized image plane. </td></tr>
@@ -398,8 +397,7 @@ constexpr int&#160;</td><td class="memItemRight" valign="bottom"><b>scope::kCame
       </table>
 </div><div class="memdoc">
 
-<p>Projects an inertial line of sight to a raw (distorted) pixel: rotate into the camera frame, pinhole-project (paper Eq. </p>
-<p>1), distort (Eq. 6), apply the intrinsics (Eq. 7).</p>
+<p>Projects an inertial line of sight to a raw (distorted) pixel: rotate into the camera frame, pinhole-project, distort, apply the intrinsics. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">eI</td><td>Unit line of sight in the inertial frame. </td></tr>

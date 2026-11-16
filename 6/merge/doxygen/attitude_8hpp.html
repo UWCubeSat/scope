@@ -139,7 +139,7 @@ Functions</h2></td></tr>
 <tr class="memdesc:a13035222299cf31ebd594e5dc50a1ba8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Writes attitudes in the format LoadAttitudes reads, one <code>w x y z</code> line each.  <br /></td></tr>
 <tr class="separator:a13035222299cf31ebd594e5dc50a1ba8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae574d23c5db12cad2b36d4be9dafe1da" id="r_ae574d23c5db12cad2b36d4be9dafe1da"><td class="memItemLeft" align="right" valign="top">found::Quaternion&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="attitude_8cpp.html#ae574d23c5db12cad2b36d4be9dafe1da">scope::AttitudeCorrection</a> (const found::Vec3 &amp;dtheta)</td></tr>
-<tr class="memdesc:ae574d23c5db12cad2b36d4be9dafe1da"><td class="mdescLeft">&#160;</td><td class="mdescRight">The attitude correction for a small rotation vector dtheta (paper Eq.  <br /></td></tr>
+<tr class="memdesc:ae574d23c5db12cad2b36d4be9dafe1da"><td class="mdescLeft">&#160;</td><td class="mdescRight">The attitude correction for a rotation vector dtheta, applied as correction * attitude.  <br /></td></tr>
 <tr class="separator:ae574d23c5db12cad2b36d4be9dafe1da"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a52215568dbd3dd7f2b598527c32ad3e3" id="r_a52215568dbd3dd7f2b598527c32ad3e3"><td class="memItemLeft" align="right" valign="top">found::Vec3&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="attitude_8cpp.html#a52215568dbd3dd7f2b598527c32ad3e3">scope::CorrectionRotationVector</a> (const found::Quaternion &amp;correction)</td></tr>
 <tr class="memdesc:a52215568dbd3dd7f2b598527c32ad3e3"><td class="mdescLeft">&#160;</td><td class="mdescRight">The rotation vector of an attitude correction; the inverse of AttitudeCorrection.  <br /></td></tr>
@@ -167,8 +167,8 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>The attitude correction for a small rotation vector dtheta (paper Eq. </p>
-<p>11 and 38). To first order it is I - [dtheta x], so a camera-frame direction becomes e_C' = e_C + e_C x dtheta, and a corrected attitude is correction * attitude. It is computed exactly, as exp(-[dtheta x]), so the result is a rotation however large dtheta is.</p>
+<p>The attitude correction for a rotation vector dtheta, applied as correction * attitude. </p>
+<p>To first order it is I - [dtheta x], the paper's small-angle form, which moves a camera-frame direction e to e + e x dtheta. It is computed exactly, so it stays a rotation for any dtheta.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">dtheta</td><td>The rotation vector, in radians.</td></tr>
