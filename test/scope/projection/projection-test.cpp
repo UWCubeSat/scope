@@ -13,22 +13,6 @@ namespace scope {
 
 namespace {
 
-/// Builds camera parameters with the given pinhole parameters and no distortion or skew.
-CameraParameters PinholeCamera(decimal focalX, decimal focalY, decimal px, decimal py) {
-    CameraParameters camera;
-    camera.focalLengthX = focalX;
-    camera.focalLengthY = focalY;
-    camera.principalX = px;
-    camera.principalY = py;
-    camera.alpha = DECIMAL(0.0);
-    camera.k1 = DECIMAL(0.0);
-    camera.k2 = DECIMAL(0.0);
-    camera.k3 = DECIMAL(0.0);
-    camera.p1 = DECIMAL(0.0);
-    camera.p2 = DECIMAL(0.0);
-    return camera;
-}
-
 const decimal kTol = DECIMAL(1e-4);
 
 // LOST/FOUND forward model, boresight on +x: pixel = (c_x - f*y/x, c_y - f*z/x)
@@ -155,7 +139,7 @@ TEST(BrownDistortTest, PureRadial) {
     EXPECT_NEAR(distorted.y(), DECIMAL(0.0), kTol);
 }
 
-// Decentering distortion (p1, p2 != 0) adds the tangential terms of Eq. 6.
+// Decentering distortion (p1, p2 != 0) adds the tangential terms.
 TEST(BrownDistortTest, Decentering) {
     found::Vec2 distorted = BrownDistort(found::Vec2(DECIMAL(0.1), DECIMAL(0.2)),
                                          DECIMAL(0.0),

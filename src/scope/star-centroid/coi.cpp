@@ -35,7 +35,7 @@ std::optional<found::Vec2> ExtractCentroid(const Image &darkSubtracted,
     const int y0 = std::max(0, cy - half);
     const int y1 = std::min(height - 1, cy + half);
 
-    // Whether (x, y) is a neighbour's to search rather than this star's.
+    // True if (x, y) is closer to a neighbour's prediction than to ours.
     const auto nearerNeighbour = [&](int x, int y) {
         const found::Vec2 pixel(DECIMAL(x), DECIMAL(y));
         const decimal own = (pixel - expectedPixel).squaredNorm();

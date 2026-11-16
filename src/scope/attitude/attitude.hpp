@@ -47,11 +47,10 @@ void WriteAttitudes(const std::string &path,
                     const std::string &header);
 
 /**
- * The attitude correction for a small rotation vector dtheta (paper Eq. 11
- * and 38). To first order it is I - [dtheta x], so a camera-frame direction
- * becomes e_C' = e_C + e_C x dtheta, and a corrected attitude is
- * correction * attitude. It is computed exactly, as exp(-[dtheta x]), so the
- * result is a rotation however large dtheta is.
+ * The attitude correction for a rotation vector dtheta, applied as
+ * correction * attitude. To first order it is I - [dtheta x], the paper's
+ * small-angle form, which moves a camera-frame direction e to e + e x dtheta.
+ * It is computed exactly, so it stays a rotation for any dtheta.
  *
  * @param dtheta The rotation vector, in radians.
  *

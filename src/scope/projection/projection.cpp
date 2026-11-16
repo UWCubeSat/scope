@@ -36,12 +36,8 @@ bool RadialDistortionIsMonotonic(decimal r2, decimal k1, decimal k2, decimal k3)
         return true;
     }
     const decimal q = DECIMAL(-0.5) * (b + std::copysign(DECIMAL_SQRT(discriminant), b));
-    for (const decimal s : {a != DECIMAL(0.0) ? q / a : DECIMAL(-1.0), q != DECIMAL(0.0) ? c / q : DECIMAL(-1.0)}) {
-        if (s > DECIMAL(0.0) && s < r2 && slope(s) <= DECIMAL(0.0)) {
-            return false;
-        }
-    }
-    return true;
+    const auto foldsAt = [&](decimal s) { return s > DECIMAL(0.0) && s < r2 && slope(s) <= DECIMAL(0.0); };
+    return !(a != DECIMAL(0.0) && foldsAt(q / a)) && !(q != DECIMAL(0.0) && foldsAt(c / q));
 }
 
 }  // namespace
@@ -89,7 +85,7 @@ std::optional<found::Vec2> ProjectStarToPixel(const found::Vec3 &eI,
     }
     const found::Vec2 distorted = BrownDistort(ideal, camera.k1, camera.k2, camera.k3, camera.p1, camera.p2);
 
-    // Paper Eq. 7: [u'; v'] = [d_x, alpha, u_p; 0, d_y, v_p] [x'; y'; 1].
+    // [u'; v'] = [d_x, alpha, u_p; 0, d_y, v_p] [x'; y'; 1]
     const decimal u = camera.focalLengthX * distorted.x() + camera.alpha * distorted.y() + camera.principalX;
     const decimal v = camera.focalLengthY * distorted.y() + camera.principalY;
 

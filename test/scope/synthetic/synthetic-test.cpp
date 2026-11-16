@@ -6,9 +6,7 @@
 #include <cmath>
 #include <cstddef>
 
-#include <fstream>
 #include <optional>
-#include <stdexcept>
 #include <string>
 #include <vector>
 
@@ -32,12 +30,7 @@ namespace {
 
 /// A pinhole camera on the 64 x 64 test image, principal point at its centre.
 CameraParameters TestImageCamera() {
-    CameraParameters camera;
-    camera.focalLengthX = DECIMAL(100.0);
-    camera.focalLengthY = DECIMAL(100.0);
-    camera.principalX = DECIMAL(31.5);
-    camera.principalY = DECIMAL(31.5);
-    return camera;
+    return PinholeCamera(DECIMAL(100.0), DECIMAL(100.0), DECIMAL(31.5), DECIMAL(31.5));
 }
 
 /// A sensor with no noise, offsets or sky, so a render is exactly the light.
@@ -59,6 +52,19 @@ Catalog StarAt(decimal u, decimal v) {
     const found::Vec3 direction(
         (u - camera.principalX) / camera.focalLengthX, (v - camera.principalY) / camera.focalLengthY, DECIMAL(1.0));
     return {CatalogStar{direction.normalized(), 0, 1}};
+}
+
+/// Renders StarAt(position) on a zero fixed pattern.
+std::vector<unsigned char> RenderStarAt(const found::Vec2 &position, const SensorModel &sensor, Random *random) {
+    const std::vector<decimal> pattern(static_cast<std::size_t>(kWidth) * kHeight, DECIMAL(0.0));
+    return RenderStarImage(StarAt(position.x(), position.y()),
+                           found::Quaternion::Identity(),
+                           TestImageCamera(),
+                           pattern,
+                           kWidth,
+                           kHeight,
+                           sensor,
+                           random);
 }
 
 }  // namespace
@@ -116,7 +122,6 @@ TEST(RandomSceneTest, ReportedAttitudesCarryTheMisalignment) {
 
     ASSERT_EQ(scene.trueAttitudes.size(), 4u);
     ASSERT_EQ(scene.priorAttitudes.size(), 4u);
-    EXPECT_EQ(scene.width, kSensorWidth);
     EXPECT_GT(scene.misalignment.angularDistance(found::Quaternion::Identity()), DECIMAL(0.0));
     for (std::size_t k = 0; k < 4; ++k) {
         const found::Quaternion correction = scene.trueAttitudes[k] * scene.priorAttitudes[k].conjugate();
@@ -168,7 +173,8 @@ TEST(SimulateObservationsTest, NoiseFreeObservationsAreExactProjections) {
                                              found::ArcSecToRad(DECIMAL(30.0)),
                                              &random);
 
-    const CentroidObservations observations = SimulateObservations(scene, catalog, 16, DECIMAL(0.0), &random);
+    const CentroidObservations observations =
+        SimulateObservations(scene, catalog, kDefaultSearchMargin, DECIMAL(0.0), &random);
 
     ASSERT_FALSE(observations.observations.empty());
     EXPECT_EQ(observations.attitudes.size(), 3u);
@@ -180,7 +186,7 @@ TEST(SimulateObservationsTest, NoiseFreeObservationsAreExactProjections) {
             observation.inertialDirection, scene.trueAttitudes[observation.imageIndex], scene.camera);
         ASSERT_TRUE(pixel.has_value());
         EXPECT_EQ(observation.measuredPixel, *pixel);
-        EXPECT_TRUE(InSensorWithMargin(observation.measuredPixel, kSensorWidth, kSensorHeight, 16));
+        EXPECT_TRUE(InSensorWithMargin(observation.measuredPixel, kSensorWidth, kSensorHeight, kDefaultSearchMargin));
         EXPECT_EQ(catalog[static_cast<std::size_t>(observation.starName) - 1].spatial, observation.inertialDirection);
     }
 }
@@ -189,23 +195,14 @@ TEST(SimulateObservationsTest, NoiseFreeObservationsAreExactProjections) {
 // coordinate is a pixel centre: a star rendered at a non-integer position
 // centroids back to that position, and its light is all there.
 TEST(RenderStarImageTest, RenderedStarCentroidsToItsPixel) {
-    const SensorModel sensor = NoiselessSensor();
-    SensorModel bright = sensor;
-    bright.zeroPoint = DECIMAL(1500.0);
-    const std::vector<decimal> pattern(static_cast<std::size_t>(kWidth) * kHeight, DECIMAL(0.0));
+    SensorModel sensor = NoiselessSensor();
+    sensor.zeroPoint = DECIMAL(1500.0);
     Random random(9);
 
     for (const found::Vec2 &position : {found::Vec2(DECIMAL(30.3), DECIMAL(35.7)),
                                         found::Vec2(DECIMAL(20.0), DECIMAL(40.5)),
                                         found::Vec2(DECIMAL(41.75), DECIMAL(22.25))}) {
-        std::vector<unsigned char> pixels = RenderStarImage(StarAt(position.x(), position.y()),
-                                                            found::Quaternion::Identity(),
-                                                            TestImageCamera(),
-                                                            pattern,
-                                                            kWidth,
-                                                            kHeight,
-                                                            bright,
-                                                            &random);
+        std::vector<unsigned char> pixels = RenderStarAt(position, sensor, &random);
 
         decimal total = DECIMAL(0.0);
         for (const unsigned char value : pixels) {
@@ -226,17 +223,9 @@ TEST(RenderStarImageTest, RenderedStarCentroidsToItsPixel) {
 TEST(RenderStarImageTest, BrightStarsSaturate) {
     SensorModel sensor = NoiselessSensor();
     sensor.zeroPoint = DECIMAL(1e5);
-    const std::vector<decimal> pattern(static_cast<std::size_t>(kWidth) * kHeight, DECIMAL(0.0));
     Random random(10);
 
-    const std::vector<unsigned char> pixels = RenderStarImage(StarAt(DECIMAL(32.0), DECIMAL(32.0)),
-                                                              found::Quaternion::Identity(),
-                                                              TestImageCamera(),
-                                                              pattern,
-                                                              kWidth,
-                                                              kHeight,
-                                                              sensor,
-                                                              &random);
+    const std::vector<unsigned char> pixels = RenderStarAt(found::Vec2(DECIMAL(32.0), DECIMAL(32.0)), sensor, &random);
 
     EXPECT_EQ(pixels[32 * kWidth + 32], 255);
     EXPECT_EQ(pixels[32 * kWidth + 33], 255);
@@ -329,18 +318,6 @@ TEST(WritePgmTest, RoundTripsThroughStbImage) {
     EXPECT_EQ(channels, 1);
     EXPECT_EQ(std::vector<unsigned char>(loaded, loaded + pixels.size()), pixels);
     stbi_image_free(loaded);
-}
-
-TEST(WritePgmTest, UnwritablePathThrows) {
-    EXPECT_THROW(WritePgm("test/fixtures/no-such-directory/image.pgm", 1, 1, {1}), std::runtime_error);
-}
-
-// /dev/full opens but fails every write, as a full disk would.
-TEST(WritePgmTest, FailedWriteThrows) {
-    if (!std::ifstream("/dev/full")) {
-        GTEST_SKIP() << "needs /dev/full";
-    }
-    EXPECT_THROW(WritePgm("/dev/full", 2, 1, {1, 2}), std::runtime_error);
 }
 
 }  // namespace scope

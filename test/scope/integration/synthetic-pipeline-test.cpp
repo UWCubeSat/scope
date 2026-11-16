@@ -106,15 +106,7 @@ TEST(SyntheticPipelineTest, RecoversCalibrationFromRenderedImages) {
     std::free(noisePtr->GetProduct()->image);
 
     EXPECT_TRUE(result.converged);
-    for (int p = 0; p < kCameraParameterCount; ++p) {
-        if (!result.estimated[p]) {
-            continue;
-        }
-        const decimal sigma = result.uncertainty.*kCameraParameterFields[p];
-        EXPECT_GT(sigma, DECIMAL(0.0)) << kCameraParameterNames[p];
-        EXPECT_NEAR(result.camera.*kCameraParameterFields[p], truth.*kCameraParameterFields[p], DECIMAL(5.0) * sigma)
-            << kCameraParameterNames[p];
-    }
+    ExpectWithinSigmas(result, truth, DECIMAL(5.0));
     EXPECT_LT(result.residualRms, DECIMAL(0.2));
     const std::ptrdiff_t used = std::count(result.inliers.begin(), result.inliers.end(), true);
     EXPECT_GT(used, 250);

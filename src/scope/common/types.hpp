@@ -58,8 +58,8 @@ struct CalibrationResult {
     /// One refined attitude per star image, in the prior attitudes' order and
     /// frame.
     std::vector<found::Quaternion> attitudes;
-    /// The mean of the per-image corrections refined * prior^-1: with two
-    /// cameras, the correction to their alignment.
+    /// Average of the per-image corrections (refined * prior^-1). With a
+    /// separate star tracker, this is the correction to the camera's alignment.
     found::Quaternion alignmentCorrection = found::Quaternion::Identity();
     /// Measured minus predicted pixel [du, dv] for every observation, in order.
     std::vector<found::Vec2> residuals;

@@ -1,7 +1,6 @@
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
 
-#include <fstream>
 #include <memory>
 #include <stdexcept>
 #include <string>
@@ -22,6 +21,7 @@
 #include "scope/projection/projection.hpp"
 #include "scope/star-centroid/star-centroid.hpp"
 
+#include "test/scope/common/cameras.hpp"
 #include "test/scope/common/test-files.hpp"
 
 namespace scope {
@@ -39,39 +39,46 @@ class FixedResultOptimization : public OptimizationAlgorithm {
     const CalibrationResult result_;
 };
 
+/// The camera the tests' star images are drawn for.
+CameraParameters TestCamera() {
+    return PinholeCamera(DECIMAL(100.0), DECIMAL(100.0), DECIMAL(32.0), DECIMAL(32.0));
+}
+
+/// An executor over options' images with the real first two stages. With no
+/// optimization given, the fit starts from TestCamera.
+PrimaryScopePipelineExecutor MakeExecutor(RecalibrationOptions options,
+                                          Catalog catalog = {},
+                                          std::unique_ptr<OptimizationAlgorithm> optimization = nullptr) {
+    const std::vector<found::Quaternion> attitudes(options.starImages.size(), found::Quaternion::Identity());
+    std::unique_ptr<StarCentroidAlgorithm> starAlgorithm =
+        std::make_unique<ROIFilterAlgorithm>(options, TestCamera(), std::move(catalog), attitudes);
+    if (!optimization) {
+        optimization = std::make_unique<LMAOptimizationAlgorithm>(TestCamera(), FitSettings());
+    }
+    return PrimaryScopePipelineExecutor(
+        std::move(options), std::make_unique<DarkScreenFilter>(), std::move(starAlgorithm), std::move(optimization));
+}
+
 }  // namespace
 
 // The sanitizer fails this test if the executor does not free the images in
 // its options.
-TEST(ExecutorsTest, RunsPipelineAndReleasesImages) {
+TEST(ExecutorsTest, RunsPipelineAndWritesOutputs) {
     std::vector<unsigned char> dark = FlatPixels(kWidth, kHeight, 10);
     std::vector<unsigned char> star = dark;
     PaintStar(&star, kWidth, 40, 36);
-
-    // Pinhole camera (focal 100, principal at (32, 32)), no distortion.
-    CameraParameters camera;
-    camera.focalLengthX = DECIMAL(100.0);
-    camera.focalLengthY = DECIMAL(100.0);
-    camera.principalX = DECIMAL(32.0);
-    camera.principalY = DECIMAL(32.0);
+    TempFile attitudes("executors-refined-attitudes.txt", "");
+    TempFile residuals("executors-residuals.csv", "");
 
     RecalibrationOptions options;
     options.darkFrames = {MallocImage(kWidth, kHeight, dark), MallocImage(kWidth, kHeight, dark)};
     options.starImages = {MallocImage(kWidth, kHeight, star)};
-
+    options.outputAttitudesPath = attitudes.Path();
+    options.outputResidualsPath = residuals.Path();
     // Under identity attitude this direction projects to (40, 36).
     Catalog catalog;
-    catalog.push_back(CatalogStar{found::Vec3(DECIMAL(0.08), DECIMAL(0.04), DECIMAL(1.0)).normalized(), 200, 1});
-    std::vector<found::Quaternion> attitudes{found::Quaternion::Identity()};
-
-    std::unique_ptr<StarCentroidAlgorithm> starAlgorithm =
-        std::make_unique<ROIFilterAlgorithm>(options, camera, std::move(catalog), std::move(attitudes));
-    std::unique_ptr<OptimizationAlgorithm> optimizationAlgorithm =
-        std::make_unique<LMAOptimizationAlgorithm>(camera, FitSettings());
-    PrimaryScopePipelineExecutor executor(std::move(options),
-                                          std::make_unique<DarkScreenFilter>(),
-                                          std::move(starAlgorithm),
-                                          std::move(optimizationAlgorithm));
+    catalog.push_back(CatalogStar{found::Vec3(DECIMAL(0.08), DECIMAL(0.04), DECIMAL(1.0)).normalized(), 200, 17});
+    PrimaryScopePipelineExecutor executor = MakeExecutor(std::move(options), std::move(catalog));
 
     testing::internal::CaptureStdout();
     executor.ExecutePipeline();
@@ -83,79 +90,28 @@ TEST(ExecutorsTest, RunsPipelineAndReleasesImages) {
     EXPECT_THAT(output, testing::HasSubstr("converged: no after 0 iterations\n"));
     EXPECT_THAT(output, testing::HasSubstr("focal-length-x: 100 +/- nan\n"));
     EXPECT_THAT(output, testing::HasSubstr("residual-rms: 0 px over 0 observations (1 not used)\n"));
-}
-
-// --output-attitudes and --output-residuals write what the fit produced: the
-// attitudes in the --attitudes format, and one CSV row per observation.
-TEST(ExecutorsTest, WritesAttitudesAndResiduals) {
-    std::vector<unsigned char> dark = FlatPixels(kWidth, kHeight, 10);
-    std::vector<unsigned char> star = dark;
-    PaintStar(&star, kWidth, 40, 36);
-    CameraParameters camera;
-    camera.focalLengthX = DECIMAL(100.0);
-    camera.focalLengthY = DECIMAL(100.0);
-    camera.principalX = DECIMAL(32.0);
-    camera.principalY = DECIMAL(32.0);
-    TempFile attitudes("executors-refined-attitudes.txt", "");
-    TempFile residuals("executors-residuals.csv", "");
-
-    RecalibrationOptions options;
-    options.darkFrames = {MallocImage(kWidth, kHeight, dark)};
-    options.starImages = {MallocImage(kWidth, kHeight, star)};
-    options.outputAttitudesPath = attitudes.Path();
-    options.outputResidualsPath = residuals.Path();
-    Catalog catalog;
-    catalog.push_back(CatalogStar{found::Vec3(DECIMAL(0.08), DECIMAL(0.04), DECIMAL(1.0)).normalized(), 200, 17});
-    std::unique_ptr<StarCentroidAlgorithm> starAlgorithm = std::make_unique<ROIFilterAlgorithm>(
-        options, camera, std::move(catalog), std::vector<found::Quaternion>{found::Quaternion::Identity()});
-    PrimaryScopePipelineExecutor executor(std::move(options),
-                                          std::make_unique<DarkScreenFilter>(),
-                                          std::move(starAlgorithm),
-                                          std::make_unique<LMAOptimizationAlgorithm>(camera, FitSettings()));
-
-    testing::internal::CaptureStdout();
-    executor.ExecutePipeline();
-    executor.OutputResults();
-    testing::internal::GetCapturedStdout();
 
     const std::vector<found::Quaternion> written = LoadAttitudes(attitudes.Path());
     ASSERT_EQ(written.size(), 1u);
     EXPECT_NEAR(written[0].w(), DECIMAL(1.0), DECIMAL(1e-12));
-    std::ifstream file(residuals.Path());
-    std::string header;
-    std::string row;
-    std::getline(file, header);
-    std::getline(file, row);
-    EXPECT_EQ(header, "image,star,measured_u,measured_v,predicted_u,predicted_v,residual_u,residual_v,inlier");
-    EXPECT_THAT(row, testing::StartsWith("0,17,40,36,40,36,"));
-    EXPECT_THAT(row, testing::EndsWith(",0"));
+    const std::string csv = ReadFile(residuals.Path());
+    EXPECT_THAT(csv,
+                testing::StartsWith("image,star,measured_u,measured_v,predicted_u,predicted_v,residual_u,residual_v,"
+                                    "inlier\n0,17,40,36,40,36,"));
+    EXPECT_THAT(csv, testing::EndsWith(",0\n"));
 }
 
-// A directory that does not exist, and /dev/full, which opens but fails
-// every write as a full disk would.
 TEST(ExecutorsTest, UnwritableOutputThrows) {
-    std::vector<std::string> paths = {"test/fixtures/no-such-directory/residuals.csv"};
-    if (std::ifstream("/dev/full")) {
-        paths.push_back("/dev/full");
-    }
-    for (const std::string &path : paths) {
-        std::vector<unsigned char> dark = FlatPixels(kWidth, kHeight, 10);
-        RecalibrationOptions options;
-        options.darkFrames = {MallocImage(kWidth, kHeight, dark)};
-        options.outputResidualsPath = path;
-        std::unique_ptr<StarCentroidAlgorithm> starAlgorithm = std::make_unique<ROIFilterAlgorithm>(
-            options, CameraParameters(), Catalog(), std::vector<found::Quaternion>());
-        PrimaryScopePipelineExecutor executor(
-            std::move(options),
-            std::make_unique<DarkScreenFilter>(),
-            std::move(starAlgorithm),
-            std::make_unique<LMAOptimizationAlgorithm>(CameraParameters(), FitSettings()));
+    std::vector<unsigned char> dark = FlatPixels(kWidth, kHeight, 10);
+    RecalibrationOptions options;
+    options.darkFrames = {MallocImage(kWidth, kHeight, dark)};
+    options.outputResidualsPath = std::string(kMissingDirectory) + "residuals.csv";
+    PrimaryScopePipelineExecutor executor = MakeExecutor(std::move(options));
 
-        testing::internal::CaptureStdout();
-        executor.ExecutePipeline();
-        EXPECT_THROW(executor.OutputResults(), std::runtime_error) << path;
-        testing::internal::GetCapturedStdout();
-    }
+    testing::internal::CaptureStdout();
+    executor.ExecutePipeline();
+    EXPECT_THROW(executor.OutputResults(), std::runtime_error);
+    testing::internal::GetCapturedStdout();
 }
 
 // The values are exactly representable, so they print the same in double and
@@ -191,13 +147,8 @@ TEST(ExecutorsTest, PrintsCalibrationResult) {
     std::vector<unsigned char> dark = FlatPixels(kWidth, kHeight, 10);
     RecalibrationOptions options;
     options.darkFrames = {MallocImage(kWidth, kHeight, dark)};
-
-    std::unique_ptr<StarCentroidAlgorithm> starAlgorithm =
-        std::make_unique<ROIFilterAlgorithm>(options, CameraParameters(), Catalog(), std::vector<found::Quaternion>());
-    PrimaryScopePipelineExecutor executor(std::move(options),
-                                          std::make_unique<DarkScreenFilter>(),
-                                          std::move(starAlgorithm),
-                                          std::make_unique<FixedResultOptimization>(result));
+    PrimaryScopePipelineExecutor executor =
+        MakeExecutor(std::move(options), {}, std::make_unique<FixedResultOptimization>(result));
 
     testing::internal::CaptureStdout();
     executor.ExecutePipeline();

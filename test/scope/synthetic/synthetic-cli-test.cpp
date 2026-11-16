@@ -8,7 +8,6 @@
 #include <cstdlib>
 
 #include <filesystem>  // NOLINT(build/c++17)
-#include <fstream>
 #include <sstream>
 #include <stdexcept>
 #include <string>
@@ -28,11 +27,10 @@ namespace scope {
 
 namespace {
 
-std::string ReadFile(const std::string &path) {
-    std::ifstream file(path);
-    std::stringstream contents;
-    contents << file.rdbuf();
-    return contents.str();
+/// argc for an argv array.
+template <std::size_t N>
+int Argc(const char *(&)[N]) {
+    return static_cast<int>(N);
 }
 
 int CountOccurrences(const std::string &text, const std::string &pattern) {
@@ -92,9 +90,8 @@ TEST_F(SynthCliTest, ParsesFlags) {
                           "9",
                           "--misalignment",
                           "0"};
-    const int argc = static_cast<int>(sizeof(argv) / sizeof(argv[0]));
 
-    const SynthesisOptions options = ParseSynthesisOptions(argc, const_cast<char **>(argv));
+    const SynthesisOptions options = ParseSynthesisOptions(Argc(argv), const_cast<char **>(argv));
 
     EXPECT_EQ(options.outputDir, "out");
     EXPECT_EQ(options.starImageCount, 3);
@@ -112,9 +109,9 @@ TEST_F(SynthCliTest, RejectsUnknownFlagAndStrayArgument) {
     const char *missingValue[] = {"scope-synth", "--seed"};
     const char *stray[] = {"scope-synth", "--output-dir", "out", "extra"};
 
-    EXPECT_THROW(ParseSynthesisOptions(5, const_cast<char **>(unknown)), std::runtime_error);
-    EXPECT_THROW(ParseSynthesisOptions(2, const_cast<char **>(missingValue)), std::runtime_error);
-    EXPECT_THROW(ParseSynthesisOptions(4, const_cast<char **>(stray)), std::runtime_error);
+    EXPECT_THROW(ParseSynthesisOptions(Argc(unknown), const_cast<char **>(unknown)), std::runtime_error);
+    EXPECT_THROW(ParseSynthesisOptions(Argc(missingValue), const_cast<char **>(missingValue)), std::runtime_error);
+    EXPECT_THROW(ParseSynthesisOptions(Argc(stray), const_cast<char **>(stray)), std::runtime_error);
 }
 
 // The data set is what scope reads: its arguments file parses with scope's
@@ -192,7 +189,7 @@ TEST_F(SynthCliTest, MainPrintsHelp) {
     const char *argv[] = {"scope-synth", "--help"};
 
     testing::internal::CaptureStdout();
-    const int status = SynthMain(2, const_cast<char **>(argv));
+    const int status = SynthMain(Argc(argv), const_cast<char **>(argv));
     const std::string output = testing::internal::GetCapturedStdout();
 
     EXPECT_EQ(status, EXIT_SUCCESS);
@@ -201,10 +198,9 @@ TEST_F(SynthCliTest, MainPrintsHelp) {
 }
 
 TEST_F(SynthCliTest, MainWritesDataSetAndReportsErrors) {
-    const std::string directoryFlag = directory_;
     const char *good[] = {"scope-synth",
                           "--output-dir",
-                          directoryFlag.c_str(),
+                          directory_.c_str(),
                           "--catalog-path",
                           kFixtureCatalog,
                           "--width",
@@ -218,10 +214,10 @@ TEST_F(SynthCliTest, MainWritesDataSetAndReportsErrors) {
     const char *bad[] = {"scope-synth", "--bogus"};
 
     testing::internal::CaptureStdout();
-    const int goodStatus = SynthMain(13, const_cast<char **>(good));
+    const int goodStatus = SynthMain(Argc(good), const_cast<char **>(good));
     const std::string output = testing::internal::GetCapturedStdout();
     testing::internal::CaptureStderr();
-    const int badStatus = SynthMain(2, const_cast<char **>(bad));
+    const int badStatus = SynthMain(Argc(bad), const_cast<char **>(bad));
     const std::string errors = testing::internal::GetCapturedStderr();
 
     EXPECT_EQ(goodStatus, EXIT_SUCCESS);

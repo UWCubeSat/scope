@@ -19,8 +19,7 @@ namespace scope {
 
 namespace {
 
-/// Mask radius about the brightest pixel, in pixels (Orion paper §"Image
-/// Processing and Star Centroiding").
+/// Mask radius about the brightest pixel, in pixels (the paper's value).
 constexpr int kRecenterRadius = 3;
 /// Two centroids closer than this (pixels) are treated as the same blob. Sized
 /// to the mask radius.
@@ -75,9 +74,9 @@ decimal Median(std::vector<decimal> values) {
     return *middle;
 }
 
-/// The median offset of the centroids from their predictions over the stars
-/// with no neighbour, which have their windows to themselves; zero if fewer
-/// than kMinOffsetStars of them centroid. Mostly the attitude error.
+/// Median offset from prediction to centroid over the stars that have their
+/// window to themselves; mostly the attitude error. Zero if fewer than
+/// kMinOffsetStars of them are found.
 found::Vec2 MedianOffset(const Image &darkSubtracted,
                          const std::vector<Prediction> &predictions,
                          const std::vector<std::vector<std::size_t>> &neighbours,
@@ -105,9 +104,8 @@ found::Vec2 MedianOffset(const Image &darkSubtracted,
     return found::Vec2(Median(offsetsU), Median(offsetsV));
 }
 
-/// Appends to observations each candidate with no other candidate's centroid
-/// within kCentroidMatchTolerance. A blob about halfway between two
-/// predictions could be either star's, so both are dropped.
+/// Keeps the candidates whose centroid no other candidate shares. A blob
+/// halfway between two predictions could be either star's, so both go.
 void KeepUnambiguous(const std::vector<Observation> &candidates, std::vector<Observation> *observations) {
     for (std::size_t a = 0; a < candidates.size(); ++a) {
         bool ambiguous = false;
@@ -150,8 +148,8 @@ CentroidObservations ROIFilterAlgorithm::Run(const Image &darkFrame) {
         unsigned char *subtracted = DarkSubtract(star, darkFrame);
         const Image darkSubtracted{star.width, star.height, star.channels, subtracted};
 
-        // Stars bright enough to search for, on the sensor or within a window
-        // of its edge, where they still claim their side of a neighbour's.
+        // Stars bright enough to search for. Those up to a window off the
+        // sensor are kept too, since they still share windows with stars on it.
         std::vector<Prediction> predictions;
         for (std::size_t j = 0; j < catalog_.size(); ++j) {
             if (catalog_[j].magnitude > magnitudeLimit) {

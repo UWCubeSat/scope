@@ -20,8 +20,8 @@ namespace scope {
 
 /**
  * The ten parameters of the paper's camera model: the intrinsics
- * k = [d_x, alpha, d_y, u_p, v_p] (Eq. 13) followed by the Brown distortion
- * coefficients xi = [k1, k2, k3, p1, p2] (Eq. 14), in that order.
+ * k = [d_x, alpha, d_y, u_p, v_p] followed by the Brown distortion
+ * coefficients xi = [k1, k2, k3, p1, p2], in that order.
  */
 struct CameraParameters {
     /// d_x: focal length along u, in pixels.
@@ -79,7 +79,7 @@ inline constexpr std::array<const char *, kCameraParameterCount> kCameraParamete
 };
 
 /**
- * Applies Brown radial and decentering distortion (paper Eq. 6).
+ * Applies Brown radial and decentering distortion.
  *
  * @param ideal Undistorted point [x, y] on the normalized image plane.
  * @param k1,k2,k3 Radial distortion coefficients.
@@ -111,8 +111,7 @@ found::Quaternion LostAttitudeToScopeFrame(const found::Quaternion &lostAttitude
 
 /**
  * Projects an inertial line of sight to a raw (distorted) pixel: rotate into
- * the camera frame, pinhole-project (paper Eq. 1), distort (Eq. 6), apply the
- * intrinsics (Eq. 7).
+ * the camera frame, pinhole-project, distort, apply the intrinsics.
  *
  * @param eI Unit line of sight in the inertial frame.
  * @param attitude Rotation from the inertial frame into the camera frame

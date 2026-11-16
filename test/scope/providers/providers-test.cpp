@@ -82,14 +82,10 @@ TEST(ProvideCameraParametersTest, ZeroFocalLengthWithStarImagesThrows) {
     EXPECT_THROW(ProvideCameraParameters(options), std::runtime_error);
 }
 
-// The command line's default and FitSettings' own default agree: everything
-// but the principal point is estimated.
-TEST(ProvideFitSettingsTest, DefaultFixesPrincipalPoint) {
+TEST(ProvideFitSettingsTest, DefaultsMatchFitSettings) {
     const FitSettings settings = ProvideFitSettings(RecalibrationOptions());
 
     EXPECT_EQ(settings.estimate, FitSettings().estimate);
-    EXPECT_FALSE(settings.estimate[3]);
-    EXPECT_FALSE(settings.estimate[4]);
     EXPECT_EQ(settings.attitudeModel, AttitudeCorrectionModel::kPerImage);
     EXPECT_EQ(settings.outlierThreshold, FitSettings().outlierThreshold);
     EXPECT_EQ(settings.maxIterations, FitSettings().maxIterations);

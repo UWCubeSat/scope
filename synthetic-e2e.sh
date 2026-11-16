@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-# Checks the whole pipeline on synthetic images, the way the observatory data
-# will be checked: calibrate on some images from the datasheet prior, then hold
+# Checks the whole pipeline on synthetic images, the way real images would be
+# checked: calibrate on some images from the datasheet prior, then hold
 # the calibration fixed and measure the residuals on images the fit never saw
 # (the paper's Fig. 7). Also compares the fit with the truth the images were
 # rendered from, which real data cannot do.
@@ -21,7 +21,7 @@ BIN=${BIN:-build/bin}
 FIT_IMAGES=${FIT_IMAGES:-15}
 HELD_OUT_IMAGES=${HELD_OUT_IMAGES:-15}
 
-# The Edmund #35-142 datasheet values on the IMX252 (reference/LENS.md §4).
+# The Edmund #35-142 datasheet values on the IMX252.
 PRIOR=(--focal-length-x 1739.13 --focal-length-y 1739.13 --principal-point-x 1031.5 --principal-point-y 771.5
        --alpha 0 --k1 -0.157 --k2 0.082 --k3 0 --p1 0 --p2 0)
 

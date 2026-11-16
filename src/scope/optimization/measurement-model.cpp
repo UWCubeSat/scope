@@ -17,7 +17,7 @@ MeasurementJacobian ComputeMeasurementJacobian(const found::Vec3 &eC, const Came
     const decimal p1 = camera.p1;
     const decimal p2 = camera.p2;
 
-    // Ideal and distorted image-plane points (Eqs. 1 and 6).
+    // Ideal and distorted image-plane points.
     const decimal x = X / Z;
     const decimal y = Y / Z;
     const decimal r2 = x * x + y * y;
@@ -29,29 +29,29 @@ MeasurementJacobian ComputeMeasurementJacobian(const found::Vec3 &eC, const Came
 
     MeasurementJacobian jacobian;
 
-    // Eq. 29: du'/dk.
+    // Intrinsics: u' is linear in them.
     jacobian.camera.leftCols<5>() << xd, yd, DECIMAL(0.0), DECIMAL(1.0), DECIMAL(0.0),
                                      DECIMAL(0.0), DECIMAL(0.0), yd, DECIMAL(0.0), DECIMAL(1.0);
 
-    // Eq. 32: du'/dx'.
+    // du'/dx'
     found::Mat2 dUdXd;
     dUdXd << camera.focalLengthX, camera.alpha,
              DECIMAL(0.0), camera.focalLengthY;
 
-    // Eq. 33: dx'/dxi.
+    // dx'/d(distortion coefficients)
     Eigen::Matrix<decimal, 2, 5> dXdDxi;
     dXdDxi << x * r2, x * r4, x * r6, DECIMAL(2.0) * x * y, r2 + DECIMAL(2.0) * x * x,
               y * r2, y * r4, y * r6, r2 + DECIMAL(2.0) * y * y, DECIMAL(2.0) * x * y;
 
-    // Eq. 30.
+    // Distortion coefficients, by the chain rule.
     jacobian.camera.rightCols<5>() = dUdXd * dXdDxi;
 
-    // Eq. 37.
+    // Derivatives of r^2, r^4 and r^6 with respect to (x, y).
     const Eigen::Matrix<decimal, 1, 2> dR2(DECIMAL(2.0) * x, DECIMAL(2.0) * y);
     const Eigen::Matrix<decimal, 1, 2> dR4 = DECIMAL(2.0) * r2 * dR2;
     const Eigen::Matrix<decimal, 1, 2> dR6 = DECIMAL(3.0) * r4 * dR2;
 
-    // Eq. 36: dx'/dx.
+    // dx'/dx: how distortion moves with the ideal point.
     const found::Vec2 ideal(x, y);
     found::Mat2 decentering;
     decentering << DECIMAL(2.0) * p1 * y + DECIMAL(4.0) * p2 * x, DECIMAL(2.0) * p1 * x,
@@ -59,18 +59,18 @@ MeasurementJacobian ComputeMeasurementJacobian(const found::Vec3 &eC, const Came
     const found::Mat2 dXdDx = radial * found::Mat2::Identity() + ideal * (k1 * dR2 + k2 * dR4 + k3 * dR6) +
                               decentering + found::Vec2(p2, p1) * dR2;
 
-    // Eq. 34: dx/de.
+    // dx/de: the pinhole projection.
     Eigen::Matrix<decimal, 2, 3> dXdE;
     dXdE << DECIMAL(1.0) / Z, DECIMAL(0.0), -X / (Z * Z),
             DECIMAL(0.0), DECIMAL(1.0) / Z, -Y / (Z * Z);
 
-    // Eq. 35: de/d(dtheta) = [e_C x].
+    // de/d(dtheta) = [e_C x]
     found::Mat3 dEdTheta;
     dEdTheta << DECIMAL(0.0), -Z, Y,
                 Z, DECIMAL(0.0), -X,
                 -Y, X, DECIMAL(0.0);
 
-    // Eq. 31.
+    // Attitude, by the chain rule.
     jacobian.attitude = dUdXd * dXdDx * dXdE * dEdTheta;
 
     return jacobian;
