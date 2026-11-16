@@ -13,12 +13,12 @@ out=bright-star-catalog.tsv
 
 if command -v curl > /dev/null; then
     fetch() {
-        curl -sS --compressed -H 'Content-Type: application/x-www-form-urlencoded' \
+        curl -sS --max-time 120 --compressed -H 'Content-Type: application/x-www-form-urlencoded' \
             -H 'Origin: https://vizier.u-strasbg.fr' --data-raw "$query" "$url"
     }
 elif command -v wget > /dev/null; then
     fetch() {
-        wget -q -O - --header='Origin: https://vizier.u-strasbg.fr' --post-data="$query" "$url"
+        wget -q -T 120 -O - --header='Origin: https://vizier.u-strasbg.fr' --post-data="$query" "$url"
     }
 else
     echo "download-bsc.sh: needs curl or wget" >&2
