@@ -1,7 +1,8 @@
 #!/bin/sh
 
 # Fetches the Yale Bright Star Catalog (VizieR V/50) into ./bright-star-catalog.tsv,
-# the file scope reads by default (--catalog-path). One star per line:
+# the file scope reads by default (--catalog-path). The catalog is committed, so
+# this is only needed to refresh it. One star per line:
 #   RA(deg)|Dec(deg)|HR|Multiple|Vmag     (J2000, decimal degrees)
 #
 # The request is LOST's: the VizieR query form as copied from Firefox dev tools.

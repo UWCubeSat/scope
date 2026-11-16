@@ -10,6 +10,3 @@ build
 
 # macOS
 .DS_Store
-
-# The downloaded bright star catalog (fetch with download-bsc.sh)
-/bright-star-catalog.tsv

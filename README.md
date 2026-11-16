@@ -22,4 +22,4 @@ That builds `scope`, the synthetic data generator `scope-synth` and the tests in
 - `-DSANITIZE=OFF` builds the tests without AddressSanitizer and UndefinedBehaviorSanitizer, to run them under valgrind.
 - `-DCOVERAGE=ON` instruments the tests. Run `gcovr` after them for a report in `build/coverage/`.
 
-`./download-bsc.sh` fetches the star catalog `scope` reads, and `./synthetic-e2e.sh` runs the whole pipeline on a synthetic data set and checks the fit against the truth. CI (`.github/workflows/ci.yml`) runs all of that, the tests under valgrind, and `cpplint --recursive src test`.
+`scope` reads the star catalog `bright-star-catalog.tsv`, which is committed; `./download-bsc.sh` fetches it again from VizieR. `./synthetic-e2e.sh` runs the whole pipeline on a synthetic data set and checks the fit against the truth. CI (`.github/workflows/ci.yml`) runs all of that, the tests under valgrind, and `cpplint --recursive src test`.
