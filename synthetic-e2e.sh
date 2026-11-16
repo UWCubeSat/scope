@@ -8,8 +8,8 @@
 # Usage: ./synthetic-e2e.sh [output-dir] [scope-synth flags...]
 #
 # Run inside the devcontainer after building scope and scope-synth
-# (./build.sh cmake "" --target scope-compile), with the catalog downloaded
-# (./download-bsc.sh). FIT_IMAGES and HELD_OUT_IMAGES set the split (15 and 15),
+# (cmake -S . -B build && cmake --build build -j 4). It reads the committed
+# bright-star-catalog.tsv. FIT_IMAGES and HELD_OUT_IMAGES set the split (15 and 15),
 # BIN where the binaries are (build/bin). Exits non-zero if the fit did not
 # converge, a fitted parameter is more than 5 sigma from the truth, or the
 # held-out residual RMS is 0.5 px or more.

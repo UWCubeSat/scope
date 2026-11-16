@@ -1,7 +1,8 @@
 #!/bin/sh
 
 # Fetches the Yale Bright Star Catalog (VizieR V/50) into ./bright-star-catalog.tsv,
-# the file scope reads by default (--catalog-path). One star per line:
+# the file scope reads by default (--catalog-path). The catalog is committed, so
+# this is only needed to refresh it. One star per line:
 #   RA(deg)|Dec(deg)|HR|Multiple|Vmag     (J2000, decimal degrees)
 #
 # The request is LOST's: the VizieR query form as copied from Firefox dev tools.
@@ -13,12 +14,12 @@ out=bright-star-catalog.tsv
 
 if command -v curl > /dev/null; then
     fetch() {
-        curl -sS --compressed -H 'Content-Type: application/x-www-form-urlencoded' \
+        curl -sS --max-time 120 --compressed -H 'Content-Type: application/x-www-form-urlencoded' \
             -H 'Origin: https://vizier.u-strasbg.fr' --data-raw "$query" "$url"
     }
 elif command -v wget > /dev/null; then
     fetch() {
-        wget -q -O - --header='Origin: https://vizier.u-strasbg.fr' --post-data="$query" "$url"
+        wget -q -T 120 -O - --header='Origin: https://vizier.u-strasbg.fr' --post-data="$query" "$url"
     }
 else
     echo "download-bsc.sh: needs curl or wget" >&2
