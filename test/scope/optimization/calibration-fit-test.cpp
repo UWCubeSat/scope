@@ -5,7 +5,6 @@
 
 #include <algorithm>
 #include <array>
-#include <initializer_list>
 #include <limits>
 #include <optional>
 #include <random>
@@ -29,7 +28,8 @@ namespace scope {
 namespace {
 
 /// Tolerances for a noise-free fit, per parameter in kCameraParameterFields
-/// order: what the convergence test leaves, with a wide allowance.
+/// order: well above what the convergence test leaves, in each parameter's
+/// own units (pixels for the intrinsics).
 constexpr std::array<decimal, kCameraParameterCount> kExactTolerance = {DECIMAL(1e-5),
                                                                         DECIMAL(1e-5),
                                                                         DECIMAL(1e-5),
@@ -69,6 +69,12 @@ class CalibrationFitTest : public testing::Test {
         return worst;
     }
 
+    /// Six images whose reported attitudes are off by the misalignment alone.
+    SyntheticScene MisalignmentOnlyScene(Random *random) const {
+        return RandomScene(
+            AsBuiltCamera(), kSensorWidth, kSensorHeight, 6, DECIMAL(0.0), found::ArcSecToRad(DECIMAL(60.0)), random);
+    }
+
     Random random_;
     Catalog catalog_;
     SyntheticScene scene_;
@@ -83,21 +89,21 @@ void ExpectCameraNear(const CameraParameters &actual,
     }
 }
 
+/// For ExpectCameraNear: exactly equal.
+constexpr std::array<decimal, kCameraParameterCount> kNoTolerance{};
+
+using CameraField = decimal CameraParameters::*;
+
 /// The settings that estimate every parameter except those listed.
-FitSettings EstimateAllBut(std::initializer_list<int> fixed) {
+FitSettings EstimateAllBut(const std::vector<CameraField> &fixed) {
     FitSettings settings;
     settings.estimate.fill(true);
-    for (const int p : fixed) {
-        settings.estimate[p] = false;
+    for (const CameraField field : fixed) {
+        const auto at = std::find(kCameraParameterFields.begin(), kCameraParameterFields.end(), field);
+        settings.estimate[static_cast<std::size_t>(at - kCameraParameterFields.begin())] = false;
     }
     return settings;
 }
-
-constexpr int kFocalLengthY = 2;
-constexpr int kPrincipalX = 3;
-constexpr int kPrincipalY = 4;
-constexpr int kK3 = 7;
-constexpr int kP2 = 9;
 
 }  // namespace
 
@@ -147,32 +153,28 @@ TEST_F(CalibrationFitTest, NoisyFitIsWithinItsUncertainty) {
     const CalibrationResult result = FitCalibration(observations, DatasheetCamera(), FitSettings());
 
     EXPECT_TRUE(result.converged);
-    for (int p = 0; p < kCameraParameterCount; ++p) {
-        if (!result.estimated[p]) {
-            continue;
-        }
-        const decimal sigma = result.uncertainty.*kCameraParameterFields[p];
-        EXPECT_GT(sigma, DECIMAL(0.0)) << kCameraParameterNames[p];
-        EXPECT_NEAR(
-            result.camera.*kCameraParameterFields[p], AsBuiltCamera().*kCameraParameterFields[p], DECIMAL(4.0) * sigma)
-            << kCameraParameterNames[p];
-    }
+    ExpectWithinSigmas(result, AsBuiltCamera(), DECIMAL(4.0));
     EXPECT_NEAR(result.residualRms, DECIMAL(0.15), DECIMAL(0.01));
 }
 
 TEST_F(CalibrationFitTest, FixedParametersKeepTheirPrior) {
     const CentroidObservations observations = Observe(DECIMAL(0.1));
     const CameraParameters prior = DatasheetCamera();
-    FitSettings settings = EstimateAllBut({kFocalLengthY, kPrincipalX, kPrincipalY, kK3, kP2});
+    const std::vector<CameraField> fixed = {&CameraParameters::focalLengthY,
+                                            &CameraParameters::principalX,
+                                            &CameraParameters::principalY,
+                                            &CameraParameters::k3,
+                                            &CameraParameters::p2};
+    FitSettings settings = EstimateAllBut(fixed);
     // The fixed focal length leaves a misfit that rejection would chew on.
     settings.outlierThreshold = DECIMAL(0.0);
 
     const CalibrationResult result = FitCalibration(observations, prior, settings);
 
     EXPECT_EQ(result.estimated, settings.estimate);
-    for (const int p : {kFocalLengthY, kPrincipalX, kPrincipalY, kK3, kP2}) {
-        EXPECT_EQ(result.camera.*kCameraParameterFields[p], prior.*kCameraParameterFields[p]);
-        EXPECT_EQ(result.uncertainty.*kCameraParameterFields[p], DECIMAL(0.0));
+    for (const CameraField field : fixed) {
+        EXPECT_EQ(result.camera.*field, prior.*field);
+        EXPECT_EQ(result.uncertainty.*field, DECIMAL(0.0));
     }
     // The estimated focal length absorbs what it can of the fixed one's error.
     EXPECT_NE(result.camera.focalLengthX, prior.focalLengthX);
@@ -195,8 +197,7 @@ TEST_F(CalibrationFitTest, AttitudeOnlyFitRecoversAttitudes) {
 // is exactly the misalignment.
 TEST_F(CalibrationFitTest, SharedCorrectionRecoversMisalignment) {
     Random random(7);
-    const SyntheticScene scene = RandomScene(
-        AsBuiltCamera(), kSensorWidth, kSensorHeight, 6, DECIMAL(0.0), found::ArcSecToRad(DECIMAL(60.0)), &random);
+    const SyntheticScene scene = MisalignmentOnlyScene(&random);
     const CentroidObservations observations =
         SimulateObservations(scene, catalog_, kDefaultSearchMargin, DECIMAL(0.0), &random);
     FitSettings settings;
@@ -216,17 +217,12 @@ TEST_F(CalibrationFitTest, SharedCorrectionRecoversMisalignment) {
 // with no stars, which with no per-image error then lands on its truth.
 TEST_F(CalibrationFitTest, SharedCorrectionReachesImageWithoutStars) {
     Random random(7);
-    const SyntheticScene scene = RandomScene(
-        AsBuiltCamera(), kSensorWidth, kSensorHeight, 6, DECIMAL(0.0), found::ArcSecToRad(DECIMAL(60.0)), &random);
+    const SyntheticScene scene = MisalignmentOnlyScene(&random);
     CentroidObservations observations =
         SimulateObservations(scene, catalog_, kDefaultSearchMargin, DECIMAL(0.0), &random);
-    std::vector<Observation> kept;
-    for (const Observation &observation : observations.observations) {
-        if (observation.imageIndex != 2) {
-            kept.push_back(observation);
-        }
-    }
-    observations.observations = kept;
+    std::vector<Observation> &list = observations.observations;
+    list.erase(std::remove_if(list.begin(), list.end(), [](const Observation &o) { return o.imageIndex == 2; }),
+               list.end());
     FitSettings settings;
     settings.attitudeModel = AttitudeCorrectionModel::kShared;
 
@@ -340,7 +336,7 @@ TEST_F(CalibrationFitTest, ResidualsAreMeasuredMinusPredicted) {
     EXPECT_NEAR(result.residualRms, DECIMAL_SQRT(sum / DECIMAL(count)), DECIMAL(1e-12));
 }
 
-// With one round, the outliers the first fit finds are not refitted without.
+// With one round the fit is not repeated, so the outlier it finds is still used.
 TEST_F(CalibrationFitTest, StopsRejectingAfterMaxRounds) {
     CentroidObservations observations = Observe(DECIMAL(0.1));
     observations.observations[3].measuredPixel += found::Vec2(DECIMAL(20.0), DECIMAL(0.0));
@@ -375,7 +371,7 @@ TEST_F(CalibrationFitTest, TooFewObservationsReturnsPrior) {
 
     EXPECT_FALSE(result.converged);
     EXPECT_EQ(result.iterations, 0);
-    ExpectCameraNear(result.camera, DatasheetCamera(), {});
+    ExpectCameraNear(result.camera, DatasheetCamera(), kNoTolerance);
     EXPECT_EQ(result.attitudes.size(), observations.attitudes.size());
     EXPECT_EQ(result.residuals.size(), 2u);
     EXPECT_EQ(std::count(result.inliers.begin(), result.inliers.end(), true), 0);

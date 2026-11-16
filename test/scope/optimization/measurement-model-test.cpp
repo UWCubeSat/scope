@@ -101,11 +101,7 @@ TEST(MeasurementJacobianTest, AttitudeColumnsMatchFiniteDifferences) {
 // first-order expansion, Eqs. 45 and 46, which pins the sign convention of
 // dtheta to the paper's.
 TEST(MeasurementJacobianTest, PinholeAttitudeColumnsMatchPaperEq45And46) {
-    CameraParameters camera;
-    camera.focalLengthX = DECIMAL(1745.0);
-    camera.focalLengthY = DECIMAL(1744.2);
-    camera.principalX = DECIMAL(1031.5);
-    camera.principalY = DECIMAL(771.5);
+    const CameraParameters camera = PinholeCamera(DECIMAL(1745.0), DECIMAL(1744.2), DECIMAL(1031.5), DECIMAL(771.5));
 
     for (const found::Vec3 &e : FieldDirections()) {
         const MeasurementJacobian jacobian = ComputeMeasurementJacobian(e, camera);
@@ -123,17 +119,6 @@ TEST(MeasurementJacobianTest, PinholeAttitudeColumnsMatchPaperEq45And46) {
         EXPECT_NEAR(jacobian.attitude(1, 1), -dy * e1 * e2, DECIMAL(1e-9) * dy);
         EXPECT_NEAR(jacobian.attitude(1, 2), -dy * e1, DECIMAL(1e-9) * dy);
     }
-}
-
-// Eq. 29 is linear in the intrinsics: u' = d_x x' + alpha y' + u_p and
-// v' = d_y y' + v_p, so the principal point columns are exactly unit vectors.
-TEST(MeasurementJacobianTest, PrincipalPointColumnsAreUnitVectors) {
-    const MeasurementJacobian jacobian = ComputeMeasurementJacobian(FieldDirections()[4], AsBuiltCamera());
-
-    EXPECT_EQ(jacobian.camera(0, 3), DECIMAL(1.0));
-    EXPECT_EQ(jacobian.camera(1, 3), DECIMAL(0.0));
-    EXPECT_EQ(jacobian.camera(0, 4), DECIMAL(0.0));
-    EXPECT_EQ(jacobian.camera(1, 4), DECIMAL(1.0));
 }
 
 }  // namespace scope

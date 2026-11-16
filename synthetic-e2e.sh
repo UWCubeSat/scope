@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-# Checks the whole pipeline on synthetic images, the way the observatory data
-# will be checked: calibrate on some images from the datasheet prior, then hold
+# Checks the whole pipeline on synthetic images, the way real images would be
+# checked: calibrate on some images from the datasheet prior, then hold
 # the calibration fixed and measure the residuals on images the fit never saw
 # (the paper's Fig. 7). Also compares the fit with the truth the images were
 # rendered from, which real data cannot do.

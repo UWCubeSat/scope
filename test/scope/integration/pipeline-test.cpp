@@ -19,6 +19,7 @@
 #include "scope/projection/projection.hpp"
 #include "scope/star-centroid/star-centroid.hpp"
 
+#include "test/scope/common/cameras.hpp"
 #include "test/scope/common/test-files.hpp"
 
 namespace scope {
@@ -32,11 +33,7 @@ TEST(PipelineIntegrationTest, RunsEndToEnd) {
     star.PaintStar(40, 36);
 
     // Pinhole camera, no distortion; the catalog star below projects to (40, 36).
-    CameraParameters camera;
-    camera.focalLengthX = DECIMAL(100.0);
-    camera.focalLengthY = DECIMAL(100.0);
-    camera.principalX = DECIMAL(32.0);
-    camera.principalY = DECIMAL(32.0);
+    const CameraParameters camera = PinholeCamera(DECIMAL(100.0), DECIMAL(100.0), DECIMAL(32.0), DECIMAL(32.0));
 
     RecalibrationOptions options;
     options.centroidThreshold = 40;

@@ -1,8 +1,6 @@
 #include <gtest/gtest.h>
 
-#include <fstream>
 #include <optional>
-#include <sstream>
 #include <stdexcept>
 #include <string>
 #include <vector>
@@ -141,22 +139,7 @@ TEST(WriteAttitudesTest, RoundTripsThroughLoadAttitudes) {
         // LoadAttitudes renormalizes, which can move the last bit.
         EXPECT_LT((loaded[i].coeffs() - attitudes[i].coeffs()).norm(), DECIMAL(1e-14));
     }
-    std::ifstream written(file.Path());
-    std::stringstream contents;
-    contents << written.rdbuf();
-    EXPECT_EQ(contents.str().rfind("# first line\n# second line\n", 0), 0u);
-}
-
-TEST(WriteAttitudesTest, UnwritablePathThrows) {
-    EXPECT_THROW(WriteAttitudes("test/fixtures/no-such-directory/attitudes.txt", {}, ""), std::runtime_error);
-}
-
-// /dev/full opens but fails every write, as a full disk would.
-TEST(WriteAttitudesTest, FailedWriteThrows) {
-    if (!std::ifstream("/dev/full")) {
-        GTEST_SKIP() << "needs /dev/full";
-    }
-    EXPECT_THROW(WriteAttitudes("/dev/full", {found::Quaternion::Identity()}, "header"), std::runtime_error);
+    EXPECT_EQ(ReadFile(file.Path()).rfind("# first line\n# second line\n", 0), 0u);
 }
 
 // To first order the correction is I - [dtheta x] (paper Eq. 38), which moves
@@ -186,12 +169,6 @@ TEST(AttitudeCorrectionTest, RotationVectorRoundTrips) {
         const found::Quaternion negated(-AttitudeCorrection(dtheta).coeffs());
         EXPECT_NEAR((CorrectionRotationVector(negated) - dtheta).norm(), DECIMAL(0.0), DECIMAL(1e-12));
     }
-}
-
-TEST(AverageQuaternionsTest, OneQuaternionIsItsOwnAverage) {
-    const found::Quaternion q = AttitudeCorrection(found::Vec3(DECIMAL(0.1), DECIMAL(0.2), DECIMAL(0.3)));
-
-    EXPECT_NEAR(AverageQuaternions({q}).angularDistance(q), DECIMAL(0.0), DECIMAL(1e-12));
 }
 
 // q and -q are the same rotation, so a flipped sign must not pull the

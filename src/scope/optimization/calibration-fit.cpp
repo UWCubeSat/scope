@@ -22,10 +22,6 @@
 #include "scope/optimization/measurement-model.hpp"
 #include "scope/projection/projection.hpp"
 
-// The normal equations are formed and solved in double whatever decimal is:
-// their columns differ in scale by many orders of magnitude (r^6 against 1
-// for k3 against focal length), which single precision cannot hold.
-
 namespace scope {
 
 namespace {
@@ -129,7 +125,9 @@ double SumOfSquares(const std::vector<found::Vec2> &residuals, const std::vector
 
 /// Accumulates the normal matrix N = J^T J (Eq. 23) and J^T (y - h) (the
 /// right-hand side of Eq. 26) over the used observations, one observation's
-/// rows at a time.
+/// rows at a time. They are in double whatever decimal is: their columns
+/// differ in scale by many orders of magnitude (r^6 against 1 for k3 against
+/// focal length), which single precision cannot hold.
 void BuildNormalEquations(const std::vector<Observation> &observations,
                           const std::vector<bool> &used,
                           const std::vector<found::Vec2> &residuals,
@@ -398,22 +396,18 @@ CalibrationResult FitCalibration(const CentroidObservations &observations,
     std::vector<bool> used(measured.size(), false);
     std::optional<StateLayout> layout;
     found::Quaternion meanCorrection = found::Quaternion::Identity();
-    bool settled = false;
 
     CalibrationResult result;
     result.estimated = settings.estimate;
-    for (int round = 0; round < settings.maxRejectionRounds; ++round) {
+    int round = 0;
+    for (; round < settings.maxRejectionRounds; ++round) {
         std::vector<int> inlierCount(priorAttitudes.size(), 0);
         for (std::size_t i = 0; i < measured.size(); ++i) {
-            inlierCount[measured[i].imageIndex] += inliers[i] ? 1 : 0;
+            inlierCount[measured[i].imageIndex] += inliers[i];
         }
         std::vector<bool> imageInFit(priorAttitudes.size());
-        FitState start = state;
         for (std::size_t k = 0; k < priorAttitudes.size(); ++k) {
             imageInFit[k] = inlierCount[k] >= minObservations;
-            if (!imageInFit[k]) {
-                start.attitudes[k] = meanCorrection * priorAttitudes[k];
-            }
         }
         std::vector<bool> roundUsed(measured.size());
         for (std::size_t i = 0; i < measured.size(); ++i) {
@@ -427,12 +421,11 @@ CalibrationResult FitCalibration(const CentroidObservations &observations,
             LOG_WARN("Optimization: too few observations to fit (" << usedCount << " usable for " << roundLayout.Size()
                                                                    << " states)");
             result.converged = false;
-            settled = true;
             break;
         }
 
         const LevenbergMarquardtOutcome outcome =
-            RunLevenbergMarquardt(measured, roundUsed, roundLayout, start, settings.maxIterations);
+            RunLevenbergMarquardt(measured, roundUsed, roundLayout, state, settings.maxIterations);
         state = outcome.state;
         meanCorrection = MeanCorrection(state, priorAttitudes, roundLayout);
         for (std::size_t k = 0; k < priorAttitudes.size(); ++k) {
@@ -451,18 +444,16 @@ CalibrationResult FitCalibration(const CentroidObservations &observations,
                                        << Rms(residuals, used) << " px"
                                        << (outcome.converged ? "" : " (not converged)"));
         if (settings.outlierThreshold == DECIMAL(0.0)) {
-            settled = true;
             break;
         }
 
         std::vector<bool> nextInliers = FindInliers(residuals, used, static_cast<double>(settings.outlierThreshold));
         if (nextInliers == inliers) {
-            settled = true;
             break;
         }
         inliers = std::move(nextInliers);
     }
-    if (!settled) {
+    if (round == settings.maxRejectionRounds) {
         LOG_WARN("Optimization: the inlier set was still changing after " << settings.maxRejectionRounds << " rounds");
     }
 

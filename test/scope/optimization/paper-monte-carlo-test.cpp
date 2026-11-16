@@ -45,24 +45,26 @@ constexpr decimal kCatalogFaintest = DECIMAL(6.5);
 /// Table 1's rows: the standard deviation of the error in each estimate.
 struct TableRow {
     const char *name;
-    /// Index into kCameraParameterFields, or -1 - axis for an alignment angle.
-    int index;
+    /// The camera parameter, or nullptr for an alignment angle.
+    decimal CameraParameters::*parameter;
+    /// The alignment angle's axis.
+    int axis;
     decimal method1;
     decimal method2;
 };
 
 constexpr std::array<TableRow, 11> kTable1 = {{
-    {"d_x", 0, DECIMAL(0.534), DECIMAL(1.345)},
-    {"alpha", 1, DECIMAL(0.141), DECIMAL(0.373)},
-    {"d_y", 2, DECIMAL(0.536), DECIMAL(1.351)},
-    {"k1", 5, DECIMAL(0.011), DECIMAL(0.027)},
-    {"k2", 6, DECIMAL(0.475), DECIMAL(1.167)},
-    {"k3", 7, DECIMAL(6.32), DECIMAL(15.417)},
-    {"p1", 8, DECIMAL(4.79e-5), DECIMAL(12.88e-5)},
-    {"p2", 9, DECIMAL(3.72e-5), DECIMAL(9.66e-5)},
-    {"dtheta1 (arcsec)", -1, DECIMAL(2.616), DECIMAL(2.907)},
-    {"dtheta2 (arcsec)", -2, DECIMAL(2.611), DECIMAL(2.834)},
-    {"dtheta3 (arcsec)", -3, DECIMAL(3.700), DECIMAL(7.487)},
+    {"d_x", &CameraParameters::focalLengthX, 0, DECIMAL(0.534), DECIMAL(1.345)},
+    {"alpha", &CameraParameters::alpha, 0, DECIMAL(0.141), DECIMAL(0.373)},
+    {"d_y", &CameraParameters::focalLengthY, 0, DECIMAL(0.536), DECIMAL(1.351)},
+    {"k1", &CameraParameters::k1, 0, DECIMAL(0.011), DECIMAL(0.027)},
+    {"k2", &CameraParameters::k2, 0, DECIMAL(0.475), DECIMAL(1.167)},
+    {"k3", &CameraParameters::k3, 0, DECIMAL(6.32), DECIMAL(15.417)},
+    {"p1", &CameraParameters::p1, 0, DECIMAL(4.79e-5), DECIMAL(12.88e-5)},
+    {"p2", &CameraParameters::p2, 0, DECIMAL(3.72e-5), DECIMAL(9.66e-5)},
+    {"dtheta1 (arcsec)", nullptr, 0, DECIMAL(2.616), DECIMAL(2.907)},
+    {"dtheta2 (arcsec)", nullptr, 1, DECIMAL(2.611), DECIMAL(2.834)},
+    {"dtheta3 (arcsec)", nullptr, 2, DECIMAL(3.700), DECIMAL(7.487)},
 }};
 
 /// The standard deviation, about zero, of each row's error over the
@@ -88,10 +90,9 @@ void Accumulate(const CalibrationResult &result, const SyntheticScene &scene, Mo
     const found::Vec3 alignmentError =
         CorrectionRotationVector(result.alignmentCorrection * scene.misalignment.conjugate());
     for (std::size_t r = 0; r < kTable1.size(); ++r) {
-        const int index = kTable1[r].index;
-        const decimal error = index >= 0
-                                  ? result.camera.*kCameraParameterFields[index] - truth.*kCameraParameterFields[index]
-                                  : found::RadToArcSec(alignmentError(-1 - index));
+        const TableRow &row = kTable1[r];
+        const decimal error = row.parameter != nullptr ? result.camera.*row.parameter - truth.*row.parameter
+                                                       : found::RadToArcSec(alignmentError(row.axis));
         statistics->errorStd[r] += error * error;
     }
     for (int p = 0; p < kCameraParameterCount; ++p) {
@@ -168,12 +169,12 @@ std::string FormatTable(const MonteCarloComparison &comparison) {
 
 /// The RMS over the camera parameters of each one's error spread divided by
 /// Table 1's for the same method: 1 if they all match.
-decimal PooledRatioToPaper(const MonteCarloStatistics &statistics, bool method2) {
+decimal PooledRatioToPaper(const MonteCarloStatistics &statistics, decimal TableRow::*method) {
     decimal sum = DECIMAL(0.0);
     int count = 0;
     for (std::size_t r = 0; r < kTable1.size(); ++r) {
-        if (kTable1[r].index >= 0) {
-            const decimal ratio = statistics.errorStd[r] / (method2 ? kTable1[r].method2 : kTable1[r].method1);
+        if (kTable1[r].parameter != nullptr) {
+            const decimal ratio = statistics.errorStd[r] / kTable1[r].*method;
             sum += ratio * ratio;
             ++count;
         }
@@ -198,15 +199,16 @@ decimal PooledNormalizedError(const MonteCarloStatistics &statistics) {
 
 // A small run, fast enough for every test pass. Six scenarios pin each
 // parameter's spread only to about 30%, so the eight camera parameters are
-// pooled, which pins the pooled ratio to about 10%.
+// pooled, which pins the pooled ratio to about 10%; the tolerances are three
+// times that.
 TEST(PaperMonteCarloTest, AgreesWithTable1) {
     const MonteCarloComparison comparison = RunMonteCarlo(6, 2016);
     SCOPED_TRACE(FormatTable(comparison));
 
     EXPECT_EQ(comparison.method1.convergedCount, comparison.scenarios);
     EXPECT_EQ(comparison.method2.convergedCount, comparison.scenarios);
-    EXPECT_NEAR(PooledRatioToPaper(comparison.method1, false), DECIMAL(1.0), DECIMAL(0.3));
-    EXPECT_NEAR(PooledRatioToPaper(comparison.method2, true), DECIMAL(1.0), DECIMAL(0.3));
+    EXPECT_NEAR(PooledRatioToPaper(comparison.method1, &TableRow::method1), DECIMAL(1.0), DECIMAL(0.3));
+    EXPECT_NEAR(PooledRatioToPaper(comparison.method2, &TableRow::method2), DECIMAL(1.0), DECIMAL(0.3));
     EXPECT_NEAR(PooledNormalizedError(comparison.method1), DECIMAL(1.0), DECIMAL(0.3));
 }
 

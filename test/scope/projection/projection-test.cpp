@@ -13,22 +13,6 @@ namespace scope {
 
 namespace {
 
-/// Builds camera parameters with the given pinhole parameters and no distortion or skew.
-CameraParameters PinholeCamera(decimal focalX, decimal focalY, decimal px, decimal py) {
-    CameraParameters camera;
-    camera.focalLengthX = focalX;
-    camera.focalLengthY = focalY;
-    camera.principalX = px;
-    camera.principalY = py;
-    camera.alpha = DECIMAL(0.0);
-    camera.k1 = DECIMAL(0.0);
-    camera.k2 = DECIMAL(0.0);
-    camera.k3 = DECIMAL(0.0);
-    camera.p1 = DECIMAL(0.0);
-    camera.p2 = DECIMAL(0.0);
-    return camera;
-}
-
 const decimal kTol = DECIMAL(1e-4);
 
 // LOST/FOUND forward model, boresight on +x: pixel = (c_x - f*y/x, c_y - f*z/x)

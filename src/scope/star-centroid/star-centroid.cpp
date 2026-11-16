@@ -150,8 +150,8 @@ CentroidObservations ROIFilterAlgorithm::Run(const Image &darkFrame) {
         unsigned char *subtracted = DarkSubtract(star, darkFrame);
         const Image darkSubtracted{star.width, star.height, star.channels, subtracted};
 
-        // Stars bright enough to search for, on the sensor or within a window
-        // of its edge, where they still claim their side of a neighbour's.
+        // Stars bright enough to search for. Those up to a window off the
+        // sensor are kept too, since they still share windows with stars on it.
         std::vector<Prediction> predictions;
         for (std::size_t j = 0; j < catalog_.size(); ++j) {
             if (catalog_[j].magnitude > magnitudeLimit) {
