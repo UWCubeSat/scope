@@ -9,6 +9,7 @@
 #include <cstring>
 
 #include <fstream>
+#include <sstream>
 #include <string>
 #include <vector>
 
@@ -23,6 +24,17 @@ constexpr int kHeight = 64;
 /// The small fixture catalog, relative to the repository root. Its first star
 /// sits at (ra = 0, dec = 0), i.e. along inertial +x.
 constexpr const char *kFixtureCatalog = "test/fixtures/bright-star-catalog-test.tsv";
+
+/// A directory that does not exist, for paths that cannot be written.
+constexpr const char *kMissingDirectory = "test/fixtures/no-such-directory/";
+
+/// The whole contents of a file.
+inline std::string ReadFile(const std::string &path) {
+    std::ifstream file(path, std::ios::binary);
+    std::stringstream contents;
+    contents << file.rdbuf();
+    return contents.str();
+}
 
 /// A file under gtest's temp directory, deleted when it goes out of scope.
 class TempFile {

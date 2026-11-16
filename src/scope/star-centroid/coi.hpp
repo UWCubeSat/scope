@@ -2,14 +2,14 @@
  * @file coi.hpp
  * @brief Center-of-intensity star centroiding kernel.
  *
- * From the Orion paper (Christian et al. 2016, §"Image Processing and Star
- * Centroiding", Eqs. 8-9).
+ * From the Orion paper's star centroiding.
  */
 
 #ifndef SRC_SCOPE_STAR_CENTROID_COI_HPP_
 #define SRC_SCOPE_STAR_CENTROID_COI_HPP_
 
 #include <optional>
+#include <vector>
 
 #include "common/spatial/attitude-utils.hpp"
 
@@ -18,7 +18,7 @@
 namespace scope {
 
 /**
- * Extracts one star centroid by center of intensity (paper Eqs. 8-9): find the
+ * Extracts one star centroid by center of intensity: find the
  * brightest pixel in a ROI around the expected pixel, then take the
  * intensity-weighted center of the pixels within recenterRadius of it that
  * exceed the threshold.
@@ -34,15 +34,19 @@ namespace scope {
  *        to the image, so an even value acts as the next odd one.
  * @param recenterRadius The mask radius about the brightest pixel (paper uses 3).
  * @param threshold Intensity a pixel must exceed to join the mask.
+ * @param neighbours The expected pixels of nearby stars. The search for the
+ *        brightest pixel skips pixels strictly nearer one of them than
+ *        expectedPixel; the mask is not restricted.
  *
  * @return The measured centroid [u', v'] (column, row), or std::nullopt if no
- *         pixel in the ROI exceeds the threshold.
+ *         searched pixel exceeds the threshold.
  */
 std::optional<found::Vec2> ExtractCentroid(const Image &darkSubtracted,
                                            const found::Vec2 &expectedPixel,
                                            int roiSize,
                                            int recenterRadius,
-                                           unsigned char threshold);
+                                           unsigned char threshold,
+                                           const std::vector<found::Vec2> &neighbours = {});
 
 }  // namespace scope
 

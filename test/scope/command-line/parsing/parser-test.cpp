@@ -65,7 +65,17 @@ TEST_F(ParserTest, ParsesEveryFlag) {
                           "--magnitude-threshold",
                           "4.5",
                           "--roi-size",
-                          "51"};
+                          "51",
+                          "--fixed-parameters",
+                          "k3,p2",
+                          "--attitude-correction",
+                          "shared",
+                          "--outlier-threshold",
+                          "3.5",
+                          "--max-iterations",
+                          "20",
+                          "--output-attitudes",
+                          "refined.txt"};
     const int argc = static_cast<int>(sizeof(argv) / sizeof(argv[0]));
 
     RecalibrationOptions options = ParseRecalibrationOptions(argc, const_cast<char **>(argv));
@@ -85,6 +95,11 @@ TEST_F(ParserTest, ParsesEveryFlag) {
     EXPECT_EQ(options.centroidThreshold, 55);
     EXPECT_EQ(options.magnitudeThreshold, DECIMAL(4.5));
     EXPECT_EQ(options.roiSize, 51);
+    EXPECT_EQ(options.fixedParameters, "k3,p2");
+    EXPECT_EQ(options.attitudeCorrection, "shared");
+    EXPECT_EQ(options.outlierThreshold, DECIMAL(3.5));
+    EXPECT_EQ(options.maxIterations, 20);
+    EXPECT_EQ(options.outputAttitudesPath, "refined.txt");
 
     ASSERT_EQ(options.darkFrames.size(), 2u);
     EXPECT_EQ(options.darkFrames[0].image[0], 10);

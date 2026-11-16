@@ -56,7 +56,9 @@ file(GLOB_RECURSE SRC ${SRC_DIR}/*.cpp)
 file(GLOB_RECURSE SRC_H ${SRC_DIR}/*.hpp)
 set(FILTERED_SRC ${SRC})
 list(FILTER FILTERED_SRC EXCLUDE REGEX ".*src/scope/main\\.cpp$")
+list(FILTER FILTERED_SRC EXCLUDE REGEX ".*src/scope/synth-main\\.cpp$")
 set(SRC_MAIN "${SRC_DIR}/scope/main.cpp")
+set(SYNTH_MAIN "${SRC_DIR}/scope/synth-main.cpp")
 
 # Test directory
 set(TEST_DIR ${PROJECT_SOURCE_DIR}/test)
@@ -227,8 +229,14 @@ target_compile_definitions(scope PRIVATE
         $<$<NOT:$<BOOL:${DISABLE_LOGGING}>>:ENABLE_LOGGING>
         $<$<NOT:$<BOOL:${DISABLE_LOGGING}>>:LOGGING_LEVEL=${LOGGING_LEVEL}>)
 set_target_properties(scope PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${BIN_DIR})
+# The synthetic data generator, for testing scope end to end.
+add_executable(scope-synth ${SYNTH_MAIN})
+
+target_link_libraries(scope-synth PRIVATE ${SRC_LIBS} scope_lib)
+set_target_properties(scope-synth PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${BIN_DIR})
+
 add_custom_target(scope-compile
-                  DEPENDS scope
+                  DEPENDS scope scope-synth
                   COMMENT "Compiles source code")
 
 if(ENABLE_WORKFLOW)

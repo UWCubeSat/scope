@@ -29,7 +29,7 @@ inline std::unique_ptr<PrimaryScopePipelineExecutor> CreatePrimaryScopePipelineE
     std::unique_ptr<NoiseFilterAlgorithm> noiseAlg = ProvideNoiseFilterAlgorithm(options);
     std::unique_ptr<StarCentroidAlgorithm> starAlg =
         ProvideStarCentroidAlgorithm(options, camera, std::move(catalog), std::move(attitudes));
-    std::unique_ptr<OptimizationAlgorithm> optAlg = ProvideOptimizationAlgorithm(options);
+    std::unique_ptr<OptimizationAlgorithm> optAlg = ProvideOptimizationAlgorithm(options, camera);
 
     return std::make_unique<PrimaryScopePipelineExecutor>(
         std::move(options), std::move(noiseAlg), std::move(starAlg), std::move(optAlg));

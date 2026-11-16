@@ -10,6 +10,7 @@
 #ifndef SRC_SCOPE_PROJECTION_PROJECTION_HPP_
 #define SRC_SCOPE_PROJECTION_PROJECTION_HPP_
 
+#include <array>
 #include <optional>
 
 #include "common/decimal.hpp"
@@ -19,8 +20,8 @@ namespace scope {
 
 /**
  * The ten parameters of the paper's camera model: the intrinsics
- * k = [d_x, alpha, d_y, u_p, v_p] (Eq. 13) followed by the Brown distortion
- * coefficients xi = [k1, k2, k3, p1, p2] (Eq. 14), in that order.
+ * k = [d_x, alpha, d_y, u_p, v_p] followed by the Brown distortion
+ * coefficients xi = [k1, k2, k3, p1, p2], in that order.
  */
 struct CameraParameters {
     /// d_x: focal length along u, in pixels.
@@ -45,8 +46,40 @@ struct CameraParameters {
     decimal p2 = DECIMAL(0.0);
 };
 
+/// Number of parameters in CameraParameters.
+constexpr int kCameraParameterCount = 10;
+
+/// CameraParameters' fields in the paper's state order [k; xi], for code that
+/// treats the parameters as a vector: camera.*kCameraParameterFields[i].
+inline constexpr std::array<decimal CameraParameters::*, kCameraParameterCount> kCameraParameterFields = {
+    &CameraParameters::focalLengthX,
+    &CameraParameters::alpha,
+    &CameraParameters::focalLengthY,
+    &CameraParameters::principalX,
+    &CameraParameters::principalY,
+    &CameraParameters::k1,
+    &CameraParameters::k2,
+    &CameraParameters::k3,
+    &CameraParameters::p1,
+    &CameraParameters::p2,
+};
+
+/// Each parameter's command-line flag name, in kCameraParameterFields order.
+inline constexpr std::array<const char *, kCameraParameterCount> kCameraParameterNames = {
+    "focal-length-x",
+    "alpha",
+    "focal-length-y",
+    "principal-point-x",
+    "principal-point-y",
+    "k1",
+    "k2",
+    "k3",
+    "p1",
+    "p2",
+};
+
 /**
- * Applies Brown radial and decentering distortion (paper Eq. 6).
+ * Applies Brown radial and decentering distortion.
  *
  * @param ideal Undistorted point [x, y] on the normalized image plane.
  * @param k1,k2,k3 Radial distortion coefficients.
@@ -78,17 +111,18 @@ found::Quaternion LostAttitudeToScopeFrame(const found::Quaternion &lostAttitude
 
 /**
  * Projects an inertial line of sight to a raw (distorted) pixel: rotate into
- * the camera frame, pinhole-project (paper Eq. 1), distort (Eq. 6), apply the
- * intrinsics (Eq. 7).
+ * the camera frame, pinhole-project, distort, apply the intrinsics.
  *
  * @param eI Unit line of sight in the inertial frame.
  * @param attitude Rotation from the inertial frame into the camera frame
- *                 (e_C = attitude * e_I), boresight on +z.
+ *                 (e_C = attitude * e_I), boresight on +z, as a unit
+ *                 quaternion.
  * @param camera The intrinsics and distortion coefficients.
  *
  * @return The predicted pixel [u', v'], or std::nullopt if the star is at or
- *         behind the image plane (camera-frame z <= 0). The pixel may lie
- *         outside the sensor; check it with InSensorWithMargin.
+ *         behind the image plane, or past the radius where the radial
+ *         distortion folds back on itself. The pixel may lie outside the
+ *         sensor; check it with InSensorWithMargin.
  */
 std::optional<found::Vec2> ProjectStarToPixel(const found::Vec3 &eI,
                                               const found::Quaternion &attitude,

@@ -7,25 +7,11 @@
 
 #include "scope/projection/projection.hpp"
 
+#include "test/scope/common/cameras.hpp"
+
 namespace scope {
 
 namespace {
-
-/// Builds camera parameters with the given pinhole parameters and no distortion or skew.
-CameraParameters PinholeCamera(decimal focalX, decimal focalY, decimal px, decimal py) {
-    CameraParameters camera;
-    camera.focalLengthX = focalX;
-    camera.focalLengthY = focalY;
-    camera.principalX = px;
-    camera.principalY = py;
-    camera.alpha = DECIMAL(0.0);
-    camera.k1 = DECIMAL(0.0);
-    camera.k2 = DECIMAL(0.0);
-    camera.k3 = DECIMAL(0.0);
-    camera.p1 = DECIMAL(0.0);
-    camera.p2 = DECIMAL(0.0);
-    return camera;
-}
 
 const decimal kTol = DECIMAL(1e-4);
 
@@ -101,6 +87,49 @@ TEST(ProjectStarToPixelTest, RejectsStarBehindCamera) {
     EXPECT_FALSE(ProjectStarToPixel(offAxisBehind.normalized(), found::Quaternion::Identity(), camera).has_value());
 }
 
+// The paper's Table 1 lens (k3 = -12.6) folds back about 26 degrees off axis,
+// so a star at 32 degrees, far outside its 12.8 degree half-diagonal, would
+// land back on the sensor. It is rejected; one inside the field is not.
+TEST(ProjectStarToPixelTest, RejectsStarPastDistortionFold) {
+    const CameraParameters camera = PaperCamera();
+    const auto offAxis = [](decimal degrees) {
+        const decimal angle = found::DegToRad(degrees);
+        return found::Vec3(DECIMAL_SIN(angle), DECIMAL(0.0), DECIMAL_COS(angle));
+    };
+
+    EXPECT_TRUE(ProjectStarToPixel(offAxis(DECIMAL(10.0)), found::Quaternion::Identity(), camera).has_value());
+    EXPECT_FALSE(ProjectStarToPixel(offAxis(DECIMAL(32.0)), found::Quaternion::Identity(), camera).has_value());
+}
+
+// The radial map can fold and then turn upward again, so a star whose own
+// slope is positive is still rejected if a fold lies between it and the axis.
+// Here the slope 1 - 3 s + 1.4 s^3 (s = r^2) is negative near s = 0.5 and
+// positive again at s = 2.
+TEST(ProjectStarToPixelTest, RejectsStarBeyondFoldThatUnfolds) {
+    CameraParameters camera = PinholeCamera(DECIMAL(100.0), DECIMAL(100.0), DECIMAL(320.0), DECIMAL(240.0));
+    camera.k1 = DECIMAL(-1.0);
+    camera.k3 = DECIMAL(0.2);
+
+    // r^2 = 2 and r^2 = 0.04.
+    EXPECT_FALSE(ProjectStarToPixel(found::Vec3(DECIMAL(1.0), DECIMAL(1.0), DECIMAL(1.0)).normalized(),
+                                    found::Quaternion::Identity(),
+                                    camera)
+                     .has_value());
+    EXPECT_TRUE(ProjectStarToPixel(found::Vec3(DECIMAL(0.2), DECIMAL(0.0), DECIMAL(1.0)).normalized(),
+                                   found::Quaternion::Identity(),
+                                   camera)
+                    .has_value());
+}
+
+// Barrel distortion that never folds (the datasheet fit for the 6 mm lens)
+// keeps stars however far off axis.
+TEST(ProjectStarToPixelTest, KeepsStarsWhenDistortionNeverFolds) {
+    EXPECT_TRUE(ProjectStarToPixel(found::Vec3(DECIMAL(2.0), DECIMAL(1.5), DECIMAL(1.0)).normalized(),
+                                   found::Quaternion::Identity(),
+                                   DatasheetCamera())
+                    .has_value());
+}
+
 TEST(BrownDistortTest, PureRadial) {
     // r^2 = 0.01, radial = 1 + 0.5 * 0.01 = 1.005, so x' = 0.1005, y' = 0.
     found::Vec2 distorted = BrownDistort(
@@ -110,7 +139,7 @@ TEST(BrownDistortTest, PureRadial) {
     EXPECT_NEAR(distorted.y(), DECIMAL(0.0), kTol);
 }
 
-// Decentering distortion (p1, p2 != 0) adds the tangential terms of Eq. 6.
+// Decentering distortion (p1, p2 != 0) adds the tangential terms.
 TEST(BrownDistortTest, Decentering) {
     found::Vec2 distorted = BrownDistort(found::Vec2(DECIMAL(0.1), DECIMAL(0.2)),
                                          DECIMAL(0.0),

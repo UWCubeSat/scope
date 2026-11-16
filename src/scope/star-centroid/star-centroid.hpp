@@ -26,14 +26,15 @@ namespace scope {
 class StarCentroidAlgorithm : public found::FunctionStage<Image, CentroidObservations> {};
 
 /**
- * A priori ROI + center-of-intensity star locator (Orion paper §"Image
- * Processing and Star Centroiding").
+ * A priori ROI + center-of-intensity star locator, as in the Orion paper.
  *
- * For each star image, every catalog star brighter than the magnitude threshold
- * is projected with the prior attitude and calibration. Those that land on the
- * sensor (less an ROI margin) are centroided with ExtractCentroid on the
- * dark-subtracted image. Centroids that collide within one image (two catalog
- * stars on the same blob) are dropped as ambiguous.
+ * Each catalog star brighter than the magnitude threshold is projected with the
+ * prior attitude and calibration and centroided in a window around that
+ * prediction. On top of the paper (whose narrow field rarely puts two stars in
+ * one window), each image's windows are shifted by the median offset of the
+ * isolated stars, and each star only searches the part of its window closer
+ * to its own prediction than to a neighbour's. If two stars still land on the
+ * same blob, both are dropped.
  */
 class ROIFilterAlgorithm : public StarCentroidAlgorithm {
  public:

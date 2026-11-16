@@ -1,16 +1,23 @@
 #ifndef SRC_SCOPE_PROVIDERS_STAGE_PROVIDERS_HPP_
 #define SRC_SCOPE_PROVIDERS_STAGE_PROVIDERS_HPP_
 
+#include <algorithm>
+#include <cstddef>
 #include <memory>
+#include <sstream>
 #include <stdexcept>
+#include <string>
 #include <utility>
 #include <vector>
 
+#include "common/decimal.hpp"
 #include "common/spatial/attitude-utils.hpp"
 
 #include "scope/attitude/attitude.hpp"
 #include "scope/catalog/catalog.hpp"
+#include "scope/command-line/parsing/options.hpp"
 #include "scope/noise-filter/noise-filter.hpp"
+#include "scope/optimization/calibration-fit.hpp"
 #include "scope/optimization/optimization.hpp"
 #include "scope/projection/projection.hpp"
 #include "scope/star-centroid/star-centroid.hpp"
@@ -26,6 +33,12 @@ namespace scope {
  * @return The prior intrinsics and distortion coefficients.
  */
 inline CameraParameters ProvideCameraParameters(const RecalibrationOptions &options) {
+    // A zero focal length projects every star onto the principal point, so
+    // stage 2 would quietly find nothing.
+    if (!options.starImages.empty() && !(options.focalLengthX > DECIMAL(0.0) && options.focalLengthY > DECIMAL(0.0))) {
+        throw std::runtime_error("--focal-length-x and --focal-length-y must be positive");
+    }
+
     CameraParameters camera;
     camera.focalLengthX = options.focalLengthX;
     camera.alpha = options.alpha;
@@ -94,14 +107,71 @@ inline std::unique_ptr<StarCentroidAlgorithm> ProvideStarCentroidAlgorithm(const
 }
 
 /**
- * Selects an OptimizationAlgorithm implementation for the run.
+ * Builds the fit settings from the command-line options.
  *
  * @param options Parsed recalibration options.
  *
+ * @return The settings for FitCalibration.
+ *
+ * @throws std::runtime_error if --fixed-parameters names an unknown parameter,
+ *         --attitude-correction is not 'per-image' or 'shared',
+ *         --outlier-threshold is negative or --max-iterations is below 1.
+ */
+inline FitSettings ProvideFitSettings(const RecalibrationOptions &options) {
+    FitSettings settings;
+
+    settings.estimate.fill(true);
+    std::string names = options.fixedParameters;
+    std::replace(names.begin(), names.end(), ',', ' ');
+    std::istringstream list(names);
+    std::string name;
+    while (list >> name) {
+        if (name == "none") {
+            continue;
+        }
+        if (name == "all") {
+            settings.estimate.fill(false);
+            continue;
+        }
+        const auto match = std::find(kCameraParameterNames.begin(), kCameraParameterNames.end(), name);
+        if (match == kCameraParameterNames.end()) {
+            throw std::runtime_error("--fixed-parameters: unknown camera parameter '" + name + "'");
+        }
+        settings.estimate[static_cast<std::size_t>(match - kCameraParameterNames.begin())] = false;
+    }
+
+    if (options.attitudeCorrection == "per-image") {
+        settings.attitudeModel = AttitudeCorrectionModel::kPerImage;
+    } else if (options.attitudeCorrection == "shared") {
+        settings.attitudeModel = AttitudeCorrectionModel::kShared;
+    } else {
+        throw std::runtime_error("--attitude-correction must be 'per-image' or 'shared', not '" +
+                                 options.attitudeCorrection + "'");
+    }
+
+    if (!(options.outlierThreshold >= DECIMAL(0.0))) {
+        throw std::runtime_error("--outlier-threshold must not be negative");
+    }
+    settings.outlierThreshold = options.outlierThreshold;
+    if (options.maxIterations < 1) {
+        throw std::runtime_error("--max-iterations must be at least 1");
+    }
+    settings.maxIterations = options.maxIterations;
+
+    return settings;
+}
+
+/**
+ * Selects an OptimizationAlgorithm implementation for the run.
+ *
+ * @param options Parsed recalibration options.
+ * @param camera The prior camera parameters.
+ *
  * @return The chosen OptimizationAlgorithm.
  */
-inline std::unique_ptr<OptimizationAlgorithm> ProvideOptimizationAlgorithm(const RecalibrationOptions &options) {
-    return std::make_unique<LMAOptimizationAlgorithm>(options);
+inline std::unique_ptr<OptimizationAlgorithm> ProvideOptimizationAlgorithm(const RecalibrationOptions &options,
+                                                                           const CameraParameters &camera) {
+    return std::make_unique<LMAOptimizationAlgorithm>(camera, ProvideFitSettings(options));
 }
 
 }  // namespace scope
