@@ -142,7 +142,7 @@ TEST(WriteAttitudesTest, RoundTripsThroughLoadAttitudes) {
     EXPECT_EQ(ReadFile(file.Path()).rfind("# first line\n# second line\n", 0), 0u);
 }
 
-// To first order the correction is I - [dtheta x] (paper Eq. 38), which moves
+// To first order the correction is I - [dtheta x], which moves
 // a direction by e x dtheta.
 TEST(AttitudeCorrectionTest, MatchesPaperFirstOrderForm) {
     const found::Vec3 dtheta(DECIMAL(2e-6), DECIMAL(-3e-6), DECIMAL(1e-6));

@@ -2,8 +2,7 @@
  * @file coi.hpp
  * @brief Center-of-intensity star centroiding kernel.
  *
- * From the Orion paper (Christian et al. 2016, §"Image Processing and Star
- * Centroiding", Eqs. 8-9).
+ * From the Orion paper's star centroiding.
  */
 
 #ifndef SRC_SCOPE_STAR_CENTROID_COI_HPP_
@@ -19,7 +18,7 @@
 namespace scope {
 
 /**
- * Extracts one star centroid by center of intensity (paper Eqs. 8-9): find the
+ * Extracts one star centroid by center of intensity: find the
  * brightest pixel in a ROI around the expected pixel, then take the
  * intensity-weighted center of the pixels within recenterRadius of it that
  * exceed the threshold.

@@ -130,7 +130,7 @@ TEST_F(CalibrationFitTest, RecoversNoiseFreeCalibration) {
 }
 
 // With a 64-degree field the principal point is not interchangeable with a
-// pointing error (LENS.md §6), so all ten parameters can be fitted at once.
+// pointing error, so all ten parameters can be fitted at once.
 TEST_F(CalibrationFitTest, RecoversPrincipalPointOnWideField) {
     CameraParameters truth = AsBuiltCamera();
     truth.principalX = DECIMAL(1037.0);

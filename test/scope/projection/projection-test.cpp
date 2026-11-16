@@ -139,7 +139,7 @@ TEST(BrownDistortTest, PureRadial) {
     EXPECT_NEAR(distorted.y(), DECIMAL(0.0), kTol);
 }
 
-// Decentering distortion (p1, p2 != 0) adds the tangential terms of Eq. 6.
+// Decentering distortion (p1, p2 != 0) adds the tangential terms.
 TEST(BrownDistortTest, Decentering) {
     found::Vec2 distorted = BrownDistort(found::Vec2(DECIMAL(0.1), DECIMAL(0.2)),
                                          DECIMAL(0.0),

@@ -1,7 +1,7 @@
 /**
  * @file calibration-fit.hpp
- * @brief The Levenberg-Marquardt calibration fit (Orion paper, Christian et
- * al. 2016, §"Estimation of Camera Calibration Parameters").
+ * @brief The Levenberg-Marquardt calibration fit, following the Orion paper
+ * (Christian et al. 2016).
  */
 
 #ifndef SRC_SCOPE_OPTIMIZATION_CALIBRATION_FIT_HPP_
@@ -18,9 +18,9 @@ namespace scope {
 
 /// How the fit corrects the prior attitudes.
 enum class AttitudeCorrectionModel {
-    /// One correction per image, 10 + 3m states (paper Eq. 16, "Method 1").
+    /// One correction per image (the paper's Method 1).
     kPerImage,
-    /// One correction shared by every image, 13 states (Eq. 17, "Method 2").
+    /// One correction shared by every image (the paper's Method 2).
     kShared,
 };
 
@@ -37,15 +37,15 @@ struct FitSettings {
     /// Observations more than this many robust standard deviations from their
     /// prediction are rejected and the fit repeated. Zero disables rejection.
     decimal outlierThreshold = DECIMAL(4.0);
-    /// The most fits; rejection stops sooner if the inlier set stops changing.
+    /// Most fit-and-reject rounds; stops early once the inliers stop changing.
     int maxRejectionRounds = 10;
 };
 
 /**
  * Fits the camera parameters and attitude corrections to star centroids with
- * the paper's Levenberg-Marquardt method (Eqs. 20-37), refining the attitude
- * of image k as AttitudeCorrection(dtheta_k) * prior_k (Eq. 11). Outliers are
- * rejected by refitting without them, which the paper does not do.
+ * the paper's Levenberg-Marquardt method. Each image's attitude is refined as
+ * AttitudeCorrection(dtheta) * prior. Unlike the paper, outliers are rejected
+ * and the fit rerun without them.
  *
  * An image with fewer than three inliers (one under the shared model) is left
  * out, and gets the mean correction of the others applied to its prior.

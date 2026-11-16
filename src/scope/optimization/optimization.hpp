@@ -20,8 +20,7 @@ namespace scope {
 class OptimizationAlgorithm : public found::FunctionStage<CentroidObservations, CalibrationResult> {};
 
 /**
- * Levenberg-Marquardt parameter optimizer (Orion paper §"Estimation of Camera
- * Calibration Parameters"); a pipeline wrapper around FitCalibration.
+ * Pipeline wrapper around FitCalibration.
  */
 class LMAOptimizationAlgorithm : public OptimizationAlgorithm {
  public:

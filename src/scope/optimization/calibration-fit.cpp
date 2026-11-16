@@ -28,13 +28,14 @@ namespace {
 
 /// Inliers an image needs to pin its three attitude angles.
 constexpr int kMinObservationsPerImage = 3;
-/// Paper step 4. With the Jacobi scaling used here diag(N) is the identity,
-/// so step 4's 0.001 * mean(diag N) and Eq. 26's lambda * diag(N) agree.
+/// Starting damping. The scaled normal matrix has a unit diagonal, so this is
+/// 0.001 of it, as in the paper.
 constexpr double kInitialDamping = 1e-3;
-/// Paper step 6.
+/// How much the damping grows after a rejected step and shrinks after an
+/// accepted one.
 constexpr double kDampingFactor = 10.0;
-/// Keeps a poor Gauss-Newton step late in the fit only a few tries from being
-/// backed off.
+/// Floor on the damping, so a bad step late in the fit takes only a few tries
+/// to back off from.
 constexpr double kMinDamping = 1e-12;
 /// Past this with no step accepted, the fit has stalled.
 constexpr double kMaxDamping = 1e20;
@@ -45,8 +46,8 @@ const double kCostTolerance = std::sqrt(static_cast<double>(std::numeric_limits<
 /// sqrt(2 ln 2): the median of a Rayleigh distribution, i.e. of the 2-D
 /// residual distance under Gaussian noise, in units of the per-axis sigma.
 constexpr double kRayleighMedian = 1.1774100225154747;
-/// No residual under this is an outlier, so noise-free data is not clipped at
-/// round-off. In pixels.
+/// Residuals under this many pixels are never outliers, so noise-free data
+/// isn't clipped at round-off.
 constexpr double kMinOutlierDistance = 0.1;
 
 /// The quantities the fit refines.
@@ -55,8 +56,7 @@ struct FitState {
     std::vector<found::Quaternion> attitudes;
 };
 
-/// Where each estimated quantity sits in the state vector beta (paper Eq. 16
-/// or Eq. 17).
+/// Which column of the normal equations each fitted value gets.
 class StateLayout {
  public:
     StateLayout(const FitSettings &settings, const std::vector<bool> &imageInFit)
@@ -111,8 +111,8 @@ std::vector<found::Vec2> ComputeResiduals(const std::vector<Observation> &observ
     return residuals;
 }
 
-/// The cost J(beta) of paper Eq. 20 over the used observations; infinite if
-/// any of them has no prediction.
+/// Sum of squared residuals over the used observations; infinite if any of
+/// them has no prediction.
 double SumOfSquares(const std::vector<found::Vec2> &residuals, const std::vector<bool> &used) {
     double sum = 0.0;
     for (std::size_t i = 0; i < residuals.size(); ++i) {
@@ -123,11 +123,9 @@ double SumOfSquares(const std::vector<found::Vec2> &residuals, const std::vector
     return std::isfinite(sum) ? sum : std::numeric_limits<double>::infinity();
 }
 
-/// Accumulates the normal matrix N = J^T J (Eq. 23) and J^T (y - h) (the
-/// right-hand side of Eq. 26) over the used observations, one observation's
-/// rows at a time. They are in double whatever decimal is: their columns
-/// differ in scale by many orders of magnitude (r^6 against 1 for k3 against
-/// focal length), which single precision cannot hold.
+/// Builds J^T J and J^T r over the used observations. These stay in double
+/// even in a float build, because their columns differ in scale by orders of
+/// magnitude (k3 multiplies r^6, focal length multiplies 1).
 void BuildNormalEquations(const std::vector<Observation> &observations,
                           const std::vector<bool> &used,
                           const std::vector<found::Vec2> &residuals,
@@ -138,10 +136,9 @@ void BuildNormalEquations(const std::vector<Observation> &observations,
     normal->setZero(layout.Size(), layout.Size());
     gradient->setZero(layout.Size());
 
-    // An observation touches at most every camera parameter and its own
-    // image's three attitude states (the block structure of Eqs. 27-28), so
-    // its two rows of J are gathered into those columns first. The products
-    // are written out by hand because this loop is most of the fit's time.
+    // Each observation only touches the camera columns and its own image's
+    // three attitude columns, so gather those and accumulate by hand. This
+    // loop is most of the fit's runtime.
     constexpr int kMaxColumns = kCameraParameterCount + 3;
     std::array<int, kMaxColumns> columns;
     std::array<std::array<double, 2>, kMaxColumns> derivatives;
@@ -194,8 +191,8 @@ Eigen::VectorXd JacobiScale(const Eigen::MatrixXd &normal) {
     return scale;
 }
 
-/// gamma = beta + delta (paper step 6), with each attitude correction applied
-/// multiplicatively (Eq. 11).
+/// Adds a step to the state. Attitude steps are small rotations applied on top
+/// of the current attitudes.
 FitState ApplyStep(const FitState &state, const Eigen::VectorXd &step, const StateLayout &layout) {
     FitState next = state;
     for (int p = 0; p < kCameraParameterCount; ++p) {
@@ -223,7 +220,7 @@ struct LevenbergMarquardtOutcome {
     bool converged = false;
 };
 
-/// The paper's Levenberg-Marquardt loop (steps 3-7) over the used observations.
+/// Levenberg-Marquardt over the used observations.
 LevenbergMarquardtOutcome RunLevenbergMarquardt(const std::vector<Observation> &observations,
                                                 const std::vector<bool> &used,
                                                 const StateLayout &layout,
@@ -243,11 +240,10 @@ LevenbergMarquardtOutcome RunLevenbergMarquardt(const std::vector<Observation> &
         const Eigen::MatrixXd scaledNormal = scale.asDiagonal() * normal * scale.asDiagonal();
         const Eigen::VectorXd scaledGradient = scale.cwiseProduct(gradient);
 
-        // Steps 5 and 6: raise the damping until a step reduces the cost. The
-        // paper stops on a residual tolerance (step 7) that real data never
-        // reaches, so instead the fit has converged when the first, least
-        // damped step is negligible. Later steps are not tested, since more
-        // damping shrinks a step whether or not the fit is at a minimum.
+        // Raise the damping until a step lowers the cost. The paper stops on a
+        // residual threshold that real data never reaches, so instead we stop
+        // when the first (least damped) step is negligible. Only the first one
+        // is checked, since more damping always shrinks the step.
         bool firstStep = true;
         while (true) {
             Eigen::MatrixXd damped = scaledNormal;
@@ -255,9 +251,9 @@ LevenbergMarquardtOutcome RunLevenbergMarquardt(const std::vector<Observation> &
             const Eigen::VectorXd scaledStep = damped.ldlt().solve(scaledGradient);
 
             if (firstStep) {
-                // A scaled step ||J_i|| delta_i is its change to the residuals,
-                // so stepLimit is in pixels. predictedReduction is
-                // ||r||^2 - ||r - J delta||^2 under the linearized model.
+                // The scaled step is how far it moves the residuals, so
+                // stepLimit is in pixels. predictedReduction is how much the
+                // cost would drop if the model were linear.
                 const double predictedReduction = scaledStep.dot(2.0 * scaledGradient - scaledNormal * scaledStep);
                 if (scaledStep.lpNorm<Eigen::Infinity>() < stepLimit ||
                     (std::isfinite(cost) && predictedReduction <= kCostTolerance * cost)) {
@@ -288,8 +284,8 @@ LevenbergMarquardtOutcome RunLevenbergMarquardt(const std::vector<Observation> &
     return outcome;
 }
 
-/// One standard deviation of each camera parameter from the covariance
-/// sigma^2 N^-1 at the solution, with sigma^2 the residual variance.
+/// One-sigma uncertainty of each camera parameter, from the inverse normal
+/// matrix scaled by the residual variance.
 CameraParameters ParameterUncertainty(const std::vector<Observation> &observations,
                                       const std::vector<bool> &used,
                                       const FitState &state,
@@ -305,7 +301,7 @@ CameraParameters ParameterUncertainty(const std::vector<Observation> &observatio
     const double degreesOfFreedom = 2.0 * static_cast<double>(CountUsed(used)) - layout.Size();
     const Eigen::VectorXd scale = JacobiScale(normal);
     const Eigen::LDLT<Eigen::MatrixXd> factor(scale.asDiagonal() * normal * scale.asDiagonal());
-    // A singular N (a parameter no observation constrains) has no inverse.
+    // Singular if some parameter isn't constrained by any observation.
     const bool invertible = factor.info() == Eigen::Success && factor.isPositive() &&
                             factor.rcond() > std::numeric_limits<double>::epsilon();
     const double variance = SumOfSquares(residuals, used) / degreesOfFreedom;
@@ -340,9 +336,9 @@ double RobustSigma(const std::vector<found::Vec2> &residuals, const std::vector<
     return *middle / kRayleighMedian;
 }
 
-/// The observations within threshold robust standard deviations of their
-/// prediction. Every observation is judged, used or not, so one rejected under
-/// a poor early fit can come back.
+/// Flags the observations within threshold robust sigmas of their prediction.
+/// Already-rejected ones are checked again, so one thrown out early can come
+/// back.
 std::vector<bool> FindInliers(const std::vector<found::Vec2> &residuals,
                               const std::vector<bool> &used,
                               double threshold) {
@@ -391,8 +387,8 @@ CalibrationResult FitCalibration(const CentroidObservations &observations,
 
     FitState state{prior, priorAttitudes};
     std::vector<bool> inliers(measured.size(), true);
-    // The observations and layout of the last fit that ran, and the average
-    // correction of its images, which images left out of it get instead.
+    // What the last completed round used. Images left out of it get its
+    // average correction.
     std::vector<bool> used(measured.size(), false);
     std::optional<StateLayout> layout;
     found::Quaternion meanCorrection = found::Quaternion::Identity();

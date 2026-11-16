@@ -22,7 +22,7 @@
 
 #include "test/scope/common/cameras.hpp"
 
-// The paper's Monte Carlo (§"Monte Carlo with Simulated Star Images", Table 1):
+// The paper's Monte Carlo behind its Table 1:
 // 15 images at random attitudes per scenario, a 15" (1 sigma) camera to star
 // tracker misalignment per scenario, a 10" star tracker error per image and
 // 0.15 px of centroid noise, on a 2592 x 2048 sensor with a 20 x 16 degree

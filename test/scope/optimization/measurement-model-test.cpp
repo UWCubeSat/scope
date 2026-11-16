@@ -97,10 +97,9 @@ TEST(MeasurementJacobianTest, AttitudeColumnsMatchFiniteDifferences) {
     }
 }
 
-// Without distortion or skew the attitude columns reduce to the paper's own
-// first-order expansion, Eqs. 45 and 46, which pins the sign convention of
-// dtheta to the paper's.
-TEST(MeasurementJacobianTest, PinholeAttitudeColumnsMatchPaperEq45And46) {
+// Without distortion or skew the attitude columns reduce to the paper's
+// small-angle expansion, which pins dtheta's sign convention to the paper's.
+TEST(MeasurementJacobianTest, PinholeAttitudeColumnsMatchPaper) {
     const CameraParameters camera = PinholeCamera(DECIMAL(1745.0), DECIMAL(1744.2), DECIMAL(1031.5), DECIMAL(771.5));
 
     for (const found::Vec3 &e : FieldDirections()) {
@@ -110,11 +109,11 @@ TEST(MeasurementJacobianTest, PinholeAttitudeColumnsMatchPaperEq45And46) {
         const decimal dx = camera.focalLengthX;
         const decimal dy = camera.focalLengthY;
 
-        // Eq. 45: du = [-d_x dth2] + d_x [e1 e2 dth1 - e1^2 dth2] + d_x e2 dth3.
+        // du = [-d_x dth2] + d_x [e1 e2 dth1 - e1^2 dth2] + d_x e2 dth3.
         EXPECT_NEAR(jacobian.attitude(0, 0), dx * e1 * e2, DECIMAL(1e-9) * dx);
         EXPECT_NEAR(jacobian.attitude(0, 1), -dx - dx * e1 * e1, DECIMAL(1e-9) * dx);
         EXPECT_NEAR(jacobian.attitude(0, 2), dx * e2, DECIMAL(1e-9) * dx);
-        // Eq. 46: dv = [d_y dth1] + d_y [e2^2 dth1 - e1 e2 dth2] - d_y e1 dth3.
+        // dv = [d_y dth1] + d_y [e2^2 dth1 - e1 e2 dth2] - d_y e1 dth3.
         EXPECT_NEAR(jacobian.attitude(1, 0), dy + dy * e2 * e2, DECIMAL(1e-9) * dy);
         EXPECT_NEAR(jacobian.attitude(1, 1), -dy * e1 * e2, DECIMAL(1e-9) * dy);
         EXPECT_NEAR(jacobian.attitude(1, 2), -dy * e1, DECIMAL(1e-9) * dy);

@@ -32,7 +32,7 @@ inline CameraParameters PinholeCamera(decimal focalX, decimal focalY, decimal pr
 }
 
 /// The Edmund #35-142 lens's datasheet values on the candidate sensor
-/// (LENS.md §4), the prior a first calibration would start from.
+/// (from its distortion curve), the prior a first calibration would start from.
 inline CameraParameters DatasheetCamera() {
     CameraParameters camera;
     camera.focalLengthX = DECIMAL(1739.13);

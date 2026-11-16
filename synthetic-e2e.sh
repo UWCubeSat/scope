@@ -21,7 +21,7 @@ BIN=${BIN:-build/bin}
 FIT_IMAGES=${FIT_IMAGES:-15}
 HELD_OUT_IMAGES=${HELD_OUT_IMAGES:-15}
 
-# The Edmund #35-142 datasheet values on the IMX252 (reference/LENS.md §4).
+# The Edmund #35-142 datasheet values on the IMX252.
 PRIOR=(--focal-length-x 1739.13 --focal-length-y 1739.13 --principal-point-x 1031.5 --principal-point-y 771.5
        --alpha 0 --k1 -0.157 --k2 0.082 --k3 0 --p1 0 --p2 0)
 
