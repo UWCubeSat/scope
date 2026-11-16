@@ -92,12 +92,13 @@ $(document).ready(function(){initNavTree('classscope_1_1LMAOptimizationAlgorithm
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="classscope_1_1LMAOptimizationAlgorithm-members.html">List of all members</a>  </div>
   <div class="headertitle"><div class="title">scope::LMAOptimizationAlgorithm Class Reference</div></div>
 </div><!--header-->
 <div class="contents">
 
-<p>Levenberg-Marquardt parameter optimizer.  
+<p>Pipeline wrapper around FitCalibration.  
  <a href="classscope_1_1LMAOptimizationAlgorithm.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="optimization_8hpp_source.html">optimization.hpp</a>&gt;</code></p>
@@ -106,7 +107,7 @@ Inheritance diagram for scope::LMAOptimizationAlgorithm:</div>
 <div class="dyncontent">
 <div class="center"><img src="classscope_1_1LMAOptimizationAlgorithm__inherit__graph.png" border="0" usemap="#ascope_1_1LMAOptimizationAlgorithm_inherit__map" alt="Inheritance graph"/></div>
 <map name="ascope_1_1LMAOptimizationAlgorithm_inherit__map" id="ascope_1_1LMAOptimizationAlgorithm_inherit__map">
-<area shape="rect" title="Levenberg&#45;Marquardt parameter optimizer." alt="" coords="5,181,249,207"/>
+<area shape="rect" title="Pipeline wrapper around FitCalibration." alt="" coords="5,181,249,207"/>
 <area shape="rect" href="classscope_1_1OptimizationAlgorithm.html" title="Fits the camera intrinsics and distortion parameters to star centroids." alt="" coords="19,108,235,133"/>
 <area shape="poly" title=" " alt="" coords="130,147,130,181,125,181,125,147"/>
 <area shape="rect" title=" " alt="" coords="36,5,219,60"/>
@@ -118,28 +119,42 @@ Collaboration diagram for scope::LMAOptimizationAlgorithm:</div>
 <div class="dyncontent">
 <div class="center"><img src="classscope_1_1LMAOptimizationAlgorithm__coll__graph.png" border="0" usemap="#ascope_1_1LMAOptimizationAlgorithm_coll__map" alt="Collaboration graph"/></div>
 <map name="ascope_1_1LMAOptimizationAlgorithm_coll__map" id="ascope_1_1LMAOptimizationAlgorithm_coll__map">
-<area shape="rect" title="Levenberg&#45;Marquardt parameter optimizer." alt="" coords="5,181,249,207"/>
-<area shape="rect" href="classscope_1_1OptimizationAlgorithm.html" title="Fits the camera intrinsics and distortion parameters to star centroids." alt="" coords="19,108,235,133"/>
-<area shape="poly" title=" " alt="" coords="130,147,130,181,125,181,125,147"/>
-<area shape="rect" title=" " alt="" coords="36,5,219,60"/>
-<area shape="poly" title=" " alt="" coords="130,74,130,108,125,108,125,74"/>
+<area shape="rect" title="Pipeline wrapper around FitCalibration." alt="" coords="221,197,465,223"/>
+<area shape="rect" href="classscope_1_1OptimizationAlgorithm.html" title="Fits the camera intrinsics and distortion parameters to star centroids." alt="" coords="5,109,221,135"/>
+<area shape="poly" title=" " alt="" coords="158,137,313,195,311,200,156,142"/>
+<area shape="rect" title=" " alt="" coords="22,5,205,60"/>
+<area shape="poly" title=" " alt="" coords="116,74,116,109,111,109,111,74"/>
+<area shape="rect" href="structscope_1_1CameraParameters.html" title="The ten parameters of the paper&#39;s camera model: the intrinsics k = [d_x, alpha, d_y,..." alt="" coords="246,109,439,135"/>
+<area shape="poly" title=" " alt="" coords="345,149,345,197,340,197,340,149"/>
+<area shape="rect" href="structscope_1_1FitSettings.html" title="Settings for FitCalibration." alt="" coords="463,109,601,135"/>
+<area shape="poly" title=" " alt="" coords="495,143,369,199,367,195,493,138"/>
 </map>
 <center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:af25916d83d401b78ca4fbf0e0c08a06a" id="r_af25916d83d401b78ca4fbf0e0c08a06a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classscope_1_1LMAOptimizationAlgorithm.html#af25916d83d401b78ca4fbf0e0c08a06a">LMAOptimizationAlgorithm</a> (const <a class="el" href="classRecalibrationOptions.html">RecalibrationOptions</a> &amp;options)</td></tr>
-<tr class="separator:af25916d83d401b78ca4fbf0e0c08a06a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af5a019e3fd854778263198c8668024b3" id="r_af5a019e3fd854778263198c8668024b3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classscope_1_1LMAOptimizationAlgorithm.html#af5a019e3fd854778263198c8668024b3">LMAOptimizationAlgorithm</a> (const <a class="el" href="structscope_1_1CameraParameters.html">CameraParameters</a> &amp;prior, const <a class="el" href="structscope_1_1FitSettings.html">FitSettings</a> &amp;settings)</td></tr>
+<tr class="separator:af5a019e3fd854778263198c8668024b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2e7343fdc6bd98e81078a71d54161f17" id="r_a2e7343fdc6bd98e81078a71d54161f17"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structscope_1_1CalibrationResult.html">CalibrationResult</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classscope_1_1LMAOptimizationAlgorithm.html#a2e7343fdc6bd98e81078a71d54161f17">Run</a> (const <a class="el" href="structscope_1_1CentroidObservations.html">CentroidObservations</a> &amp;observations) override</td></tr>
 <tr class="memdesc:a2e7343fdc6bd98e81078a71d54161f17"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fits camera parameters to the star centroids.  <br /></td></tr>
 <tr class="separator:a2e7343fdc6bd98e81078a71d54161f17"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-attribs" name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:afb1f9082fc81e6175a3cf087f8ec1ffd" id="r_afb1f9082fc81e6175a3cf087f8ec1ffd"><td class="memItemLeft" align="right" valign="top"><a id="afb1f9082fc81e6175a3cf087f8ec1ffd" name="afb1f9082fc81e6175a3cf087f8ec1ffd"></a>
+const <a class="el" href="structscope_1_1CameraParameters.html">CameraParameters</a>&#160;</td><td class="memItemRight" valign="bottom"><b>prior_</b></td></tr>
+<tr class="memdesc:afb1f9082fc81e6175a3cf087f8ec1ffd"><td class="mdescLeft">&#160;</td><td class="mdescRight">The prior camera parameters. <br /></td></tr>
+<tr class="separator:afb1f9082fc81e6175a3cf087f8ec1ffd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa9a7eaa0570a4bd5cf0bcfe2ad73c62e" id="r_aa9a7eaa0570a4bd5cf0bcfe2ad73c62e"><td class="memItemLeft" align="right" valign="top"><a id="aa9a7eaa0570a4bd5cf0bcfe2ad73c62e" name="aa9a7eaa0570a4bd5cf0bcfe2ad73c62e"></a>
+const <a class="el" href="structscope_1_1FitSettings.html">FitSettings</a>&#160;</td><td class="memItemRight" valign="bottom"><b>settings_</b></td></tr>
+<tr class="memdesc:aa9a7eaa0570a4bd5cf0bcfe2ad73c62e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Which parameters to estimate and how. <br /></td></tr>
+<tr class="separator:aa9a7eaa0570a4bd5cf0bcfe2ad73c62e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Levenberg-Marquardt parameter optimizer. </p>
-<p>Stub pending the real algorithm. </p>
+<div class="textblock"><p>Pipeline wrapper around FitCalibration. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="af25916d83d401b78ca4fbf0e0c08a06a" name="af25916d83d401b78ca4fbf0e0c08a06a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af25916d83d401b78ca4fbf0e0c08a06a">&#9670;&#160;</a></span>LMAOptimizationAlgorithm()</h2>
+<a id="af5a019e3fd854778263198c8668024b3" name="af5a019e3fd854778263198c8668024b3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af5a019e3fd854778263198c8668024b3">&#9670;&#160;</a></span>LMAOptimizationAlgorithm()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -150,20 +165,31 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="memname">scope::LMAOptimizationAlgorithm::LMAOptimizationAlgorithm </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="classRecalibrationOptions.html">RecalibrationOptions</a> &amp;&#160;</td>
-          <td class="paramname"><em>options</em></td><td>)</td>
+          <td class="paramtype">const <a class="el" href="structscope_1_1CameraParameters.html">CameraParameters</a> &amp;&#160;</td>
+          <td class="paramname"><em>prior</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">const <a class="el" href="structscope_1_1FitSettings.html">FitSettings</a> &amp;&#160;</td>
+          <td class="paramname"><em>settings</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">explicit</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">options</td><td>Parsed recalibration options (currently unused). </td></tr>
+    <tr><td class="paramname">prior</td><td>The prior camera parameters, where the fit starts. </td></tr>
+    <tr><td class="paramname">settings</td><td>Which parameters to estimate and how. </td></tr>
   </table>
   </dd>
 </dl>
@@ -202,7 +228,7 @@ Public Member Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>The fitted calibration; from the stub, an empty, unconverged result. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The fitted calibration (see FitCalibration). </dd></dl>
 
 </div>
 </div>

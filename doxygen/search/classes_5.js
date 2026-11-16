@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['primaryscopepipelineexecutor_0',['PrimaryScopePipelineExecutor',['../classscope_1_1PrimaryScopePipelineExecutor.html',1,'scope']]]
+  ['noisefilteralgorithm_0',['NoiseFilterAlgorithm',['../classscope_1_1NoiseFilterAlgorithm.html',1,'scope']]]
 ];

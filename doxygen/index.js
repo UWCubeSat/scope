@@ -1,4 +1,4 @@
 var index =
 [
-    [ "NOT CURRENTLY FUNCTIONAL", "index.html#autotoc_md1", null ]
+    [ "Status", "index.html#autotoc_md1", null ]
 ];

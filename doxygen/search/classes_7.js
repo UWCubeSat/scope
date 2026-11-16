@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['starcentroidalgorithm_0',['StarCentroidAlgorithm',['../classscope_1_1StarCentroidAlgorithm.html',1,'scope']]]
+  ['primaryscopepipelineexecutor_0',['PrimaryScopePipelineExecutor',['../classscope_1_1PrimaryScopePipelineExecutor.html',1,'scope']]]
 ];

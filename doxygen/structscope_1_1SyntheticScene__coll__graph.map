@@ -1,0 +1,5 @@
+<map id="scope::SyntheticScene" name="scope::SyntheticScene">
+<area shape="rect" id="Node000001" title="A set of star images: the camera that took them, where each was really pointing, and the attitudes a ..." alt="" coords="18,93,186,119"/>
+<area shape="rect" id="Node000002" href="$structscope_1_1CameraParameters.html" title="The ten parameters of the paper&#39;s camera model: the intrinsics k = [d_x, alpha, d_y,..." alt="" coords="5,5,199,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="105,45,105,93,99,93,99,45"/>
+</map>

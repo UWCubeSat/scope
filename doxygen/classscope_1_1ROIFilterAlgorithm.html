@@ -98,8 +98,7 @@ $(document).ready(function(){initNavTree('classscope_1_1ROIFilterAlgorithm.html'
 </div><!--header-->
 <div class="contents">
 
-<p>A priori ROI + center-of-intensity star locator (Orion paper §"Image
-Processing and Star Centroiding").  
+<p>A priori ROI + center-of-intensity star locator, as in the Orion paper.  
  <a href="classscope_1_1ROIFilterAlgorithm.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="star-centroid_8hpp_source.html">star-centroid.hpp</a>&gt;</code></p>
@@ -108,7 +107,7 @@ Inheritance diagram for scope::ROIFilterAlgorithm:</div>
 <div class="dyncontent">
 <div class="center"><img src="classscope_1_1ROIFilterAlgorithm__inherit__graph.png" border="0" usemap="#ascope_1_1ROIFilterAlgorithm_inherit__map" alt="Inheritance graph"/></div>
 <map name="ascope_1_1ROIFilterAlgorithm_inherit__map" id="ascope_1_1ROIFilterAlgorithm_inherit__map">
-<area shape="rect" title="A priori ROI + center&#45;of&#45;intensity star locator (Orion paper §&quot;Image Processing and Star Centroiding&quot;..." alt="" coords="33,167,221,192"/>
+<area shape="rect" title="A priori ROI + center&#45;of&#45;intensity star locator, as in the Orion paper." alt="" coords="33,167,221,192"/>
 <area shape="rect" href="classscope_1_1StarCentroidAlgorithm.html" title="Extracts star centroids from the star images, pairing each measured pixel with the catalog star it ca..." alt="" coords="20,93,233,119"/>
 <area shape="poly" title=" " alt="" coords="129,132,129,167,124,167,124,132"/>
 <area shape="rect" title=" " alt="" coords="5,5,248,45"/>
@@ -120,7 +119,7 @@ Collaboration diagram for scope::ROIFilterAlgorithm:</div>
 <div class="dyncontent">
 <div class="center"><img src="classscope_1_1ROIFilterAlgorithm__coll__graph.png" border="0" usemap="#ascope_1_1ROIFilterAlgorithm_coll__map" alt="Collaboration graph"/></div>
 <map name="ascope_1_1ROIFilterAlgorithm_coll__map" id="ascope_1_1ROIFilterAlgorithm_coll__map">
-<area shape="rect" title="A priori ROI + center&#45;of&#45;intensity star locator (Orion paper §&quot;Image Processing and Star Centroiding&quot;..." alt="" coords="243,183,431,208"/>
+<area shape="rect" title="A priori ROI + center&#45;of&#45;intensity star locator, as in the Orion paper." alt="" coords="243,183,431,208"/>
 <area shape="rect" href="classscope_1_1StarCentroidAlgorithm.html" title="Extracts star centroids from the star images, pairing each measured pixel with the catalog star it ca..." alt="" coords="20,95,233,120"/>
 <area shape="poly" title=" " alt="" coords="169,123,310,180,308,185,167,128"/>
 <area shape="rect" title=" " alt="" coords="5,5,248,45"/>
@@ -160,9 +159,8 @@ const std::vector&lt; found::Quaternion &gt;&#160;</td><td class="memItemRight" 
 <tr class="separator:a8e088f207df08e893bf9d6de04e54522"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>A priori ROI + center-of-intensity star locator (Orion paper §"Image
-Processing and Star Centroiding"). </p>
-<p>For each star image, every catalog star brighter than the magnitude threshold is projected with the prior attitude and calibration. Those that land on the sensor (less an ROI margin) are centroided with ExtractCentroid on the dark-subtracted image. Centroids that collide within one image (two catalog stars on the same blob) are dropped as ambiguous. </p>
+<div class="textblock"><p>A priori ROI + center-of-intensity star locator, as in the Orion paper. </p>
+<p>Each catalog star brighter than the magnitude threshold is projected with the prior attitude and calibration and centroided in a window around that prediction. On top of the paper (whose narrow field rarely puts two stars in one window), each image's windows are shifted by the median offset of the isolated stars, and each star only searches the part of its window closer to its own prediction than to a neighbour's. If two stars still land on the same blob, both are dropped. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a4d41a359fad0a27284b6c31051a710d7" name="a4d41a359fad0a27284b6c31051a710d7"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a4d41a359fad0a27284b6c31051a710d7">&#9670;&#160;</a></span>ROIFilterAlgorithm()</h2>

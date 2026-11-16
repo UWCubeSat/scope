@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['projection_2ehpp_0',['projection.hpp',['../projection_8hpp.html',1,'']]]
+  ['noise_2dfilter_2ehpp_0',['noise-filter.hpp',['../noise-filter_8hpp.html',1,'']]]
 ];

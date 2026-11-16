@@ -1,11 +1,10 @@
 var searchData=
 [
-  ['p1_0',['p1',['../structscope_1_1CameraParameters.html#aeabbbcc087bf837bdddc9c16831ac749',1,'scope::CameraParameters']]],
-  ['p2_1',['p2',['../structscope_1_1CameraParameters.html#afe902207f8f1082215008c431422eab8',1,'scope::CameraParameters']]],
-  ['parameter_20estimator_2',['SCOPE: Star Camera Optical Parameter Estimator',['../index.html',1,'']]],
-  ['pipeline_5f_3',['pipeline_',['../classscope_1_1PrimaryScopePipelineExecutor.html#af5af9aa3ff63ab731e2833d193cca9b9',1,'scope::PrimaryScopePipelineExecutor']]],
-  ['primaryscopepipelineexecutor_4',['primaryscopepipelineexecutor',['../classscope_1_1PrimaryScopePipelineExecutor.html',1,'scope::PrimaryScopePipelineExecutor'],['../classscope_1_1PrimaryScopePipelineExecutor.html#a004dd88c834c59bab54fc9bec20c5de9',1,'scope::PrimaryScopePipelineExecutor::PrimaryScopePipelineExecutor()']]],
-  ['principalx_5',['principalX',['../structscope_1_1CameraParameters.html#a5c3edcd0dc0e4fb09150066ffdebc03c',1,'scope::CameraParameters']]],
-  ['principaly_6',['principalY',['../structscope_1_1CameraParameters.html#af3f732deeb907d862b49c57ebc15839d',1,'scope::CameraParameters']]],
-  ['projection_2ehpp_7',['projection.hpp',['../projection_8hpp.html',1,'']]]
+  ['magnitude_0',['magnitude',['../structscope_1_1CatalogStar.html#a77ea9eb5cc69fc8c241feed1ea6d8b9c',1,'scope::CatalogStar']]],
+  ['maxiterations_1',['maxIterations',['../structscope_1_1FitSettings.html#a1614d538dd6c5546d83bb03469e608e5',1,'scope::FitSettings']]],
+  ['maxrejectionrounds_2',['maxRejectionRounds',['../structscope_1_1FitSettings.html#a6a54b4978e3a064821a8611d8456a6ab',1,'scope::FitSettings']]],
+  ['measuredpixel_3',['measuredPixel',['../structscope_1_1Observation.html#ab2c1c1c8ea54ae0bfe0e1d8aa67897ca',1,'scope::Observation']]],
+  ['measurement_2dmodel_2ehpp_4',['measurement-model.hpp',['../measurement-model_8hpp.html',1,'']]],
+  ['measurementjacobian_5',['MeasurementJacobian',['../structscope_1_1MeasurementJacobian.html',1,'scope']]],
+  ['misalignment_6',['misalignment',['../structscope_1_1SyntheticScene.html#a021724159ce8dad4394a97fb54d32b08',1,'scope::SyntheticScene']]]
 ];

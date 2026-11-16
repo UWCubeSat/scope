@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['lmaoptimizationalgorithm_0',['LMAOptimizationAlgorithm',['../classscope_1_1LMAOptimizationAlgorithm.html',1,'scope']]]
+  ['fitsettings_0',['FitSettings',['../structscope_1_1FitSettings.html',1,'scope']]]
 ];

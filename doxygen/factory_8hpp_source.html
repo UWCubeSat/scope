@@ -122,7 +122,7 @@ $(document).ready(function(){initNavTree('factory_8hpp_source.html',''); initRes
 <div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>    std::unique_ptr&lt;NoiseFilterAlgorithm&gt; noiseAlg = ProvideNoiseFilterAlgorithm(options);</div>
 <div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>    std::unique_ptr&lt;StarCentroidAlgorithm&gt; starAlg =</div>
 <div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>        ProvideStarCentroidAlgorithm(options, camera, std::move(catalog), std::move(attitudes));</div>
-<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>    std::unique_ptr&lt;OptimizationAlgorithm&gt; optAlg = ProvideOptimizationAlgorithm(options);</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>    std::unique_ptr&lt;OptimizationAlgorithm&gt; optAlg = ProvideOptimizationAlgorithm(options, camera);</div>
 <div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span> </div>
 <div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>    <span class="keywordflow">return</span> std::make_unique&lt;PrimaryScopePipelineExecutor&gt;(</div>
 <div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>        std::move(options), std::move(noiseAlg), std::move(starAlg), std::move(optAlg));</div>
@@ -133,7 +133,7 @@ $(document).ready(function(){initNavTree('factory_8hpp_source.html',''); initRes
 <div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span><span class="preprocessor">#endif  </span><span class="comment">// SRC_SCOPE_PROVIDERS_FACTORY_HPP_</span></div>
 <div class="ttc" id="acatalog_8hpp_html"><div class="ttname"><a href="catalog_8hpp.html">catalog.hpp</a></div><div class="ttdoc">Bright star catalog types and loader for SCOPE calibration.</div></div>
 <div class="ttc" id="acatalog_8hpp_html_a088b8f568074b9e555714a6a55b43614"><div class="ttname"><a href="catalog_8hpp.html#a088b8f568074b9e555714a6a55b43614">scope::Catalog</a></div><div class="ttdeci">std::vector&lt; CatalogStar &gt; Catalog</div><div class="ttdoc">A collection of catalog stars.</div><div class="ttdef"><b>Definition</b> catalog.hpp:29</div></div>
-<div class="ttc" id="aclassRecalibrationOptions_html"><div class="ttname"><a href="classRecalibrationOptions.html">RecalibrationOptions</a></div><div class="ttdoc">Parsed CLI options driving a recalibration run.</div><div class="ttdef"><b>Definition</b> options.hpp:42</div></div>
+<div class="ttc" id="aclassRecalibrationOptions_html"><div class="ttname"><a href="classRecalibrationOptions.html">RecalibrationOptions</a></div><div class="ttdoc">Parsed CLI options driving a recalibration run.</div><div class="ttdef"><b>Definition</b> options.hpp:48</div></div>
 <div class="ttc" id="aexecutors_8hpp_html"><div class="ttname"><a href="executors_8hpp.html">executors.hpp</a></div><div class="ttdoc">Pipeline executor for the primary SCOPE calibration chain.</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->

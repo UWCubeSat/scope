@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['name_0',['name',['../structscope_1_1CatalogStar.html#a7ce5ac9bb9e0dc3291d8d716bd7f7af2',1,'scope::CatalogStar']]],
-  ['noisestage_5f_1',['noiseStage_',['../classscope_1_1PrimaryScopePipelineExecutor.html#aa68c27991e46a72f3de2849451f82929',1,'scope::PrimaryScopePipelineExecutor']]]
+  ['height_0',['height',['../structscope_1_1SyntheticScene.html#ae682e8f381ed7ac91623a8f28808d343',1,'scope::SyntheticScene']]],
+  ['hotpixelfraction_1',['hotPixelFraction',['../structscope_1_1SensorModel.html#a36eab011c51401ed2981752163a375e3',1,'scope::SensorModel']]]
 ];

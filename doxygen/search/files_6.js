@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['star_2dcentroid_2ehpp_0',['star-centroid.hpp',['../star-centroid_8hpp.html',1,'']]]
+  ['optimization_2ehpp_0',['optimization.hpp',['../optimization_8hpp.html',1,'']]]
 ];

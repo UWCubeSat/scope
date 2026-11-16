@@ -98,7 +98,8 @@ $(document).ready(function(){initNavTree('types_8hpp.html',''); initResizable();
 
 <p>Plain data passed between SCOPE's stages, independent of FOUND's pipeline and of the command line.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &lt;vector&gt;</code><br />
+<div class="textblock"><code>#include &lt;array&gt;</code><br />
+<code>#include &lt;vector&gt;</code><br />
 <code>#include &quot;common/decimal.hpp&quot;</code><br />
 <code>#include &quot;common/spatial/attitude-utils.hpp&quot;</code><br />
 <code>#include &quot;<a class="el" href="projection_8hpp_source.html">scope/projection/projection.hpp</a>&quot;</code><br />
@@ -107,19 +108,22 @@ Include dependency graph for types.hpp:</div>
 <div class="dyncontent">
 <div class="center"><img src="types_8hpp__incl.png" border="0" usemap="#asrc_2scope_2common_2types_8hpp" alt=""/></div>
 <map name="asrc_2scope_2common_2types_8hpp" id="asrc_2scope_2common_2types_8hpp">
-<area shape="rect" title="Plain data passed between SCOPE&#39;s stages, independent of FOUND&#39;s pipeline and of the command line." alt="" coords="75,5,287,31"/>
-<area shape="rect" title=" " alt="" coords="5,79,68,104"/>
-<area shape="poly" title=" " alt="" coords="159,33,74,75,71,70,156,28"/>
-<area shape="rect" title=" " alt="" coords="27,159,190,185"/>
-<area shape="poly" title=" " alt="" coords="170,33,151,54,134,80,121,113,114,146,109,145,116,112,129,77,147,50,166,29"/>
-<area shape="rect" title=" " alt="" coords="316,152,499,192"/>
-<area shape="poly" title=" " alt="" coords="288,27,339,45,363,59,384,77,401,106,409,138,404,139,397,108,380,80,360,64,337,50,286,33"/>
-<area shape="rect" href="projection_8hpp.html" title="Forward camera projection (pinhole + Brown distortion + intrinsics)." alt="" coords="143,79,370,104"/>
-<area shape="poly" title=" " alt="" coords="195,29,236,67,232,71,191,33"/>
-<area shape="poly" title=" " alt="" coords="236,107,144,155,141,150,234,102"/>
-<area shape="poly" title=" " alt="" coords="280,102,360,143,358,148,278,107"/>
-<area shape="rect" title=" " alt="" coords="217,159,291,185"/>
-<area shape="poly" title=" " alt="" coords="259,104,258,146,252,145,254,104"/>
+<area shape="rect" title="Plain data passed between SCOPE&#39;s stages, independent of FOUND&#39;s pipeline and of the command line." alt="" coords="203,5,415,31"/>
+<area shape="rect" title=" " alt="" coords="5,159,61,185"/>
+<area shape="poly" title=" " alt="" coords="277,33,224,54,167,81,108,118,60,153,57,149,105,113,164,76,222,49,275,28"/>
+<area shape="rect" title=" " alt="" coords="498,79,561,104"/>
+<area shape="poly" title=" " alt="" coords="345,28,486,73,484,78,344,33"/>
+<area shape="rect" title=" " alt="" coords="85,159,248,185"/>
+<area shape="poly" title=" " alt="" coords="262,33,221,51,202,64,186,80,177,95,172,112,168,146,163,145,167,111,173,93,182,77,198,60,218,46,260,28"/>
+<area shape="rect" title=" " alt="" coords="371,152,554,192"/>
+<area shape="poly" title=" " alt="" coords="356,28,398,47,419,60,437,77,454,107,462,138,457,139,449,109,433,80,415,64,396,51,353,33"/>
+<area shape="rect" href="projection_8hpp.html" title="Forward camera projection (pinhole + Brown distortion + intrinsics)." alt="" coords="196,79,423,104"/>
+<area shape="poly" title=" " alt="" coords="312,31,312,65,307,65,307,31"/>
+<area shape="poly" title=" " alt="" coords="252,107,167,127,74,155,69,156,67,151,72,149,166,121,251,101"/>
+<area shape="poly" title=" " alt="" coords="290,107,201,155,198,150,287,102"/>
+<area shape="poly" title=" " alt="" coords="333,102,415,143,412,148,331,107"/>
+<area shape="rect" title=" " alt="" coords="272,159,347,185"/>
+<area shape="poly" title=" " alt="" coords="312,104,312,145,307,145,307,104"/>
 </map>
 </div>
 </div><div class="textblock"><div class="dynheader">
@@ -127,42 +131,50 @@ This graph shows which files directly or indirectly include this file:</div>
 <div class="dyncontent">
 <div class="center"><img src="types_8hpp__dep__incl.png" border="0" usemap="#asrc_2scope_2common_2types_8hppdep" alt=""/></div>
 <map name="asrc_2scope_2common_2types_8hppdep" id="asrc_2scope_2common_2types_8hppdep">
-<area shape="rect" title="Plain data passed between SCOPE&#39;s stages, independent of FOUND&#39;s pipeline and of the command line." alt="" coords="295,5,507,31"/>
-<area shape="rect" href="style_8hpp_source.html" title=" " alt="" coords="297,79,505,104"/>
-<area shape="poly" title=" " alt="" coords="404,44,404,79,398,79,398,44"/>
-<area shape="poly" title=" " alt="" coords="475,75,514,78,526,83,532,91,525,101,509,106,461,107,461,101,508,100,522,96,526,91,523,87,512,83,474,81"/>
-<area shape="rect" href="executors_8hpp.html" title="Pipeline executor for the primary SCOPE calibration chain." alt="" coords="225,416,409,456"/>
-<area shape="poly" title=" " alt="" coords="284,101,204,119,165,134,129,154,83,191,53,228,33,271,14,329,8,349,9,358,14,366,27,377,46,387,99,404,162,416,225,424,224,430,161,421,98,409,44,392,24,382,10,370,4,359,3,349,9,327,28,269,49,225,79,187,126,150,163,129,203,114,283,96"/>
-<area shape="rect" href="options_8hpp_source.html" title=" " alt="" coords="153,240,334,280"/>
-<area shape="poly" title=" " alt="" coords="388,117,360,154,326,194,271,242,267,238,322,190,356,151,384,114"/>
-<area shape="rect" href="optimization_8hpp.html" title="Parameter&#45;fit optimization algorithms for SCOPE calibration." alt="" coords="244,328,414,368"/>
-<area shape="poly" title=" " alt="" coords="397,118,337,329,332,327,392,116"/>
-<area shape="rect" href="star-centroid_8hpp.html" title="Star centroid algorithms for SCOPE calibration." alt="" coords="438,328,609,368"/>
-<area shape="poly" title=" " alt="" coords="413,116,444,189,486,279,514,326,509,329,481,281,439,192,408,118"/>
-<area shape="rect" href="noise-filter_8hpp.html" title="Noise filtering algorithms for SCOPE calibration." alt="" coords="633,328,790,368"/>
-<area shape="poly" title=" " alt="" coords="427,111,690,326,687,330,424,115"/>
-<area shape="rect" href="converters_8hpp_source.html" title=" " alt="" coords="140,152,288,192"/>
-<area shape="poly" title=" " alt="" coords="363,112,260,154,258,149,360,107"/>
-<area shape="rect" href="coi_8hpp.html" title="Center&#45;of&#45;intensity star centroiding kernel." alt="" coords="540,152,710,192"/>
-<area shape="poly" title=" " alt="" coords="448,106,572,149,570,154,446,111"/>
-<area shape="poly" title=" " alt="" coords="424,422,432,428,436,436,428,448,410,454,409,449,425,443,430,436,428,431,421,427"/>
-<area shape="rect" href="factory_8hpp_source.html" title=" " alt="" coords="352,504,500,544"/>
-<area shape="poly" title=" " alt="" coords="354,463,404,502,401,506,351,467"/>
-<area shape="poly" title=" " alt="" coords="141,279,87,293,42,312,28,323,20,336,20,350,29,366,40,377,58,386,107,402,166,415,225,423,225,429,165,420,106,408,56,391,37,381,24,370,15,351,15,334,24,320,40,307,85,288,139,274"/>
-<area shape="rect" href="parser_8hpp_source.html" title=" " alt="" coords="38,328,220,368"/>
-<area shape="poly" title=" " alt="" coords="209,290,156,330,153,326,206,286"/>
-<area shape="poly" title=" " alt="" coords="274,288,312,326,308,330,270,292"/>
-<area shape="poly" title=" " alt="" coords="319,281,463,325,462,331,317,287"/>
-<area shape="poly" title=" " alt="" coords="327,382,322,416,317,415,322,381"/>
-<area shape="rect" href="stage-providers_8hpp_source.html" title=" " alt="" coords="458,416,614,456"/>
-<area shape="poly" title=" " alt="" coords="388,371,492,414,490,418,386,376"/>
-<area shape="poly" title=" " alt="" coords="502,467,452,506,449,502,499,463"/>
-<area shape="poly" title=" " alt="" coords="467,376,363,418,361,414,465,371"/>
-<area shape="poly" title=" " alt="" coords="531,381,536,415,531,416,526,382"/>
-<area shape="poly" title=" " alt="" coords="620,372,404,419,403,413,619,367"/>
-<area shape="poly" title=" " alt="" coords="662,376,576,418,573,414,660,372"/>
-<area shape="poly" title=" " alt="" coords="228,204,240,239,235,241,223,206"/>
-<area shape="poly" title=" " alt="" coords="303,159,312,164,315,172,307,184,290,189,288,184,304,179,310,172,308,167,301,163"/>
+<area shape="rect" title="Plain data passed between SCOPE&#39;s stages, independent of FOUND&#39;s pipeline and of the command line." alt="" coords="617,5,829,31"/>
+<area shape="rect" href="style_8hpp_source.html" title=" " alt="" coords="365,86,573,111"/>
+<area shape="poly" title=" " alt="" coords="673,37,507,89,505,83,672,32"/>
+<area shape="rect" href="calibration-fit_8hpp.html" title="The Levenberg&#45;Marquardt calibration fit, following the Orion paper (Christian et al." alt="" coords="681,255,850,295"/>
+<area shape="poly" title=" " alt="" coords="729,44,765,254,759,255,724,45"/>
+<area shape="rect" href="synthetic_8hpp.html" title="Synthetic star fields from a known camera and known attitudes, for testing the pipeline end to end." alt="" coords="760,79,907,119"/>
+<area shape="poly" title=" " alt="" coords="751,36,808,76,805,81,748,41"/>
+<area shape="poly" title=" " alt="" coords="530,82,577,83,593,89,600,99,592,110,572,115,516,114,516,109,571,110,589,105,595,99,590,93,576,88,530,87"/>
+<area shape="rect" href="executors_8hpp.html" title="Pipeline executor for the primary SCOPE calibration chain." alt="" coords="256,431,440,471"/>
+<area shape="poly" title=" " alt="" coords="352,114,206,136,143,151,100,169,76,187,61,205,38,256,23,292,11,322,10,351,16,365,26,381,40,393,61,403,119,421,188,433,256,440,255,446,187,438,118,426,59,408,37,397,22,384,11,368,5,352,6,321,18,290,33,254,56,202,72,183,97,164,142,146,205,131,351,109"/>
+<area shape="rect" href="options_8hpp_source.html" title=" " alt="" coords="48,255,229,295"/>
+<area shape="poly" title=" " alt="" coords="352,109,280,116,210,128,151,145,130,156,115,168,107,188,109,211,117,233,128,253,123,256,112,236,103,212,102,187,111,165,127,152,149,141,209,123,279,111,351,104"/>
+<area shape="rect" href="star-centroid_8hpp.html" title="Star centroid algorithms for SCOPE calibration." alt="" coords="253,343,424,383"/>
+<area shape="poly" title=" " alt="" coords="489,122,508,162,512,185,508,208,481,252,445,291,407,322,373,345,370,340,404,318,442,287,476,249,503,206,507,185,503,163,484,124"/>
+<area shape="rect" href="noise-filter_8hpp.html" title="Noise filtering algorithms for SCOPE calibration." alt="" coords="499,343,656,383"/>
+<area shape="poly" title=" " alt="" coords="503,117,529,138,551,165,570,212,579,262,582,307,581,342,576,342,577,307,574,263,565,214,547,168,526,141,500,121"/>
+<area shape="rect" href="optimization_8hpp.html" title="Parameter&#45;fit optimization algorithms for SCOPE calibration." alt="" coords="681,343,850,383"/>
+<area shape="poly" title=" " alt="" coords="507,115,543,137,579,165,608,198,625,229,642,259,670,293,701,319,733,340,730,345,698,323,666,297,638,262,621,232,604,201,575,169,540,141,504,120"/>
+<area shape="rect" href="converters_8hpp_source.html" title=" " alt="" coords="126,167,274,207"/>
+<area shape="poly" title=" " alt="" coords="421,118,260,169,258,164,419,113"/>
+<area shape="rect" href="coi_8hpp.html" title="Center&#45;of&#45;intensity star centroiding kernel." alt="" coords="323,167,493,207"/>
+<area shape="poly" title=" " alt="" coords="455,124,424,168,419,165,451,121"/>
+<area shape="poly" title=" " alt="" coords="455,437,463,442,467,451,459,462,441,468,439,463,456,458,461,450,459,446,452,441"/>
+<area shape="rect" href="factory_8hpp_source.html" title=" " alt="" coords="383,519,531,559"/>
+<area shape="poly" title=" " alt="" coords="385,477,435,516,431,521,381,481"/>
+<area shape="poly" title=" " alt="" coords="87,304,61,321,41,340,31,361,32,371,38,381,51,392,71,403,126,419,191,432,256,440,256,445,190,437,125,425,69,408,48,397,34,384,27,372,26,360,36,337,58,317,84,299"/>
+<area shape="rect" href="parser_8hpp_source.html" title=" " alt="" coords="48,343,229,383"/>
+<area shape="poly" title=" " alt="" coords="141,309,141,342,136,342,136,309"/>
+<area shape="rect" href="stage-providers_8hpp_source.html" title=" " alt="" coords="494,431,650,471"/>
+<area shape="poly" title=" " alt="" coords="243,294,363,320,437,340,464,359,488,381,549,428,546,433,485,385,461,363,435,345,362,325,242,300"/>
+<area shape="poly" title=" " alt="" coords="196,298,296,340,294,345,194,303"/>
+<area shape="poly" title=" " alt="" coords="537,481,484,521,481,516,534,477"/>
+<area shape="poly" title=" " alt="" coords="345,396,348,430,343,431,339,397"/>
+<area shape="poly" title=" " alt="" coords="403,385,522,428,520,433,402,390"/>
+<area shape="poly" title=" " alt="" coords="515,390,399,433,397,428,513,385"/>
+<area shape="poly" title=" " alt="" coords="578,397,576,431,570,430,572,396"/>
+<area shape="poly" title=" " alt="" coords="667,387,440,433,439,428,666,382"/>
+<area shape="poly" title=" " alt="" coords="711,391,615,433,613,428,709,386"/>
+<area shape="poly" title=" " alt="" coords="180,220,154,256,150,253,176,216"/>
+<area shape="poly" title=" " alt="" coords="289,172,297,178,301,187,293,199,275,205,273,200,290,195,295,186,293,181,286,177"/>
+<area shape="rect" href="synthetic-cli_8hpp.html" title="Command line of scope&#45;synth, which writes a synthetic data set for the scope command: dark frames,..." alt="" coords="253,255,400,295"/>
+<area shape="poly" title=" " alt="" coords="241,212,300,252,297,257,238,217"/>
+<area shape="poly" title=" " alt="" coords="816,300,841,317,862,338,871,361,870,373,863,384,849,396,829,407,775,424,712,436,650,445,650,440,711,431,774,419,827,402,846,392,859,381,865,371,866,361,857,341,838,321,813,304"/>
+<area shape="poly" title=" " alt="" coords="768,309,768,342,763,342,763,309"/>
 </map>
 </div>
 </div>

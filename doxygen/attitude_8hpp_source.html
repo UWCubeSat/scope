@@ -111,9 +111,19 @@ $(document).ready(function(){initNavTree('attitude_8hpp_source.html',''); initRe
 <div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span> </div>
 <div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>std::vector&lt;found::Quaternion&gt; LoadAttitudes(<span class="keyword">const</span> std::string &amp;path);</div>
 <div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span> </div>
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>}  <span class="comment">// namespace scope</span></div>
-<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span> </div>
-<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span><span class="preprocessor">#endif  </span><span class="comment">// SRC_SCOPE_ATTITUDE_ATTITUDE_HPP_</span></div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span><span class="keywordtype">void</span> WriteAttitudes(<span class="keyword">const</span> std::string &amp;path,</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>                    <span class="keyword">const</span> std::vector&lt;found::Quaternion&gt; &amp;attitudes,</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>                    <span class="keyword">const</span> std::string &amp;header);</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span> </div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>found::Quaternion AttitudeCorrection(<span class="keyword">const</span> found::Vec3 &amp;dtheta);</div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span> </div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>found::Vec3 CorrectionRotationVector(<span class="keyword">const</span> found::Quaternion &amp;correction);</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span> </div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>found::Quaternion AverageQuaternions(<span class="keyword">const</span> std::vector&lt;found::Quaternion&gt; &amp;quaternions);</div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span> </div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>}  <span class="comment">// namespace scope</span></div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span> </div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span><span class="preprocessor">#endif  </span><span class="comment">// SRC_SCOPE_ATTITUDE_ATTITUDE_HPP_</span></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

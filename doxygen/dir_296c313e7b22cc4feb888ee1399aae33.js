@@ -8,5 +8,6 @@ var dir_296c313e7b22cc4feb888ee1399aae33 =
     [ "optimization", "dir_87fee5896d39201987984be50eac7001.html", "dir_87fee5896d39201987984be50eac7001" ],
     [ "projection", "dir_9e22d399b3156c2efbedd8b807d3b770.html", "dir_9e22d399b3156c2efbedd8b807d3b770" ],
     [ "providers", "dir_4bdfd8c94e0b04d73b9c795b90cda96d.html", "dir_4bdfd8c94e0b04d73b9c795b90cda96d" ],
-    [ "star-centroid", "dir_13df637fe27c735d27cd20fa2052489b.html", "dir_13df637fe27c735d27cd20fa2052489b" ]
+    [ "star-centroid", "dir_13df637fe27c735d27cd20fa2052489b.html", "dir_13df637fe27c735d27cd20fa2052489b" ],
+    [ "synthetic", "dir_60d130c0b62b4d6ec61eba9d4c16630f.html", "dir_60d130c0b62b4d6ec61eba9d4c16630f" ]
 ];

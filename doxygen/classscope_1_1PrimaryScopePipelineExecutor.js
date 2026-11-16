@@ -6,5 +6,6 @@ var classscope_1_1PrimaryScopePipelineExecutor =
     [ "OutputResults", "classscope_1_1PrimaryScopePipelineExecutor.html#a89553ccccb8276f1c2fb8c064ad12d21", null ],
     [ "noiseStage_", "classscope_1_1PrimaryScopePipelineExecutor.html#aa68c27991e46a72f3de2849451f82929", null ],
     [ "options_", "classscope_1_1PrimaryScopePipelineExecutor.html#a54bc6fbbbbe62ae9eba3467978998bc1", null ],
-    [ "pipeline_", "classscope_1_1PrimaryScopePipelineExecutor.html#af5af9aa3ff63ab731e2833d193cca9b9", null ]
+    [ "pipeline_", "classscope_1_1PrimaryScopePipelineExecutor.html#af5af9aa3ff63ab731e2833d193cca9b9", null ],
+    [ "starStage_", "classscope_1_1PrimaryScopePipelineExecutor.html#ab3bb1ef32340975fab319d2a248f5671", null ]
 ];

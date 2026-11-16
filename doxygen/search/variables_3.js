@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['imageindex_0',['imageIndex',['../structscope_1_1Observation.html#ad475fc57494afd5a7f45bf13f8ffe1a9',1,'scope::Observation']]],
-  ['inertialdirection_1',['inertialDirection',['../structscope_1_1Observation.html#ae9981d012b7b9165c12c01be1bca5621',1,'scope::Observation']]]
+  ['estimate_0',['estimate',['../structscope_1_1FitSettings.html#aca2ae068ecbec1b2dcc428c79462330c',1,'scope::FitSettings']]],
+  ['estimated_1',['estimated',['../structscope_1_1CalibrationResult.html#a532cd53c70b8c688e0da520d1d303618',1,'scope::CalibrationResult']]]
 ];

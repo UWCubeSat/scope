@@ -26,7 +26,7 @@
                 <span>src/scope/</span>
             </div>
             <div>File: providers/factory.hpp</div>
-            <div>Date: 2026-10-10 06:27:25</div>
+            <div>Date: 2026-11-16 11:45:37</div>
         </div>
         <div class="col-sm-12 col-lg-3 float-left d-flex flex-column text-right flex-justify-end p-3">
             <div class="d-flex">
@@ -41,7 +41,7 @@
             </div>
             <div class="d-flex">
                 <div class="mr-2">Branches:</div>
-                <div class="mr-2" style="margin: auto;">6/6</div>
+                <div class="mr-2" style="margin: auto;">7/7</div>
                 <div class="Label--minw"><span class="coverage-high IssueLabel color-fg-on-emphasis mr-1">100.0%</span></div>
             </div>
         </div>
@@ -274,6 +274,12 @@
             <tr>
                 <td class="text-right src linenos"><a class="normal" id="l27" href="#l27">27</a></td>
                 <td class="text-right src linenos ws-unset">
+                    <details class="normal details-overlay">
+                        <summary>1/1</summary>
+                        <div class="text-left position-absolute color-bg-subtle p-3 mt-2" style="z-index: 1;">
+                            <div class="color-taken-branch">&check; Branch 2 taken 2 times.</div>
+                        </div>
+                    </details>
                 </td>
                 <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">2</td>
                 <td class="src coveredLine"><span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="n">CameraParameters</span><span class="w"> </span><span class="n">camera</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ProvideCameraParameters</span><span class="p">(</span><span class="n">options</span><span class="p">);</span></td>
@@ -329,7 +335,7 @@
                     </details>
                 </td>
                 <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">2</td>
-                <td class="src coveredLine"><span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">unique_ptr</span><span class="o">&lt;</span><span class="n">OptimizationAlgorithm</span><span class="o">&gt;</span><span class="w"> </span><span class="n">optAlg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ProvideOptimizationAlgorithm</span><span class="p">(</span><span class="n">options</span><span class="p">);</span></td>
+                <td class="src coveredLine"><span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">unique_ptr</span><span class="o">&lt;</span><span class="n">OptimizationAlgorithm</span><span class="o">&gt;</span><span class="w"> </span><span class="n">optAlg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ProvideOptimizationAlgorithm</span><span class="p">(</span><span class="n">options</span><span class="p">,</span><span class="w"> </span><span class="n">camera</span><span class="p">);</span></td>
             </tr>
             <tr>
                 <td class="text-right src linenos"><a class="normal" id="l33" href="#l33">33</a></td>
