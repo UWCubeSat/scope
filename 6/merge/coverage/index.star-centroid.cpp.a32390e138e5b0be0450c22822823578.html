@@ -26,7 +26,7 @@
                 <span>src/scope/</span>
             </div>
             <div>File: star-centroid/star-centroid.cpp</div>
-            <div>Date: 2026-10-21 21:11:59</div>
+            <div>Date: 2026-11-16 11:33:45</div>
         </div>
         <div class="col-sm-12 col-lg-3 float-left d-flex flex-column text-right flex-justify-end p-3">
             <div class="d-flex">
@@ -59,12 +59,12 @@
       <th>Call count</th>
       <th>Block coverage</th>
     </tr>
-    <tr><td><a href="#l40">scope::(anonymous namespace)::DarkSubtract(found::Image const&amp;, found::Image const&amp;) (line 40)</a></td><td>called 35 times</td><td>71.0%</td></tr>
-    <tr><td><a href="#l56">scope::(anonymous namespace)::FindNeighbours(std::vector&lt;scope::(anonymous namespace)::Prediction, std::allocator&lt;scope::(anonymous namespace)::Prediction&gt; &gt; const&amp;, int) (line 56)</a></td><td>called 35 times</td><td>76.0%</td></tr>
-    <tr><td><a href="#l111">scope::(anonymous namespace)::KeepUnambiguous(std::vector&lt;scope::Observation, std::allocator&lt;scope::Observation&gt; &gt; const&amp;, std::vector&lt;scope::Observation, std::allocator&lt;scope::Observation&gt; &gt;*) (line 111)</a></td><td>called 35 times</td><td>88.0%</td></tr>
+    <tr><td><a href="#l40">scope::(anonymous namespace)::DarkSubtract(found::Image const&amp;, found::Image const&amp;) (line 40)</a></td><td>called 32 times</td><td>71.0%</td></tr>
+    <tr><td><a href="#l56">scope::(anonymous namespace)::FindNeighbours(std::vector&lt;scope::(anonymous namespace)::Prediction, std::allocator&lt;scope::(anonymous namespace)::Prediction&gt; &gt; const&amp;, int) (line 56)</a></td><td>called 32 times</td><td>76.0%</td></tr>
+    <tr><td><a href="#l111">scope::(anonymous namespace)::KeepUnambiguous(std::vector&lt;scope::Observation, std::allocator&lt;scope::Observation&gt; &gt; const&amp;, std::vector&lt;scope::Observation, std::allocator&lt;scope::Observation&gt; &gt;*) (line 111)</a></td><td>called 32 times</td><td>88.0%</td></tr>
     <tr><td><a href="#l72">scope::(anonymous namespace)::Median(std::vector&lt;double, std::allocator&lt;double&gt; &gt;) (line 72)</a></td><td>called 14 times</td><td>93.0%</td></tr>
-    <tr><td><a href="#l81">scope::(anonymous namespace)::MedianOffset(found::Image const&amp;, std::vector&lt;scope::(anonymous namespace)::Prediction, std::allocator&lt;scope::(anonymous namespace)::Prediction&gt; &gt; const&amp;, std::vector&lt;std::vector&lt;unsigned long, std::allocator&lt;unsigned long&gt; &gt;, std::allocator&lt;std::vector&lt;unsigned long, std::allocator&lt;unsigned long&gt; &gt; &gt; &gt; const&amp;, int, int, unsigned char) (line 81)</a></td><td>called 35 times</td><td>69.0%</td></tr>
-    <tr><td><a href="#l126">scope::ROIFilterAlgorithm::Run(found::Image const&amp;) (line 126)</a></td><td>called 41 times</td><td>80.0%</td></tr>
+    <tr><td><a href="#l81">scope::(anonymous namespace)::MedianOffset(found::Image const&amp;, std::vector&lt;scope::(anonymous namespace)::Prediction, std::allocator&lt;scope::(anonymous namespace)::Prediction&gt; &gt; const&amp;, std::vector&lt;std::vector&lt;unsigned long, std::allocator&lt;unsigned long&gt; &gt;, std::allocator&lt;std::vector&lt;unsigned long, std::allocator&lt;unsigned long&gt; &gt; &gt; &gt; const&amp;, int, int, unsigned char) (line 81)</a></td><td>called 32 times</td><td>69.0%</td></tr>
+    <tr><td><a href="#l126">scope::ROIFilterAlgorithm::Run(found::Image const&amp;) (line 126)</a></td><td>called 35 times</td><td>80.0%</td></tr>
   </table>
 </details>
 </div>
@@ -359,21 +359,21 @@
                 <td class="text-right src linenos"><a class="normal" id="l40" href="#l40">40</a></td>
                 <td class="text-right src linenos ws-unset">
                 </td>
-                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">35</td>
+                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">32</td>
                 <td class="src coveredLine"><span class="kt">unsigned</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="nf">DarkSubtract</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">Image</span><span class="w"> </span><span class="o">&amp;</span><span class="n">star</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">Image</span><span class="w"> </span><span class="o">&amp;</span><span class="n">dark</span><span class="p">)</span><span class="w"> </span><span class="p">{</span></td>
             </tr>
             <tr>
                 <td class="text-right src linenos"><a class="normal" id="l41" href="#l41">41</a></td>
                 <td class="text-right src linenos ws-unset">
                 </td>
-                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">35</td>
+                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">32</td>
                 <td class="src coveredLine"><span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="kt">size_t</span><span class="w"> </span><span class="n">valueCount</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">static_cast</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="kt">size_t</span><span class="o">&gt;</span><span class="p">(</span><span class="n">star</span><span class="p">.</span><span class="n">width</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">star</span><span class="p">.</span><span class="n">height</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">star</span><span class="p">.</span><span class="n">channels</span><span class="p">;</span></td>
             </tr>
             <tr>
                 <td class="text-right src linenos"><a class="normal" id="l42" href="#l42">42</a></td>
                 <td class="text-right src linenos ws-unset">
                 </td>
-                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">35</td>
+                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">32</td>
                 <td class="src coveredLine"><span class="w">    </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">out</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">static_cast</span><span class="o">&lt;</span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*&gt;</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">malloc</span><span class="p">(</span><span class="n">valueCount</span><span class="p">));</span></td>
             </tr>
             <tr>
@@ -417,12 +417,12 @@
                     <details class="normal details-overlay">
                         <summary>2/2</summary>
                         <div class="text-left position-absolute color-bg-subtle p-3 mt-2" style="z-index: 1;">
-                            <div class="color-taken-branch">&check; Branch 0 taken 417548 times.</div>
-                            <div class="color-taken-branch">&check; Branch 1 taken 35 times.</div>
+                            <div class="color-taken-branch">&check; Branch 0 taken 405260 times.</div>
+                            <div class="color-taken-branch">&check; Branch 1 taken 32 times.</div>
                         </div>
                     </details>
                 </td>
-                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">417583</td>
+                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">405292</td>
                 <td class="src coveredLine"><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="kt">size_t</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">valueCount</span><span class="p">;</span><span class="w"> </span><span class="o">++</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="p">{</span></td>
             </tr>
             <tr>
@@ -431,12 +431,12 @@
                     <details class="normal details-overlay">
                         <summary>2/2</summary>
                         <div class="text-left position-absolute color-bg-subtle p-3 mt-2" style="z-index: 1;">
-                            <div class="color-taken-branch">&check; Branch 0 taken 276450 times.</div>
-                            <div class="color-taken-branch">&check; Branch 1 taken 141098 times.</div>
+                            <div class="color-taken-branch">&check; Branch 0 taken 276435 times.</div>
+                            <div class="color-taken-branch">&check; Branch 1 taken 128825 times.</div>
                         </div>
                     </details>
                 </td>
-                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">417548</td>
+                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">405260</td>
                 <td class="src coveredLine"><span class="w">        </span><span class="n">out</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">star</span><span class="p">.</span><span class="n">image</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">dark</span><span class="p">.</span><span class="n">image</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="k">static_cast</span><span class="o">&lt;</span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">char</span><span class="o">&gt;</span><span class="p">(</span><span class="n">star</span><span class="p">.</span><span class="n">image</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">dark</span><span class="p">.</span><span class="n">image</span><span class="p">[</span><span class="n">i</span><span class="p">])</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span></td>
             </tr>
             <tr>
@@ -450,7 +450,7 @@
                 <td class="text-right src linenos"><a class="normal" id="l51" href="#l51">51</a></td>
                 <td class="text-right src linenos ws-unset">
                 </td>
-                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">35</td>
+                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">32</td>
                 <td class="src coveredLine"><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">out</span><span class="p">;</span></td>
             </tr>
             <tr>
@@ -485,14 +485,14 @@
                 <td class="text-right src linenos"><a class="normal" id="l56" href="#l56">56</a></td>
                 <td class="text-right src linenos ws-unset">
                 </td>
-                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">35</td>
+                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">32</td>
                 <td class="src coveredLine"><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="kt">size_t</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">FindNeighbours</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Prediction</span><span class="o">&gt;</span><span class="w"> </span><span class="o">&amp;</span><span class="n">predictions</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">roiSize</span><span class="p">)</span><span class="w"> </span><span class="p">{</span></td>
             </tr>
             <tr>
                 <td class="text-right src linenos"><a class="normal" id="l57" href="#l57">57</a></td>
                 <td class="text-right src linenos ws-unset">
                 </td>
-                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">35</td>
+                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">32</td>
                 <td class="src coveredLine"><span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="n">decimal</span><span class="w"> </span><span class="n">reach</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">DECIMAL</span><span class="p">(</span><span class="n">roiSize</span><span class="p">);</span></td>
             </tr>
             <tr>
@@ -501,11 +501,11 @@
                     <details class="normal details-overlay">
                         <summary>1/1</summary>
                         <div class="text-left position-absolute color-bg-subtle p-3 mt-2" style="z-index: 1;">
-                            <div class="color-taken-branch">&check; Branch 3 taken 35 times.</div>
+                            <div class="color-taken-branch">&check; Branch 3 taken 32 times.</div>
                         </div>
                     </details>
                 </td>
-                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">105</td>
+                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">96</td>
                 <td class="src coveredLine"><span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="kt">size_t</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">neighbours</span><span class="p">(</span><span class="n">predictions</span><span class="p">.</span><span class="n">size</span><span class="p">());</span></td>
             </tr>
             <tr>
@@ -514,12 +514,12 @@
                     <details class="normal details-overlay">
                         <summary>2/2</summary>
                         <div class="text-left position-absolute color-bg-subtle p-3 mt-2" style="z-index: 1;">
-                            <div class="color-taken-branch">&check; Branch 2 taken 740 times.</div>
-                            <div class="color-taken-branch">&check; Branch 3 taken 35 times.</div>
+                            <div class="color-taken-branch">&check; Branch 2 taken 737 times.</div>
+                            <div class="color-taken-branch">&check; Branch 3 taken 32 times.</div>
                         </div>
                     </details>
                 </td>
-                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">775</td>
+                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">769</td>
                 <td class="src coveredLine"><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="kt">size_t</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">predictions</span><span class="p">.</span><span class="n">size</span><span class="p">();</span><span class="w"> </span><span class="o">++</span><span class="n">a</span><span class="p">)</span><span class="w"> </span><span class="p">{</span></td>
             </tr>
             <tr>
@@ -529,11 +529,11 @@
                         <summary>2/2</summary>
                         <div class="text-left position-absolute color-bg-subtle p-3 mt-2" style="z-index: 1;">
                             <div class="color-taken-branch">&check; Branch 2 taken 40641 times.</div>
-                            <div class="color-taken-branch">&check; Branch 3 taken 740 times.</div>
+                            <div class="color-taken-branch">&check; Branch 3 taken 737 times.</div>
                         </div>
                     </details>
                 </td>
-                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">41381</td>
+                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">41378</td>
                 <td class="src coveredLine"><span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="kt">size_t</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">predictions</span><span class="p">.</span><span class="n">size</span><span class="p">();</span><span class="w"> </span><span class="o">++</span><span class="n">b</span><span class="p">)</span><span class="w"> </span><span class="p">{</span></td>
             </tr>
             <tr>
@@ -621,7 +621,7 @@
                 <td class="text-right src linenos"><a class="normal" id="l68" href="#l68">68</a></td>
                 <td class="text-right src linenos ws-unset">
                 </td>
-                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">35</td>
+                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">32</td>
                 <td class="src coveredLine"><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">neighbours</span><span class="p">;</span></td>
             </tr>
             <tr>
@@ -718,7 +718,7 @@
                 <td class="text-right src linenos"><a class="normal" id="l81" href="#l81">81</a></td>
                 <td class="text-right src linenos ws-unset">
                 </td>
-                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">35</td>
+                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">32</td>
                 <td class="src coveredLine"><span class="n">found</span><span class="o">::</span><span class="n">Vec2</span><span class="w"> </span><span class="n">MedianOffset</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">Image</span><span class="w"> </span><span class="o">&amp;</span><span class="n">darkSubtracted</span><span class="p">,</span></td>
             </tr>
             <tr>
@@ -760,14 +760,14 @@
                 <td class="text-right src linenos"><a class="normal" id="l87" href="#l87">87</a></td>
                 <td class="text-right src linenos ws-unset">
                 </td>
-                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">35</td>
+                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">32</td>
                 <td class="src coveredLine"><span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">decimal</span><span class="o">&gt;</span><span class="w"> </span><span class="n">offsetsU</span><span class="p">;</span></td>
             </tr>
             <tr>
                 <td class="text-right src linenos"><a class="normal" id="l88" href="#l88">88</a></td>
                 <td class="text-right src linenos ws-unset">
                 </td>
-                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">35</td>
+                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">32</td>
                 <td class="src coveredLine"><span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">decimal</span><span class="o">&gt;</span><span class="w"> </span><span class="n">offsetsV</span><span class="p">;</span></td>
             </tr>
             <tr>
@@ -776,19 +776,19 @@
                     <details class="normal details-overlay">
                         <summary>2/2</summary>
                         <div class="text-left position-absolute color-bg-subtle p-3 mt-2" style="z-index: 1;">
-                            <div class="color-taken-branch">&check; Branch 1 taken 740 times.</div>
-                            <div class="color-taken-branch">&check; Branch 2 taken 35 times.</div>
+                            <div class="color-taken-branch">&check; Branch 1 taken 737 times.</div>
+                            <div class="color-taken-branch">&check; Branch 2 taken 32 times.</div>
                         </div>
                     </details>
                 </td>
-                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">775</td>
+                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">769</td>
                 <td class="src coveredLine"><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="kt">size_t</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">predictions</span><span class="p">.</span><span class="n">size</span><span class="p">();</span><span class="w"> </span><span class="o">++</span><span class="n">k</span><span class="p">)</span><span class="w"> </span><span class="p">{</span></td>
             </tr>
             <tr>
                 <td class="text-right src linenos"><a class="normal" id="l90" href="#l90">90</a></td>
                 <td class="text-right src linenos ws-unset">
                 </td>
-                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">740</td>
+                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">737</td>
                 <td class="src coveredLine"><span class="w">        </span><span class="k">const</span><span class="w"> </span><span class="n">found</span><span class="o">::</span><span class="n">Vec2</span><span class="w"> </span><span class="o">&amp;</span><span class="n">expected</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">predictions</span><span class="p">[</span><span class="n">k</span><span class="p">].</span><span class="n">pixel</span><span class="p">;</span></td>
             </tr>
             <tr>
@@ -797,14 +797,14 @@
                     <details class="normal details-overlay">
                         <summary>4/4</summary>
                         <div class="text-left position-absolute color-bg-subtle p-3 mt-2" style="z-index: 1;">
-                            <div class="color-taken-branch">&check; Branch 2 taken 534 times.</div>
+                            <div class="color-taken-branch">&check; Branch 2 taken 531 times.</div>
                             <div class="color-taken-branch">&check; Branch 3 taken 206 times.</div>
                             <div class="color-taken-branch">&check; Branch 4 taken 282 times.</div>
-                            <div class="color-taken-branch">&check; Branch 5 taken 458 times.</div>
+                            <div class="color-taken-branch">&check; Branch 5 taken 455 times.</div>
                         </div>
                     </details>
                 </td>
-                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">1274</td>
+                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">1268</td>
                 <td class="src coveredLine"><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">neighbours</span><span class="p">[</span><span class="n">k</span><span class="p">].</span><span class="n">empty</span><span class="p">()</span><span class="w"> </span><span class="o">||</span></td>
             </tr>
             <tr>
@@ -813,13 +813,13 @@
                     <details class="normal details-overlay">
                         <summary>3/3</summary>
                         <div class="text-left position-absolute color-bg-subtle p-3 mt-2" style="z-index: 1;">
-                            <div class="color-taken-branch">&check; Branch 1 taken 534 times.</div>
+                            <div class="color-taken-branch">&check; Branch 1 taken 531 times.</div>
                             <div class="color-taken-branch">&check; Branch 3 taken 76 times.</div>
-                            <div class="color-taken-branch">&check; Branch 4 taken 458 times.</div>
+                            <div class="color-taken-branch">&check; Branch 4 taken 455 times.</div>
                         </div>
                     </details>
                 </td>
-                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">534</td>
+                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">531</td>
                 <td class="src coveredLine"><span class="w">            </span><span class="o">!</span><span class="n">InSensorWithMargin</span><span class="p">(</span><span class="n">expected</span><span class="p">,</span><span class="w"> </span><span class="n">darkSubtracted</span><span class="p">.</span><span class="n">width</span><span class="p">,</span><span class="w"> </span><span class="n">darkSubtracted</span><span class="p">.</span><span class="n">height</span><span class="p">,</span><span class="w"> </span><span class="n">sensorMargin</span><span class="p">))</span><span class="w"> </span><span class="p">{</span></td>
             </tr>
             <tr>
@@ -840,7 +840,7 @@
                 <td class="text-right src linenos"><a class="normal" id="l95" href="#l95">95</a></td>
                 <td class="text-right src linenos ws-unset">
                 </td>
-                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">458</td>
+                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">455</td>
                 <td class="src coveredLine"><span class="w">        </span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">optional</span><span class="o">&lt;</span><span class="n">found</span><span class="o">::</span><span class="n">Vec2</span><span class="o">&gt;</span><span class="w"> </span><span class="n">centroid</span><span class="w"> </span><span class="o">=</span></td>
             </tr>
             <tr>
@@ -849,11 +849,11 @@
                     <details class="normal details-overlay">
                         <summary>1/1</summary>
                         <div class="text-left position-absolute color-bg-subtle p-3 mt-2" style="z-index: 1;">
-                            <div class="color-taken-branch">&check; Branch 3 taken 458 times.</div>
+                            <div class="color-taken-branch">&check; Branch 3 taken 455 times.</div>
                         </div>
                     </details>
                 </td>
-                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">458</td>
+                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">455</td>
                 <td class="src coveredLine"><span class="w">            </span><span class="n">ExtractCentroid</span><span class="p">(</span><span class="n">darkSubtracted</span><span class="p">,</span><span class="w"> </span><span class="n">expected</span><span class="p">,</span><span class="w"> </span><span class="n">roiSize</span><span class="p">,</span><span class="w"> </span><span class="n">kRecenterRadius</span><span class="p">,</span><span class="w"> </span><span class="n">threshold</span><span class="p">);</span></td>
             </tr>
             <tr>
@@ -862,12 +862,12 @@
                     <details class="normal details-overlay">
                         <summary>2/2</summary>
                         <div class="text-left position-absolute color-bg-subtle p-3 mt-2" style="z-index: 1;">
-                            <div class="color-taken-branch">&check; Branch 1 taken 310 times.</div>
+                            <div class="color-taken-branch">&check; Branch 1 taken 307 times.</div>
                             <div class="color-taken-branch">&check; Branch 2 taken 148 times.</div>
                         </div>
                     </details>
                 </td>
-                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">458</td>
+                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">455</td>
                 <td class="src coveredLine"><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">centroid</span><span class="p">.</span><span class="n">has_value</span><span class="p">())</span><span class="w"> </span><span class="p">{</span></td>
             </tr>
             <tr>
@@ -876,13 +876,13 @@
                     <details class="normal details-overlay">
                         <summary>3/3</summary>
                         <div class="text-left position-absolute color-bg-subtle p-3 mt-2" style="z-index: 1;">
-                            <div class="color-taken-branch">&check; Branch 3 taken 310 times.</div>
-                            <div class="color-taken-branch">&check; Branch 6 taken 310 times.</div>
-                            <div class="color-taken-branch">&check; Branch 9 taken 310 times.</div>
+                            <div class="color-taken-branch">&check; Branch 3 taken 307 times.</div>
+                            <div class="color-taken-branch">&check; Branch 6 taken 307 times.</div>
+                            <div class="color-taken-branch">&check; Branch 9 taken 307 times.</div>
                         </div>
                     </details>
                 </td>
-                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">310</td>
+                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">307</td>
                 <td class="src coveredLine"><span class="w">            </span><span class="n">offsetsU</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">centroid</span><span class="o">-&gt;</span><span class="n">x</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">expected</span><span class="p">.</span><span class="n">x</span><span class="p">());</span></td>
             </tr>
             <tr>
@@ -891,13 +891,13 @@
                     <details class="normal details-overlay">
                         <summary>3/3</summary>
                         <div class="text-left position-absolute color-bg-subtle p-3 mt-2" style="z-index: 1;">
-                            <div class="color-taken-branch">&check; Branch 3 taken 310 times.</div>
-                            <div class="color-taken-branch">&check; Branch 6 taken 310 times.</div>
-                            <div class="color-taken-branch">&check; Branch 9 taken 310 times.</div>
+                            <div class="color-taken-branch">&check; Branch 3 taken 307 times.</div>
+                            <div class="color-taken-branch">&check; Branch 6 taken 307 times.</div>
+                            <div class="color-taken-branch">&check; Branch 9 taken 307 times.</div>
                         </div>
                     </details>
                 </td>
-                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">310</td>
+                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">307</td>
                 <td class="src coveredLine"><span class="w">            </span><span class="n">offsetsV</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">centroid</span><span class="o">-&gt;</span><span class="n">y</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">expected</span><span class="p">.</span><span class="n">y</span><span class="p">());</span></td>
             </tr>
             <tr>
@@ -920,12 +920,12 @@
                     <details class="normal details-overlay">
                         <summary>2/2</summary>
                         <div class="text-left position-absolute color-bg-subtle p-3 mt-2" style="z-index: 1;">
-                            <div class="color-taken-branch">&check; Branch 1 taken 28 times.</div>
+                            <div class="color-taken-branch">&check; Branch 1 taken 25 times.</div>
                             <div class="color-taken-branch">&check; Branch 2 taken 7 times.</div>
                         </div>
                     </details>
                 </td>
-                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">35</td>
+                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">32</td>
                 <td class="src coveredLine"><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">offsetsU</span><span class="p">.</span><span class="n">size</span><span class="p">()</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">kMinOffsetStars</span><span class="p">)</span><span class="w"> </span><span class="p">{</span></td>
             </tr>
             <tr>
@@ -934,11 +934,11 @@
                     <details class="normal details-overlay">
                         <summary>1/1</summary>
                         <div class="text-left position-absolute color-bg-subtle p-3 mt-2" style="z-index: 1;">
-                            <div class="color-taken-branch">&check; Branch 3 taken 28 times.</div>
+                            <div class="color-taken-branch">&check; Branch 3 taken 25 times.</div>
                         </div>
                     </details>
                 </td>
-                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">56</td>
+                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">50</td>
                 <td class="src coveredLine"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">found</span><span class="o">::</span><span class="n">Vec2</span><span class="p">(</span><span class="n">DECIMAL</span><span class="p">(</span><span class="mf">0.0</span><span class="p">),</span><span class="w"> </span><span class="n">DECIMAL</span><span class="p">(</span><span class="mf">0.0</span><span class="p">));</span></td>
             </tr>
             <tr>
@@ -969,7 +969,7 @@
                 <td class="text-right src linenos"><a class="normal" id="l106" href="#l106">106</a></td>
                 <td class="text-right src linenos ws-unset">
                 </td>
-                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">35</td>
+                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">32</td>
                 <td class="src coveredLine"><span class="p">}</span></td>
             </tr>
             <tr>
@@ -1004,7 +1004,7 @@
                 <td class="text-right src linenos"><a class="normal" id="l111" href="#l111">111</a></td>
                 <td class="text-right src linenos ws-unset">
                 </td>
-                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">35</td>
+                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">32</td>
                 <td class="src coveredLine"><span class="kt">void</span><span class="w"> </span><span class="n">KeepUnambiguous</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Observation</span><span class="o">&gt;</span><span class="w"> </span><span class="o">&amp;</span><span class="n">candidates</span><span class="p">,</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Observation</span><span class="o">&gt;</span><span class="w"> </span><span class="o">*</span><span class="n">observations</span><span class="p">)</span><span class="w"> </span><span class="p">{</span></td>
             </tr>
             <tr>
@@ -1013,19 +1013,19 @@
                     <details class="normal details-overlay">
                         <summary>2/2</summary>
                         <div class="text-left position-absolute color-bg-subtle p-3 mt-2" style="z-index: 1;">
-                            <div class="color-taken-branch">&check; Branch 1 taken 450 times.</div>
-                            <div class="color-taken-branch">&check; Branch 2 taken 35 times.</div>
+                            <div class="color-taken-branch">&check; Branch 1 taken 447 times.</div>
+                            <div class="color-taken-branch">&check; Branch 2 taken 32 times.</div>
                         </div>
                     </details>
                 </td>
-                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">485</td>
+                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">479</td>
                 <td class="src coveredLine"><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="kt">size_t</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">candidates</span><span class="p">.</span><span class="n">size</span><span class="p">();</span><span class="w"> </span><span class="o">++</span><span class="n">a</span><span class="p">)</span><span class="w"> </span><span class="p">{</span></td>
             </tr>
             <tr>
                 <td class="text-right src linenos"><a class="normal" id="l113" href="#l113">113</a></td>
                 <td class="text-right src linenos ws-unset">
                 </td>
-                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">450</td>
+                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">447</td>
                 <td class="src coveredLine"><span class="w">        </span><span class="kt">bool</span><span class="w"> </span><span class="n">ambiguous</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span></td>
             </tr>
             <tr>
@@ -1034,23 +1034,23 @@
                     <details class="normal details-overlay">
                         <summary>6/6</summary>
                         <div class="text-left position-absolute color-bg-subtle p-3 mt-2" style="z-index: 1;">
-                            <div class="color-taken-branch">&check; Branch 1 taken 27664 times.</div>
-                            <div class="color-taken-branch">&check; Branch 2 taken 395 times.</div>
-                            <div class="color-taken-branch">&check; Branch 3 taken 27609 times.</div>
+                            <div class="color-taken-branch">&check; Branch 1 taken 27661 times.</div>
+                            <div class="color-taken-branch">&check; Branch 2 taken 392 times.</div>
+                            <div class="color-taken-branch">&check; Branch 3 taken 27606 times.</div>
                             <div class="color-taken-branch">&check; Branch 4 taken 55 times.</div>
-                            <div class="color-taken-branch">&check; Branch 5 taken 27609 times.</div>
-                            <div class="color-taken-branch">&check; Branch 6 taken 450 times.</div>
+                            <div class="color-taken-branch">&check; Branch 5 taken 27606 times.</div>
+                            <div class="color-taken-branch">&check; Branch 6 taken 447 times.</div>
                         </div>
                     </details>
                 </td>
-                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">28059</td>
+                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">28053</td>
                 <td class="src coveredLine"><span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="kt">size_t</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">candidates</span><span class="p">.</span><span class="n">size</span><span class="p">()</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="o">!</span><span class="n">ambiguous</span><span class="p">;</span><span class="w"> </span><span class="o">++</span><span class="n">b</span><span class="p">)</span><span class="w"> </span><span class="p">{</span></td>
             </tr>
             <tr>
                 <td class="text-right src linenos"><a class="normal" id="l115" href="#l115">115</a></td>
                 <td class="text-right src linenos ws-unset">
                 </td>
-                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">27609</td>
+                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">27606</td>
                 <td class="src coveredLine"><span class="w">            </span><span class="n">ambiguous</span><span class="w"> </span><span class="o">=</span></td>
             </tr>
             <tr>
@@ -1060,19 +1060,19 @@
                         <summary>8/10</summary>
                         <div class="text-left position-absolute color-bg-subtle p-3 mt-2" style="z-index: 1;">
                             <div class="color-taken-branch">&check; Branch 0 taken 27189 times.</div>
-                            <div class="color-taken-branch">&check; Branch 1 taken 420 times.</div>
+                            <div class="color-taken-branch">&check; Branch 1 taken 417 times.</div>
                             <div class="color-taken-branch">&check; Branch 6 taken 27189 times.</div>
                             <div class="color-taken-branch">&check; Branch 9 taken 27189 times.</div>
                             <div class="color-taken-branch">&check; Branch 11 taken 56 times.</div>
                             <div class="color-taken-branch">&check; Branch 12 taken 27133 times.</div>
-                            <div class="color-taken-branch">&check; Branch 13 taken 420 times.</div>
+                            <div class="color-taken-branch">&check; Branch 13 taken 417 times.</div>
                             <div class="color-taken-branch">&check; Branch 14 taken 27189 times.</div>
                             <div class="color-fg-danger">&cross; Branch 16 not taken.</div>
                             <div class="color-fg-danger">&cross; Branch 17 not taken.</div>
                         </div>
                     </details>
                 </td>
-                <td class="src partialCoveredLine pr-2 pl-2 color-fg-muted text-right">54798</td>
+                <td class="src partialCoveredLine pr-2 pl-2 color-fg-muted text-right">54795</td>
                 <td class="src partialCoveredLine"><span class="w">                </span><span class="n">a</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="p">(</span><span class="n">candidates</span><span class="p">[</span><span class="n">a</span><span class="p">].</span><span class="n">measuredPixel</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">candidates</span><span class="p">[</span><span class="n">b</span><span class="p">].</span><span class="n">measuredPixel</span><span class="p">).</span><span class="n">norm</span><span class="p">()</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">kCentroidMatchTolerance</span><span class="p">;</span></td>
             </tr>
             <tr>
@@ -1088,19 +1088,19 @@
                     <details class="normal details-overlay">
                         <summary>2/2</summary>
                         <div class="text-left position-absolute color-bg-subtle p-3 mt-2" style="z-index: 1;">
-                            <div class="color-taken-branch">&check; Branch 0 taken 394 times.</div>
+                            <div class="color-taken-branch">&check; Branch 0 taken 391 times.</div>
                             <div class="color-taken-branch">&check; Branch 1 taken 56 times.</div>
                         </div>
                     </details>
                 </td>
-                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">450</td>
+                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">447</td>
                 <td class="src coveredLine"><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">ambiguous</span><span class="p">)</span><span class="w"> </span><span class="p">{</span></td>
             </tr>
             <tr>
                 <td class="text-right src linenos"><a class="normal" id="l119" href="#l119">119</a></td>
                 <td class="text-right src linenos ws-unset">
                 </td>
-                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">394</td>
+                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">391</td>
                 <td class="src coveredLine"><span class="w">            </span><span class="n">observations</span><span class="o">-&gt;</span><span class="n">push_back</span><span class="p">(</span><span class="n">candidates</span><span class="p">[</span><span class="n">a</span><span class="p">]);</span></td>
             </tr>
             <tr>
@@ -1121,7 +1121,7 @@
                 <td class="text-right src linenos"><a class="normal" id="l122" href="#l122">122</a></td>
                 <td class="text-right src linenos ws-unset">
                 </td>
-                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">35</td>
+                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">32</td>
                 <td class="src coveredLine"><span class="p">}</span></td>
             </tr>
             <tr>
@@ -1149,7 +1149,7 @@
                 <td class="text-right src linenos"><a class="normal" id="l126" href="#l126">126</a></td>
                 <td class="text-right src linenos ws-unset">
                 </td>
-                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">41</td>
+                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">35</td>
                 <td class="src coveredLine"><span class="n">CentroidObservations</span><span class="w"> </span><span class="n">ROIFilterAlgorithm</span><span class="o">::</span><span class="n">Run</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">Image</span><span class="w"> </span><span class="o">&amp;</span><span class="n">darkFrame</span><span class="p">)</span><span class="w"> </span><span class="p">{</span></td>
             </tr>
             <tr>
@@ -1159,11 +1159,11 @@
                         <summary>2/2</summary>
                         <div class="text-left position-absolute color-bg-subtle p-3 mt-2" style="z-index: 1;">
                             <div class="color-taken-branch">&check; Branch 2 taken 1 times.</div>
-                            <div class="color-taken-branch">&check; Branch 3 taken 40 times.</div>
+                            <div class="color-taken-branch">&check; Branch 3 taken 34 times.</div>
                         </div>
                     </details>
                 </td>
-                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">41</td>
+                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">35</td>
                 <td class="src coveredLine"><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">attitudes_</span><span class="p">.</span><span class="n">size</span><span class="p">()</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">options_</span><span class="p">.</span><span class="n">starImages</span><span class="p">.</span><span class="n">size</span><span class="p">())</span><span class="w"> </span><span class="p">{</span></td>
             </tr>
             <tr>
@@ -1193,11 +1193,11 @@
                         <summary>2/2</summary>
                         <div class="text-left position-absolute color-bg-subtle p-3 mt-2" style="z-index: 1;">
                             <div class="color-taken-branch">&check; Branch 0 taken 1 times.</div>
-                            <div class="color-taken-branch">&check; Branch 1 taken 39 times.</div>
+                            <div class="color-taken-branch">&check; Branch 1 taken 33 times.</div>
                         </div>
                     </details>
                 </td>
-                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">40</td>
+                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">34</td>
                 <td class="src coveredLine"><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">options_</span><span class="p">.</span><span class="n">roiSize</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="p">{</span></td>
             </tr>
             <tr>
@@ -1231,7 +1231,7 @@
                 <td class="text-right src linenos"><a class="normal" id="l134" href="#l134">134</a></td>
                 <td class="text-right src linenos ws-unset">
                 </td>
-                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">39</td>
+                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">33</td>
                 <td class="src coveredLine"><span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">sensorMargin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">options_</span><span class="p">.</span><span class="n">roiSize</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span></td>
             </tr>
             <tr>
@@ -1245,7 +1245,7 @@
                 <td class="text-right src linenos"><a class="normal" id="l136" href="#l136">136</a></td>
                 <td class="text-right src linenos ws-unset">
                 </td>
-                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">39</td>
+                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">33</td>
                 <td class="src coveredLine"><span class="w">    </span><span class="n">CentroidObservations</span><span class="w"> </span><span class="n">result</span><span class="p">;</span></td>
             </tr>
             <tr>
@@ -1254,11 +1254,11 @@
                     <details class="normal details-overlay">
                         <summary>1/1</summary>
                         <div class="text-left position-absolute color-bg-subtle p-3 mt-2" style="z-index: 1;">
-                            <div class="color-taken-branch">&check; Branch 1 taken 39 times.</div>
+                            <div class="color-taken-branch">&check; Branch 1 taken 33 times.</div>
                         </div>
                     </details>
                 </td>
-                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">39</td>
+                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">33</td>
                 <td class="src coveredLine"><span class="w">    </span><span class="n">result</span><span class="p">.</span><span class="n">attitudes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">attitudes_</span><span class="p">;</span></td>
             </tr>
             <tr>
@@ -1272,7 +1272,7 @@
                 <td class="text-right src linenos"><a class="normal" id="l139" href="#l139">139</a></td>
                 <td class="text-right src linenos ws-unset">
                 </td>
-                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">39</td>
+                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">33</td>
                 <td class="src coveredLine"><span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="n">threshold</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">static_cast</span><span class="o">&lt;</span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">char</span><span class="o">&gt;</span><span class="p">(</span><span class="n">options_</span><span class="p">.</span><span class="n">centroidThreshold</span><span class="p">);</span></td>
             </tr>
             <tr>
@@ -1293,7 +1293,7 @@
                 <td class="text-right src linenos"><a class="normal" id="l142" href="#l142">142</a></td>
                 <td class="text-right src linenos ws-unset">
                 </td>
-                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">39</td>
+                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">33</td>
                 <td class="src coveredLine"><span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">magnitudeLimit</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">static_cast</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">(</span><span class="n">DECIMAL_ROUND</span><span class="p">(</span><span class="n">options_</span><span class="p">.</span><span class="n">magnitudeThreshold</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">DECIMAL</span><span class="p">(</span><span class="mf">100.0</span><span class="p">)));</span></td>
             </tr>
             <tr>
@@ -1309,19 +1309,19 @@
                     <details class="normal details-overlay">
                         <summary>2/2</summary>
                         <div class="text-left position-absolute color-bg-subtle p-3 mt-2" style="z-index: 1;">
-                            <div class="color-taken-branch">&check; Branch 1 taken 36 times.</div>
-                            <div class="color-taken-branch">&check; Branch 2 taken 38 times.</div>
+                            <div class="color-taken-branch">&check; Branch 1 taken 33 times.</div>
+                            <div class="color-taken-branch">&check; Branch 2 taken 32 times.</div>
                         </div>
                     </details>
                 </td>
-                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">74</td>
+                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">65</td>
                 <td class="src coveredLine"><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="kt">size_t</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">options_</span><span class="p">.</span><span class="n">starImages</span><span class="p">.</span><span class="n">size</span><span class="p">();</span><span class="w"> </span><span class="o">++</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="p">{</span></td>
             </tr>
             <tr>
                 <td class="text-right src linenos"><a class="normal" id="l145" href="#l145">145</a></td>
                 <td class="text-right src linenos ws-unset">
                 </td>
-                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">36</td>
+                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">33</td>
                 <td class="src coveredLine"><span class="w">        </span><span class="k">const</span><span class="w"> </span><span class="n">Image</span><span class="w"> </span><span class="o">&amp;</span><span class="n">star</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">options_</span><span class="p">.</span><span class="n">starImages</span><span class="p">[</span><span class="n">i</span><span class="p">];</span></td>
             </tr>
             <tr>
@@ -1330,16 +1330,16 @@
                     <details class="normal details-overlay">
                         <summary>4/6</summary>
                         <div class="text-left position-absolute color-bg-subtle p-3 mt-2" style="z-index: 1;">
-                            <div class="color-taken-branch">&check; Branch 0 taken 35 times.</div>
+                            <div class="color-taken-branch">&check; Branch 0 taken 32 times.</div>
                             <div class="color-taken-branch">&check; Branch 1 taken 1 times.</div>
-                            <div class="color-taken-branch">&check; Branch 2 taken 35 times.</div>
+                            <div class="color-taken-branch">&check; Branch 2 taken 32 times.</div>
                             <div class="color-fg-danger">&cross; Branch 3 not taken.</div>
                             <div class="color-fg-danger">&cross; Branch 4 not taken.</div>
-                            <div class="color-taken-branch">&check; Branch 5 taken 35 times.</div>
+                            <div class="color-taken-branch">&check; Branch 5 taken 32 times.</div>
                         </div>
                     </details>
                 </td>
-                <td class="src partialCoveredLine pr-2 pl-2 color-fg-muted text-right">36</td>
+                <td class="src partialCoveredLine pr-2 pl-2 color-fg-muted text-right">33</td>
                 <td class="src partialCoveredLine"><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">star</span><span class="p">.</span><span class="n">width</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">darkFrame</span><span class="p">.</span><span class="n">width</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">star</span><span class="p">.</span><span class="n">height</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">darkFrame</span><span class="p">.</span><span class="n">height</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">star</span><span class="p">.</span><span class="n">channels</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">darkFrame</span><span class="p">.</span><span class="n">channels</span><span class="p">)</span><span class="w"> </span><span class="p">{</span></td>
             </tr>
             <tr>
@@ -1375,18 +1375,18 @@
                     <details class="normal details-overlay">
                         <summary>1/1</summary>
                         <div class="text-left position-absolute color-bg-subtle p-3 mt-2" style="z-index: 1;">
-                            <div class="color-taken-branch">&check; Branch 1 taken 35 times.</div>
+                            <div class="color-taken-branch">&check; Branch 1 taken 32 times.</div>
                         </div>
                     </details>
                 </td>
-                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">35</td>
+                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">32</td>
                 <td class="src coveredLine"><span class="w">        </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">subtracted</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">DarkSubtract</span><span class="p">(</span><span class="n">star</span><span class="p">,</span><span class="w"> </span><span class="n">darkFrame</span><span class="p">);</span></td>
             </tr>
             <tr>
                 <td class="text-right src linenos"><a class="normal" id="l151" href="#l151">151</a></td>
                 <td class="text-right src linenos ws-unset">
                 </td>
-                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">35</td>
+                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">32</td>
                 <td class="src coveredLine"><span class="w">        </span><span class="k">const</span><span class="w"> </span><span class="n">Image</span><span class="w"> </span><span class="n">darkSubtracted</span><span class="p">{</span><span class="n">star</span><span class="p">.</span><span class="n">width</span><span class="p">,</span><span class="w"> </span><span class="n">star</span><span class="p">.</span><span class="n">height</span><span class="p">,</span><span class="w"> </span><span class="n">star</span><span class="p">.</span><span class="n">channels</span><span class="p">,</span><span class="w"> </span><span class="n">subtracted</span><span class="p">};</span></td>
             </tr>
             <tr>
@@ -1401,20 +1401,20 @@
                 <td class="text-right src linenos ws-unset">
                 </td>
                 <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
-                <td class="src "><span class="w">        </span><span class="c1">// Stars bright enough to search for, on the sensor or within a window</span></td>
+                <td class="src "><span class="w">        </span><span class="c1">// Stars bright enough to search for. Those up to a window off the</span></td>
             </tr>
             <tr>
                 <td class="text-right src linenos"><a class="normal" id="l154" href="#l154">154</a></td>
                 <td class="text-right src linenos ws-unset">
                 </td>
                 <td class="src  pr-2 pl-2 color-fg-muted text-right"></td>
-                <td class="src "><span class="w">        </span><span class="c1">// of its edge, where they still claim their side of a neighbour&#39;s.</span></td>
+                <td class="src "><span class="w">        </span><span class="c1">// sensor are kept too, since they still share windows with stars on it.</span></td>
             </tr>
             <tr>
                 <td class="text-right src linenos"><a class="normal" id="l155" href="#l155">155</a></td>
                 <td class="text-right src linenos ws-unset">
                 </td>
-                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">35</td>
+                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">32</td>
                 <td class="src coveredLine"><span class="w">        </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Prediction</span><span class="o">&gt;</span><span class="w"> </span><span class="n">predictions</span><span class="p">;</span></td>
             </tr>
             <tr>
@@ -1423,12 +1423,12 @@
                     <details class="normal details-overlay">
                         <summary>2/2</summary>
                         <div class="text-left position-absolute color-bg-subtle p-3 mt-2" style="z-index: 1;">
-                            <div class="color-taken-branch">&check; Branch 1 taken 15057 times.</div>
-                            <div class="color-taken-branch">&check; Branch 2 taken 35 times.</div>
+                            <div class="color-taken-branch">&check; Branch 1 taken 15054 times.</div>
+                            <div class="color-taken-branch">&check; Branch 2 taken 32 times.</div>
                         </div>
                     </details>
                 </td>
-                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">15092</td>
+                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">15086</td>
                 <td class="src coveredLine"><span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="kt">size_t</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">catalog_</span><span class="p">.</span><span class="n">size</span><span class="p">();</span><span class="w"> </span><span class="o">++</span><span class="n">j</span><span class="p">)</span><span class="w"> </span><span class="p">{</span></td>
             </tr>
             <tr>
@@ -1438,11 +1438,11 @@
                         <summary>2/2</summary>
                         <div class="text-left position-absolute color-bg-subtle p-3 mt-2" style="z-index: 1;">
                             <div class="color-taken-branch">&check; Branch 1 taken 6523 times.</div>
-                            <div class="color-taken-branch">&check; Branch 2 taken 8534 times.</div>
+                            <div class="color-taken-branch">&check; Branch 2 taken 8531 times.</div>
                         </div>
                     </details>
                 </td>
-                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">15057</td>
+                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">15054</td>
                 <td class="src coveredLine"><span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">catalog_</span><span class="p">[</span><span class="n">j</span><span class="p">].</span><span class="n">magnitude</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">magnitudeLimit</span><span class="p">)</span><span class="w"> </span><span class="p">{</span></td>
             </tr>
             <tr>
@@ -1465,11 +1465,11 @@
                     <details class="normal details-overlay">
                         <summary>1/1</summary>
                         <div class="text-left position-absolute color-bg-subtle p-3 mt-2" style="z-index: 1;">
-                            <div class="color-taken-branch">&check; Branch 4 taken 8534 times.</div>
+                            <div class="color-taken-branch">&check; Branch 4 taken 8531 times.</div>
                         </div>
                     </details>
                 </td>
-                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">8534</td>
+                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">8531</td>
                 <td class="src coveredLine"><span class="w">            </span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">optional</span><span class="o">&lt;</span><span class="n">found</span><span class="o">::</span><span class="n">Vec2</span><span class="o">&gt;</span><span class="w"> </span><span class="n">pixel</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ProjectStarToPixel</span><span class="p">(</span><span class="n">catalog_</span><span class="p">[</span><span class="n">j</span><span class="p">].</span><span class="n">spatial</span><span class="p">,</span><span class="w"> </span><span class="n">attitudes_</span><span class="p">[</span><span class="n">i</span><span class="p">],</span><span class="w"> </span><span class="n">camera_</span><span class="p">);</span></td>
             </tr>
             <tr>
@@ -1478,17 +1478,17 @@
                     <details class="normal details-overlay">
                         <summary>7/7</summary>
                         <div class="text-left position-absolute color-bg-subtle p-3 mt-2" style="z-index: 1;">
-                            <div class="color-taken-branch">&check; Branch 1 taken 4221 times.</div>
+                            <div class="color-taken-branch">&check; Branch 1 taken 4218 times.</div>
                             <div class="color-taken-branch">&check; Branch 2 taken 4313 times.</div>
-                            <div class="color-taken-branch">&check; Branch 5 taken 4221 times.</div>
-                            <div class="color-taken-branch">&check; Branch 7 taken 740 times.</div>
+                            <div class="color-taken-branch">&check; Branch 5 taken 4218 times.</div>
+                            <div class="color-taken-branch">&check; Branch 7 taken 737 times.</div>
                             <div class="color-taken-branch">&check; Branch 8 taken 3481 times.</div>
-                            <div class="color-taken-branch">&check; Branch 9 taken 740 times.</div>
+                            <div class="color-taken-branch">&check; Branch 9 taken 737 times.</div>
                             <div class="color-taken-branch">&check; Branch 10 taken 7794 times.</div>
                         </div>
                     </details>
                 </td>
-                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">8534</td>
+                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">8531</td>
                 <td class="src coveredLine"><span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">pixel</span><span class="p">.</span><span class="n">has_value</span><span class="p">()</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">InSensorWithMargin</span><span class="p">(</span><span class="o">*</span><span class="n">pixel</span><span class="p">,</span><span class="w"> </span><span class="n">star</span><span class="p">.</span><span class="n">width</span><span class="p">,</span><span class="w"> </span><span class="n">star</span><span class="p">.</span><span class="n">height</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="n">options_</span><span class="p">.</span><span class="n">roiSize</span><span class="p">))</span><span class="w"> </span><span class="p">{</span></td>
             </tr>
             <tr>
@@ -1497,12 +1497,12 @@
                     <details class="normal details-overlay">
                         <summary>2/2</summary>
                         <div class="text-left position-absolute color-bg-subtle p-3 mt-2" style="z-index: 1;">
-                            <div class="color-taken-branch">&check; Branch 3 taken 740 times.</div>
-                            <div class="color-taken-branch">&check; Branch 6 taken 740 times.</div>
+                            <div class="color-taken-branch">&check; Branch 3 taken 737 times.</div>
+                            <div class="color-taken-branch">&check; Branch 6 taken 737 times.</div>
                         </div>
                     </details>
                 </td>
-                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">740</td>
+                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">737</td>
                 <td class="src coveredLine"><span class="w">                </span><span class="n">predictions</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">Prediction</span><span class="p">{</span><span class="n">j</span><span class="p">,</span><span class="w"> </span><span class="o">*</span><span class="n">pixel</span><span class="p">});</span></td>
             </tr>
             <tr>
@@ -1525,11 +1525,11 @@
                     <details class="normal details-overlay">
                         <summary>1/1</summary>
                         <div class="text-left position-absolute color-bg-subtle p-3 mt-2" style="z-index: 1;">
-                            <div class="color-taken-branch">&check; Branch 2 taken 35 times.</div>
+                            <div class="color-taken-branch">&check; Branch 2 taken 32 times.</div>
                         </div>
                     </details>
                 </td>
-                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">35</td>
+                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">32</td>
                 <td class="src coveredLine"><span class="w">        </span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="kt">size_t</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">neighbours</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">FindNeighbours</span><span class="p">(</span><span class="n">predictions</span><span class="p">,</span><span class="w"> </span><span class="n">options_</span><span class="p">.</span><span class="n">roiSize</span><span class="p">);</span></td>
             </tr>
             <tr>
@@ -1543,7 +1543,7 @@
                 <td class="text-right src linenos"><a class="normal" id="l167" href="#l167">167</a></td>
                 <td class="text-right src linenos ws-unset">
                 </td>
-                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">35</td>
+                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">32</td>
                 <td class="src coveredLine"><span class="w">        </span><span class="k">const</span><span class="w"> </span><span class="n">found</span><span class="o">::</span><span class="n">Vec2</span><span class="w"> </span><span class="n">offset</span><span class="w"> </span><span class="o">=</span></td>
             </tr>
             <tr>
@@ -1552,11 +1552,11 @@
                     <details class="normal details-overlay">
                         <summary>1/1</summary>
                         <div class="text-left position-absolute color-bg-subtle p-3 mt-2" style="z-index: 1;">
-                            <div class="color-taken-branch">&check; Branch 1 taken 35 times.</div>
+                            <div class="color-taken-branch">&check; Branch 1 taken 32 times.</div>
                         </div>
                     </details>
                 </td>
-                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">35</td>
+                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">32</td>
                 <td class="src coveredLine"><span class="w">            </span><span class="n">MedianOffset</span><span class="p">(</span><span class="n">darkSubtracted</span><span class="p">,</span><span class="w"> </span><span class="n">predictions</span><span class="p">,</span><span class="w"> </span><span class="n">neighbours</span><span class="p">,</span><span class="w"> </span><span class="n">options_</span><span class="p">.</span><span class="n">roiSize</span><span class="p">,</span><span class="w"> </span><span class="n">sensorMargin</span><span class="p">,</span><span class="w"> </span><span class="n">threshold</span><span class="p">);</span></td>
             </tr>
             <tr>
@@ -1584,7 +1584,7 @@
                 <td class="text-right src linenos"><a class="normal" id="l172" href="#l172">172</a></td>
                 <td class="text-right src linenos ws-unset">
                 </td>
-                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">35</td>
+                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">32</td>
                 <td class="src coveredLine"><span class="w">        </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Observation</span><span class="o">&gt;</span><span class="w"> </span><span class="n">candidates</span><span class="p">;</span></td>
             </tr>
             <tr>
@@ -1593,12 +1593,12 @@
                     <details class="normal details-overlay">
                         <summary>2/2</summary>
                         <div class="text-left position-absolute color-bg-subtle p-3 mt-2" style="z-index: 1;">
-                            <div class="color-taken-branch">&check; Branch 1 taken 740 times.</div>
-                            <div class="color-taken-branch">&check; Branch 2 taken 35 times.</div>
+                            <div class="color-taken-branch">&check; Branch 1 taken 737 times.</div>
+                            <div class="color-taken-branch">&check; Branch 2 taken 32 times.</div>
                         </div>
                     </details>
                 </td>
-                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">775</td>
+                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">769</td>
                 <td class="src coveredLine"><span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="kt">size_t</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">predictions</span><span class="p">.</span><span class="n">size</span><span class="p">();</span><span class="w"> </span><span class="o">++</span><span class="n">k</span><span class="p">)</span><span class="w"> </span><span class="p">{</span></td>
             </tr>
             <tr>
@@ -1607,12 +1607,12 @@
                     <details class="normal details-overlay">
                         <summary>2/2</summary>
                         <div class="text-left position-absolute color-bg-subtle p-3 mt-2" style="z-index: 1;">
-                            <div class="color-taken-branch">&check; Branch 4 taken 740 times.</div>
-                            <div class="color-taken-branch">&check; Branch 7 taken 740 times.</div>
+                            <div class="color-taken-branch">&check; Branch 4 taken 737 times.</div>
+                            <div class="color-taken-branch">&check; Branch 7 taken 737 times.</div>
                         </div>
                     </details>
                 </td>
-                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">740</td>
+                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">737</td>
                 <td class="src coveredLine"><span class="w">            </span><span class="k">const</span><span class="w"> </span><span class="n">found</span><span class="o">::</span><span class="n">Vec2</span><span class="w"> </span><span class="n">expected</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">predictions</span><span class="p">[</span><span class="n">k</span><span class="p">].</span><span class="n">pixel</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">offset</span><span class="p">;</span></td>
             </tr>
             <tr>
@@ -1621,13 +1621,13 @@
                     <details class="normal details-overlay">
                         <summary>3/3</summary>
                         <div class="text-left position-absolute color-bg-subtle p-3 mt-2" style="z-index: 1;">
-                            <div class="color-taken-branch">&check; Branch 1 taken 740 times.</div>
+                            <div class="color-taken-branch">&check; Branch 1 taken 737 times.</div>
                             <div class="color-taken-branch">&check; Branch 3 taken 102 times.</div>
-                            <div class="color-taken-branch">&check; Branch 4 taken 638 times.</div>
+                            <div class="color-taken-branch">&check; Branch 4 taken 635 times.</div>
                         </div>
                     </details>
                 </td>
-                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">740</td>
+                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">737</td>
                 <td class="src coveredLine"><span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">InSensorWithMargin</span><span class="p">(</span><span class="n">expected</span><span class="p">,</span><span class="w"> </span><span class="n">star</span><span class="p">.</span><span class="n">width</span><span class="p">,</span><span class="w"> </span><span class="n">star</span><span class="p">.</span><span class="n">height</span><span class="p">,</span><span class="w"> </span><span class="n">sensorMargin</span><span class="p">))</span><span class="w"> </span><span class="p">{</span></td>
             </tr>
             <tr>
@@ -1648,7 +1648,7 @@
                 <td class="text-right src linenos"><a class="normal" id="l178" href="#l178">178</a></td>
                 <td class="text-right src linenos ws-unset">
                 </td>
-                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">638</td>
+                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">635</td>
                 <td class="src coveredLine"><span class="w">            </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">found</span><span class="o">::</span><span class="n">Vec2</span><span class="o">&gt;</span><span class="w"> </span><span class="n">nearby</span><span class="p">;</span></td>
             </tr>
             <tr>
@@ -1658,11 +1658,11 @@
                         <summary>2/2</summary>
                         <div class="text-left position-absolute color-bg-subtle p-3 mt-2" style="z-index: 1;">
                             <div class="color-taken-branch">&check; Branch 8 taken 217 times.</div>
-                            <div class="color-taken-branch">&check; Branch 9 taken 638 times.</div>
+                            <div class="color-taken-branch">&check; Branch 9 taken 635 times.</div>
                         </div>
                     </details>
                 </td>
-                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">855</td>
+                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">852</td>
                 <td class="src coveredLine"><span class="w">            </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="kt">size_t</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">neighbours</span><span class="p">[</span><span class="n">k</span><span class="p">])</span><span class="w"> </span><span class="p">{</span></td>
             </tr>
             <tr>
@@ -1691,7 +1691,7 @@
                 <td class="text-right src linenos"><a class="normal" id="l182" href="#l182">182</a></td>
                 <td class="text-right src linenos ws-unset">
                 </td>
-                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">638</td>
+                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">635</td>
                 <td class="src coveredLine"><span class="w">            </span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">optional</span><span class="o">&lt;</span><span class="n">found</span><span class="o">::</span><span class="n">Vec2</span><span class="o">&gt;</span><span class="w"> </span><span class="n">centroid</span><span class="w"> </span><span class="o">=</span></td>
             </tr>
             <tr>
@@ -1700,11 +1700,11 @@
                     <details class="normal details-overlay">
                         <summary>1/1</summary>
                         <div class="text-left position-absolute color-bg-subtle p-3 mt-2" style="z-index: 1;">
-                            <div class="color-taken-branch">&check; Branch 1 taken 638 times.</div>
+                            <div class="color-taken-branch">&check; Branch 1 taken 635 times.</div>
                         </div>
                     </details>
                 </td>
-                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">638</td>
+                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">635</td>
                 <td class="src coveredLine"><span class="w">                </span><span class="n">ExtractCentroid</span><span class="p">(</span><span class="n">darkSubtracted</span><span class="p">,</span><span class="w"> </span><span class="n">expected</span><span class="p">,</span><span class="w"> </span><span class="n">options_</span><span class="p">.</span><span class="n">roiSize</span><span class="p">,</span><span class="w"> </span><span class="n">kRecenterRadius</span><span class="p">,</span><span class="w"> </span><span class="n">threshold</span><span class="p">,</span><span class="w"> </span><span class="n">nearby</span><span class="p">);</span></td>
             </tr>
             <tr>
@@ -1713,19 +1713,19 @@
                     <details class="normal details-overlay">
                         <summary>2/2</summary>
                         <div class="text-left position-absolute color-bg-subtle p-3 mt-2" style="z-index: 1;">
-                            <div class="color-taken-branch">&check; Branch 1 taken 450 times.</div>
+                            <div class="color-taken-branch">&check; Branch 1 taken 447 times.</div>
                             <div class="color-taken-branch">&check; Branch 2 taken 188 times.</div>
                         </div>
                     </details>
                 </td>
-                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">638</td>
+                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">635</td>
                 <td class="src coveredLine"><span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">centroid</span><span class="p">.</span><span class="n">has_value</span><span class="p">())</span><span class="w"> </span><span class="p">{</span></td>
             </tr>
             <tr>
                 <td class="text-right src linenos"><a class="normal" id="l185" href="#l185">185</a></td>
                 <td class="text-right src linenos ws-unset">
                 </td>
-                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">450</td>
+                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">447</td>
                 <td class="src coveredLine"><span class="w">                </span><span class="k">const</span><span class="w"> </span><span class="n">CatalogStar</span><span class="w"> </span><span class="o">&amp;</span><span class="n">catalogStar</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">catalog_</span><span class="p">[</span><span class="n">predictions</span><span class="p">[</span><span class="n">k</span><span class="p">].</span><span class="n">catalogIndex</span><span class="p">];</span></td>
             </tr>
             <tr>
@@ -1734,11 +1734,11 @@
                     <details class="normal details-overlay">
                         <summary>1/1</summary>
                         <div class="text-left position-absolute color-bg-subtle p-3 mt-2" style="z-index: 1;">
-                            <div class="color-taken-branch">&check; Branch 2 taken 450 times.</div>
+                            <div class="color-taken-branch">&check; Branch 2 taken 447 times.</div>
                         </div>
                     </details>
                 </td>
-                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">900</td>
+                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">894</td>
                 <td class="src coveredLine"><span class="w">                </span><span class="n">candidates</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span></td>
             </tr>
             <tr>
@@ -1747,12 +1747,12 @@
                     <details class="normal details-overlay">
                         <summary>2/2</summary>
                         <div class="text-left position-absolute color-bg-subtle p-3 mt-2" style="z-index: 1;">
-                            <div class="color-taken-branch">&check; Branch 1 taken 450 times.</div>
-                            <div class="color-taken-branch">&check; Branch 5 taken 450 times.</div>
+                            <div class="color-taken-branch">&check; Branch 1 taken 447 times.</div>
+                            <div class="color-taken-branch">&check; Branch 5 taken 447 times.</div>
                         </div>
                     </details>
                 </td>
-                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">900</td>
+                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">894</td>
                 <td class="src coveredLine"><span class="w">                    </span><span class="n">Observation</span><span class="p">{</span><span class="k">static_cast</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">(</span><span class="n">i</span><span class="p">),</span><span class="w"> </span><span class="n">catalogStar</span><span class="p">.</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">catalogStar</span><span class="p">.</span><span class="n">spatial</span><span class="p">,</span><span class="w"> </span><span class="o">*</span><span class="n">centroid</span><span class="p">});</span></td>
             </tr>
             <tr>
@@ -1766,7 +1766,7 @@
                 <td class="text-right src linenos"><a class="normal" id="l189" href="#l189">189</a></td>
                 <td class="text-right src linenos ws-unset">
                 </td>
-                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">638</td>
+                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">635</td>
                 <td class="src coveredLine"><span class="w">        </span><span class="p">}</span></td>
             </tr>
             <tr>
@@ -1780,7 +1780,7 @@
                 <td class="text-right src linenos"><a class="normal" id="l191" href="#l191">191</a></td>
                 <td class="text-right src linenos ws-unset">
                 </td>
-                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">35</td>
+                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">32</td>
                 <td class="src coveredLine"><span class="w">        </span><span class="n">std</span><span class="o">::</span><span class="n">free</span><span class="p">(</span><span class="n">subtracted</span><span class="p">);</span></td>
             </tr>
             <tr>
@@ -1794,7 +1794,7 @@
                 <td class="text-right src linenos"><a class="normal" id="l193" href="#l193">193</a></td>
                 <td class="text-right src linenos ws-unset">
                 </td>
-                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">35</td>
+                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">32</td>
                 <td class="src coveredLine"><span class="w">        </span><span class="p">[[</span><span class="n">maybe_unused</span><span class="p">]]</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="kt">size_t</span><span class="w"> </span><span class="n">observationsBefore</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">result</span><span class="p">.</span><span class="n">observations</span><span class="p">.</span><span class="n">size</span><span class="p">();</span></td>
             </tr>
             <tr>
@@ -1803,11 +1803,11 @@
                     <details class="normal details-overlay">
                         <summary>1/1</summary>
                         <div class="text-left position-absolute color-bg-subtle p-3 mt-2" style="z-index: 1;">
-                            <div class="color-taken-branch">&check; Branch 1 taken 35 times.</div>
+                            <div class="color-taken-branch">&check; Branch 1 taken 32 times.</div>
                         </div>
                     </details>
                 </td>
-                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">35</td>
+                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">32</td>
                 <td class="src coveredLine"><span class="w">        </span><span class="n">KeepUnambiguous</span><span class="p">(</span><span class="n">candidates</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">result</span><span class="p">.</span><span class="n">observations</span><span class="p">);</span></td>
             </tr>
             <tr>
@@ -1816,30 +1816,30 @@
                     <details class="normal details-overlay">
                         <summary>20/20</summary>
                         <div class="text-left position-absolute color-bg-subtle p-3 mt-2" style="z-index: 1;">
-                            <div class="color-taken-branch">&check; Branch 3 taken 35 times.</div>
-                            <div class="color-taken-branch">&check; Branch 10 taken 35 times.</div>
-                            <div class="color-taken-branch">&check; Branch 13 taken 35 times.</div>
-                            <div class="color-taken-branch">&check; Branch 16 taken 35 times.</div>
-                            <div class="color-taken-branch">&check; Branch 20 taken 35 times.</div>
-                            <div class="color-taken-branch">&check; Branch 23 taken 35 times.</div>
-                            <div class="color-taken-branch">&check; Branch 26 taken 35 times.</div>
-                            <div class="color-taken-branch">&check; Branch 29 taken 35 times.</div>
-                            <div class="color-taken-branch">&check; Branch 32 taken 35 times.</div>
-                            <div class="color-taken-branch">&check; Branch 36 taken 35 times.</div>
-                            <div class="color-taken-branch">&check; Branch 39 taken 35 times.</div>
-                            <div class="color-taken-branch">&check; Branch 43 taken 35 times.</div>
-                            <div class="color-taken-branch">&check; Branch 46 taken 35 times.</div>
-                            <div class="color-taken-branch">&check; Branch 49 taken 35 times.</div>
-                            <div class="color-taken-branch">&check; Branch 52 taken 35 times.</div>
-                            <div class="color-taken-branch">&check; Branch 55 taken 35 times.</div>
-                            <div class="color-taken-branch">&check; Branch 58 taken 35 times.</div>
-                            <div class="color-taken-branch">&check; Branch 61 taken 35 times.</div>
-                            <div class="color-taken-branch">&check; Branch 64 taken 35 times.</div>
-                            <div class="color-taken-branch">&check; Branch 67 taken 35 times.</div>
+                            <div class="color-taken-branch">&check; Branch 3 taken 32 times.</div>
+                            <div class="color-taken-branch">&check; Branch 10 taken 32 times.</div>
+                            <div class="color-taken-branch">&check; Branch 13 taken 32 times.</div>
+                            <div class="color-taken-branch">&check; Branch 16 taken 32 times.</div>
+                            <div class="color-taken-branch">&check; Branch 20 taken 32 times.</div>
+                            <div class="color-taken-branch">&check; Branch 23 taken 32 times.</div>
+                            <div class="color-taken-branch">&check; Branch 26 taken 32 times.</div>
+                            <div class="color-taken-branch">&check; Branch 29 taken 32 times.</div>
+                            <div class="color-taken-branch">&check; Branch 32 taken 32 times.</div>
+                            <div class="color-taken-branch">&check; Branch 36 taken 32 times.</div>
+                            <div class="color-taken-branch">&check; Branch 39 taken 32 times.</div>
+                            <div class="color-taken-branch">&check; Branch 43 taken 32 times.</div>
+                            <div class="color-taken-branch">&check; Branch 46 taken 32 times.</div>
+                            <div class="color-taken-branch">&check; Branch 49 taken 32 times.</div>
+                            <div class="color-taken-branch">&check; Branch 52 taken 32 times.</div>
+                            <div class="color-taken-branch">&check; Branch 55 taken 32 times.</div>
+                            <div class="color-taken-branch">&check; Branch 58 taken 32 times.</div>
+                            <div class="color-taken-branch">&check; Branch 61 taken 32 times.</div>
+                            <div class="color-taken-branch">&check; Branch 64 taken 32 times.</div>
+                            <div class="color-taken-branch">&check; Branch 67 taken 32 times.</div>
                         </div>
                     </details>
                 </td>
-                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">105</td>
+                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">96</td>
                 <td class="src coveredLine"><span class="w">        </span><span class="n">LOG_INFO</span><span class="p">(</span><span class="s">&quot;Star image &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;: &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">result</span><span class="p">.</span><span class="n">observations</span><span class="p">.</span><span class="n">size</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">observationsBefore</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot; of &quot;</span></td>
             </tr>
             <tr>
@@ -1860,7 +1860,7 @@
                 <td class="text-right src linenos"><a class="normal" id="l198" href="#l198">198</a></td>
                 <td class="text-right src linenos ws-unset">
                 </td>
-                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">35</td>
+                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">32</td>
                 <td class="src coveredLine"><span class="w">    </span><span class="p">}</span></td>
             </tr>
             <tr>
@@ -1874,7 +1874,7 @@
                 <td class="text-right src linenos"><a class="normal" id="l200" href="#l200">200</a></td>
                 <td class="text-right src linenos ws-unset">
                 </td>
-                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">38</td>
+                <td class="src coveredLine pr-2 pl-2 color-fg-muted text-right">32</td>
                 <td class="src coveredLine"><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">result</span><span class="p">;</span></td>
             </tr>
             <tr>
